@@ -12,9 +12,9 @@ const userSchema = new mongoose.Schema({
     type:Boolean,
     default:false
   },
-  clientRefNo:{
+  verifyToken:{
     type:String,
-    required:true
+    default:""
   }
 })
 

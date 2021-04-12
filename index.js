@@ -25,6 +25,8 @@ app.use([
   require("./routes/test"),
   require("./routes/clients/admin/employees"),
   require("./routes/clients/admin/task"),
+  require("./routes/upload"),
+  require("./routes/market"),
 ]);
 
 // Error handling
