@@ -1,7 +1,7 @@
+/* eslint-disable prettier/prettier */
 const express = require('express')
 const multer = require('multer')
 const AWS = require('aws-sdk')
-
 const { v4: uuidv4 } = require('uuid'); 
 
 
@@ -42,7 +42,6 @@ router.post('/upload',upload,(req, res) => {
         if(error){
             res.status(500).send(error)
         }
-
         res.status(200).send(data)
     })
 })

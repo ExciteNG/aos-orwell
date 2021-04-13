@@ -63,3 +63,5 @@ typings/
 
 # mongodb
 dump
+
+seed.js
