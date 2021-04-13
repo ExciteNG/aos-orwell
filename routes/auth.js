@@ -3,7 +3,6 @@ const {
   signUp,
   signUpAffiliates,
   signUpPartner,
-  signUpClientEmployees,
   signIn,
   requireJWT,
   signJWTForUser,
