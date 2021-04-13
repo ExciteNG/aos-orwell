@@ -232,61 +232,7 @@ const signUpAffiliates = (req, res, next) => {
   });
 };
 
-//client sign up many employee
-const signUpClientEmployees = (req, res) => {
-  if (!req.body.employees || req.body.employees.length < 0) {
-    res.status(400).send("No username or password provided.");
-  }
-  let employees = req.body.employees;
-  // console.log(employees)
-  const errorBag = [];
 
-  const generateID = () =>
-    randomstring.generate({
-      length: 6,
-      charset: "numeric",
-      readable: true,
-    });
-
-  for (worker of employees) {
-    const user = {
-      email: worker.email,
-      name: worker.name,
-      userType: "CL05",
-      employeeID: `CL05-${generateID()}`,
-      clientRefNo: req.user.clientRefNo,
-    };
-    const userInstance = new User(user);
-    User.register(userInstance, worker.password, (error, user) => {
-      if (error) {
-        let errItem = { affectedUser: worker.name };
-        errorBag.push(errItem);
-        return;
-      }
-    });
-    const profileInstance = new Profile({
-      isSupper: false,
-      surname: worker.surname,
-      firstName: worker.firstName,
-      ...user,
-    });
-    profileInstance.save((error, doc) => {
-      if (error) {
-        let errItem = { affectedUser: worker.name };
-        errorBag.push(errItem);
-        return;
-      }
-    });
-  }
-
-  if (errorBag.length > 0) {
-    res.json({ status: 400, users: errorBag });
-  } else {
-    res.json({ status: 200 });
-  }
-  // req.user = user;
-  // next();
-};
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -429,7 +375,6 @@ module.exports = {
   signUp,
   signUpAffiliates,
   signUpPartner,
-  signUpClientEmployees,
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,

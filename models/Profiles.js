@@ -16,6 +16,12 @@ const profileSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  subscriptionStart:{
+    type:String,
+  },
+  subscriptionEnd:{
+    type:String,
+  },
   referral: {
     type: Object,
     default: { isReffered: false, refCode: "" },

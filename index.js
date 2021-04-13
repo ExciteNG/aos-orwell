@@ -19,12 +19,12 @@ app.use(authMiddleware.initialize);
 // Routes
 app.use([
   require("./routes/auth"),
-  require("./routes/rooms"),
+  require("./routes/products"),
+  require("./routes/profile"),
+  require("./routes/payments"),
+  require("./routes/adbanner"),
   require("./routes/validation"),
-  require("./routes/messenger"),
   require("./routes/test"),
-  require("./routes/clients/admin/employees"),
-  require("./routes/clients/admin/task"),
   require("./routes/upload"),
   require("./routes/market"),
 ]);
