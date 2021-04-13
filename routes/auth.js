@@ -3,7 +3,6 @@ const {
   signUp,
   signUpAffiliates,
   signUpPartner,
-  signUpClientEmployees,
   signIn,
   requireJWT,
   signJWTForUser,
@@ -13,7 +12,8 @@ const {
   authPageMerchant,
   authPageAffiliate,
   authPagePartner,
-  authPageSpringBoard
+  authPageSpringBoard,
+  signUpRefCode
 } = require('../middleware/auth')
 
 const router = express.Router()
@@ -26,12 +26,13 @@ router.post('/auth/sign-up', signUp)
 // Sign up affiliates
 router.post('/auth/affiliate/sign-up', signUpAffiliates)
 
+// Sign up affiliates
+router.post('/auth/affiliate/sign-up/ref-system', signUpRefCode)
+
 
 // Sign up partner
 router.post('/auth/partner/sign-up', signUpPartner)
 
-// Sign up client employees MANY
-router.post('/auth/sign-up/004/employees', requireJWT,signUpClientEmployees)
 
 
 // Sign in client
@@ -40,7 +41,7 @@ router.post('/auth', signIn, signJWTForUser)
 router.post('/auth/login/affiliates', signIn, signJWTForAffiliates)
 // Sign in partners
 router.post('/auth/login/partners', signIn, signJWTForPartners)
-// Sign in partners
+// Sign in springboard
 router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 
 

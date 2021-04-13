@@ -233,61 +233,71 @@ const signUpAffiliates = (req, res, next) => {
   });
 };
 
-//client sign up many employee
-const signUpClientEmployees = (req, res) => {
-  if (!req.body.employees || req.body.employees.length < 0) {
+
+// Signup User Via Refcode
+
+const signUpRefCode =async (req, res, next) => {
+  if (!req.body.email || !req.body.password) {
     res.status(400).send("No username or password provided.");
   }
-  let employees = req.body.employees;
-  // console.log(employees)
-  const errorBag = [];
+  User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    } else {
+      //continue
 
-  const generateID = () =>
-    randomstring.generate({
-      length: 6,
-      charset: "numeric",
-      readable: true,
-    });
+      const user = {
+        email: req.body.email,
+        name: req.body.name,
+        userType: "EX10AF",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 401, mesage: "Failed create account" });
 
-  for (worker of employees) {
-    const user = {
-      email: worker.email,
-      name: worker.name,
-      userType: "CL05",
-      employeeID: `CL05-${generateID()}`,
-      clientRefNo: req.user.clientRefNo,
-    };
-    const userInstance = new User(user);
-    User.register(userInstance, worker.password, (error, user) => {
-      if (error) {
-        let errItem = { affectedUser: worker.name };
-        errorBag.push(errItem);
-        return;
+          return;
+        }
+      });
+      const profileInstance = new Profile(userInstance);
+      let profiler = profileInstance
+      profiler.referral.isReffered = true
+      profiler.referral.refCode = req.body.refCode;
+      profileInstance.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create profile" });
+          return;
+        }
+      });
+// TODO restructure
+      const refBy = await Profile.findOne({affiliateCode:req.body.refCode})
+
+      if(!refBy) return   res.json({ code: 201, mesage: "Account created" });
+      if(refBy){
+        let currentCnt = refBy.affiliateCount;
+        refBy.affiliateCount = currentCnt + 1;
+        refBy.markModified('affiliateCount')
+        refBy.save()
+        res.json({ code: 201, mesage: "Account created" });
       }
-    });
-    const profileInstance = new Profile({
-      isSupper: false,
-      surname: worker.surname,
-      firstName: worker.firstName,
-      ...user,
-    });
-    profileInstance.save((error, doc) => {
-      if (error) {
-        let errItem = { affectedUser: worker.name };
-        errorBag.push(errItem);
-        return;
-      }
-    });
-  }
-
-  if (errorBag.length > 0) {
-    res.json({ status: 400, users: errorBag });
-  } else {
-    res.json({ status: 200 });
-  }
-  // req.user = user;
-  // next();
+      // req.user = userInstance;
+    
+      // next();
+    }
+  });
 };
+
+
+
+
+
+
+
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -430,7 +440,7 @@ module.exports = {
   signUp,
   signUpAffiliates,
   signUpPartner,
-  signUpClientEmployees,
+  signUpRefCode,
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,

@@ -5,7 +5,7 @@ const { requireJWT } = require("../middleware/auth");
 
 const Profile = require("./../models/Profiles");
 
-//Client Get all Employees
+//Marketplace
 router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   const { vendor, phone, address, lga, state } = req.body;
   const email = req.user.email;
