@@ -13,7 +13,8 @@ const {
   authPageMerchant,
   authPageAffiliate,
   authPagePartner,
-  authPageSpringBoard
+  authPageSpringBoard,
+  signUpRefCode
 } = require('../middleware/auth')
 
 const router = express.Router()
@@ -25,6 +26,9 @@ router.post('/auth/sign-up', signUp)
 
 // Sign up affiliates
 router.post('/auth/affiliate/sign-up', signUpAffiliates)
+
+// Sign up affiliates
+router.post('/auth/affiliate/sign-up/ref-system', signUpRefCode)
 
 
 // Sign up partner

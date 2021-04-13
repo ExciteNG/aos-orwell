@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireJWT } = require('../middleware/auth')
-
+const Randomstring = require('randomstring')
 const router = express.Router()
 const Profiles = require('../models/Profiles')
 
@@ -45,12 +45,17 @@ router.put('/app/profile/get/profile/approved', async (req,res)=>{
     const {profile} = req.body
     // const {email,userType} = req.user
     // if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
-
+const generateRefNo = Randomstring.generate({
+    length:6,
+    charset:'alphanumeric',
+    readable:true
+})
     //
     let affiliate = await Profiles.findOne({_id:profile})
         
         affiliate.regStatus.isApproved=true;
         affiliate.regStatus.dateApproved='3/2/2019'
+        affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus')
         affiliate.save()
         res.json({code:201,affiliate})
