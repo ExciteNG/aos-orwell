@@ -22,7 +22,6 @@ app.use([
   require("./routes/products"),
   require("./routes/profile"),
   require("./routes/payments"),
-  require("./routes/adbanner"),
   require("./routes/validation"),
   require("./routes/test"),
   require("./routes/upload"),
