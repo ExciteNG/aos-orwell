@@ -129,7 +129,7 @@ router.delete('/delete/all', async (req,res) => {
 
 //post a new deal
 // add a new record
-router.post('/new',upload, async (req,res) =>{
+router.post('/new', async (req,res) =>{
     const id = req.params.id
     try {
         // req.body.user = req.user.id

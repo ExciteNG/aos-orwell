@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
@@ -25,7 +26,7 @@ const signUp = (req, res, next) => {
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
-      //continue
+      // continue
       const generateRefNo = randomstring.generate({
         length: 4,
         charset: "numeric",
