@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const authMiddleware = require('./middleware/auth')
 const dotenv = require('dotenv')
@@ -14,26 +13,17 @@ const app = express()
 // Middleware
 app.use(express.json())
 app.use(cors({ credentials: true }))
+app.set('trust proxy', 1)
 app.use(authMiddleware.initialize)
 app.use(morgan('short'))
 
 // Routes
-app.use([
-<<<<<<< HEAD
-  require('./routes/auth'),
-  require('./routes/rooms'),
-  require('./routes/validation'),
-  require('./routes/messenger'),
-  require('./routes/test'),
-  require('./routes/clients/admin/employees'),
-  require('./routes/clients/admin/task'),
-  require('./routes/upload'),
-  require('./routes/market')
-])
 // define further routes
 app.use('/book-keeping', require('./routes/book'))
 app.use('/deals', require('./routes/dealroutes'))
-=======
+app.use('/business', require('./routes/busReg'))
+
+app.use([
   require("./routes/auth"),
   require("./routes/products"),
   require("./routes/profile"),
@@ -42,9 +32,7 @@ app.use('/deals', require('./routes/dealroutes'))
   require("./routes/test"),
   require("./routes/upload"),
   require("./routes/market"),
-]);
-
->>>>>>> 3632f0428cfdce73adfde216a1bdc09ed7ba8ad5
+])
 // Error handling
 app.use((error, req, res, next) => {
   res.json({
