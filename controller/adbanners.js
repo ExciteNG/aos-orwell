@@ -1,4 +1,4 @@
-const AdbannerModel = require('../models/adbanner');
+const AdbannerModel = require('../models/adBanner');
 
 const createAdbanner = (req, res) => {
   const adbannerModel = new AdbannerModel({
