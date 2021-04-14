@@ -12,7 +12,7 @@ router.get('/all',async (req, res) => {
         .sort({createdAt: 'asc' })
     .lean()
     if (records.length === 0){
-        return res.status(404).json({message:"empty"})
+        return res.status(404).json({message:"no records yet"})
     }
    return res.status(200).json({"records":records})
     }
@@ -54,7 +54,7 @@ router.put('/:id', async (req,res) =>{
     else {
 
         let {productName,price,buyersContact,description} = req.body
-        record = Records.findByIdAndUpdate({_id:id}, req.body,{
+        record = await Records.findByIdAndUpdate({_id:id}, req.body,{
             new: true
             // runValidators: true
         })
