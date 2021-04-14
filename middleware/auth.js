@@ -233,6 +233,70 @@ const signUpAffiliates = (req, res, next) => {
 };
 
 
+// Signup User Via Refcode
+
+const signUpRefCode =async (req, res, next) => {
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send("No username or password provided.");
+  }
+  User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    } else {
+      //continue
+
+      const user = {
+        email: req.body.email,
+        name: req.body.name,
+        userType: "EX10AF",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 401, mesage: "Failed create account" });
+
+          return;
+        }
+      });
+      const profileInstance = new Profile(userInstance);
+      let profiler = profileInstance
+      profiler.referral.isReffered = true
+      profiler.referral.refCode = req.body.refCode;
+      profileInstance.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create profile" });
+          return;
+        }
+      });
+// TODO restructure
+      const refBy = await Profile.findOne({affiliateCode:req.body.refCode})
+
+      if(!refBy) return   res.json({ code: 201, mesage: "Account created" });
+      if(refBy){
+        let currentCnt = refBy.affiliateCount;
+        refBy.affiliateCount = currentCnt + 1;
+        refBy.markModified('affiliateCount')
+        refBy.save()
+        res.json({ code: 201, mesage: "Account created" });
+      }
+      // req.user = userInstance;
+    
+      // next();
+    }
+  });
+};
+
+
+
+
+
+
+
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -375,6 +439,7 @@ module.exports = {
   signUp,
   signUpAffiliates,
   signUpPartner,
+  signUpRefCode,
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,

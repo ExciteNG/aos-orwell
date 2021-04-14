@@ -67,6 +67,10 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  affiliateCount: {
+    type: Number,
+    default: 0,
+  },
   partnerCode:{
     type:String,
     default:""
