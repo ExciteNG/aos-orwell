@@ -1,6 +1,6 @@
 const AdbannerModel = require('../models/adBanner');
 
-exports.createAdbanner = (req, res) => {
+const createAdbanner = (req, res) => {
   const adbannerModel = new AdbannerModel({
   categories: req.body.categories,
   purpose: req.body.purpose,
@@ -21,7 +21,7 @@ exports.createAdbanner = (req, res) => {
     });
 };
 
-exports.updateAdbanner = (req, res) => {
+const updateAdbanner = (req, res) => {
   const adbannerModel = new AdbannerModel({
     _id: req.params.id,
     categories: req.body.categories,
@@ -44,7 +44,7 @@ exports.updateAdbanner = (req, res) => {
     });
 };
 
-exports.deleteBanner = (req, res) => {
+const deleteBanner = (req, res) => {
   AdbannerModel.deleteOne({ _id: req.params.id })
     .then(() => {
       res.status(200).json({
@@ -59,7 +59,7 @@ exports.deleteBanner = (req, res) => {
     });
 };
 
-exports.getOneAdbanner = (req, res) => {
+const getOneAdbanner = (req, res) => {
   AdbannerModel.findOne({
     _id: req.params.id
   })
@@ -74,7 +74,7 @@ exports.getOneAdbanner = (req, res) => {
     });
 };
 
-exports.getAllAdbanners = (req, res) => {
+const getAllAdbanners = (req, res) => {
   AdbannerModel.find()
     .then((adBannerResponse) => {
       res.status(200).json(adBannerResponse);
@@ -86,3 +86,11 @@ exports.getAllAdbanners = (req, res) => {
       });
     });
 };
+
+module.exports = {
+  getAllAdbanners,
+  getOneAdbanner,
+  updateAdbanner,
+  deleteBanner,
+  createAdbanner
+}
