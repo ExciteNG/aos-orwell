@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -32,7 +33,9 @@ app.use([
   require("./routes/test"),
   require("./routes/upload"),
   require("./routes/market"),
+  require('./routes/adbanner')
 ])
+
 // Error handling
 app.use((error, req, res, next) => {
   res.json({
