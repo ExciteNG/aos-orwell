@@ -20,6 +20,7 @@ app.use(authMiddleware.initialize);
 app.use([
   require("./routes/auth"),
   require("./routes/products"),
+  require("./routes/social"),
   require("./routes/profile"),
   require("./routes/payments"),
   require("./routes/validation"),
