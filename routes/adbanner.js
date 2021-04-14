@@ -2,15 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-// const  require('../middleware/;
-
 const AdBannerCtrl = require('../controller/adbanners');
 
 
 // AdBanner ROUTES
-
 // post adbanners
-router.post('/banner', AdBannerCtrl.createAdbanner);
+router.post('/banner/new', AdBannerCtrl.createAdbanner);
 
 // update a adbanner
 router.put('/banner/:id', AdBannerCtrl.updateAdbanner);

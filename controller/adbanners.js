@@ -1,16 +1,15 @@
-const AdbannerModel = require('../models/adbannerModel');
+const AdbannerModel = require('../models/adbanner');
 
 exports.createAdbanner = (req, res) => {
   const adbannerModel = new AdbannerModel({
-  // _id: req.body.id,
-  categories: req.body.ticategories,
+  categories: req.body.categories,
   purpose: req.body.purpose,
   banner: req.body.banner,
   approval: req.body.approval
   });
   adbannerModel.save()
-    .then(() => {
-      res.status(200).json({
+    .then((record) => {
+      res.status(201).json({
         message: 'Banner posted successful!ly'
       });
     })
@@ -29,7 +28,7 @@ exports.updateAdbanner = (req, res) => {
     purpose: req.body.purpose,
     banner: req.body.banner,
     approval: req.body.approval,
-    dateUpdated: Date.now
+    dateApproved: req.body.dateApproved,
   });
   AdbannerModel.updateOne({ _id: req.params.id }, adbannerModel)
     .then(() => {
