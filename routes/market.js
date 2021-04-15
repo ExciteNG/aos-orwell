@@ -4,6 +4,7 @@ const router = express.Router();
 const { requireJWT } = require("../middleware/auth");
 
 const Profile = require("./../models/Profiles");
+const marketController = require('./../controller/market')
 
 //Marketplace
 router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
@@ -26,5 +27,8 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
 
   // res.json({email})
 });
+
+router.get('/marketplace/products/electronics/all',marketController.getAllElectronics)
+router.get('/marketplace/products/one/:id',marketController.getOneElectronic)
 
 module.exports = router;
