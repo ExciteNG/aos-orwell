@@ -1,5 +1,5 @@
+/* eslint-disable prettier/prettier */
 const mongoose = require("./init");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const PaymentSchema = new mongoose.Schema({
   email:{type:String, unique:false},

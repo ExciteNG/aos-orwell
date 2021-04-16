@@ -46,13 +46,41 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
         profile.save()
     }
     // const storeInfo=profile.storeInfo
+    if (profile.referral.isReffered && profile.referral.count===1){
+        const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
+        const newPayment = new Payments(item)
+        newPayment.save()
+        res.json({code:201, msg:"payment added"})
 
-    const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
-    const newPayment = new Payments(item)
+    } else if(!profile.referral.isReffered && profile.referral.count===0){
+        const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
+        const newPayment = new Payments(item)
+        newPayment.save()
+        res.json({code:201, msg:"payment added"})
+    } else if(profile.referral.isReffered && profile.referral.count===0){
+        const findRef = await Profiles.findOne({referral})
+        if(!findRef.refCode){
+            res.status(404).json({error:"referral code doesn''t exist"})
+        } else {
+              //push the user the referrers profile list
 
-    newPayment.save()
+        let newReferrer =    {
+            amount:amount,
+            email:email,
+            package:package,
+            cycle:cycle,
+            commission:0.15*amount
+          }
+        findRef.earnings.push(newReferrer)
+        findRef.markModified('earnings');
+        findRef.save()
 
-    res.json({code:201, msg:"payment added"})
+        const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
+        const newPayment = new Payments(item)
+        newPayment.save()
+        res.json({code:201, msg:"payment added"})
+        }
+    }
 
 
 })

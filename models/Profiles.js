@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
 
@@ -24,7 +25,7 @@ const profileSchema = new mongoose.Schema({
   },
   referral: {
     type: Object,
-    default: { isReffered: false, refCode: "" },
+    default: { isReffered: false, refCode: "",count:0 },
   },
   email: {
     type: String,
@@ -93,6 +94,18 @@ const profileSchema = new mongoose.Schema({
   company:{
     type:Object,
     default:{name:"",address:"",rc:"",tin:"",nature:"",taxCert:"",cacCert:""}
+  },
+  earnings:{
+    type:Array,
+    default:[
+      {
+        amount:0,
+        email:"",
+        package:"",
+        cycle:"",
+        commission:""
+      }
+    ]
   }
 });
 
