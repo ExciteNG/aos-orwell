@@ -23,6 +23,9 @@ const profileSchema = new mongoose.Schema({
   subscriptionEnd:{
     type:String,
   },
+  AryshareProfileKey:{
+    type:String,
+  },
   referral: {
     type: Object,
     default: { isReffered: false, refCode: "",count:0 },

@@ -72,7 +72,7 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
             commission:0.15*amount
           }
         findRef.earnings.push(newReferrer)
-        findRef.markModified('earnings');
+        findRef.markModified('earnings')
         findRef.save()
 
         const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
