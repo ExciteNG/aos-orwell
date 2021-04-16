@@ -16,7 +16,6 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
     const {email} = req.user
 
     const profile = await Profiles.findOne({email:email});
-
     const handleExpire = ()=>{
         switch (cycle) {
             case 'monthly':
@@ -51,6 +50,7 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
     const newPayment = new Payments(item)
 
     newPayment.save()
+
 
     res.json({code:201, msg:"payment added"})
 
