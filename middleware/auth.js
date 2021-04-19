@@ -81,7 +81,19 @@ const signUpPartner = (req, res, next) => {
     address,
   } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
+  const handleNature =()=>{
+    switch (serviceRendered) {
+      case "Tax Services":
+        return "EX50AFTAX"
+      case "Business Registration":
+        return "EX50AFBIZ"
+      case "Loan Services":
+        return "EX50AFFIN"
+      default:
+        break;
+    }
+  }
 
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
@@ -102,7 +114,7 @@ const signUpPartner = (req, res, next) => {
       const user = {
         email: req.body.email,
         name: req.body.companyName,
-        userType: "EX50AF",
+        userType: handleNature(),
         emailVerified: false,
       };
       const userInstance = new User(user);
@@ -348,7 +360,8 @@ const signJWTForAffiliates = (req, res) => {
 const signJWTForPartners = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
-  if (req.user.userType !== "EX50AF")
+  // const org = req.user.userType
+  if (req.user.userType !== ("EX50AFTAX" || "EX50AFBIZ" || "EX50AFFIN"))
     return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
   const token = JWT.sign(

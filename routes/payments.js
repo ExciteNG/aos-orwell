@@ -89,8 +89,8 @@ router.post(
          //change count to 1
          profile.referral = {isReffered:true, refCode:isRefBy , count:1 };
          profile.markModified("referral");
-       const updated= await profile.save();
-       console.log(updated)
+          await profile.save();
+      //  console.log(updated)
       const saved = await affiliateProfile.save()
       
      
