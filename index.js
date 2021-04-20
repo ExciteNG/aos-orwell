@@ -23,6 +23,7 @@ app.use(morgan('short'))
 app.use('/book-keeping', require('./routes/book'))
 app.use('/deals', require('./routes/dealroutes'))
 app.use('/business', require('./routes/busReg'))
+app.use('/statistic', require('./routes/statistic'))
 
 app.use([
   require("./routes/auth"),
