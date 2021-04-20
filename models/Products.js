@@ -14,6 +14,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender:{
+    type: String,
+    default: ""
+  },
   brand: { type: String, unique: false },
   condition: {
     type: String,
@@ -45,6 +49,15 @@ const ProductSchema = new mongoose.Schema({
   },
   priority:{
     type:Number
+  },
+  room:{
+    type: String,
+  },
+  transmission:{
+    type: String,
+  },
+  fuelType:{
+    type: String,
   },
   storeInfo: {
     type: Object,
