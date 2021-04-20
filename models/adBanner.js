@@ -7,7 +7,8 @@ const adbannerSchema = mongoose.Schema({
   purpose: { type: String, required: true },
   banner: { type: String, required: false },
   approval: { type: Boolean, default: false},
-  dateApproved: { type: String }
+  dateApproved: { type: String },
+  email: {type: String, required: true}
 },
 { timestamps: true });
 

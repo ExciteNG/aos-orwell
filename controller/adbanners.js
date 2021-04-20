@@ -1,12 +1,13 @@
 const AdbannerModel = require('../models/adBanner');
 
 const createAdbanner = (req, res) => {
+  const {email,userType}= req.user;
   const adbannerModel = new AdbannerModel({
   categories: req.body.categories,
   purpose: req.body.purpose,
   banner: req.body.banner,
   approval: false
-  });
+  })
   adbannerModel.save()
     .then((record) => {
       res.status(201).json({

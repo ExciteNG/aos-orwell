@@ -34,7 +34,8 @@ app.use([
   require("./routes/test"),
   require("./routes/upload"),
   require("./routes/market"),
-  require('./routes/adbanner')
+  require('./routes/adbanner'),
+  require('./routes/tax')
 ])
 
 // Error handling
