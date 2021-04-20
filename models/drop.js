@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const Room = require('./Room')
 const User = require('./User')
 

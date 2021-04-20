@@ -1,3 +1,5 @@
+/* eslint-disable standard/object-curly-even-spacing */
+/* eslint-disable prettier/prettier */
 const mongoose = require('mongoose');
 
 const adbannerSchema = mongoose.Schema({

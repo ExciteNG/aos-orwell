@@ -6,9 +6,8 @@ const createAdbanner = (req, res) => {
   categories: req.body.categories,
   purpose: req.body.purpose,
   banner: req.body.banner,
-  approval: req.body.approval,
-  email:email
-  });
+  approval: false
+  })
   adbannerModel.save()
     .then((record) => {
       res.status(201).json({
