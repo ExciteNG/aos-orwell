@@ -22,6 +22,13 @@ const bookModel = new mongoose.Schema({
   },
   email:{
       type:String
+  },
+  typeOfLedger: {
+    type: String,
+    default: ""
+  },
+  storeInfo:{
+    type:Object,
   }
 })
 
