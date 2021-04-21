@@ -8,6 +8,8 @@ var authy = require('authy')(API_KEY);
 const router = require('express').Router();
 const Loans = require('../models/loan');
 const multer = require('multer');
+const randn = Math.floor(10000000*Math.random())
+
 
 router.get('/all', async (req,res)=>{
     try {
@@ -23,7 +25,9 @@ router.get('/all', async (req,res)=>{
 router.post('/new',async (req,res)=>{
     try {
         await Loans.create(req.body)
-        return res.status(201).json({success:"An otp has been sent to the phone number provided,kindly use the code to complete your loan application"})
+        const welcomeMessage = `customer, Your verification code is ${randn}`
+        sendSms(req.body.MobileNumber,welcomeMessage);
+        return res.status(200).json({success:"An otp has been sent to the phone number provided, kindly use the code to complete your loan application"})
     } catch (err){
         console.error(err)
         res.status(500).send({error:err.message})
@@ -40,9 +44,9 @@ const sendSms = (phone, message) => {
            to: phone
          })
          console.log(msg.sid);
+         return msg
     } catch (err) {
         console.error(err)
-        
     }
   }
   

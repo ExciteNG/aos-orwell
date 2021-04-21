@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
 const mongoose =  require('./init')
-
-let phoRegexVal = new RegExp('^\\+\[0-9]+$');
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const CheckBusinessName = mongoose.Schema({
@@ -32,22 +30,6 @@ const CheckBusinessName = mongoose.Schema({
         },
         required:[true,'Please enter your email address'],
         unique:true
-    },
-    kycdirectors:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'kycDirectors'
-    },
-    kyshareholders:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'kycShareholders'
-    },
-    kycsecretary:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'kycSecretary'
-    },
-    SharedAllocationStructure:{
-        type:[String],
-        required:true
     }
 
 })
