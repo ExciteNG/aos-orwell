@@ -9,10 +9,13 @@ const authMiddleware = require('./middleware/auth')
 const dotenv = require('dotenv')
 dotenv.config()
 const morgan = require('morgan')
+const bodyParser=require('body-parser')
 const app = express()
 
 // Middleware
 app.use(express.json())
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 app.use(cors({ credentials: true }))
 app.set('trust proxy', 1)
 app.use(authMiddleware.initialize)
@@ -20,9 +23,12 @@ app.use(morgan('short'))
 
 // Routes
 // define further routes
-app.use('/book-keeping', require('./routes/book'))
-app.use('/deals', require('./routes/dealroutes'))
-app.use('/business', require('./routes/busReg'))
+app.use('/book-keeping', require('./routes/book'));
+app.use('/deals', require('./routes/dealroutes'));
+app.use('/business', require('./routes/busReg'));
+app.use('/loans',require('./routes/loan'));
+app.use('/check-business-name', require('./routes/checkname'))
+app.use('/statistic', require('./routes/statistic'))
 
 app.use([
   require("./routes/auth"),

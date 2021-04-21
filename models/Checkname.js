@@ -29,7 +29,8 @@ const CheckBusinessName = mongoose.Schema({
             },
             message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
         },
-        required: [true, 'phone number required']
+        required: [true, 'phone number required'],
+        unique:true
     },
 
     email:{
@@ -41,7 +42,8 @@ const CheckBusinessName = mongoose.Schema({
             },
             message:mail => `${mail.value} is not a valid emmail address !`
         },
-        required:[true,'Please enter your email address']
+        required:[true,'Please enter your email address'],
+        unique:true
     },
     address:{
         type:String

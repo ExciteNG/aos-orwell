@@ -40,7 +40,6 @@ router.post(
       profile.subscriptionLevel = 3;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
-      profile.save();
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -49,7 +48,6 @@ router.post(
       profile.subscriptionLevel = 2;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
-      profile.save();
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -58,7 +56,6 @@ router.post(
       profile.subscriptionLevel = 1;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
-      profile.save();
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -66,7 +63,7 @@ router.post(
 
     //credit affiliate
     const isRef = profile.referral.isReffered;
-    console.log(isRef);
+    // console.log(isRef);
     if (!isRef) return res.json({ msg: "added not reffered" });
     if (isRef && profile.referral.count === 1)
       return res.json({ msg: "reffered but count is one" });
@@ -76,7 +73,6 @@ router.post(
       const affiliateProfile = await Profiles.findOne({
         affiliateCode: isRefBy,
       });
-    //   console.log(affiliateProfile);
       let newCommission = {
         amount: amount,
         email: email,
@@ -87,17 +83,18 @@ router.post(
       affiliateProfile.earnings.push(newCommission);
       affiliateProfile.markModified("earnings");
          //change count to 1
-         await profile.referral.count === 1;
-        //  profile.markModified("referral");
-       const updated= await profile.save();
-       console.log(updated)
+         profile.referral = {isReffered:true, refCode:isRefBy , count:1 };
+         profile.markModified("referral");
+      //  console.log(updated)
       const saved = await affiliateProfile.save()
       
      
-    return res.json({ msg: "added, affiliate credited" });
 
       
     }
+    await profile.save();
+
+    return res.json({ msg: "added, affiliate credited" });
 
     //
 

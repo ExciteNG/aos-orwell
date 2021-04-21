@@ -8,18 +8,18 @@ const marketController = require('./../controller/market')
 
 //Marketplace
 router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
-  const { vendor, phone, address, lga, state } = req.body;
+  const { storeAddress, storeLga, storeName, storePhone, storeState } = req.body;
   const email = req.user.email;
 //   console.log(req.body);
   const profile = await Profile.findOne({ email: email });
   if (!profile) return res.status(401).json({ err: err });
 
 //   console.log(profile);
-  profile.storeInfo.storeName = vendor;
-  profile.storeInfo.storePhone = phone;
-  profile.storeInfo.storeAddress = address;
-  profile.storeInfo.storeLga = lga;
-  profile.storeInfo.storeState = state;
+  profile.storeInfo.storeName = storeName;
+  profile.storeInfo.storePhone = storePhone;
+  profile.storeInfo.storeAddress = storeAddress;
+  profile.storeInfo.storeLga = storeLga;
+  profile.storeInfo.storeState = storeState;
   // very important : telling mongoose that this field has been modified
   profile.markModified("storeInfo");
   let updatedProfile = await profile.save();
@@ -28,7 +28,8 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   // res.json({email})
 });
 
-router.get('/marketplace/products/electronics/all',marketController.getAllElectronics)
-router.get('/marketplace/products/one/:id',marketController.getOneElectronic)
+//electronics
+router.post('/marketplace/products/category/all',marketController.getCategory)
+router.get('/marketplace/products/one/:id',marketController.getItemById)
 
 module.exports = router;

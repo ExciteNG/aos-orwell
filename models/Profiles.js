@@ -91,7 +91,7 @@ const profileSchema = new mongoose.Schema({
   },
   accountDetails: {
     type:Object,
-    default:  { bank: "", accountNo: "", branch: "",bvn:"" },
+    default:  { bank: "", accountNo: "", branch: "",bvn:"",accountName:"",paymentMode:"" },
   },
 
   company:{
@@ -106,7 +106,7 @@ const profileSchema = new mongoose.Schema({
         email:"",
         package:"",
         cycle:"",
-        commission:""
+        commission:0
       }
     ]
   }
