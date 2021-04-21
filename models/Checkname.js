@@ -21,18 +21,6 @@ const CheckBusinessName = mongoose.Schema({
         required:true,
         unique:true
     },
-    phoneNo:{
-        type:String,
-        validate:{
-            validator:function(v){
-                return phoRegexVal.test(v)
-            },
-            message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
-        },
-        required: [true, 'phone number required'],
-        unique:true
-    },
-
     email:{
         type:String,
         validate:{
@@ -44,9 +32,6 @@ const CheckBusinessName = mongoose.Schema({
         },
         required:[true,'Please enter your email address'],
         unique:true
-    },
-    address:{
-        type:String
     },
     kycdirectors:{
         type:mongoose.Schema.Types.ObjectId,

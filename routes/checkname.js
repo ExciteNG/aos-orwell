@@ -88,8 +88,6 @@ router.delete('/remove/:id', async (req,res) => {
 
 // delete all records
 router.delete('/delete/all-names', async (req,res) => {
-
-    const id = req.params.id
     
     try {
         let check = await checkName.find().lean()
@@ -109,7 +107,6 @@ router.delete('/delete/all-names', async (req,res) => {
 
 // add a new record
 router.post('/new/name' , async (req,res) =>{
-    const id = req.params.id
     try {
         // req.body.user = req.user.id
         await checkName.create(req.body)
