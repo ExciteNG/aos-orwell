@@ -40,6 +40,9 @@ router.post(
       profile.subscriptionLevel = 3;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
+      profile.markModified('subscriptionLevel');
+      profile.markModified('subscriptionStart');
+      profile.markModified('subscriptionEnd');
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -48,6 +51,9 @@ router.post(
       profile.subscriptionLevel = 2;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
+      profile.markModified('subscriptionLevel');
+      profile.markModified('subscriptionStart');
+      profile.markModified('subscriptionEnd');
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -56,6 +62,9 @@ router.post(
       profile.subscriptionLevel = 1;
       profile.subscriptionStart = todaysDate();
       profile.subscriptionEnd = handleExpire();
+      profile.markModified('subscriptionLevel');
+      profile.markModified('subscriptionStart');
+      profile.markModified('subscriptionEnd');
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -64,9 +73,16 @@ router.post(
     //credit affiliate
     const isRef = profile.referral.isReffered;
     // console.log(isRef);
-    if (!isRef) return res.json({ msg: "added not reffered" });
-    if (isRef && profile.referral.count === 1)
-      return res.json({ msg: "reffered but count is one" });
+    if (!isRef) {
+      //save profile and return
+      await profile.save();
+      return res.json({code:201, msg: "added not reffered" })
+    };
+    if (isRef && profile.referral.count === 1){
+      // save profile and return
+    await profile.save();
+      return res.json({ code:201, msg: "reffered but count is one" })
+    };
 
     if (isRef && profile.referral.count === 0) {
       const isRefBy = profile.referral.refCode;
@@ -94,7 +110,7 @@ router.post(
     }
     await profile.save();
 
-    return res.json({ msg: "added, affiliate credited" });
+    return res.json({code:201, msg: "added, affiliate credited" });
 
     //
 
