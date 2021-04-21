@@ -28,6 +28,7 @@ app.use('/deals', require('./routes/dealroutes'));
 app.use('/business', require('./routes/busReg'));
 app.use('/loans',require('./routes/loan'));
 app.use('/check-business-name', require('./routes/checkname'))
+app.use('/statistic', require('./routes/statistic'))
 
 app.use([
   require("./routes/auth"),
@@ -39,7 +40,8 @@ app.use([
   require("./routes/test"),
   require("./routes/upload"),
   require("./routes/market"),
-  require('./routes/adbanner')
+  require('./routes/adbanner'),
+  require('./routes/tax')
 ])
 
 // Error handling

@@ -28,7 +28,8 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   // res.json({email})
 });
 
-router.get('/marketplace/products/electronics/all',marketController.getAllElectronics)
-router.get('/marketplace/products/one/:id',marketController.getOneElectronic)
+//electronics
+router.post('/marketplace/products/category/all',marketController.getCategory)
+router.get('/marketplace/products/one/:id',marketController.getItemById)
 
 module.exports = router;
