@@ -18,7 +18,7 @@ passport.use(User.createStrategy());
 // Merchants
 const signUp = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No username or password provided.");
+   return  res.status(400).send("No username or password provided.");
   }
   User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
