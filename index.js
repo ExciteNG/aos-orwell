@@ -27,7 +27,6 @@ app.use('/business', require('./routes/busReg'))
 app.use([
   require("./routes/auth"),
   require("./routes/products"),
-  require("./routes/social"),
   require("./routes/profile"),
   require("./routes/payments"),
   require("./routes/validation"),
