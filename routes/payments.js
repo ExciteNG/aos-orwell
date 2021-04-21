@@ -45,21 +45,19 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
         profile.subscriptionEnd = handleExpire()
         profile.save()
     }
-    // const storeInfo=profile.storeInfo
-    if (profile.referral.isReffered && profile.referral.count===1){
+    // if not referred
+    if (!profile.referral.isReffered){
         const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
         const newPayment = new Payments(item)
         newPayment.save()
-        res.json({code:201, msg:"payment added"})
+        return res.json({code:201, msg:"payment added"})
 
-    } else if(!profile.referral.isReffered && profile.referral.count===0){
-        const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
-        const newPayment = new Payments(item)
-        newPayment.save()
-        res.json({code:201, msg:"payment added"})
-    } else if(profile.referral.isReffered && profile.referral.count===0){
-        const findRef = await Profiles.findOne({referral})
-        if(!findRef.refCode){
+    }
+    
+    else if(!profile.referral.isReffered && profile.referral.count===0){
+        let search = profile.referral.refCode
+        const findRef = await Profiles.findOne({search})
+        if(!findRef){
             res.status(404).json({error:"referral code doesn''t exist"})
         } else {
               //push the user the referrers profile list
@@ -73,17 +71,22 @@ router.post('/app/payment/paystack/marketplace', requireJWT, async (req,res)=>{
           }
         findRef.earnings.push(newReferrer)
         findRef.markModified('earnings')
+        profile.referral.count=1
         findRef.save()
+        profile.save()
 
         const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
         const newPayment = new Payments(item)
         newPayment.save()
         res.json({code:201, msg:"payment added"})
         }
+    } else{
+        const item = {ref,amount,package,cycle,email:email,service:'marketplace'}
+        const newPayment = new Payments(item)
+        newPayment.save()
+        res.json({code:201, msg:"payment added"})
     }
-
-
-})
+    })
 
 
 router.get('/app/payment/paystack/get-marketplace-payments',requireJWT, async (req,res)=>{

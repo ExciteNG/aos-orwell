@@ -88,7 +88,7 @@ const businessRegistrationSchema =  new mongoose.Schema({
             validator:function(v){
                 return emailRegexVal.test(v)
             },
-            message:mail => `${mail.value} is not a valid emmail address !`
+            message:mail => `${mail.value} is not a valid email address !`
         },
         required:[true,'Please enter your email address']
     },
