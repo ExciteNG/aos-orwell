@@ -119,7 +119,6 @@ router.post('/' ,requireJWT, async (req,res) =>{
   const profiles = await Profiles.findOne({email:email});
 
   const storeInfo = profiles.storeInfo;
-    // const id = req.params.id
     try {
         // req.body.user = req.user.id
         await Records.create({...req.body,storeInfo:storeInfo,email})
