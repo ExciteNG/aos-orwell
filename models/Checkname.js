@@ -4,17 +4,17 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 const CheckBusinessName = mongoose.Schema({
 
-    Option1:{
+    mostPreferred:{
         type:String,
         required:true,
         unique:true
     },
-    Option2:{
+    morePreferred:{
         type:String,
         required:true,
         unique:true
     },
-    Option3:{
+    other:{
         type:String,
         required:true,
         unique:true
