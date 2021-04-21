@@ -50,14 +50,14 @@ const loanSchema = mongoose.Schema({
     },
     MobileNumber:{
         type:String,
-        unique:true,
         validate:{
             validator:function(v){
                 return phoRegexVal.test(v)
             },
             message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
         },
-        required: [true, 'phone number required']
+        required: [true, 'phone number required'],
+        unique:true
     },
     MobileNumber2:{
         type:String,
@@ -111,6 +111,10 @@ const loanSchema = mongoose.Schema({
     },
     Signature:{
         type:String
+    },
+    verified:{
+        type:String,
+        default:false
     }
 })
 
