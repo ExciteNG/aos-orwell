@@ -1,3 +1,5 @@
+/* eslint-disable standard/object-curly-even-spacing */
+/* eslint-disable prettier/prettier */
 const express = require('express')
 const { requireJWT } = require('../middleware/auth')
 const {PostToSocialMedia} = require('./../social/social')
