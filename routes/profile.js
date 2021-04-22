@@ -35,10 +35,9 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
 
 
 //springboard access to affiliates
-// router.get('/app/profile/get-all-affiliates/profile', requireJWT, async (req,res)=>{
-router.get('/app/profile/get-all-affiliates/profile', async (req,res)=>{
-    // const {email,userType} = req.user
-    // if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
+router.get('/app/profile/get-all-affiliates/profile', requireJWT, async (req,res)=>{
+    const {email,userType} = req.user
+    if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 
     const affiliates = await Profiles.find({userType:'EX20AF'})
 

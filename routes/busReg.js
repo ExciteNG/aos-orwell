@@ -31,10 +31,10 @@ router.get('/all', async (req,res) => {
     }
 })
 
-router.post('/new', async (req,res)=>{
+router.post('/new/sole-propietor', async (req,res)=>{
     try {
         // req.body.user = req.user.id
-        await busRegister.create(req.body)
+        await busRegister.create({...req.body,businessRegType:"Sole Propietorship"})
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)

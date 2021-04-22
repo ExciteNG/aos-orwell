@@ -12,7 +12,7 @@ router.get('/all-names',async (req, res) => {
     if (check.length === 0){
         return res.status(404).json({message:"you have no business proposed names yet"})
     }
-   return res.status(200).json({"businessNames":check})
+   return res.status(200).json({"reservations":check})
     }
     catch (err){
         console.error(err)
@@ -103,7 +103,7 @@ router.delete('/delete/all-names', async (req,res) => {
 })
 
 // add a new record
-router.post('/new/name' ,requireJWT, async (req,res) =>{
+router.post('/new/name' , requireJWT, async (req,res) =>{
   // console.log(req.body)
   const {email} = req.user
     try {

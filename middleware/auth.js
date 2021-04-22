@@ -247,14 +247,13 @@ const signUpAffiliates = (req, res, next) => {
 
 
 // Signup User Via Refcode
-
 const signUpRefCode =async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     res.status(400).send("No username or password provided.");
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
-      console.log(doc);
+      // console.log(doc);
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
@@ -270,7 +269,7 @@ const signUpRefCode =async (req, res, next) => {
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
-          res.json({ code: 401, mesage: "Failed create account" });
+          res.json({ code: 400, mesage: "Failed create account" });
 
           return;
         }
@@ -282,7 +281,7 @@ const signUpRefCode =async (req, res, next) => {
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
-          res.json({ code: 401, mesage: "Failed to create profile" });
+          res.json({ code: 400, mesage: "Failed to create profile" });
           return;
         }
       });
@@ -303,6 +302,37 @@ const signUpRefCode =async (req, res, next) => {
     }
   });
 };
+
+const setUpSpringBoard = (req,res,next)=>{
+  if(req.body.token !== process.env.SPRING_BOARD_ACCESS_TOKEN) return res.status(400).json({msg:"Invalid Token"})
+  if (!req.body.email || !req.body.password) {
+    res.status(400).send("No username or password provided.");
+  }
+  User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "Account exist" });
+      next(err);
+    } else {
+      //continue
+      const user = {
+        email: req.body.email,
+        name: 'SpringBoard',
+        userType: "EXSBAF",
+        emailVerified: true,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 400, mesage: "Failed create account" });
+          return;
+        }
+        res.json({ code: 201, mesage: "Account Set Successfully." });
+      });
+    }
+  });
+}
 
 
 
@@ -454,6 +484,7 @@ module.exports = {
   signUpAffiliates,
   signUpPartner,
   signUpRefCode,
+  setUpSpringBoard,
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
