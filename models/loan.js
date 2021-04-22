@@ -61,7 +61,7 @@ const loanSchema = mongoose.Schema({
     },
     MobileNumber2:{
         type:String,
-        unique:true,
+        required:false,
         validate:{
             validator:function(v){
                 return phoRegexVal.test(v)
