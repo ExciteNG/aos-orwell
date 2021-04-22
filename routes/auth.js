@@ -3,6 +3,7 @@ const {
   signUp,
   signUpAffiliates,
   signUpPartner,
+  setUpSpringBoard,
   signIn,
   requireJWT,
   signJWTForUser,
@@ -32,6 +33,9 @@ router.post('/auth/affiliate/sign-up/ref-system', signUpRefCode)
 
 // Sign up partner
 router.post('/auth/partner/sign-up', signUpPartner)
+
+// Sign up springboard
+router.post('/auth/springboard/set-up', setUpSpringBoard)
 
 
 
