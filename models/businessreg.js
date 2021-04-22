@@ -65,10 +65,10 @@ const businessRegistrationSchema =  new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum : ['Male','Female'],
-        default: 'Male'
+        enum : ['male','female'],
+        default: 'male'
     },
-    DateOfBirth:{
+    dob:{
         type:Date,
         required:true
     },
@@ -82,7 +82,7 @@ const businessRegistrationSchema =  new mongoose.Schema({
         },
         required: [true, 'phone number required']
     },
-    emailAddress:{
+    email:{
         type:String,
         validate:{
             validator:function(v){
@@ -115,21 +115,19 @@ const businessRegistrationSchema =  new mongoose.Schema({
     },
     idType:{
         type:String,
-        required:true
     },
     idNumber:{
         type:String,
-        required:true
+
     },
-    imageId:{
+    idImg:{
         type:String,
-        required:true
     },
     passportImg:{
         type:String
     },
     signature:{
-        type:String
+        type:Object
     },
 });
 
