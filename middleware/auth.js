@@ -20,6 +20,7 @@ const signUp = (req, res, next) => {
   if (!req.body.email || !req.body.password) {
    return  res.status(400).send("No username or password provided.");
   }
+  // console.log(req.body)
   User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       console.log(doc);
@@ -35,7 +36,7 @@ const signUp = (req, res, next) => {
 
       const user = {
         email: req.body.email,
-        name: req.body.name,
+        fullname: req.body.name,
         userType: "EX10AF",
         emailVerified: false,
       };
@@ -48,7 +49,9 @@ const signUp = (req, res, next) => {
           return;
         }
       });
+  // 
       const profileInstance = new Profile(userInstance);
+      profileInstance.fullname=req.body.fullname
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
