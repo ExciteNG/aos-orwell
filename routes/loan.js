@@ -29,7 +29,7 @@ router.delete('/delete/:id', async (req,res) => {
         
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message}) 
+        return res.send({status:500,error:err.message}) 
     }
 })
 
@@ -40,7 +40,7 @@ router.get('/all', async (req,res)=>{
         return res.status(200).json({loans:loans})
     } catch (err) {
         console.error(err)
-        res.status(500).send({error:err.message})
+        res.send({ status:500,error:err.message})
     }
 })
 
@@ -61,7 +61,7 @@ router.post('/new/user',async (req,res)=>{
         return res.status(200).json({phone, hash: fullHash,success:"An otp has been sent to the phone number provided, kindly use the code to complete your loan application"})
     } catch (err){
         console.error(err)
-        res.status(500).send({error:err.message})
+        res.send({status:500,error:err.message})
     }
 })
 
@@ -81,7 +81,7 @@ router.post('/verify/new/user', async (req,res)=>{
             verified: false,
           });
           Loan.remove()
-		return res.status(504).send({ msg: 'Timeout. Please try again' });
+		return res.send({status:500, msg: 'Timeout. Please try again' });
 	}
 	let data = `${phone}.${otp}.${expires}`;
 	let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
@@ -102,7 +102,7 @@ router.post('/verify/new/user', async (req,res)=>{
             verified: false,
           });
           Loan.remove()
-       return res.status(500).send({"error":"invalid otp credential, generate another token and try again"});
+       return res.send({status:500,"error":"invalid otp credential, generate another token and try again"});
     }
 })
 

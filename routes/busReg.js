@@ -21,13 +21,13 @@ router.get('/all', async (req,res) => {
         .sort({createdAt: -1 })
     .lean()
     if (register.length === 0){
-        return res.status(404).json({message:"no businesses registered yet"})
+        return res.json({status:404,message:"no businesses registered yet"})
     }
    return res.status(200).json({"records":register})
     }
     catch (err){
         console.error(err)
-       return res.status(500).json({"error":err.message})
+       return res.json({status:500,"error":err.message})
     }
 })
 
@@ -38,24 +38,23 @@ router.post('/new/sole-propietor', async (req,res)=>{
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
-        res.status(500).send({message:err.message})
+        res.send({status:500,message:err.message})
     }
 })
 
 //delete all  business
 router.delete('/item/all', async (req,res)=>{
-
     try {
         let business = await busRegister.find().lean()
         if (business.length===0) {
-          return res.status(404).send({message:"no businesses found"})
+          return res.send({status:404,message:"no businesses found"})
         } else {
         await busRegister.deleteMany()
        return  res.status(200).send({message:"Wipedown of all businesses complete and successful !"})
      }
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message})
+        return res.send({status:500,error:err.message})
     }
 })
 
@@ -65,13 +64,13 @@ router.get('/:id',async (req,res)=>{
         try {
             const busId = await busRegister.findById({_id:id})
             if (!busId){
-                return res.status(404).send({message:"not found"})
+                return res.send({status:404,message:"not found"})
             }
             return res.status(200).json({record:busId})
 
         } catch (err) {
             console.error(err)
-            res.status(500).json({error:err.message})
+            res.json({status:500,error:err.message})
         }
 });
 
@@ -83,7 +82,7 @@ router.put("/edit/:id",createLimiter, async (req,res)=>{
         let business = await busRegister.findById({_id:id}).lean()
 
     if (!business){
-        res.status(404).json({message:"not found"})
+        res.json({status:404,message:"not found"})
    }
     else {
         business = await busRegister.findByIdAndUpdate({_id:id}, req.body,{
@@ -96,7 +95,7 @@ router.put("/edit/:id",createLimiter, async (req,res)=>{
     }
     catch (err) {
         console.error(err)
-       return res.status(500).send({error:err.message})
+       return res.send({status:500,error:err.message})
     }
 
 })
@@ -109,7 +108,7 @@ router.delete('/item/:id', async (req,res)=>{
         let business = await busRegister.findById({_id:id}).lean()
 
         if (!business) {
-          return res.status(404).send({message:"not found"})
+          return res.send({status:404,message:"not found"})
         } else {
         await busRegister.remove({_id:id})
        return  res.status(200).send({message:"Delete successful !"})
@@ -117,7 +116,7 @@ router.delete('/item/:id', async (req,res)=>{
 
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message})
+        return res.send({status:500,error:err.message})
     }
 })
 
