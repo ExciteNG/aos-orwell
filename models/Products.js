@@ -39,6 +39,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  images:{
+    type:Array,
+    default:[]
+  },
   year: {
     type: String,
     default: "",
