@@ -25,11 +25,6 @@ const storage = multer.memoryStorage({
 const upload = multer({ storage }).single("image");
 
 // DELETE FROM S3
-
-// const params = {
-//   Bucket: BUCKET_NAME,  /* required */        # Put your bucket name
-//   Key: fileName         /* required */        # Put your file name
-// };
 const s3delete = function(key) {
   const item = {
     Bucket: process.env.AWS_STORAGE_BUCKET_NAME /* required */,
@@ -75,15 +70,33 @@ router.post("/upload", upload, (req, res) => {
 
 router.post('/upload/delete-item', async function(req, res, next) {
   const {key} = req.body; 
-    console.log(key)
+    // console.log(key)
     const response = await s3delete(key)
   res.json({code:201,response})
 })
 
 
 
-// Affiliate Marketers Uploads
+// Product Listing
+router.post('/upload/products',upload, async (req,res)=>{
+ // console.log(req)
+ let myFile = req.file.originalname.split(".");
+ const fileType = myFile[myFile.length - 1];
+ const params = {
+   Bucket: process.env.AWS_STORAGE_BUCKET_NAME,
+   Key: `${"Enterprise-Images/marketplace/ProductListing"}/${uuidv4()}.${fileType}`,
+   Body: req.file.buffer,
+   ACL: "public-read",
+ };
+ s3.upload(params, (error, data) => {
+   if (error) {
+     res.status(500).send(error);
+   }
+   res.status(200).json({code:201,data});
+ });
+})
 
+// Affiliate Marketers Uploads
 router.post('/upload/affiliates',upload, async (req,res)=>{
  // console.log(req)
  let myFile = req.file.originalname.split(".");

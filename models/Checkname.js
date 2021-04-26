@@ -22,7 +22,15 @@ const CheckBusinessName = mongoose.Schema({
         type:String,
         default: 'pending'
     },
-    email:{
+    isAssigned: {
+      type: Boolean,
+      default: false
+    },
+    assignedTo: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Profiles'
+    },
+    email: {
         type:String,
         validate:{
             validator:function(v){
