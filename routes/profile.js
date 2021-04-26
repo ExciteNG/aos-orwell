@@ -96,6 +96,18 @@ router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
     })
 
 })
+// Merchants name by email
+router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
+    const {profile} = req.body
+    const {email,userType} = req.user
+//
+    Profiles.findOne({email:email},(err,doc)=>{
+        // console.log(doc)
+        res.json({fullname:doc.fullname})
+
+    })
+
+})
 
 
 module.exports = router

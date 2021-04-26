@@ -9,10 +9,7 @@ router.get('/all-names',async (req, res) => {
         const check =  await checkName.find()
         .sort({createdAt: 'asc' })
     .lean()
-    if (check.length === 0){
-        return res.status(404).json({message:"you have no business proposed names yet"})
-    }
-   return res.status(200).json({"reservations":check})
+   return res.status(200).json({code:400,"reservations":check})
     }
     catch (err){
         console.error(err)
