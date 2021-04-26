@@ -29,6 +29,7 @@ app.use('/business', require('./routes/busReg'));
 app.use('/loans',require('./routes/loan'));
 app.use('/check-business-name', require('./routes/checkname'))
 app.use('/statistic', require('./routes/statistic'))
+app.use('/excite/business', require('./routes/excite'))
 
 app.use([
   require("./routes/auth"),

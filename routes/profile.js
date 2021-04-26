@@ -36,13 +36,18 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
 
 //springboard access to affiliates
 router.get('/app/profile/get-all-affiliates/profile', requireJWT, async (req,res)=>{
-    const {email,userType} = req.user
-    if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
+    try {
+      const {email,userType} = req.user
+      if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 
-    const affiliates = await Profiles.find({userType:'EX20AF'})
+      const affiliates = await Profiles.find({userType:'EX20AF'})
 
-    res.json({code:201,affiliates})
+      res.json({code:201,affiliates})
+    } catch (error) {
+      res.status(500).json(error)
+    }
 })
+
 //springborad access to an affiliate
 router.post('/app/profile/get/profile', async (req,res)=>{
     const {profile} = req.body
@@ -55,8 +60,8 @@ router.post('/app/profile/get/profile', async (req,res)=>{
         res.json(doc)
 
     })
-
 })
+
 // springboard approved status for affiliate
 router.put('/app/profile/get/profile/approved', async (req,res)=>{
     const {profile} = req.body
@@ -69,7 +74,7 @@ const generateRefNo = Randomstring.generate({
 })
     //
     let affiliate = await Profiles.findOne({_id:profile})
-        
+
         affiliate.regStatus.isApproved=true;
         affiliate.regStatus.dateApproved='3/2/2019'
         affiliate.affiliateCode=`AF${generateRefNo}`
