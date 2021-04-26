@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const mongoose = require('./init')
 const Schema = mongoose.Schema
 const moment = require('moment')

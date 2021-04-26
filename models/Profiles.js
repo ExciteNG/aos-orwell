@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
+let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 
 const profileSchema = new mongoose.Schema({
   storeInfo: {
@@ -33,6 +35,13 @@ const profileSchema = new mongoose.Schema({
   email: {
     type: String,
     index: true,
+    validate:{
+      validator:function(v){
+          return emailRegexVal.test(v)
+      },
+      message:mail => `${mail.value} is not a valid email address !`
+  },
+  required:[true,'Please enter your email address'] ,
     unique: true,
   },
   userType: {
