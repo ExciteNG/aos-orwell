@@ -4,8 +4,7 @@ const crypto = require('crypto');
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
-const Profile = require("../models/Partners");
-const Partners = require("../models/Profiles");
+const Profile = require("../models/Profiles");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -72,7 +71,7 @@ const signUp = (req, res, next) => {
 };
 
 // Partners
-const signUpPartner = async (req, res, next) => {
+const signUpPartner = (req, res, next) => {
   const {
     email,
     password,
@@ -106,13 +105,19 @@ const signUpPartner = async (req, res, next) => {
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
-  User.findOne({ email: email }, async (err, doc) => {
+  User.findOne({ email: email }, (err, doc) => {
     if (doc) {
       // conso
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
       //continue
+      const generateRefNo = randomstring.generate({
+        length: 4,
+        charset: "numeric",
+        readable: true,
+      });
+
       const user = {
         email: req.body.email,
         name: req.body.companyName,
@@ -128,11 +133,11 @@ const signUpPartner = async (req, res, next) => {
           return;
         }
       });
-      const partnerInstance = new Partners(userInstance);
-      partnerInstance.fullname = fullname;
-      partnerInstance.phone = phone;
+      const profileInstance = new Profile(userInstance);
+      profileInstance.fullname = fullname;
+      profileInstance.phone = phone;
 
-      partnerInstance.company = {
+      profileInstance.company = {
         name: companyName,
         address: address,
         rc: rc,
@@ -141,7 +146,7 @@ const signUpPartner = async (req, res, next) => {
       };
       // very important : telling mongoose that this field has been modified
       // profile.markModified("company");
-      partnerInstance.identification = {
+      profileInstance.identification = {
         idType: "",
         id: "",
         passport: "",
@@ -149,18 +154,17 @@ const signUpPartner = async (req, res, next) => {
         cacCert: cacCert,
         taxCert: taxCert,
       };
-      partnerInstance.location = { address: address, state: state, lga: lga };
+      profileInstance.location = { address: address, state: state, lga: lga };
     
-      await partnerInstance.save((err, doc) => {
+      profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
           return;
         }
-      res.json({ code: 201, mesage: "Account created" });
-
       });
       // req.user = userInstance;
+      res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -186,95 +190,117 @@ const signUpAffiliates = (req, res, next) => {
   if (!email || !password) {
     res.json({"status":400,code:"No username or password provided"});
   }
-  User.findOne({ email: req.body.email }, (err, doc) => {
-    if (err) {
-      res.json({ code: 401, msg: "Error ocured" });
-    }
-    if (doc) {
-      // console.log(doc);
-      res.json({ code: 401, msg: "Account exist", doc });
-      next(err);
-    } else {
-      //continue
-      const generateRefNo = randomstring.generate({
-        length: 4,
-        charset: "numeric",
-        readable: true,
-      });
-      //  let clientRefNo= `HR-CL-${generateRefNo}`,
+  var arr = [];
+    //create an async workflow
+    async.waterfall([
+      function(done) {
+        crypto.randomBytes(20, (err, buf) => {
+          var token = buf.toString('hex');
+          done(err, token);
+        });
+      },
 
-      const user = {
-        email: email,
-        name: fullname,
-        userType: "EX20AF",
-        emailVerified: false,
-      };
-      const userInstance = new User(user);
-      const msg = {
-        to: user.email, // Change to your recipient
-        from: 'iyayiemmanuel1@gmail.com', // Change to your verified sender
-        subject: 'Verify Your Account',
-        text: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-        html: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-      }
-      sgMail
-        .send(msg)
-        .then(() => {
-          console.log('Email sent')
-        })
-        .catch((err) => {
+      function(token, done) {
+
+        User.findOne({ email: email }).then(user => {
+          if (user) {
+            res.json({code:400, message: 'Email already exists' });
+          } else {
+
+            const generateRefNo = randomstring.generate({
+              length: 4,
+              charset: "numeric",
+              readable: true,
+            });
+
+            const user = {
+              email: req.body.email,
+              fullname: req.body.name,
+              userType: "EX20AF",
+              emailVerified: false,
+            };
+            const userInstance = new User(user);
+            // var users = new User({
+            //   username,
+            //   email,
+            //   password
+            // });
+         //push user data into array
+          arr.push(userInstance)
+  
+            userInstance.authToken = token;
+  
+            userInstance.save((err) => {
+              done(err, token, userInstance);
+            });
+
+            const profileInstance = new Profile(userInstance);
+            profileInstance.fullname=req.body.fullname;
+            profileInstance.phone = phone;
+            profileInstance.cellInfo = {
+              cell: cell,
+              cellGroup: "",
+              isCellHead: false,
+              isClusterHead: false,
+              cluster: "",
+            };
+            profileInstance.identification = {
+              idType: idType,
+              id: idImg,
+              passport: passportImg,
+              signature: "",
+            };
+            profileInstance.location = { address: address, state: state, lga: lga };
+            profileInstance.save((err, doc) => {
+              if (err) {
+                // next(err);
+                res.json({ code: 401, mesage: "Failed to create profile" });
+                return;
+              }
+            });
+            // req.user = userInstance;
+            res.json({ code: 201, mesage: "Account created" });
+            // next();
+
+          }
+        })      
+
+      },
+      function(token, userInstance, done) {
+      email(userInstance.email,userInstance.name,'/auth/affiliate/sign-up',token)
+      
+    }
+    ], function(err) {
+      if (err) {
           console.error(err)
-        })
+         res.redirect('/auth/affiliate/sign-up');
 
-      User.register(userInstance, req.body.password, (error, user) => {
-        if (error) {
-          // next(error);
-          res.json({ code: 401, mesage: "Failed create account" });
-          return;
-        }
-      });
+     }
+      else{
+        console.log("arr" , arr);
+        req.flash(
+          'success_msg',
+          'You are now registered and can log in'
+        );
+        res.redirect('/auth/login/affiliates');
+      }
+    });
+  };
 
-      const profileInstance = new Profile(userInstance);
-      profileInstance.fullname = fullname;
-      profileInstance.phone = phone;
-      profileInstance.cellInfo = {
-        cell: cell,
-        cellGroup: "",
-        isCellHead: false,
-        isClusterHead: false,
-        cluster: "",
-      };
-      profileInstance.identification = {
-        idType: idType,
-        id: idImg,
-        passport: passportImg,
-        signature: "",
-      };
-      profileInstance.location = { address: address, state: state, lga: lga };
-
-      profileInstance.save((err, doc) => {
-        if (err) {
-          // next(err);
-          res.json({ code: 401, mesage: "Failed to create profile" });
-          return;
-        }
-      });
-      // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
-      // next();
-    }
-  })
-}
 
 //verify account via the email token
 const verifyAffiliateToken =  (req,res) =>{
-  let token = req.params.token
-  if (token){
-    res.json({message:"account registered successfully"})
-  }else{
-    res.json({error:"an error ocurred while registering your account"})
-  }
+  User.findOne({ authToken: req.params.token}, function(err, user) {
+    if (!user) {
+      res.json('You are not valid user');
+      res.redirect('/auth/affiliate/sign-up');
+    } else {
+      res.json("you are now registered and you can log In...")
+      res.redirect('/auth/login/affiliates')
+    }
+  });
 }
+
 
 
 // Signup User Via Refcode
