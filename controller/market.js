@@ -1,5 +1,5 @@
 const Products = require('./../models/Products');
-const Profiles = require('./../models/Profiles');
+const Profiles = require('../models/Partners');
 const {PostToSocialMedia} = require('./../social/social')
 
 const getCategory = async (req,res)=>{

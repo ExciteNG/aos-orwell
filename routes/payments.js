@@ -3,7 +3,7 @@ const { requireJWT } = require("../middleware/auth");
 const { todaysDate, addMonth, addYear } = require("./../helper/date/date");
 const router = express.Router();
 const Payments = require("../models/Payments");
-const Profiles = require("../models/Profiles");
+const Profiles = require("../models/Partners");
 
 //add product
 

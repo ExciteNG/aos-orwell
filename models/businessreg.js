@@ -74,12 +74,6 @@ const businessRegistrationSchema =  new mongoose.Schema({
     },
     phoneNumber:{
         type:String,
-        validate:{
-            validator:function(v){
-                return phoRegexVal.test(v)
-            },
-            message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
-        },
         required: [true, 'phone number required']
     },
     email:{

@@ -27,9 +27,11 @@ app.use('/book-keeping', require('./routes/book'));
 app.use('/deals', require('./routes/dealroutes'));
 app.use('/business', require('./routes/busReg'));
 app.use('/loans',require('./routes/loan'));
-app.use('/check-business-name', require('./routes/checkname'))
-app.use('/statistic', require('./routes/statistic'))
-app.use('/excite/business', require('./routes/excite'))
+app.use('/check-business-name', require('./routes/checkname'));
+app.use('/statistic', require('./routes/statistic'));
+app.use('/excite/business', require('./routes/excite/business'));
+app.use('/excite/payments', require('./routes/excite/payments'));
+app.use('/excite/partners', require('./routes/excite/partners'));
 
 app.use([
   require("./routes/auth"),
