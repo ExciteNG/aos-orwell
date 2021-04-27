@@ -239,7 +239,7 @@ const signUpAffiliates = (req, res, next) => {
         .catch((err) => {
           console.error(err)
         })
-}
+
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
@@ -277,8 +277,8 @@ const signUpAffiliates = (req, res, next) => {
       res.json({ code: 201, mesage: "Account created" });
       // next();
     }
-  });
-};
+  })
+}
 
 //verify account via the email token
 const verifyAffiliateToken =  (req,res) =>{
