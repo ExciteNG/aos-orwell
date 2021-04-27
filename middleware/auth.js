@@ -513,7 +513,6 @@ module.exports = {
   initialize: passport.initialize(),
   signUp,
   signUpAffiliates,
-  verifyAffiliateToken,
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
