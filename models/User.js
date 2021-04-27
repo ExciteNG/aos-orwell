@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
     default:""
   },
   authToken:{
-    type:String
+    type:String,
+    default:""
   }
 })
 

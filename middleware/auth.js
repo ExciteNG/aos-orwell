@@ -171,7 +171,6 @@ const signUpPartner = (req, res, next) => {
 };
 
 // Affiliates
-//create  signup token
 const signUpAffiliates = (req, res, next) => {
   let token = crypto.randomBytes(12).toString('hex');
   const {
@@ -190,116 +189,91 @@ const signUpAffiliates = (req, res, next) => {
   if (!email || !password) {
     res.json({"status":400,code:"No username or password provided"});
   }
-  var arr = [];
-    //create an async workflow
-    async.waterfall([
-      function(done) {
-        crypto.randomBytes(20, (err, buf) => {
-          var token = buf.toString('hex');
-          done(err, token);
-        });
-      },
-
-      function(token, done) {
-
-        User.findOne({ email: email }).then(user => {
-          if (user) {
-            res.json({code:400, message: 'Email already exists' });
-          } else {
-
-            const generateRefNo = randomstring.generate({
-              length: 4,
-              charset: "numeric",
-              readable: true,
-            });
-
-            const user = {
-              email: req.body.email,
-              fullname: req.body.name,
-              userType: "EX20AF",
-              emailVerified: false,
-            };
-            const userInstance = new User(user);
-            // var users = new User({
-            //   username,
-            //   email,
-            //   password
-            // });
-         //push user data into array
-          arr.push(userInstance)
-  
-            userInstance.authToken = token;
-  
-            userInstance.save((err) => {
-              done(err, token, userInstance);
-            });
-
-            const profileInstance = new Profile(userInstance);
-            profileInstance.fullname=req.body.fullname;
-            profileInstance.phone = phone;
-            profileInstance.cellInfo = {
-              cell: cell,
-              cellGroup: "",
-              isCellHead: false,
-              isClusterHead: false,
-              cluster: "",
-            };
-            profileInstance.identification = {
-              idType: idType,
-              id: idImg,
-              passport: passportImg,
-              signature: "",
-            };
-            profileInstance.location = { address: address, state: state, lga: lga };
-            profileInstance.save((err, doc) => {
-              if (err) {
-                // next(err);
-                res.json({ code: 401, mesage: "Failed to create profile" });
-                return;
-              }
-            });
-            // req.user = userInstance;
-            res.json({ code: 201, mesage: "Account created" });
-            // next();
-
-          }
-        })      
-
-      },
-      function(token, userInstance, done) {
-      email(userInstance.email,userInstance.name,'/auth/affiliate/sign-up',token)
-      
+  User.findOne({ email: req.body.email }, (err, doc) => {
+    if (err) {
+      res.json({ code: 401, msg: "Error ocured" });
     }
-    ], function(err) {
-      if (err) {
-          console.error(err)
-         res.redirect('/auth/affiliate/sign-up');
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    } else {
+      //continue
+      const generateRefNo = randomstring.generate({
+        length: 4,
+        charset: "numeric",
+        readable: true,
+      });
+      //  let clientRefNo= `HR-CL-${generateRefNo}`,
 
-     }
-      else{
-        console.log("arr" , arr);
-        req.flash(
-          'success_msg',
-          'You are now registered and can log in'
-        );
-        res.redirect('/auth/login/affiliates');
+      const user = {
+        email: email,
+        name: fullname,
+        userType: "EX20AF",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      const msg = {
+        to: user.email, // Change to your recipient
+        from: 'iyayiemmanuel1@gmail.com', // Change to your verified sender
+        subject: 'Verify Your Account',
+        text: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
+        html: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
       }
-    });
-  };
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 401, mesage: "Failed create account" });
+          return;
+        }
+      });
+
+      const profileInstance = new Profile(userInstance);
+      profileInstance.fullname = fullname;
+      profileInstance.phone = phone;
+      profileInstance.cellInfo = {
+        cell: cell,
+        cellGroup: "",
+        isCellHead: false,
+        isClusterHead: false,
+        cluster: "",
+      };
+      profileInstance.identification = {
+        idType: idType,
+        id: idImg,
+        passport: passportImg,
+        signature: "",
+      };
+      profileInstance.location = { address: address, state: state, lga: lga };
+
+      profileInstance.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create profile" });
+          return;
+        }
+      });
+      // req.user = userInstance;
+      res.json({ code: 201, mesage: "Account created" });
+      // next();
+    }
+  })
+}
+
 
 
 //verify account via the email token
-const verifyAffiliateToken =  (req,res) =>{
-  User.findOne({ authToken: req.params.token}, function(err, user) {
-    if (!user) {
-      res.json('You are not valid user');
-      res.redirect('/auth/affiliate/sign-up');
-    } else {
-      res.json("you are now registered and you can log In...")
-      res.redirect('/auth/login/affiliates')
-    }
-  });
-}
+// const verifyAffiliateToken =  (req,res) =>{
+//   User.findOne({ authToken: req.params.token}, function(err, user) {
+//     if (!user) {
+//       res.json('You are not valid user');
+//       res.redirect('/auth/affiliate/sign-up');
+//     } else {
+//       res.json("you are now registered and you can log In...")
+//       res.redirect('/auth/login/affiliates')
+//     }
+//   });
+// }
 
 
 
