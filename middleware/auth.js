@@ -49,7 +49,7 @@ const signUp = (req, res, next) => {
           return;
         }
       });
-  // 
+  //
       const profileInstance = new Profile(userInstance);
       profileInstance.fullname=req.body.fullname
       profileInstance.save((err, doc) => {
@@ -151,7 +151,7 @@ const signUpPartner = (req, res, next) => {
         taxCert: taxCert,
       };
       profileInstance.location = { address: address, state: state, lga: lga };
-    
+
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -184,6 +184,12 @@ const signUpAffiliates = (req, res, next) => {
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
+
+  const validEmail = (/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email));
+  if(!validEmail){
+    res.json({message: 'invalid email', code: 400})
+  }
+
   User.findOne({ email: req.body.email }, (err, doc) => {
     if (err) {
       res.json({ code: 401, msg: "Error ocured" });
@@ -300,7 +306,7 @@ const signUpRefCode =async (req, res, next) => {
         res.json({ code: 201, mesage: "Account created" });
       }
       // req.user = userInstance;
-    
+
       // next();
     }
   });
