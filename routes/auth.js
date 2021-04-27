@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 const express = require('express')
 const {
   signUp,
@@ -6,6 +7,7 @@ const {
   setUpSpringBoard,
   signIn,
   requireJWT,
+  verifyAffiliateToken,
   signJWTForUser,
   signJWTForAffiliates,
   signJWTForPartners,
@@ -27,8 +29,13 @@ router.post('/auth/sign-up', signUp)
 // Sign up affiliates
 router.post('/auth/affiliate/sign-up', signUpAffiliates)
 
+//verify signup via token
+router.post('/auth/affiliate/sign-up/:token', verifyAffiliateToken)
+
 // Sign up affiliates
-router.post('/auth/affiliate/sign-up/ref-system', signUpRefCode)
+router.post('/auth/affiliate/sign-up/ref-system/', signUpRefCode)
+//verify sign up affiliates via token
+router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
 
 
 // Sign up partner
