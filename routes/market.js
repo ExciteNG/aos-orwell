@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { requireJWT } = require("../middleware/auth");
 
-const Profile = require("./../models/Profiles");
+const Profile = require("../models/Partners");
 const marketController = require('./../controller/market')
 
 //Marketplace

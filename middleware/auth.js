@@ -4,7 +4,8 @@ const crypto = require('crypto');
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
-const Profile = require("../models/Profiles");
+const Profile = require("../models/Partners");
+const Partners = require("../models/Profiles");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -71,7 +72,7 @@ const signUp = (req, res, next) => {
 };
 
 // Partners
-const signUpPartner = (req, res, next) => {
+const signUpPartner = async (req, res, next) => {
   const {
     email,
     password,
@@ -105,19 +106,13 @@ const signUpPartner = (req, res, next) => {
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
-  User.findOne({ email: email }, (err, doc) => {
+  User.findOne({ email: email }, async (err, doc) => {
     if (doc) {
       // conso
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
       //continue
-      const generateRefNo = randomstring.generate({
-        length: 4,
-        charset: "numeric",
-        readable: true,
-      });
-
       const user = {
         email: req.body.email,
         name: req.body.companyName,
@@ -133,11 +128,11 @@ const signUpPartner = (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile(userInstance);
-      profileInstance.fullname = fullname;
-      profileInstance.phone = phone;
+      const partnerInstance = new Partners(userInstance);
+      partnerInstance.fullname = fullname;
+      partnerInstance.phone = phone;
 
-      profileInstance.company = {
+      partnerInstance.company = {
         name: companyName,
         address: address,
         rc: rc,
@@ -146,7 +141,7 @@ const signUpPartner = (req, res, next) => {
       };
       // very important : telling mongoose that this field has been modified
       // profile.markModified("company");
-      profileInstance.identification = {
+      partnerInstance.identification = {
         idType: "",
         id: "",
         passport: "",
@@ -154,17 +149,18 @@ const signUpPartner = (req, res, next) => {
         cacCert: cacCert,
         taxCert: taxCert,
       };
-      profileInstance.location = { address: address, state: state, lga: lga };
+      partnerInstance.location = { address: address, state: state, lga: lga };
     
-      profileInstance.save((err, doc) => {
+      await partnerInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
           return;
         }
+      res.json({ code: 201, mesage: "Account created" });
+
       });
       // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -229,7 +225,7 @@ const signUpAffiliates = (req, res, next) => {
         .catch((err) => {
           console.error(err)
         })
-}
+
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
@@ -267,8 +263,8 @@ const signUpAffiliates = (req, res, next) => {
       res.json({ code: 201, mesage: "Account created" });
       // next();
     }
-  });
-};
+  })
+}
 
 //verify account via the email token
 const verifyAffiliateToken =  (req,res) =>{

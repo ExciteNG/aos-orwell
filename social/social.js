@@ -1,6 +1,6 @@
 // const { Op } = require("sequelize");
 const axios = require("axios");
-const Profiles = require('./../models/Profiles')
+const Profiles = require('../models/Partners')
 
 
 // 
