@@ -12,26 +12,26 @@ const loanSchema = mongoose.Schema({
             type:String,
             required:true
     },
-    lastName:{
+    middleName:{
         type:String,
     },
-    Gender: {
+    gender: {
         type: String,
         enum : ['Male','Female'],
         default:"Male",
         required:true
     },
-    DateOfBirth:{
+    dob:{
         type:Date,
         required:true
     },
-    StateOfOrigin:{
+    stateOrigin:{
         type:String
     },
-    LocalGovernmentArea:{
+    lgaOrigin:{
         type:String
     },
-    StreetNumber:{
+    streetNumber:{
         type:String
     },
     ResidentialAddress:{
@@ -120,3 +120,42 @@ const loanSchema = mongoose.Schema({
 
 
 module.exports=mongoose.model("loan",loanSchema)
+
+
+// surname: "",
+// firstName: "",
+// middleName: "",
+// gender: "",
+// dob: "",
+// stateOrigin:"",
+// lgaOrigin:"",
+// streetNumber:"",
+// addressRes:"",
+// phoneNumber: "",
+// phoneNumberAlt: "",
+// BVN:"",
+// bvnPhone:"",
+// authPin:"",
+// email: "",
+// kinOneSurname:"",
+// kinOneMiddleName:"",
+// kinOneFirstName:"",
+// kinOneRelationship:"",
+// kinOneEmail:"",
+// kinOneNumber:"",
+// kinTwoSurname:"",
+// kinTwoMiddleName:"",
+// kinTwoFirstName:"",
+// kinTwoRelationship:"",
+// kinTwoEmail:"",
+// kinTwoNumber:"",
+// employmentStatus:"",
+// qualification:"",
+// monthlyIncome:"",
+// salaryPayDay:"",
+// maritalStatus:"",
+// annualRent:"",
+// outstandingLoan:"",
+// utility:"",
+// passport:"",
+// signature:"",
