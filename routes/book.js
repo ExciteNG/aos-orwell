@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Records = require('../models/bookkeeping');
-const Profiles = require('../models/Profiles')
+const Profiles = require('../models/Partners')
 const bodyParser = require('body-parser');
 const {requireJWT} = require('../middleware/auth')
 router.use(bodyParser.urlencoded({extended:true}));
@@ -21,7 +21,7 @@ router.get('/all',requireJWT, async (req, res) => {
     }
     catch (err){
         console.error(err)
-       return res.status(500).json({"error":err.message})
+       return res.json({status:500,"error":err.message})
     }
 })
 // get a specific record by id
@@ -31,13 +31,13 @@ router.get('/:id', async (req,res)=>{
     try {
         const storeId = await Records.findById({_id:id})
         if (!storeId){
-            return res.status(404).send({message:"not found"})
+            return res.send({status:404,message:"not found"})
         }
         return res.status(200).json({record:storeId})
 
     } catch (err) {
         console.error(err)
-        res.status(500).json({error:err.message})
+        res.json({status:500,error:err.message})
     }
 })
 
@@ -52,7 +52,7 @@ router.put('/:id', async (req,res) =>{
         let record = await Records.findById({_id:id}).lean()
 
     if (!record){
-        res.status(404).json({message:"not found"})
+        res.json({status:404,message:"not found"})
    }
     else {
 
@@ -62,12 +62,12 @@ router.put('/:id', async (req,res) =>{
             // runValidators: true
         })
      }
-    return res.status(200).json({update:record})
+    return res.json({status:200,update:record})
 
     }
     catch (err) {
         console.error(err)
-       return res.status(500).send({error:err.message})
+       return res.send({status:500,error:err.message})
     }
 })
 
@@ -80,7 +80,7 @@ router.delete('/:id', async (req,res) => {
         let record = await Records.findById({_id:id}).lean()
 
         if (!record) {
-          return res.status(404).send({message:"not found"})
+          return res.send({status:404,message:"not found"})
         } else {
         await Records.remove({_id:id})
        return  res.status(200).send({message:"Delete successful !"})
@@ -88,7 +88,7 @@ router.delete('/:id', async (req,res) => {
 
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message})
+        return res.send({status:500,error:err.message})
     }
 })
 
@@ -100,7 +100,7 @@ router.delete('/record', async (req,res) => {
     try {
         let record = await Records.find().lean()
         if (record.length===0) {
-          return res.status(404).send({message:"records not found"})
+          return res.send({status:404,message:"records not found"})
         } else {
         await Records.deleteMany()
        return  res.status(200).send({message:"Wipedown complete and successful !"})
@@ -108,7 +108,7 @@ router.delete('/record', async (req,res) => {
 
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err})
+        return res.send({status:500,error:err.message})
     }
 })
 
@@ -125,7 +125,7 @@ router.post('/' ,requireJWT, async (req,res) =>{
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
-        res.status(500).send({message:err.message})
+        res.send({status:500,message:err.message})
     }
 })
 

@@ -13,7 +13,7 @@ router.get('/all-names',async (req, res) => {
     }
     catch (err){
         console.error(err)
-       return res.status(500).json({"error":err.message})
+       return res.json({status:500,"error":err.message})
     }
 })
 // get a specific record by id
@@ -23,13 +23,13 @@ router.get('/:id', async (req,res)=>{
     try {
         const checkId = await checkName.findById({_id:id})
         if (!checkId){
-            return res.status(404).send({message:"not found"})
+            return res.send({status:404,message:"not found"})
         }
-        return res.status(200).json({checks:checkId})
+        return res.json({status:200,checks:checkId})
 
     } catch (err) {
         console.error(err)
-        res.status(500).json({error:err.message})
+        res.json({status:500,error:err.message})
     }
 })
 
@@ -44,7 +44,7 @@ router.put('/update/:id', async (req,res) =>{
         let checkId = await checkName.findById({_id:id}).lean()
 
     if (!checkId){
-        res.status(404).json({message:"not found"})
+        res.json({status:404,message:"not found"})
    }
     else {
 
@@ -59,7 +59,7 @@ router.put('/update/:id', async (req,res) =>{
     }
     catch (err) {
         console.error(err)
-       return res.status(500).send({error:err.message})
+       return res.send({status:500,error:err.message})
     }
 })
 
@@ -72,14 +72,14 @@ router.delete('/remove/:id', async (req,res) => {
         let check = await checkName.findById({_id:id}).lean()
 
         if (!check) {
-          return res.status(404).send({message:"not found"})
+          return res.send({status:404,message:"not found"})
         } else {
         await checkName.remove({_id:id})
        return  res.status(200).send({message:"Delete successful !"})
           }
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message})
+        return res.send({status:500,error:err.message})
     }
 })
 
@@ -88,14 +88,14 @@ router.delete('/delete/all-names', async (req,res) => {
     try {
         let check = await checkName.find().lean()
         if (check.length===0) {
-          return res.status(404).send({message:"no names found"})
+          return res.send({status:404,message:"no names found"})
         } else {
         await checkName.deleteMany()
        return  res.status(200).send({message:"Wipedown complete and successful !"})
     }
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err})
+        return res.send({status:500,error:err})
     }
 })
 
@@ -105,10 +105,10 @@ router.post('/new/name' , requireJWT, async (req,res) =>{
   const {email} = req.user
     try {
         await checkName.create({...req.body,email})
-        return res.status(201).send({message:"success"})
+        return res.send({status:201,message:"success"})
     } catch (err) {
         console.error(err)
-        res.status(500).send({message:err.message})
+        res.send({status:500,message:err.message})
     }
 })
 

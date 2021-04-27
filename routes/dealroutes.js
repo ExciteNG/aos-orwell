@@ -29,13 +29,13 @@ router.get('/all',async (req, res) => {
     .sort({createdAt: -1})
     .lean()
     if (deals.length === 0){
-        return res.status(404).json({message:"you have no deals yet"})
+        return res.json({status:404,message:"you have no deals yet"})
     }
    return res.status(200).json({"deals":deals})
     }
     catch (err){
         console.error(err)
-       return res.status(500).json({"error":err.message})
+       return res.json({status:500,"error":err.message})
     }
 })
 
@@ -46,13 +46,13 @@ router.get('/deal/:id', async (req,res)=>{
     try {
         const dealsId = await Deals.findById({_id:id})
         if (!dealsId){
-            return res.status(404).send({message:"not found"})
+            return res.send({status:404,message:"not found"})
         }
         return res.status(200).json({record:dealsId})
         
     } catch (err) {
         console.error(err)
-        res.status(500).json({error:err.message})
+        res.json({status:500,error:err.message})
     }
 })
 
@@ -67,7 +67,7 @@ router.put('/deal/:id',upload, async (req,res) =>{
         let deal = await Deals.findById({_id:id}).lean()
 
     if (!deal){
-        res.status(404).json({message:"not found"})
+        res.json({status:404,message:"not found"})
    }
     else {
         
@@ -77,12 +77,12 @@ router.put('/deal/:id',upload, async (req,res) =>{
             // runValidators: true
         })
      }
-    return res.status(200).json({update:deal})
+    return res.json({status:500,update:deal})
 
     }
     catch (err) {
         console.error(err)
-       return res.status(500).send({error:err.message})
+       return res.send({status:500,error:err.message})
     }
 })
 
@@ -95,7 +95,7 @@ router.delete('/delete/:id', async (req,res) => {
         let deals = await Deals.findById({_id:id}).lean()
   
         if (!deals) {
-          return res.status(404).send({message:"deal not found"})
+          return res.send({status:404,message:"deal not found"})
         } else {
         await Deals.remove({_id:id})
        return  res.status(200).send({message:"Deal successfully deleted !"})
@@ -103,7 +103,7 @@ router.delete('/delete/:id', async (req,res) => {
         
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err.message}) 
+        return res.send({status:500,error:err.message}) 
     }
 })
 
@@ -115,7 +115,7 @@ router.delete('/delete/all', async (req,res) => {
     try {
         let deals = await Deals.find().lean()
         if (deals.length===0) {
-          return res.status(404).send({message:"deals not found"})
+          return res.send({status:404,message:"deals not found"})
         } else {
         await deals.deleteMany()
        return  res.status(200).send({message:"Wipedown of all deals complete and successful !"})
@@ -123,7 +123,7 @@ router.delete('/delete/all', async (req,res) => {
         
     } catch (err) {
         console.error(err)
-        return res.status(500).send({error:err}) 
+        return res.send({status:500,error:err.message}) 
     }
 })
 
@@ -137,7 +137,7 @@ router.post('/new', async (req,res) =>{
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
-        res.status(500).send({message:err.message})
+        res.send({status:500,message:err.message})
     }
 })
 
