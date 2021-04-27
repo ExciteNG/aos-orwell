@@ -7,7 +7,6 @@ const {
   setUpSpringBoard,
   signIn,
   requireJWT,
-  verifyAffiliateToken,
   signJWTForUser,
   signJWTForAffiliates,
   signJWTForPartners,
@@ -30,12 +29,12 @@ router.post('/auth/sign-up', signUp)
 router.post('/auth/affiliate/sign-up', signUpAffiliates)
 
 //verify signup via token
-router.post('/auth/affiliate/sign-up/:token', verifyAffiliateToken)
+// router.post('/auth/affiliate/sign-up/:token', verifyAffiliateToken)
 
 // Sign up affiliates (referrals)
 router.post('/auth/affiliate/sign-up/ref-system/', signUpRefCode)
 //verify sign up affiliates via token
-router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
+// router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
 
 
 // Sign up partner
