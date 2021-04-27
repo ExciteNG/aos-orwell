@@ -4,8 +4,8 @@ const crypto = require('crypto');
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
-const Profile = require("../models/Partners");
-const Partners = require("../models/Profiles");
+const Profile = require("../models/Profiles");
+const Partners = require("../models/Partners");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -441,7 +441,7 @@ const signJWTForAffiliates = (req, res) => {
 const signJWTForPartners = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
-  // const org = req.user.userType
+  const org = req.user.userType
   if (req.user.userType !== ("EX50AFTAX" || "EX50AFBIZ" || "EX50AFFIN"))
     return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
