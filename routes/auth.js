@@ -54,6 +54,7 @@ router.post('/auth/login/affiliates', signIn, signJWTForAffiliates)
 router.post('/auth/login/partners', signIn, signJWTForPartners)
 // Sign in springboard
 router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
+//sign in admin
 
 
 //page authorization
