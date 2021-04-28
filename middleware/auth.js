@@ -102,7 +102,7 @@ const signUpPartner = (req, res, next) => {
         break;
     }
   }
-
+console.log(req.body)
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
@@ -222,13 +222,6 @@ const signUpAffiliates = (req, res, next) => {
         emailVerified: false,
       };
       const userInstance = new User(user);
-      const msg = {
-        to: user.email, // Change to your recipient
-        from: 'iyayiemmanuel1@gmail.com', // Change to your verified sender
-        subject: 'Verify Your Account',
-        text: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-        html: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-      }
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
@@ -283,7 +276,6 @@ const signUpAffiliates = (req, res, next) => {
 //     }
 //   });
 // }
-
 
 
 // Signup User Via Refcode
@@ -528,7 +520,7 @@ module.exports = {
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
-  signIn: passport.authenticate("local", { session: false }),
+  signIn: passport.authenticate("local", { session: false}),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,
