@@ -2,7 +2,7 @@ const express = require('express')
 const { requireJWT } = require('../middleware/auth')
 const Randomstring = require('randomstring')
 const router = express.Router()
-const Profiles = require('../models/Partners')
+const Profiles = require('../models/Profiles')
 
 
 

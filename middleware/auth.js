@@ -5,6 +5,7 @@ const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profile = require("../models/Profiles");
+const Partners = require("../models/Partners");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -101,7 +102,7 @@ const signUpPartner = (req, res, next) => {
         break;
     }
   }
-
+console.log(req.body)
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
@@ -133,11 +134,11 @@ const signUpPartner = (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile(userInstance);
-      profileInstance.fullname = fullname;
-      profileInstance.phone = phone;
+      const partnerInstance = new Profile(userInstance);
+      partnerInstance.fullname = fullname;
+      partnerInstance.phone = phone;
 
-      profileInstance.company = {
+      partnerInstance.company = {
         name: companyName,
         address: address,
         rc: rc,
@@ -146,7 +147,7 @@ const signUpPartner = (req, res, next) => {
       };
       // very important : telling mongoose that this field has been modified
       // profile.markModified("company");
-      profileInstance.identification = {
+      partnerInstance.identification = {
         idType: "",
         id: "",
         passport: "",
@@ -154,9 +155,9 @@ const signUpPartner = (req, res, next) => {
         cacCert: cacCert,
         taxCert: taxCert,
       };
-      profileInstance.location = { address: address, state: state, lga: lga };
+      partnerInstance.location = { address: address, state: state, lga: lga };
     
-      profileInstance.save((err, doc) => {
+      partnerInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
@@ -189,6 +190,7 @@ const signUpAffiliates = (req, res, next) => {
   if (!email || !password) {
     res.json({"status":400,code:"No username or password provided"});
   }
+  
   User.findOne({ email: req.body.email }, (err, doc) => {
     if (err) {
       res.json({ code: 401, msg: "Error ocured" });
@@ -213,13 +215,6 @@ const signUpAffiliates = (req, res, next) => {
         emailVerified: false,
       };
       const userInstance = new User(user);
-      const msg = {
-        to: user.email, // Change to your recipient
-        from: 'iyayiemmanuel1@gmail.com', // Change to your verified sender
-        subject: 'Verify Your Account',
-        text: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-        html: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
-      }
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
@@ -274,7 +269,6 @@ const signUpAffiliates = (req, res, next) => {
 //     }
 //   });
 // }
-
 
 
 // Signup User Via Refcode
@@ -516,7 +510,7 @@ module.exports = {
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
-  signIn: passport.authenticate("local", {  session: false }),
+  signIn: passport.authenticate("local", { session: false}),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,

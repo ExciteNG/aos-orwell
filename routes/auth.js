@@ -7,7 +7,6 @@ const {
   setUpSpringBoard,
   signIn,
   requireJWT,
-  ///verifyAffiliateToken,
   signJWTForUser,
   signJWTForAffiliates,
   signJWTForPartners,
