@@ -14,7 +14,7 @@ const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
 const jwtAlgorithm = "HS256";
 const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
-//email templating 
+//email templating
 const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 
@@ -54,7 +54,7 @@ const signUp = (req, res, next) => {
           return;
         }
       });
-  // 
+  //
       const profileInstance = new Profile(userInstance);
       profileInstance.fullname=req.body.fullname
       profileInstance.save((err, doc) => {
@@ -121,7 +121,7 @@ console.log(req.body)
 
       const user = {
         email: req.body.email,
-        name: req.body.companyName,
+        fullname: req.body.companyName,
         userType: handleNature(),
         emailVerified: false,
       };
@@ -134,7 +134,7 @@ console.log(req.body)
           return;
         }
       });
-      const partnerInstance = new Profile(userInstance);
+      const partnerInstance = new Partners(userInstance);
       partnerInstance.fullname = fullname;
       partnerInstance.phone = phone;
 
@@ -146,7 +146,7 @@ console.log(req.body)
         nature: serviceRendered,
       };
       // very important : telling mongoose that this field has been modified
-      // profile.markModified("company");
+      partnerInstance.markModified("company");
       partnerInstance.identification = {
         idType: "",
         id: "",
@@ -156,16 +156,18 @@ console.log(req.body)
         taxCert: taxCert,
       };
       partnerInstance.location = { address: address, state: state, lga: lga };
-    
+
       partnerInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
           return;
         }
+        res.json({ code: 201, mesage: "Account created" });
+
       });
       // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
+      // res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -190,7 +192,12 @@ const signUpAffiliates = (req, res, next) => {
   if (!email || !password) {
     res.json({"status":400,code:"No username or password provided"});
   }
-  
+
+  const validEmail = (/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email));
+  if(!validEmail){
+    res.json({message: 'invalid email', code: 400})
+  }
+
   User.findOne({ email: req.body.email }, (err, doc) => {
     if (err) {
       res.json({ code: 401, msg: "Error ocured" });
@@ -322,7 +329,7 @@ const signUpRefCode =async (req, res, next) => {
         res.json({ code: 201, mesage: "Account created" });
       }
       // req.user = userInstance;
-    
+
       // next();
     }
   });
@@ -436,29 +443,32 @@ const signJWTForAffiliates = (req, res) => {
   // console.log(token);
   res.json({ token });
 };
+
 // Partners Login
 const signJWTForPartners = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
-  // const org = req.user.userType
-  if (req.user.userType !== ("EX50AFTAX" || "EX50AFBIZ" || "EX50AFFIN"))
-    return res.status(400).json({ msg: "invalid login" });
-  const user = req.user;
-  const token = JWT.sign(
-    {
-      email: user.email,
-      userType: user.userType,
-    },
-    jwtSecret,
-    {
-      algorithm: jwtAlgorithm,
-      expiresIn: jwtExpiresIn,
-      subject: user._id.toString(),
-    }
-  );
-  // console.log(token);
-  res.json({ token });
+  const org = req.user.userType
+
+  if ((req.user.userType === "EX50AFTAX") || (req.user.userType ===   "EX50AFBIZ") || (req.user.userType === "EX50AFFIN")){
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    return res.json({ token });
+  }
+  return res.status(400).json({ user: req.user.userType, msg: "invalid login" });
 };
+
 // SpringBoards Login
 const signJWTForSpringBoard = (req, res) => {
   // console.log('signing jwt', req.user)

@@ -109,5 +109,4 @@ router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
 
 })
 
-
 module.exports = router
