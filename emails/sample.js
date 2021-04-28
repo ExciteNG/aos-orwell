@@ -1,14 +1,15 @@
 var nodeoutlook = require('nodejs-nodemailer-outlook')
-let emailTemplate = require('../emails/templates')
+// let emailTemplate = require('../emails/templates')
+let mail = require('./templates')
 nodeoutlook.sendEmail({
     auth: {
         user: "enquiry@exciteafrica.com",
         pass: "ExciteManagement123$"
     },
     from: 'enquiry@exciteafrica.com',
-    to: 'ojotuk14@gmail.com',
+    to: 'tosin.adedotun@precise.com.ng',
     subject: 'Hey you, awesome!',
-    html: '<b>This is bold text</b>',
+    html: mail('Tosin'),
     text: 'This is text version!',
     replyTo: 'enquiry@exciteafrica.com',
     onError: (e) => console.log(e),
