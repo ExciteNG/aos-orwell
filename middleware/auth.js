@@ -491,6 +491,28 @@ const signJWTForSpringBoard = (req, res) => {
   // console.log(token);
   res.json({ token });
 };
+// Excite Admin Login
+const signJWTForExcite = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  if (req.user.userType !== "EXMANAF")
+    return res.status(400).json({ msg: "invalid login" });
+  const user = req.user;
+  const token = JWT.sign(
+    {
+      email: user.email,
+      userType: user.userType,
+    },
+    jwtSecret,
+    {
+      algorithm: jwtAlgorithm,
+      expiresIn: jwtExpiresIn,
+      subject: user._id.toString(),
+    }
+  );
+  // console.log(token);
+  res.json({ token });
+};
 
 //PAGE AUTHORIZATION
 
@@ -552,6 +574,7 @@ module.exports = {
   signJWTForAffiliates,
   signJWTForPartners,
   signJWTForSpringBoard,
+  signJWTForExcite,
   authPageAffiliate,
   authPageMerchant,
   authPagePartner,
