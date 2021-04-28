@@ -510,7 +510,7 @@ module.exports = {
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
-  signIn: passport.authenticate("local", { session: false, failureMessage:"fail to login" }),
+  signIn: passport.authenticate("local", { session: false}),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,
