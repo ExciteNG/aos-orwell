@@ -5,10 +5,7 @@ const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profile = require("../models/Profiles");
-<<<<<<< HEAD
 const Partners = require("../models/Partners");
-=======
->>>>>>> 0ad9da7593aff345d5f861f66b7695dc665ca115
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -124,7 +121,7 @@ const signUpPartner = (req, res, next) => {
 
       const user = {
         email: req.body.email,
-        name: req.body.companyName,
+        fullname: req.body.companyName,
         userType: handleNature(),
         emailVerified: false,
       };
@@ -137,11 +134,11 @@ const signUpPartner = (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile(userInstance);
-      profileInstance.fullname = fullname;
-      profileInstance.phone = phone;
+      const partnerInstance = new Partners(userInstance);
+      partnerInstance.fullname = fullname;
+      partnerInstance.phone = phone;
 
-      profileInstance.company = {
+      partnerInstance.company = {
         name: companyName,
         address: address,
         rc: rc,
@@ -149,8 +146,8 @@ const signUpPartner = (req, res, next) => {
         nature: serviceRendered,
       };
       // very important : telling mongoose that this field has been modified
-      // profile.markModified("company");
-      profileInstance.identification = {
+      partnerInstance.markModified("company");
+      partnerInstance.identification = {
         idType: "",
         id: "",
         passport: "",
@@ -158,23 +155,19 @@ const signUpPartner = (req, res, next) => {
         cacCert: cacCert,
         taxCert: taxCert,
       };
-<<<<<<< HEAD
       partnerInstance.location = { address: address, state: state, lga: lga };
 
-      await partnerInstance.save((err, doc) => {
-=======
-      profileInstance.location = { address: address, state: state, lga: lga };
-    
-      profileInstance.save((err, doc) => {
->>>>>>> 0ad9da7593aff345d5f861f66b7695dc665ca115
+      partnerInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
           return;
         }
+        res.json({ code: 201, mesage: "Account created" });
+
       });
       // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
+      // res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -236,19 +229,6 @@ const signUpAffiliates = (req, res, next) => {
         text: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
         html: emailTemplate(user.fullname,'/auth/affiliate/sign-up/',token),
       }
-<<<<<<< HEAD
-
-      sgMail
-        .send(msg)
-        .then(() => {
-          console.log('Email sent')
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-
-=======
->>>>>>> 0ad9da7593aff345d5f861f66b7695dc665ca115
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
@@ -446,29 +426,32 @@ const signJWTForAffiliates = (req, res) => {
   // console.log(token);
   res.json({ token });
 };
+
 // Partners Login
 const signJWTForPartners = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
   const org = req.user.userType
-  if (req.user.userType !== ("EX50AFTAX" || "EX50AFBIZ" || "EX50AFFIN"))
-    return res.status(400).json({ msg: "invalid login" });
-  const user = req.user;
-  const token = JWT.sign(
-    {
-      email: user.email,
-      userType: user.userType,
-    },
-    jwtSecret,
-    {
-      algorithm: jwtAlgorithm,
-      expiresIn: jwtExpiresIn,
-      subject: user._id.toString(),
-    }
-  );
-  // console.log(token);
-  res.json({ token });
+
+  if ((req.user.userType === "EX50AFTAX") || (req.user.userType ===   "EX50AFBIZ") || (req.user.userType === "EX50AFFIN")){
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    return res.json({ token });
+  }
+  return res.status(400).json({ user: req.user.userType, msg: "invalid login" });
 };
+
 // SpringBoards Login
 const signJWTForSpringBoard = (req, res) => {
   // console.log('signing jwt', req.user)
@@ -542,7 +525,6 @@ module.exports = {
   initialize: passport.initialize(),
   signUp,
   signUpAffiliates,
-  verifyAffiliateToken,
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
