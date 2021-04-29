@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 var nodeoutlook = require('nodejs-nodemailer-outlook')
+let mail = require('./new_welcome_templates')
 // let emailTemplate = require('../emails/templates')
-let mail = require('./templates')
+//let mail = require('./templates')
 nodeoutlook.sendEmail({
     auth: {
         user: "enquiry@exciteafrica.com",
@@ -15,7 +17,4 @@ nodeoutlook.sendEmail({
     onError: (e) => console.log(e),
     onSuccess: (i) => console.log(i),
     secure:false
-}
- 
- 
-);
+});

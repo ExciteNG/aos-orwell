@@ -1,5 +1,6 @@
 const Products = require('./../models/Products');
-const Profiles = require('../models/Partners');
+const Profiles = require('../models/Profiles');
+const Banners = require('./../models/adBanner');
 const {PostToSocialMedia} = require('./../social/social')
 
 const getCategory = async (req,res)=>{
@@ -112,6 +113,14 @@ const addVehicle = async (req,res)=>{
        return res.json({code:201,msg:"posted to social",added:true});
 }
 
+const getLandinpPage =async (rer,res)=>{
+const banners = await Banners.find();
+const approvedBanners = banners.filter((banner=>banner.approval));
+const products = await Products.find()
+res.json({banner:approvedBanners,products:products})
+
+}
+
 
 
 module.exports={
@@ -122,4 +131,5 @@ module.exports={
     addPhoneTablet,
     addHome,
     addVehicle,
+    getLandinpPage
 }

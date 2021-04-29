@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 const passport = require("passport");
+var nodeoutlook = require('nodejs-nodemailer-outlook')
 const crypto = require('crypto');
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
@@ -9,24 +10,25 @@ const Partners = require("../models/Partners");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 const sgMail = require('@sendgrid/mail');
+const verifyEmail = require('../emails/verify_template')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
 const jwtAlgorithm = "HS256";
 const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 //email templating
-const emailTemplate = require('./template');
+// const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 
 /*                  SIGNUPs                         */
 
 // Merchants
-const signUp = (req, res, next) => {
+const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
    return  res.send({code:400,error:"No username or password provided."});
   }
-  // console.log(req.body)
-  User.findOne({ email: req.body.email }, (err, doc) => {
+  console.log(req.body)
+  await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "Account exist", doc });
@@ -34,16 +36,19 @@ const signUp = (req, res, next) => {
     } else {
       // continue
       const generateRefNo = randomstring.generate({
-        length: 4,
-        charset: "numeric",
+        length: 12,
+        charset: "alphanumeric",
         readable: true,
       });
 
       const user = {
         email: req.body.email,
-        fullname: req.body.name,
+        fullname: req.body.fullname,
+        username:req.body.username,
+        name: req.body.fullname,
         userType: "EX10AF",
         emailVerified: false,
+        verifyToken:generateRefNo
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -65,8 +70,25 @@ const signUp = (req, res, next) => {
         }
       });
       // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
       // next();
+            //send mail
+            nodeoutlook.sendEmail({
+              auth: {
+                  user: "enquiry@exciteafrica.com",
+                  pass: "ExciteManagement123$"
+              },
+              from: 'enquiry@exciteafrica.com',
+              to: user.email,
+              subject: 'Verify Your Account',
+              html: verifyEmail(user.username,user.email,user.verifyToken),
+              text:verifyEmail(user.username,user.email,user.verifyToken),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => console.log(i),
+              secure:false
+          });
+      res.json({ code: 201, mesage: "Account created" });
+
     }
   });
 };
@@ -102,7 +124,7 @@ const signUpPartner = (req, res, next) => {
         break;
     }
   }
-console.log(req.body)
+// console.log(req.body)
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
@@ -174,8 +196,8 @@ console.log(req.body)
 };
 
 // Affiliates
-const signUpAffiliates = (req, res, next) => {
-  let token = crypto.randomBytes(12).toString('hex');
+const signUpAffiliates = async (req, res, next) => {
+  
   const {
     email,
     password,
@@ -198,7 +220,7 @@ const signUpAffiliates = (req, res, next) => {
     res.json({message: 'invalid email', code: 400})
   }
 
-  User.findOne({ email: req.body.email }, (err, doc) => {
+   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (err) {
       res.json({ code: 401, msg: "Error ocured" });
     }
@@ -209,8 +231,8 @@ const signUpAffiliates = (req, res, next) => {
     } else {
       //continue
       const generateRefNo = randomstring.generate({
-        length: 4,
-        charset: "numeric",
+        length: 12,
+        charset: "alphanumeric",
         readable: true,
       });
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
@@ -248,7 +270,7 @@ const signUpAffiliates = (req, res, next) => {
       };
       profileInstance.location = { address: address, state: state, lga: lga };
 
-      profileInstance.save((err, doc) => {
+       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
           res.json({ code: 401, mesage: "Failed to create profile" });
