@@ -32,6 +32,7 @@ const ProductSchema = new mongoose.Schema({
   },
   color: {
     type: String,
+    default:""
   },
   size: {
     type: String,
@@ -60,16 +61,20 @@ const ProductSchema = new mongoose.Schema({
   required:[true,'Please enter your email address'] 
   },
   priority:{
-    type:Number
+    type:Number,
+    default:0
   },
   room:{
     type: String,
+    default:""
   },
   transmission:{
     type: String,
+    default:""
   },
   fuelType:{
     type: String,
+    default:""
   },
   storeInfo: {
     type: Object,

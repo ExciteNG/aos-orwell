@@ -114,5 +114,42 @@ router.post('/upload/affiliates',upload, async (req,res)=>{
    res.status(200).json({code:201,data});
  });
 })
+// Partners Uploads
+router.post('/upload/partners',upload, async (req,res)=>{
+ // console.log(req)
+ let myFile = req.file.originalname.split(".");
+ const fileType = myFile[myFile.length - 1];
+ const params = {
+   Bucket: process.env.AWS_STORAGE_BUCKET_NAME,
+   Key: `${"Enterprise-Images/Partners"}/${uuidv4()}.${fileType}`,
+   Body: req.file.buffer,
+   ACL: "public-read",
+ };
+ s3.upload(params, (error, data) => {
+   if (error) {
+     res.status(500).send(error);
+   }
+   res.status(200).json({code:201,data});
+ });
+})
+
+// upload banner
+router.post('/upload/banner',upload, async (req,res)=>{
+ // console.log(req)
+ let myFile = req.file.originalname.split(".");
+ const fileType = myFile[myFile.length - 1];
+ const params = {
+   Bucket: process.env.AWS_STORAGE_BUCKET_NAME,
+   Key: `${"Enterprise-Images/Banners"}/${uuidv4()}.${fileType}`,
+   Body: req.file.buffer,
+   ACL: "public-read",
+ };
+ s3.upload(params, (error, data) => {
+   if (error) {
+     res.status(500).send(error);
+   }
+   res.status(200).json({code:201,data});
+ });
+})
 
 module.exports = router;

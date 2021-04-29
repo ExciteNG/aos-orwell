@@ -102,7 +102,7 @@ const signUpPartner = (req, res, next) => {
         break;
     }
   }
-console.log(req.body)
+// console.log(req.body)
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }

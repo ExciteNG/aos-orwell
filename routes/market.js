@@ -3,18 +3,18 @@ const router = express.Router();
 
 const { requireJWT } = require("../middleware/auth");
 
-const Profile = require("../models/Partners");
+const Profile = require("../models/Profiles");
 const marketController = require('./../controller/market')
 
 //Marketplace
 router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   const { storeAddress, storeLga, storeName, storePhone, storeState } = req.body;
   const email = req.user.email;
-//   console.log(req.body);
+  // console.log(req.user);
   const profile = await Profile.findOne({ email: email });
-  if (!profile) return res.status(401).json({ err: err });
+  if (!profile) return res.status(401).json({ err: 'profile not found' });
 
-//   console.log(profile);
+  // console.log(profile);
   profile.storeInfo.storeName = storeName;
   profile.storeInfo.storePhone = storePhone;
   profile.storeInfo.storeAddress = storeAddress;
@@ -28,8 +28,13 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   // res.json({email})
 });
 
-//electronics
+//get items
 router.post('/marketplace/products/category/all',marketController.getCategory)
 router.get('/marketplace/products/one/:id',marketController.getItemById)
+
+
+
+// get landing page item
+router.get('/marketplace/landing/products/banners/offers/get',marketController.getLandinpPage)
 
 module.exports = router;

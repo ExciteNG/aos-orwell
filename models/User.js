@@ -7,13 +7,6 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 const userSchema = new mongoose.Schema({
  name:{type:String},
   email: { type: String, index: true,
-    validate:{
-      validator:function(v){
-          return emailRegexVal.test(v)
-      },
-      message:mail => `${mail.value} is not a valid email address !`
-  },
-  required:[true,'Please enter your email address'] ,
    unique:true },
   userType:{
     type:String,
