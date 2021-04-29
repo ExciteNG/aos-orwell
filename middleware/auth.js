@@ -30,7 +30,7 @@ const signUp = async (req, res, next) => {
   // console.log(req.body)
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
-      console.log(doc);
+      // console.log(doc);
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
@@ -383,11 +383,36 @@ const setUpSpringBoard = (req,res,next)=>{
     }
   });
 }
-
-
-
-
-
+const setUpAdmin =async (req,res,next)=>{
+  if(req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN) return res.status(400).json({msg:"Invalid Token"})
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send("No username or password provided.");
+  }
+  // console.log(req.body)
+  User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      console.log(doc);
+      return res.json({ code: 401, msg: "Account exist" });
+    } else {
+      //continue
+      const user = {
+        email: req.body.email,
+        name: 'Excite Africa',
+        userType: "EXMANAF",
+        emailVerified: true,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+         return res.json({ code: 400, mesage: "Failed create account" });
+        
+        }
+      });
+      return  res.json({ code: 201, mesage: "Account Set Successfully." });
+    }
+  });
+}
 
 
 
@@ -484,6 +509,28 @@ const signJWTForSpringBoard = (req, res) => {
   // console.log(token);
   res.json({ token });
 };
+// Excite Admin Login
+const signJWTForExcite = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  if (req.user.userType !== "EXMANAF")
+    return res.status(400).json({ msg: "invalid login" });
+  const user = req.user;
+  const token = JWT.sign(
+    {
+      email: user.email,
+      userType: user.userType,
+    },
+    jwtSecret,
+    {
+      algorithm: jwtAlgorithm,
+      expiresIn: jwtExpiresIn,
+      subject: user._id.toString(),
+    }
+  );
+  // console.log(token);
+  res.json({ token });
+};
 
 //PAGE AUTHORIZATION
 
@@ -538,12 +585,14 @@ module.exports = {
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
+  setUpAdmin,
   signIn: passport.authenticate("local", { session: false}),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,
   signJWTForPartners,
   signJWTForSpringBoard,
+  signJWTForExcite,
   authPageAffiliate,
   authPageMerchant,
   authPagePartner,

@@ -15,7 +15,9 @@ const {
   authPageAffiliate,
   authPagePartner,
   authPageSpringBoard,
-  signUpRefCode
+  signUpRefCode,
+  setUpAdmin,
+  signJWTForExcite
 } = require('../middleware/auth')
 
 const router = express.Router()
@@ -43,6 +45,9 @@ router.post('/auth/partner/sign-up', signUpPartner)
 // Sign up springboard
 router.post('/auth/springboard/set-up', setUpSpringBoard)
 
+// Setup admin
+router.post('/auth/management/set-up', setUpAdmin)
+
 
 
 // Sign in client
@@ -54,6 +59,7 @@ router.post('/auth/login/partners', signIn, signJWTForPartners)
 // Sign in springboard
 router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 //sign in admin
+router.post('/auth/login/admin', signIn, signJWTForExcite)
 
 
 //page authorization
