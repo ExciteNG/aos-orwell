@@ -1,10 +1,4 @@
-/* eslint-disable prettier/prettier */
-
-//define a hhelper mail function
-
-let sendMail = (userName) => {
-    
-    let mail = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -822,47 +816,47 @@ button.es-button {
                                                                                     <td align="center" class="esd-block-text">
                                                                                         <h3 style="color: #6fd20d; font-weight: 400;">WELCOME TO EXCITE</h3>
                                                                                         <p style="color: #6fd20d;"><br></p>
-                                                                                        <p style="text-align: left; color:#000000; font-size: medium;">Dear ${userName},<br><br></p>
+                                                                                        <p style="text-align: left; color:#000000; font-size: medium;">Dear &lt;user-name&gt;,<br></p>
                                                                                         <p style="color: #000000; font-size: medium;">We are excited to have you on our platform. Excite Enterprise deals with SMEs. Our aim is to provide accessible, affordable and effective business solutions that address the needs of Africa's growing businesses.</p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text"><br>Our services include, but not limited to:</td>
+                                                                                    <td align="center" class="esd-block-text"><br><br>
+                                                                                        <p style="color: #000000; font-size:large;">Our services include, but not limited to:</p>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text"><br><strong>Access To Funds:</strong> Get access to funds to grow your business.</td>
+                                                                                    <td align="left" class="esd-block-text">
+                                                                                        <p style="color: #000000; font-size:medium; "><br><strong>Access To Funds:</strong>&nbsp;Get access to funds to grow your business.</p>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text"><br><strong>Automation Tools (Ease of Business):</strong></td>
+                                                                                    <td align="left" class="esd-block-text" bgcolor="#ffffff">
+                                                                                        <p style="color: #000000; font-size:medium"><br><strong>Automation Tools (Ease of Business)</strong></p>
+                                                                                        <ul>
+                                                                                            <li style="color: #000000; font-size:medium">Get your business registered within a week.</li>
+                                                                                            <li style="color: #000000; font-size:medium">Pay your taxes.</li>
+                                                                                            <li style="color: #000000; font-size:medium">All from the comfort of your home.</li>
+                                                                                        </ul>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text">Get your business registered within a week. </td>
+                                                                                    <td align="left" class="esd-block-text">
+                                                                                        <p style="color: #000000; font-size:medium; font-weight:600;">Growth and Expansion Tools</p>
+                                                                                        <ul>
+                                                                                            <li style="color: #000000;font-size:medium">Take advantage of our Excite Kiosk service and get your business place setup in no time</li>
+                                                                                            <li style="color: #000000;font-size:medium">Put your business in front of millions of potential customers with our Banner Advert services.</li>
+                                                                                            <li style="color: #000000;font-size:medium">List your products and services for free.</li>
+                                                                                        </ul>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-text">Pay your taxes. </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text">all from the comfort of your home. </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text"><br>Growth and Expansion Tools </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text">Take advantage of our Excite Kiosk service and get your business place setup in no time. </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text">Put your business in front of millions of potential customers with our Banner Advert services. </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text">List your products and services for free. </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="center" class="esd-block-text"><br>.. And much more ! </td>
+                                                                                    <td align="center" class="esd-block-text"><br><strong>And much more !</strong></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="“left”" class="esd-block-text"><br>
                                                                                         <p style="color:black; font-weight:600;">ONBOARDING</p><br>
-                                                                                        <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href>Video</a><br> To visit the Excite platform directly, kindly click excite link <a href>here</a><br> If you have any questions, kindly reply to this email or reach us on the following contacts:<br> excite phone number<br> excite customer care email<br></p>
+                                                                                        <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href>Video</a><br>To visit the Excite platform directly, kindly click excite link <a href>here</a><br>If you have any questions, kindly reply to this email or reach us on the following contacts:<br>070121533679<br><span>enquiry@exciteafrica.com</span><br></p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -930,7 +924,7 @@ button.es-button {
                                                                                     <td class="esd-block-text es-p15t es-p5b" align="center" bgcolor="#6fd20d">
                                                                                         <p style="color: #ffffff;">© Excite Inc.</p>
                                                                                         <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
-                                                                                        <p style="color: #ffffff;">Company Number: 07012345</p>
+                                                                                        <p style="color: #ffffff;">Company Number: 0701234522</p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
@@ -949,7 +943,7 @@ button.es-button {
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                        <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have visited our site or asked us about regular newsletter. Make sure our messages get to your Inbox (and not your bulk or junk folders). Please add hello@bookkeeping.com to your contacts</p>
+                                                                                        <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as an affiliate.</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -1003,11 +997,4 @@ button.es-button {
         </table>
     </div>
 </body>
-
-</html>`
-
-  return mail
-}
-
-module.exports = sendMail;
-
+</html>
