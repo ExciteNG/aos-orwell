@@ -1,9 +1,5 @@
 const Partners = require('../../models/Partners')
 
-
-
-
-
 const getAllPartners = async (req,res)=>{
     try {
         const allBizProfiles = await Partners.find();

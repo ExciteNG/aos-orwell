@@ -9,5 +9,4 @@ router.get('/all/payments', Controller.getAllPayments);
 //loans
 //profiles
 
-module.exports = router
-
+module.exports = router;
