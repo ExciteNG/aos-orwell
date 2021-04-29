@@ -5,7 +5,7 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 
 const userSchema = new mongoose.Schema({
- name:{type:String},
+ name:{type:String, default:""},
   email: { type: String, index: true,
    unique:true },
   userType:{
