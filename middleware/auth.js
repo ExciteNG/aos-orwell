@@ -46,6 +46,7 @@ const signUp = async (req, res, next) => {
         fullname: req.body.name,
         userType: "EX10AF",
         emailVerified: false,
+        authToken:generateRefNo
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
