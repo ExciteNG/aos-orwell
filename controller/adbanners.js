@@ -1,25 +1,30 @@
 const AdbannerModel = require('../models/adBanner');
+const Profiles = require('./../models/Profiles')
 
-const createAdbanner = (req, res) => {
+
+
+
+// 
+const createAdbanner = async(req, res) => {
   const {email,userType}= req.user;
-  const adbannerModel = new AdbannerModel({
+  console.log(email)
+  const userProfile = await Profiles.findOne({email:email})
+  const userStore = userProfile.storeInfo
+  const adbanner = new AdbannerModel({
   categories: req.body.categories,
   purpose: req.body.purpose,
   banner: req.body.banner,
-  approval: false
+  approval: false,
+  storeInfo:userStore,
+  email:email
   })
-  adbannerModel.save()
-    .then((record) => {
-      res.status(201).json({
-        message: 'Banner posted successful!ly'
-      });
-    })
-    .catch((err) => {
-      res.status(400).json({
-        message: 'Oops! Something went wrong.',
-        err
-      });
-    });
+  console.log(req.body)
+  // adbanner.save()
+  const upd = await adbanner.save()
+  if(upd) return res.json({
+        message: 'Banner posted successful!ly',
+        code:201
+      })
 };
 
 const updateAdbanner = (req, res) => {

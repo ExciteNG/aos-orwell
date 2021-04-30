@@ -858,7 +858,7 @@ const welcomeMail = (userName) =>{
                                                                                     <tr>
                                                                                         <td align="“left”" class="esd-block-text"><br>
                                                                                             <p style="color:black; font-weight:600;">ONBOARDING</p><br>
-                                                                                            <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href>Video</a><br>To visit the Excite platform directly, kindly click excite link <a href>here</a><br>If you have any questions, kindly reply to this email or reach us on the following contacts:<br>070121533679<br><span>enquiry@exciteafrica.com</span><br></p>
+                                                                                            <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href="https://youtu.be/E-QWZ-nyJLU">Video</a><br>To visit the Excite platform directly, kindly click excite link <a href>here</a><br>If you have any questions, kindly reply to this email or reach us on the following contacts:<br>070121533679<br><span>enquiry@exciteafrica.com</span><br></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>

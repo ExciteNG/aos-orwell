@@ -27,7 +27,7 @@ const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
    return  res.send({code:400,error:"No username or password provided."});
   }
-  // console.log(req.body)
+  console.log(req.body)
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
@@ -43,10 +43,12 @@ const signUp = async (req, res, next) => {
 
       const user = {
         email: req.body.email,
-        fullname: req.body.name,
+        fullname: req.body.fullname,
+        username:req.body.username,
+        name: req.body.fullname,
         userType: "EX10AF",
         emailVerified: false,
-        authToken:generateRefNo
+        verifyToken:generateRefNo
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -68,7 +70,6 @@ const signUp = async (req, res, next) => {
         }
       });
       // req.user = userInstance;
-      res.json({ code: 201, mesage: "Account created" });
       // next();
             //send mail
             nodeoutlook.sendEmail({
@@ -77,15 +78,17 @@ const signUp = async (req, res, next) => {
                   pass: "ExciteManagement123$"
               },
               from: 'enquiry@exciteafrica.com',
-              to: email,
+              to: user.email,
               subject: 'Verify Your Account',
-              html: verifyEmail(fullname,email,generateRefNo),
-              text:verifyEmail(fullname,email,generateRefNo),
+              html: verifyEmail(user.username,user.email,user.verifyToken),
+              text:verifyEmail(user.username,user.email,user.verifyToken),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => console.log(i),
               secure:false
           });
+      res.json({ code: 201, mesage: "Account created" });
+
     }
   });
 };
@@ -121,7 +124,7 @@ const signUpPartner = (req, res, next) => {
         break;
     }
   }
-console.log(req.body)
+// console.log(req.body)
   if (!email || !password) {
     res.status(400).send("No username or password provided.");
   }
