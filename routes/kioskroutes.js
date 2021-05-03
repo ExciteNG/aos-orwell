@@ -20,7 +20,9 @@ router.get('/kiosk-all',async (req, res) => {
     }
 })
 
-// get a specific deal by id
+
+
+// get a specific kiosks by id
 router.get('/kiosk/:id', async (req,res)=>{
 
     const id = req.params.id
@@ -37,7 +39,7 @@ router.get('/kiosk/:id', async (req,res)=>{
     }
 })
 
-// update a deal
+// update a kiosk
 router.put('/kiosk-update/:id', async (req,res) =>{
 
     // let hex = /[0-9A-Fa-f]{6}/g;
@@ -45,9 +47,9 @@ router.put('/kiosk-update/:id', async (req,res) =>{
     const id = req.params.id
     
     try {
-        let kioskupdate = await Kiosk.findById({_id:id}).lean()
+        let kioskupdates = await Kiosk.findById({_id:id}).lean()
 
-    if (!kioskupdate){
+    if (!kioskupdates){
         res.json({status:404,message:"not found"})
    }
     else {
@@ -67,7 +69,7 @@ router.put('/kiosk-update/:id', async (req,res) =>{
     }
 })
 
-//delete a deal from the database
+//delete a kiosk from the database
 router.delete('/delete-kiosk/:id', async (req,res) => {
 
     const id = req.params.id
@@ -88,27 +90,7 @@ router.delete('/delete-kiosk/:id', async (req,res) => {
     }
 })
 
-// delete all records
-router.delete('/delete-kiosk/all', async (req,res) => {
-
-    const id = req.params.id
-    
-    try {
-        let kiosks = await Kiosk.find().lean()
-        if (kiosks.length===0) {
-          return res.send({status:404,message:"kiosks not found"})
-        } else {
-        await kiosks.deleteMany()
-       return  res.status(200).send({message:"wipedown of all kiosks complete and successful !"})
-    }
-        
-    } catch (err) {
-        console.error(err)
-        return res.send({status:500,error:err.message}) 
-    }
-})
-
-//post a new deal
+//post a new kiosk
 // add a new record
 router.post('/new-kiosk', async (req,res) =>{
     const id = req.params.id
@@ -119,6 +101,24 @@ router.post('/new-kiosk', async (req,res) =>{
     } catch (err) {
         console.error(err)
         res.send({status:500,message:err.message})
+    }
+})
+
+// delete all kiosks
+router.delete('/delete-kiosk/all', async (req,res) => {
+    
+    try {
+        let kiosks = await Kiosk.find().lean()
+        if (kiosks.length===0) {
+          return res.send({status:404,message:"kiosks not found"})
+        } else {
+        await kiosks.deleteMany()
+        return res.status(200).send({message:"wipedown of all kiosks complete and successful !"})
+    }
+        
+    } catch (err) {
+        console.error(err)
+        return res.send({status:500,error:err.message}) 
     }
 })
 
