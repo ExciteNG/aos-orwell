@@ -38,7 +38,7 @@ router.get('/kiosk/:id', async (req,res)=>{
 })
 
 // update a deal
-router.put('/kiosk-update/:id',upload, async (req,res) =>{
+router.put('/kiosk-update/:id', async (req,res) =>{
 
     // let hex = /[0-9A-Fa-f]{6}/g;
     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
