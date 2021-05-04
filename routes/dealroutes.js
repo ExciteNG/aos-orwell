@@ -69,7 +69,7 @@ router.put('/deal/:id', async (req,res) =>{
     }
 })
 
-//delete a story from the database
+//delete a deal from the database
 router.delete('/delete/:id', async (req,res) => {
 
     const id = req.params.id
