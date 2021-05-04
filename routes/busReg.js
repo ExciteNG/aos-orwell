@@ -6,6 +6,10 @@ const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
+
+
+
+// 
 const createLimiter = rateLimit({
     windowMs: 14*24*60 * 60 * 1000, // two weeks window
     max: 1, // start blocking after making a  request
