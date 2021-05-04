@@ -21,15 +21,15 @@ router.post('/confirmation/email', async (req, res) => {
 
     nodeoutlook.sendEmail({
       auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$"
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS
       },
-      from: 'enquiry@exciteafrica.com',
+      from: process.env.EXCITE_ENQUIRY_USER,
       to: account.email,
       subject: `Welcome ${account.name}`,
       html: WelcomeMail(account.name),
       text:WelcomeMail(account.name),
-      replyTo: 'enquiry@exciteafrica.com',
+      replyTo: process.env.EXCITE_ENQUIRY_USER,
       onError: (e) => console.log(e),
       onSuccess: (i) => console.log(i),
       secure:false

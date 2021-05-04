@@ -1,7 +1,5 @@
-const emailHost = require('./email_host')
-const welcomeMail = (userName) =>{
-
-    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+const emailAcknowledge = () => {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
     <head>
@@ -11,22 +9,8 @@ const welcomeMail = (userName) =>{
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="telephone=no" name="format-detection">
         <title></title>
-        <!--[if (mso 16)]>
-        <style type="text/css">
-        a {text-decoration: none;}
-        </style>
-        <![endif]-->
-        <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
-        <!--[if gte mso 9]>
-    <xml>
-        <o:OfficeDocumentSettings>
-        <o:AllowPNG></o:AllowPNG>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-    </xml>
-    <![endif]-->
-    <style>
-        /* CONFIG STYLES Please do not delete and edit CSS styles below */
+        <style>
+            /* CONFIG STYLES Please do not delete and edit CSS styles below */
     /* IMPORTANT THIS STYLES MUST BE ON FINAL EMAIL */
     #outlook a {
         padding: 0;
@@ -75,8 +59,8 @@ const welcomeMail = (userName) =>{
     }
     
     /*
-    END OF IMPORTANT
-    */
+        END OF IMPORTANT
+        */
     s {
         text-decoration: line-through;
     }
@@ -754,9 +738,21 @@ const welcomeMail = (userName) =>{
             object-fit: cover;
         }
     }
-    
-    /* END RESPONSIVE STYLES */
-    </style>
+        </style>
+        <!--[if (mso 16)]>
+            <style type="text/css">
+            a {text-decoration: none;}
+            </style>
+            <![endif]-->
+        <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
+        <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG></o:AllowPNG>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
     </head>
     
     <body>
@@ -816,50 +812,10 @@ const welcomeMail = (userName) =>{
                                                                             <table cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400;">WELCOME TO EXCITE</h3>
-                                                                                            <p style="color: #6fd20d;"><br></p>
-                                                                                            <p style="text-align: left; color:#000000; font-size: medium;">Dear ${userName},<br></p>
-                                                                                            <p style="color: #000000; font-size: medium;">We are excited to have you on our platform. Excite Enterprise deals with SMEs. Our aim is to provide accessible, affordable and effective business solutions that address the needs of Africa's growing businesses.</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="center" class="esd-block-text"><br><br>
-                                                                                            <p style="color: #000000; font-size:large;">Our services include, but not limited to:</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="left" class="esd-block-text">
-                                                                                            <p style="color: #000000; font-size:medium; "><br><strong>Access To Funds:</strong>&nbsp;Get access to funds to grow your business.</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="left" class="esd-block-text" bgcolor="#ffffff">
-                                                                                            <p style="color: #000000; font-size:medium"><br><strong>Automation Tools (Ease of Business)</strong></p>
-                                                                                            <ul>
-                                                                                                <li style="color: #000000; font-size:medium">Get your business registered within a week.</li>
-                                                                                                <li style="color: #000000; font-size:medium">Pay your taxes.</li>
-                                                                                                <li style="color: #000000; font-size:medium">All from the comfort of your home.</li>
-                                                                                            </ul>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="left" class="esd-block-text">
-                                                                                            <p style="color: #000000; font-size:medium; font-weight:600;">Growth and Expansion Tools</p>
-                                                                                            <ul>
-                                                                                                <li style="color: #000000;font-size:medium">Take advantage of our Excite Kiosk service and get your business place setup in no time</li>
-                                                                                                <li style="color: #000000;font-size:medium">Put your business in front of millions of potential customers with our Banner Advert services.</li>
-                                                                                                <li style="color: #000000;font-size:medium">List your products and services for free.</li>
-                                                                                            </ul>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="center" class="esd-block-text"><br><strong>And much more !</strong></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td align="“left”" class="esd-block-text"><br>
-                                                                                            <p style="color:black; font-weight:600;">ONBOARDING</p><br>
-                                                                                            <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href="https://youtu.be/E-QWZ-nyJLU">Video</a><br>To visit the Excite platform directly, kindly click excite link <a href>here</a><br>If you have any questions, kindly reply to this email or reach us on the following contacts:<br>070121533679<br><span>enquiry@exciteafrica.com</span><br></p>
+                                                                                        <td align="center" class="esd-block-text" bgcolor="#ffffff">
+                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">ACKNOWLEDGEMENT EMAIL</h3>
+                                                                                            <p style="color: #6fd20d; line-height: 200%;"><br></p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear Prospective Partner ,<br>&nbsp; &nbsp; &nbsp;&nbsp;Your&nbsp;application has been received. Your certifications will be reviewed and our team will get back to you in due time.<br><br>Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -946,7 +902,7 @@ const welcomeMail = (userName) =>{
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as an affiliate.</p>
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as a&nbsp;partner.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -1000,7 +956,8 @@ const welcomeMail = (userName) =>{
             </table>
         </div>
     </body>
-    </html>`
-} 
+    
+    </html>`;
+};
 
-module.exports = welcomeMail;
+module.exports = emailAcknowledge;
