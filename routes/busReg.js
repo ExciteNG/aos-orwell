@@ -4,6 +4,7 @@ const busRegister = require('../models/businessreg')
 //express-rate-limit middleware
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+const { requireJWT } = require('../middleware/auth');
 router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
 
@@ -19,14 +20,13 @@ const createLimiter = rateLimit({
 
 
 //get all businesses registered by a user
-router.get('/all', async (req,res) => {
+router.get('/all',requireJWT, async (req,res) => {
+    const {email} = req.user;
     try {
-        const register =  await busRegister.find()
+        const register =  await busRegister.findOne({email:email})
         .sort({createdAt: -1 })
-    .lean()
-    if (register.length === 0){
-        return res.json({status:404,message:"no businesses registered yet"})
-    }
+    .lean();
+    if(!register) return res.status(200).json({records:[]})
    return res.status(200).json({"records":register})
     }
     catch (err){

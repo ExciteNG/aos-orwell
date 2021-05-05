@@ -93,7 +93,6 @@ router.delete('/delete-kiosk/:id', async (req,res) => {
 //post a new kiosk
 // add a new record
 router.post('/new-kiosk', requireJWT, async (req,res) =>{
-    const id = req.params.id
     try {
         // req.body.user = req.user.id
         await Kiosk.create(req.body)
