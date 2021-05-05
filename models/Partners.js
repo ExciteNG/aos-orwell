@@ -40,7 +40,7 @@ const partnerSchema = new mongoose.Schema({
   },
   regStatus: {
     type: Object,
-    default: { isApproved: false, dateApproved: "", dateRegistered: "" },
+    default: { isApproved: "pending", dateApproved: "", dateRegistered: "" },
   },
   partnerCode:{
     type:String,

@@ -6,7 +6,7 @@ const router = express.Router();
 const taxCtrl = require('../controller/tax');
 
 
-// AdBanner ROUTES
+// Tax ROUTES
 // post taxs
 router.post('/tax/new', taxCtrl.createTax);
 
