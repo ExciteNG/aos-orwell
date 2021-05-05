@@ -816,7 +816,7 @@ const businessDecline = () => {
                                                                                         <td align="center" class="esd-block-text" bgcolor="#ffffff">
                                                                                             <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">BUSINESS REGISTRATION STATUS</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>We are sorry to inform you that your business registration on the excite platform was not successful.&nbsp;<br>We strongly encourage you to review your entities carefully and try again.<br><br>Best Regards,<br>The excite team</p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>We are sorry to inform you that your business registration on the excite platform was not successful because your proposed business name is not currently available.&nbsp;<br>We strongly encourage you to review your entities carefully and try again.<br><br>Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
