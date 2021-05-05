@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
 const Kiosk = require('../models/kiosk');
-
+const {requireJWT} =require("./../middleware/auth")
 //crud routes for the  kiosk
 router.get('/kiosk-all',async (req, res) => {
 
@@ -92,7 +92,7 @@ router.delete('/delete-kiosk/:id', async (req,res) => {
 
 //post a new kiosk
 // add a new record
-router.post('/new-kiosk', async (req,res) =>{
+router.post('/new-kiosk', requireJWT, async (req,res) =>{
     const id = req.params.id
     try {
         // req.body.user = req.user.id
