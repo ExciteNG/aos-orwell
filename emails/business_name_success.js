@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-const taxDecline = () => {
+const businessNameSuccess = () => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -814,9 +814,9 @@ const taxDecline = () => {
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td align="center" class="esd-block-text" bgcolor="#ffffff">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">TAX PAYMENT STATUS</h3>
+                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">BUSINESS REGISTRATION STATUS</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>We regret to inform you that the payment for your tax was not successful.<br>Please kindly reviews your entries and try again.<br><br>Best Regards,<br>The excite team</p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>Congratulations !<br>We are glad to inform you that your&nbsp; preferred business name is available !<br>Please login to your dashboard and proceed with your business registration.<br><br>Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -888,6 +888,7 @@ const taxDecline = () => {
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
+                                                                                    
                                                                                     <td class="esd-block-social es-p10t es-p20b" align="center" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d">
                                                                                     <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
                                                                                         <tbody>
@@ -904,7 +905,7 @@ const taxDecline = () => {
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you attempted to pay&nbsp;your tax on the excite enterprise platform.</p>
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you attempted to register your business on the excite enterprise platform.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -962,4 +963,5 @@ const taxDecline = () => {
     </html>`
 }
 
-module.exports = taxDecline;
+
+module.exports = businessNameSuccess;

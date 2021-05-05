@@ -91,9 +91,7 @@ router.delete('/delete/:id', async (req,res) => {
 })
 
 // delete all records
-router.delete('/delete/all', async (req,res) => {
-
-    const id = req.params.id
+router.delete('/delete', async (req,res) => {
     
     try {
         let deals = await Deals.find().lean()
