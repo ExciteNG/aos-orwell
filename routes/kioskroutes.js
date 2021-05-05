@@ -105,15 +105,15 @@ router.post('/new-kiosk', async (req,res) =>{
 })
 
 // delete all kiosks
-router.delete('/delete-kiosk/all', async (req,res) => {
+router.delete('/delete-all-kiosk', async (req,res) => {
     
     try {
-        let kiosks = await Kiosk.find().lean()
-        if (kiosks.length===0) {
+        let kiosk = Kiosk.find().lean()
+        if (kiosk.length===0) {
           return res.send({status:404,message:"kiosks not found"})
         } else {
-        await kiosks.deleteMany()
-        return res.status(200).send({message:"wipedown of all kiosks complete and successful !"})
+        await kiosk.remove({})
+        return res.send({status:200,message:"wipedown of all kiosks complete and successful !"})
     }
         
     } catch (err) {
