@@ -24,6 +24,7 @@ app.use(morgan('short'))
 // Routes
 // define further routes
 app.use('/book-keeping', require('./routes/book'));
+app.use('/kiosk',require('./routes/kioskroutes'));
 app.use('/deals', require('./routes/dealroutes'));
 app.use('/business', require('./routes/busReg'));
 app.use('/loans',require('./routes/loan'));
@@ -33,7 +34,6 @@ app.use('/excite/business', require('./routes/excite/business'));
 app.use('/excite/payments', require('./routes/excite/payments'));
 app.use('/excite/partners', require('./routes/excite/partners'));
 app.use('/excite/banners', require('./routes/excite/banners'));
-app.use('/kiosk',require('./routes/kioskroutes'));
 app.use('/partners',require('./routes/partners/partners'));
 
 app.use([
