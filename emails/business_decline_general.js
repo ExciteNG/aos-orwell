@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-const businessDecline = () => {
+const businessDeclineGeneral = () => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -816,7 +816,7 @@ const businessDecline = () => {
                                                                                         <td align="center" class="esd-block-text" bgcolor="#ffffff">
                                                                                             <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">BUSINESS REGISTRATION STATUS</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>We are sorry to inform you that your business registration on the excite platform was not successful because your proposed business name is not currently available.&nbsp;<br>We strongly encourage you to review your entities carefully and try again.<br><br>Best Regards,<br>The excite team</p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear User,<br>We are sorry to inform you that your business registration on the excite platform was not successful.&nbsp;<br>We strongly encourage you to review your entities carefully and try again.<br><br>Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -961,4 +961,4 @@ const businessDecline = () => {
     </html>`
 }
 
-module.exports = businessDecline;
+module.exports = businessDeclineGeneral;
