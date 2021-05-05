@@ -9,8 +9,6 @@ const kioskSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required:true,
-        unique:true
     },
     phoneNumber:{
         type:String,
@@ -46,6 +44,10 @@ const kioskSchema = mongoose.Schema({
     },
     price:{
         type:String
+    },
+    paymentType:{
+        type:String
+
     }
 
 })

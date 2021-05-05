@@ -12,5 +12,8 @@ router.get('/business/check-names/get-all-applicants',requireJWT,Controller.getC
 
 router.get('/business/business-names-reg/get-all-applicants',requireJWT,Controller.getBusinessNameApplicants)
 
+// Approved name reservation
+router.put('/business/check-names-reg/approve-applicants',requireJWT,Controller.approvedReservation)
+
 
 module.exports = router
