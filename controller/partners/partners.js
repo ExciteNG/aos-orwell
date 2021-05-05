@@ -4,6 +4,7 @@ const CheckName = require("./../../models/Checkname");
 const BusinessReg = require("./../../models/businessreg");
 var nodeoutlook = require("nodejs-nodemailer-outlook");
 const rejectCheckName = require("./../../emails/business_decline")
+const successCheckName = require("./../../emails/business_name_success")
 
 
 const myProfile = async (req, res) => {
@@ -81,6 +82,22 @@ const approvedReservation = async (req, res) => {
   }else{
     reservations.mostPreferred = update.mostPreferred;
     reservations.morePreferred = update.morePreferred;
+     //send mail
+     nodeoutlook.sendEmail({
+      auth: {
+        user: "enquiry@exciteafrica.com",
+        pass: "ExciteManagement123$",
+      },
+      from: "enquiry@exciteafrica.com",
+      to: reservations.email,
+      subject: "Welcome",
+      html: successCheckName(),
+      text: successCheckName(),
+      replyTo: "enquiry@exciteafrica.com",
+      onError: (e) => console.log(e),
+      onSuccess: (i) => console.log(i),
+      secure: false,
+    });
   }
   reservations.markModified("mostPreferred");
   reservations.markModified("morePreferred");
