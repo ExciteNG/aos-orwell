@@ -1,6 +1,7 @@
 const Products = require('./../models/Products');
 const Profiles = require('../models/Profiles');
 const Banners = require('./../models/adBanner');
+const Deals = require('./../models/deals')
 const {PostToSocialMedia} = require('./../social/social')
 
 const getCategory = async (req,res)=>{
@@ -15,6 +16,13 @@ const getItemById = async (req,res)=>{
     // console.log(id)
     // 
     const item = await Products.findOne({_id:id})
+    res.json({code:201,item})
+}
+const getOfferById = async (req,res)=>{
+    const id = req.params.id
+    // console.log(id)
+    // 
+    const item = await Deals.findOne({_id:id})
     res.json({code:201,item})
 }
 
@@ -113,11 +121,12 @@ const addVehicle = async (req,res)=>{
        return res.json({code:201,msg:"posted to social",added:true});
 }
 
-const getLandinpPage =async (rer,res)=>{
+const getLandinpPage =async (req,res)=>{
 const banners = await Banners.find();
+const deals = await Deals.find()
 const approvedBanners = banners.filter((banner=>banner.approval));
 const products = await Products.find()
-res.json({banner:approvedBanners,products:products})
+res.json({banner:approvedBanners,products:products,deals:deals})
 
 }
 
@@ -131,5 +140,6 @@ module.exports={
     addPhoneTablet,
     addHome,
     addVehicle,
+    getOfferById,
     getLandinpPage
 }

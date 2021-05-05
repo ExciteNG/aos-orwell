@@ -31,7 +31,7 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
 //get items
 router.post('/marketplace/products/category/all',marketController.getCategory)
 router.get('/marketplace/products/one/:id',marketController.getItemById)
-
+router.get('/marketplace/products/offers/get/:id',marketController.getOfferById)
 
 
 // get landing page item

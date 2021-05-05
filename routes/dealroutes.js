@@ -1,26 +1,9 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
 const Deals = require('../models/deals');
-const multer = require('multer');
-const AWS = require('aws-sdk');
-const { v4: uuidv4 } = require('uuid');
+const Controller = require('../controller/deals')
+const {requireJWT} = require('./../middleware/auth')
 
-
-const s3 = new AWS.S3({
-    credentials: {  
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region:process.env.AWS_S3_REGION_NAME
-    }
-})
-
-const storage = multer.memoryStorage({
-    destination: function(req, file, callback) {
-        callback(null, '')
-    }
-})
-
-const upload = multer({storage}).single('image')
 
 router.get('/all',async (req, res) => {
 
@@ -57,7 +40,7 @@ router.get('/deal/:id', async (req,res)=>{
 })
 
 // update a deal
-router.put('/deal/:id',upload, async (req,res) =>{
+router.put('/deal/:id', async (req,res) =>{
 
     // let hex = /[0-9A-Fa-f]{6}/g;
     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
@@ -129,17 +112,7 @@ router.delete('/delete/all', async (req,res) => {
 
 //post a new deal
 // add a new record
-router.post('/new', async (req,res) =>{
-    const id = req.params.id
-    try {
-        // req.body.user = req.user.id
-        await Deals.create(req.body)
-        return res.status(201).send({message:"success"})
-    } catch (err) {
-        console.error(err)
-        res.send({status:500,message:err.message})
-    }
-})
+router.post('/promotions/merchants/new',requireJWT, Controller.addDeals)
 
 
 
