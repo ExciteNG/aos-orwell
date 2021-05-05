@@ -2,6 +2,9 @@ const Partners = require("./../../models/Partners");
 const Tax = require("./../../models/tax");
 const CheckName = require("./../../models/Checkname");
 const BusinessReg = require("./../../models/businessreg");
+var nodeoutlook = require("nodejs-nodemailer-outlook");
+const rejectCheckName = require("./../../emails/business_decline")
+
 
 const myProfile = async (req, res) => {
   const { email } = req.user;
@@ -59,6 +62,22 @@ const approvedReservation = async (req, res) => {
   if(status==="Not Available"){
     reservations.mostPreferred.status = false;
     reservations.morePreferred.status = false;
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: "enquiry@exciteafrica.com",
+          pass: "ExciteManagement123$",
+        },
+        from: "enquiry@exciteafrica.com",
+        to: reservations.email,
+        subject: "Welcome",
+        html: rejectCheckName(),
+        text: rejectCheckName(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
   }else{
     reservations.mostPreferred = update.mostPreferred;
     reservations.morePreferred = update.morePreferred;
@@ -69,7 +88,7 @@ const approvedReservation = async (req, res) => {
   // reservations.morePreferred = update.morePreferred;
   reservations.status = status;
   const updated = await reservations.save();
-  res.json({ code: 201, reservations: updated });
+  return res.json({ code: 201, reservations: updated });
 };
 const getBusinessNameApplicants = async (req, res) => {
   const { email } = req.user;
