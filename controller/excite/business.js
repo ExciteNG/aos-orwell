@@ -2,8 +2,6 @@ const CheckNames = require('./../../models/Checkname')
 const BusinessReg = require('./../../models/businessreg')
 
 
-
-
 const getAllNameReservations = async (req,res)=>{
     try {
         const nameReserve = await CheckNames.find();
@@ -21,7 +19,6 @@ const getAllBusinessNameRegistrations =async (req,res)=>{
         res.status(400).json({message: 'Oops! Something went wrong!'})
       }
 }
-
 
 
 module.exports = {

@@ -3,10 +3,10 @@ const router = require('express').Router();
 const checkName = require('../models/Checkname');
 const {requireJWT} = require('../middleware/auth')
 
-router.get('/all-names',async (req, res) => {
-
+router.get('/all-names',requireJWT,async (req, res) => {
+const {email} = req.user
     try {
-        const check =  await checkName.find()
+        const check =  await checkName.find({email:email})
         .sort({createdAt: 'asc' })
     .lean()
    return res.status(200).json({code:400,"reservations":check})
@@ -102,9 +102,11 @@ router.delete('/delete/all-names', async (req,res) => {
 // add a new record
 router.post('/new/name' , requireJWT, async (req,res) =>{
   // console.log(req.body)
-  const {email} = req.user
+  const {email} = req.user;
+  const mostPreferred = {mostPreferred:req.body.mostPreferred, status: false};
+  const morePreferred = {morePreferred:req.body.morePreferred, status: false};
     try {
-        await checkName.create({...req.body,email})
+        await checkName.create({mostPreferred,morePreferred,email})
         return res.send({status:201,message:"success"})
     } catch (err) {
         console.error(err)

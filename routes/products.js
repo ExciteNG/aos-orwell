@@ -4,8 +4,6 @@ const express = require('express')
 const { requireJWT } = require('../middleware/auth')
 const {PostToSocialMedia} = require('./../social/social')
 const router = express.Router()
-const Products = require('../models/Products')
-const Profiles = require('../models/Partners')
 const { addElectronics,addFashion ,addPhoneTablet,addHome,addVehicle} = require('../controller/market')
 
 

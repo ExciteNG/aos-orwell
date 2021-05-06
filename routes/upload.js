@@ -90,7 +90,7 @@ router.post('/upload/products',upload, async (req,res)=>{
  };
  s3.upload(params, (error, data) => {
    if (error) {
-     res.status(500).send(error);
+     return res.status(500).send(error);
    }
    res.status(200).json({code:201,data});
  });
@@ -109,7 +109,7 @@ router.post('/upload/affiliates',upload, async (req,res)=>{
  };
  s3.upload(params, (error, data) => {
    if (error) {
-     res.status(500).send(error);
+     return res.status(500).send(error);
    }
    res.status(200).json({code:201,data});
  });
@@ -127,7 +127,7 @@ router.post('/upload/partners',upload, async (req,res)=>{
  };
  s3.upload(params, (error, data) => {
    if (error) {
-     res.status(500).send(error);
+     return res.status(500).send(error);
    }
    res.status(200).json({code:201,data});
  });
