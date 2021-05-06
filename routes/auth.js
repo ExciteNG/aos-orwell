@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable spaced-comment */
 const express = require('express')
 const {
@@ -17,6 +18,7 @@ const {
   authPageSpringBoard,
   signUpRefCode,
   setUpAdmin,
+  passwordReset,
   signJWTForExcite
 } = require('../middleware/auth')
 
@@ -47,6 +49,7 @@ router.post('/auth/springboard/set-up', setUpSpringBoard)
 
 // Setup admin
 router.post('/auth/management/set-up', setUpAdmin)
+router.post('/reset-password',passwordReset)
 
 
 

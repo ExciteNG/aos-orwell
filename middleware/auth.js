@@ -56,7 +56,6 @@ const signUp = async (req, res, next) => {
         if (error) {
           // next(error);
           res.json({ code: 401, mesage: "Failed to create account" });
-
           return;
         }
       });
@@ -601,6 +600,40 @@ passport.use(
   )
 );
 
+//write a reset password middleware
+// const passwordResetMiddleware = (req,res,next) => {
+//   User.findOne({email:req.body.email}, (err,doc)=>{
+//     if (err){
+//       return res.json({code:401,message:"You are unauthorized to view this resource"})
+//     }else{
+//       console.log(doc)
+//     }
+//   })
+//   next();
+// }
+
+//reset a user password
+const passwordReset = (req,res) => {
+  //create a lookup to verify user
+  User.findOne({email:req.body.email},(err,doc)=>{
+    if (err){
+      return res.json({code:401,message:"You are unauthorized to view this resource"})
+    }
+  })
+  let userTypeList = ["EX10AF","EX20AF","EX50AF","EXSBAF"];
+  if (!req.user.userType.includes(userTypeList)){
+    return res.json({code:401,message:"You are unauthorized to view this resource"})
+  }
+  passport.setPassword(req.body.password,function(err,data){
+    if (err){
+      console.error(err)
+    }else{
+      console.log(data)
+    }
+  })
+
+}
+
 module.exports = {
   initialize: passport.initialize(),
   signUp,
@@ -616,6 +649,7 @@ module.exports = {
   signJWTForPartners,
   signJWTForSpringBoard,
   signJWTForExcite,
+  passwordReset,
   authPageAffiliate,
   authPageMerchant,
   authPagePartner,
