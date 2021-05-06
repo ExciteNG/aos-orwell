@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Records = require('../models/bookkeeping');
-const Profiles = require('../models/Partners')
+const Profiles = require('../models/Profiles')
 const bodyParser = require('body-parser');
 const {requireJWT} = require('../middleware/auth')
 router.use(bodyParser.urlencoded({extended:true}));
