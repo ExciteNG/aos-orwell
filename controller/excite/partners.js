@@ -1,5 +1,6 @@
 const Partners = require('../../models/Partners')
-
+const rejectPartner = require('./../../emails/partner_decline')
+const successPartner = require('./../../emails/partner_success')
 // update Partner approval
 const updatePartner = async (req, res) => {
   try {
@@ -10,6 +11,41 @@ const updatePartner = async (req, res) => {
     partner.regStatus=regStatus;
     partner.markModified("regStatus");
     await partner.save()
+    if(req.body.isApproved==="rejected"){
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: "enquiry@exciteafrica.com",
+          pass: "ExciteManagement123$",
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "Notification",
+        html: rejectPartner(),
+        text: rejectPartner(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+    }else{
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: "enquiry@exciteafrica.com",
+          pass: "ExciteManagement123$",
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "Notification",
+        html: successPartner(),
+        text: successPartner(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+    }
     return res.json({message:"updated successful"})
   } catch (e) {
     res.json({
