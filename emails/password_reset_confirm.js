@@ -1,4 +1,5 @@
-const partnerDecline = () => {
+/* eslint-disable prettier/prettier */
+const passwordResetConfirmation = (email) => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -59,8 +60,8 @@ const partnerDecline = () => {
     }
     
     /*
-        END OF IMPORTANT
-        */
+    END OF IMPORTANT
+    */
     s {
         text-decoration: line-through;
     }
@@ -738,21 +739,23 @@ const partnerDecline = () => {
             object-fit: cover;
         }
     }
+    
+    /* END RESPONSIVE STYLES */
         </style>
         <!--[if (mso 16)]>
-            <style type="text/css">
-            a {text-decoration: none;}
-            </style>
-            <![endif]-->
+        <style type="text/css">
+        a {text-decoration: none;}
+        </style>
+        <![endif]-->
         <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
         <!--[if gte mso 9]>
-        <xml>
-            <o:OfficeDocumentSettings>
-            <o:AllowPNG></o:AllowPNG>
-            <o:PixelsPerInch>96</o:PixelsPerInch>
-            </o:OfficeDocumentSettings>
-        </xml>
-        <![endif]-->
+    <xml>
+        <o:OfficeDocumentSettings>
+        <o:AllowPNG></o:AllowPNG>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
     </head>
     
     <body>
@@ -812,10 +815,23 @@ const partnerDecline = () => {
                                                                             <table cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#ffffff">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">NOTIFICATION ON PARTNER APPLICATION</h3>
-                                                                                            <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear Sir/Ma,<br>&nbsp;Thank you for taking your&nbsp; time to go through our&nbsp; partnership application. We appreciate your interest in the company and the partnership.<br>&nbsp;We are writing to inform you that we will not be accepting your application at this time.<br>You can kindly review your application<strong>&nbsp;</strong>and revert to support@exciteafrica.com.<br>we await your revert<br><br>Best Regards,<br>The excite team</p>
+                                                                                        <td align="center" class="esd-block-text">
+                                                                                            <h3 style="color: #6fd20d; font-weight:540; font-size:xx-large">Your Password Has Been Changed</h3>
+                                                                                            <p style="color: #000000;"><br></p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium;">Dear User,<br><br></p>
+                                                                                            <p style="color: #000000; font-size: medium;">&nbsp;&nbsp;This&nbsp;is&nbsp;a&nbsp;confirmation&nbsp;that&nbsp;the&nbsp;password&nbsp;for&nbsp;your&nbsp;account&nbsp; ${email} has&nbsp;just&nbsp;been&nbsp;changed</p>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td align="left" class="esd-block-text" bgcolor="#ffffff">
+                                                                                            <p style="color: #000000; line-height: 200%; font-size:medium;"><br></p>
+                                                                                            <p style="color: #000000; line-height: 100%; font-size:medium;">If you have any questions, just reply to this email, we are always happy to help out.<br><br><br><br></p>
+                                                                                            <p style="color: #000000; line-height: 100%; font-size:medium;">Cheers,<br>The Excite Team<br><br></p>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td align="center" class="esd-block-text es-p5" bgcolor="#f5f2f6" esd-links-color="#000"><br>
+                                                                                            <p style="color: black; font-weight: 600;">Need More Help?<br><a href style="color: #000000;">We are here,ready to talk</a></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -863,7 +879,7 @@ const partnerDecline = () => {
                             <table cellpadding="0" cellspacing="0" class="es-footer" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" esd-custom-block-id="3511" align="center" bgcolor="#6fd20d" style="background-color: #6fd20d;">
+                                        <td class="esd-stripe" esd-custom-block-id="3511" align="center" bgcolor="#ffffff" style="background-color: #ffffff;">
                                             <table class="es-footer-body" width="600" cellspacing="0" cellpadding="0" align="center" style="background-color: #000000;" bgcolor="#000">
                                                 <tbody>
                                                     <tr>
@@ -875,42 +891,34 @@ const partnerDecline = () => {
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#6fd20d">
-                                                                                            <p style="color: #ffffff;"><br><br>This email was sent by Excite Africa.</p>
+                                                                                        <td align="center" class="esd-block-text">
+                                                                                            <p style="color: #ffffff;">You received this email because you just&nbsp; requested to reset your account on the excite enterprise platform</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text es-p15t es-p5b" align="center" bgcolor="#6fd20d">
                                                                                             <p style="color: #ffffff;">© Excite Inc.</p>
                                                                                             <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
-                                                                                            <p style="color: #ffffff;">Company Number: 0701234522</p>
+                                                                                            <p style="color: #ffffff;">Company Number: 07012345<br>Company Email:enquiry@exciteafrica.com</p>
                                                                                         </td>
                                                                                     </tr>
-
                                                                                     <tr>
-                                                                                    <td align="center" class="esd-block-text" bgcolor="#6fd20d" esd-links-color="#ffffff" esd-links-underline="underline"><br>
-                                                                                        <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                
-                                                                                    <tr>
-                                                                                    <td class="esd-block-social es-p10t es-p20b" align="center" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d">
-                                                                                    <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://twitter.com/ExciteBusiness"><img title="Twitter" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/twitter-square-gray.png" alt="Tw" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/Excite-Enterprise-109200980956538"><img title="Facebook" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/facebook-square-gray.png" alt="Fb" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/exciteenterprise/"><img title="Instagram" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/instagram-square-gray.png" alt="Ig" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.linkedin.com/in/excite-africa-4632a71b9/"><img title="LinkedIn" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/linkedin-square-gray.png" alt="Ig" width="24" height="24"></a></td>
-                                                                                               
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </td>
+                                                                                        <td align="center" class="esd-block-text" bgcolor="#6fd20d" esd-links-color="#ffffff" esd-links-underline="underline"><br>
+                                                                                            <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
+                                                                                        </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as a&nbsp;partner.</p>
+                                                                                        <td class="esd-block-social es-p10t es-p20b" align="center" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d">
+                                                                                            <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://twitter.com/ExciteBusiness"><img title="Twitter" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/twitter-square-gray.png" alt="Tw" width="24" height="24"></a></td>
+                                                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/Excite-Enterprise-109200980956538https://www.facebook.com/Excite-Enterprise-109200980956538"><img title="Facebook" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/facebook-square-gray.png" alt="Fb" width="24" height="24"></a></td>
+                                                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/exciteenterprise/"><img title="Instagram" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/instagram-square-gray.png" alt="Ig" width="24" height="24"></a></td>
+                                                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.linkedin.com/in/excite-africa-4632a71b9/"><img title="LinkedIn" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/linkedin-square-gray.png" alt="Ig" width="24" height="24"></a></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -968,4 +976,4 @@ const partnerDecline = () => {
     </html>`
 }
 
-module.exports = partnerDecline;
+module.exports = passwordResetConfirmation;
