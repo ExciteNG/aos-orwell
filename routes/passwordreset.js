@@ -5,6 +5,8 @@ const crypto = require('crypto');
 const User = require('../models/User');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const resetPassTemplates = require('../emails/password_reset')
+const resetPasswordConfirmation = require('../emails/password_reset_confirm');
+const passwordResetConfirmation = require('../emails/password_reset_confirm');
 router.post('/forgot-password', function(req, res, next) {
     async.waterfall([
       function(done) {
@@ -38,7 +40,7 @@ router.post('/forgot-password', function(req, res, next) {
             to: user.email,
             subject: 'Excite Account Password Reset',
             html: 'Tosin',
-            text: resetPassTemplates,
+            text: resetPassTemplates(token),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
@@ -74,7 +76,7 @@ router.post('/reset/:token', function(req, res) {
         User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-            return res.redirect('/forgot-password');
+            return res.redirect('/password-forgot/forgot-password');
           }
   
           user.password = req.body.password;
@@ -97,9 +99,7 @@ router.post('/reset/:token', function(req, res) {
             from: 'enquiry@exciteafrica.com',
             to: user.email,
             subject: 'Your password has been changed',
-            html: resetPassTemplates,
-            text: 'Hello,\n\n' +
-            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n',
+            html: passwordResetConfirmation(user.email),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
