@@ -1,5 +1,8 @@
 /* eslint-disable prettier/prettier */
-const passwordReset = () => {
+const emailHost = require('./email_host');
+
+const passwordReset = (email,tokenString) => {
+    return ``
 
 }
 

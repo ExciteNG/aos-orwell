@@ -17,7 +17,7 @@ router.post('/forgot-password', function(req, res, next) {
         User.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
               res.json({code:500,message:"No account with that email address exists."});
-            return res.redirect('/forgot-password');
+            return res.redirect('/password-forgot/forgot-password');
           }
   
           user.resetPasswordToken = token;
@@ -43,22 +43,22 @@ router.post('/forgot-password', function(req, res, next) {
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
             secure:false,
-            done(err, 'done');
         })
+        done(err,'done')
       }
     ], function(err) {
       if (err) return next(err);
-      res.redirect('/forgot-password');
+      res.redirect('/password-forgot/forgot-password');
     });
   });
 
 
-router.get('/reset/:token', async function(req, res) {
+router.get('/reset/:token', async (req, res) => {
     try {
         User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
               res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-              return res.redirect('/forgot-password');
+              return res.redirect('/password-forgot/forgot-password');
             }
             res.json({user:req.user})
           });
@@ -104,12 +104,16 @@ router.post('/reset/:token', function(req, res) {
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
             secure:false,
-            done(err);
+           
         });
+        done(err);
       }
     ], function(err) {
-       return res.json({code:400,err:err.message})
-      res.redirect('/forgot-password');
+        res.redirect('/password-forgot/forgot-password');
+        return res.json({code:400,err:err.message})
+     
     });
   });
+
+module.exports = router;
 
