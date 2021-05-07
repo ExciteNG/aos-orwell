@@ -2,17 +2,22 @@
 const router = require('express').Router();
 const Kiosk = require('../models/kiosk');
 const {requireJWT} =require("./../middleware/auth")
+
+
+
+
+
+
 //crud routes for the  kiosk
-router.get('/kiosk-all',async (req, res) => {
+// router.get('/kiosk-all',requireJWT,async (req, res) => {
+// const {email,userType} = req.user
+router.get('/springboard/kiosk-all',async (req, res) => {
 
     try {
         const kiosks =  await Kiosk.find().sort({'createdAt':-1})
     .sort({createdAt: -1})
     .lean()
-    if (kiosks.length === 0){
-        return res.json({status:404,message:"you have no kiosks yet"})
-    }
-   return res.status(200).json({"kiosks":kiosks})
+   return res.status(200).json({"kiosks":kiosks,code:201})
     }
     catch (err){
         console.error(err)
@@ -93,9 +98,10 @@ router.delete('/delete-kiosk/:id', async (req,res) => {
 //post a new kiosk
 // add a new record
 router.post('/new-kiosk', requireJWT, async (req,res) =>{
+    const {email} = req.user
     try {
         // req.body.user = req.user.id
-        await Kiosk.create(req.body)
+        await Kiosk.create({...req.body,email})
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)

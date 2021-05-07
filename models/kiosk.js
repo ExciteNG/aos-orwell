@@ -47,9 +47,10 @@ const kioskSchema = mongoose.Schema({
     },
     paymentType:{
         type:String
-
+    },
+    kioskType:{
+        type:String
     }
-
 })
 
 module.exports = mongoose.model('kiosk',kioskSchema);
