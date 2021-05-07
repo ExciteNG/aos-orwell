@@ -1,6 +1,7 @@
 const Partners = require('../../models/Partners')
 const rejectPartner = require('./../../emails/partner_decline')
 const successPartner = require('./../../emails/partner_success')
+
 // update Partner approval
 const updatePartner = async (req, res) => {
   try {
