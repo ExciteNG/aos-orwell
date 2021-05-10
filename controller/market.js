@@ -33,6 +33,7 @@ const addElectronics = async (req,res)=>{
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
        const storeInfo=profile.storeInfo
+       if(!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName) return res.json({code:404 , message:"Please update store info"});
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'electronics',email:email,priority,images:images}
        const newProduct = new Products(item)
@@ -52,7 +53,8 @@ const addFashion = async (req,res)=>{
        // console.log(req.body)
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
-       const storeInfo=profile.storeInfo
+       const storeInfo=profile.storeInfo;
+       if(!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName) return res.json({code:404 , message:"Please update store info"});
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'fashion',email:email,priority,size,gender,images:images}
        const newProduct = new Products(item)
@@ -70,7 +72,8 @@ const addPhoneTablet = async (req,res)=>{
        // console.log(req.body)
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
-       const storeInfo=profile.storeInfo
+       const storeInfo=profile.storeInfo;
+       if(!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName) return res.json({code:404 , message:"Please update store info"});
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'phones-tablets',email:email,priority,images:images}
        const newProduct = new Products(item)
@@ -88,7 +91,8 @@ const addHome = async (req,res)=>{
        // console.log(req.body)
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
-       const storeInfo=profile.storeInfo
+       const storeInfo=profile.storeInfo;
+       if(!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName) return res.json({code:404 , message:"Please update store info"});
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'home-kitchen-appliance',email:email,priority,room,images:images}
        const newProduct = new Products(item)
@@ -107,7 +111,8 @@ const addVehicle = async (req,res)=>{
        // console.log(req.body)
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
-       const storeInfo=profile.storeInfo
+       const storeInfo=profile.storeInfo;
+       if(!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName) return res.json({code:404 , message:"Please update store info"});
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'vehicle',email:email,priority,year,fuelType,transmission,images:images}
        const newProduct = new Products(item)
