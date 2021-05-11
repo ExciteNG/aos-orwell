@@ -1,12 +1,20 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
+const passport = require("passport");
+const PassportJWT = require("passport-jwt");
 const async = require('async');
 const crypto = require('crypto');
 const User = require('../models/User');
+const BackupCollection = require('../models/backup');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const resetPassTemplates = require('../emails/password_reset')
-const resetPasswordConfirmation = require('../emails/password_reset_confirm');
+//const resetPasswordConfirmation = require('../emails/password_reset_confirm');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
+const jwtSecret = process.env.JWT_SECRET;
+const jwtAlgorithm = "HS256";
+const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
+passport.use(User.createStrategy());
+
 router.post('/forgot-password', function(req, res, next) {
     async.waterfall([
       function(done) {
@@ -16,14 +24,14 @@ router.post('/forgot-password', function(req, res, next) {
         });
       },
       function(token, done) {
-        User.findOne({ email: req.body.email }, function(err, user) {
+        BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
               res.json({code:500,message:"No account with that email address exists."});
             return res.redirect('/password-forgot/forgot-password');
           }
   
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+          user.Token = token;
+          user.resetToken = Date.now() + 3600000; // 1 hour
   
           user.save(function(err) {
             done(err, token, user);
@@ -39,7 +47,7 @@ router.post('/forgot-password', function(req, res, next) {
             from: 'enquiry@exciteafrica.com',
             to: user.email,
             subject: 'Excite Account Password Reset',
-            html: 'Tosin',
+            html: resetPassTemplates(token),
             text: resetPassTemplates(token),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
@@ -57,7 +65,7 @@ router.post('/forgot-password', function(req, res, next) {
 
 router.get('/reset/:token', async (req, res) => {
     try {
-        User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+      BackupCollection.findOne({ Token: req.params.token, resetToken: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
               res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
               return res.redirect('/password-forgot/forgot-password');
@@ -73,22 +81,57 @@ router.get('/reset/:token', async (req, res) => {
 router.post('/reset/:token', function(req, res) {
     async.waterfall([
       function(done) {
-        User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        BackupCollection.findOne({ Token: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             return res.redirect('/password-forgot/forgot-password');
-          }
-  
-          user.password = req.body.password;
-          user.resetPasswordToken = undefined;
-          user.resetPasswordExpires = undefined;
-  
-          user.save(function(err) {
-            req.logIn(user, function(err) {
-              done(err, user);
+          }//authenticate here
+            if (!req.body.firstName || !req.body.lastName) {
+              console.log(req.body);
+              return res.send({ code: 400, error: "No firstname or lastname provided." });
+            } else {
+                // continue
+                const newUsers = {
+                  email: req.body.email,
+                  firstName: req.body.firstName,
+                  lastName: req.body.lastName,
+                  Token : undefined,
+                  resetToken:undefined
+                };
+                const userInstance = new BackupCollection(newUsers);
+                BackupCollection.register(userInstance, req.body.password, (error, user) => {
+                  if (error) {
+                    // next(error);
+                    res.json({ code: 401, mesage: "Failed to create account" });
+                    return;
+                  }
+                });
+                //
+                const profileInstance = new Profile(userInstance);
+                profileInstance.fullname = req.body.firstName + ' ' + req.body.lastName;
+                profileInstance.save((err, doc) => {
+                  if (err) {
+                    // next(err);
+                    res.json({ code: 401, mesage: "Failed to create profile" });
+                    return;
+                  }
+                });
+                // req.user = userInstance;
+                // next();
+                
+                res.json({ code: 201, mesage: "Account created" });
+              }
             });
-          });
-        });
+        //   user.password = req.body.password;
+        //   user.Token = undefined;
+        //   user.resetToken = undefined;
+  
+        //   user.save(function(err) {
+        //     req.logIn(user, function(err) {
+        //       done(err, user);
+        //     });
+        //   });
+        // });
       },
       function(user, done) {
         nodeoutlook.sendEmail({
@@ -100,6 +143,7 @@ router.post('/reset/:token', function(req, res) {
             to: user.email,
             subject: 'Your password has been changed',
             html: passwordResetConfirmation(user.email),
+            text: passwordResetConfirmation(user.email),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
@@ -115,5 +159,14 @@ router.post('/reset/:token', function(req, res) {
     });
   });
 
-module.exports = router;
+router.get('/get-all',async (req,res) => {
+  try {
+    const allUsers = await BackupCollection.find({}).lean().sort({'createdAt':-1})
+    res.json({allUsers,length:allUsers.length})
+  } catch (error) {
+    res.json({err:error.message})
+  }
+  
+})
 
+module.exports = router;
