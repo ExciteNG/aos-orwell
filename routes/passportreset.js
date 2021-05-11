@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
-const passport = require("passport");
-const PassportJWT = require("passport-jwt");
 const async = require('async');
 const crypto = require('crypto');
 const User = require('../models/User');
@@ -11,10 +9,6 @@ var nodeoutlook = require('nodejs-nodemailer-outlook');
 const resetPassTemplates = require('../emails/password_reset')
 //const resetPasswordConfirmation = require('../emails/password_reset_confirm');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
-const jwtSecret = process.env.JWT_SECRET;
-const jwtAlgorithm = "HS256";
-const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
-passport.use(User.createStrategy());
 
 router.post('/forgot-password', function(req, res, next) {
     async.waterfall([
@@ -174,50 +168,50 @@ router.get('/get-all',async (req,res) => {
 })
 
 //add jwt signatures
-const signJWTForUser = (req, res) => {
-  // console.log('signing jwt', req.user)
-  // check login route authorization
-  if (req.user.userType !== "EX10AF")
-    return res.status(400).json({ msg: "invalid login" });
-  const user = req.user;
-  const token = JWT.sign(
-    {
-      email: user.email,
-      userType: user.userType,
-    },
-    jwtSecret,
-    {
-      algorithm: jwtAlgorithm,
-      expiresIn: jwtExpiresIn,
-      subject: user._id.toString(),
-    }
-  );
-  // console.log(token);
-  res.json({ token });
-};
+// const signJWTForUser = (req, res) => {
+//   // console.log('signing jwt', req.user)
+//   // check login route authorization
+//   if (req.user.userType !== "EX10AF")
+//     return res.status(400).json({ msg: "invalid login" });
+//   const user = req.user;
+//   const token = JWT.sign(
+//     {
+//       email: user.email,
+//       userType: user.userType,
+//     },
+//     jwtSecret,
+//     {
+//       algorithm: jwtAlgorithm,
+//       expiresIn: jwtExpiresIn,
+//       subject: user._id.toString(),
+//     }
+//   );
+//   // console.log(token);
+//   res.json({ token });
+// };
 
-passport.use(
-  new PassportJWT.Strategy(
-    {
-      jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: jwtSecret,
-      algorithms: [jwtAlgorithm],
-    },
-    (payload, done) => {
-      User.findById(payload.sub)
-        .then((user) => {
-          if (user) {
-            done(null, user);
-          } else {
-            done(null, false);
-          }
-        })
-        .catch((error) => {
-          done(error, false);
-        });
-    }
-  )
-);
+// passport.use(
+//   new PassportJWT.Strategy(
+//     {
+//       jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: jwtSecret,
+//       algorithms: [jwtAlgorithm],
+//     },
+//     (payload, done) => {
+//       User.findById(payload.sub)
+//         .then((user) => {
+//           if (user) {
+//             done(null, user);
+//           } else {
+//             done(null, false);
+//           }
+//         })
+//         .catch((error) => {
+//           done(error, false);
+//         });
+//     }
+//   )
+// );
 
 
 module.exports = router;
