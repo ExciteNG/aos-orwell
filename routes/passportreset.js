@@ -47,8 +47,8 @@ router.post('/forgot-password', function(req, res, next) {
             from: 'enquiry@exciteafrica.com',
             to: user.email,
             subject: 'Excite Account Password Reset',
-            html: resetPassTemplates(token),
-            text: resetPassTemplates(token),
+            html: resetPassTemplates(token,user.email),
+            text: resetPassTemplates(token,user.email),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
@@ -63,9 +63,9 @@ router.post('/forgot-password', function(req, res, next) {
   });
 
 
-router.get('/reset/:token', async (req, res) => {
+router.get('/reset/:token/:email', async (req, res) => {
     try {
-      BackupCollection.findOne({ Token: req.params.token, resetToken: { $gt: Date.now() } }, function(err, user) {
+      BackupCollection.findOne({ Token: req.params.token, email: req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
               res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
               return res.redirect('/password-forgot/forgot-password');
@@ -78,7 +78,7 @@ router.get('/reset/:token', async (req, res) => {
   });
 
 //verify the password reset
-router.post('/reset/:token', function(req, res) {
+router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([
       function(done) {
         BackupCollection.findOne({ Token: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {

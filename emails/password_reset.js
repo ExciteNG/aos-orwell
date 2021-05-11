@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 const emailHost = require('./email_host');
-const passwordReset = (tokenString) => {
+const passwordReset = (email,tokenString) => {
+    
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -824,11 +825,11 @@ button.es-button {
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="center" class="esd-block-button es-m-txt-c" bgcolor="#ffffff"><br><br><br><span class="es-button-border" style="border-radius: 8px; background: #6fd20d; border-color: #50b948;"><a href="${emailHost()}/reset/${tokenString}" class="es-button" target="_blank" style="color: #000000; border-radius: 8px; font-weight: bold; font-size: 18px; font-family: arial, &quot;helvetica neue&quot;, helvetica, sans-serif; border-left-width: 20px; border-right-width: 20px; background: #6fd20d; border-color: #6fd20d;">Reset Password</a></span></td>
+                                                                                    <td align="center" class="esd-block-button es-m-txt-c" bgcolor="#ffffff"><br><br><br><span class="es-button-border" style="border-radius: 8px; background: #6fd20d; border-color: #50b948;"><a href="${emailHost()}/reset/${email}_${tokenString}" class="es-button" target="_blank" style="color: #000000; border-radius: 8px; font-weight: bold; font-size: 18px; font-family: arial, &quot;helvetica neue&quot;, helvetica, sans-serif; border-left-width: 20px; border-right-width: 20px; background: #6fd20d; border-color: #6fd20d;">Reset Password</a></span></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="left" class="esd-block-text" bgcolor="#ffffff">
-                                                                                        <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work, Copy and paste the link below to your browser.</p><br><a href="${emailHost()}/reset/${tokenString}" style="font-size:medium;" target="_blank">${emailHost()}/reset/${tokenString}</a><br><br>Please kindly ignore if you did not request for this action<br><br>
+                                                                                        <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work, Copy and paste the link below to your browser.</p><br><a href="${emailHost()}/reset/${email}_${tokenString}" style="font-size:medium;" target="_blank">${emailHost()}/reset/${email}_${tokenString}</a><br><br>Please kindly ignore if you did not request for this action<br><br>
                                                                                         <p style="color: #000000; line-height: 100%; font-size:medium;">If you have any questions, just reply to this email, we are always happy to help out.<br><br><br><br></p>
                                                                                         <p style="color: #000000; line-height: 100%; font-size:medium;">Cheers,<br>The Excite Team<br><br></p>
                                                                                     </td>
