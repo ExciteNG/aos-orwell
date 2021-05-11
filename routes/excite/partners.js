@@ -9,7 +9,9 @@ router.get('/all/partners', Controller.getAllPartners);
 
 // excite- partner routes
 router.put('/:id', Controller.updatePartner);
+// Tax partner routes
 router.get('/tax/partners', Controller.getAllTaxPartners);
+
 // Business Partner routes
 router.get('/business/partners', Controller.getAllBusinessPartners);
 
