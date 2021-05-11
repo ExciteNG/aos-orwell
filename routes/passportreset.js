@@ -79,11 +79,11 @@ router.post('/reset/:token/:email', function(req, res) {
         BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-            return res.redirect('/password-forgot/forgot-password');
+            
           }//authenticate here
             if (!req.body.password === !req.body.password2) {
               console.log(req.body);
-              return res.send({ code: 400, error: "Password fields do not match" });
+              return res.json({ code: 400, error: "Password fields do not match" });
             } else {
                 // continue
                 const newUsers = {
@@ -150,11 +150,12 @@ router.post('/reset/:token/:email', function(req, res) {
         });
         done(err);
       }
-    ], function(err) {
+    ], /***  function(err) {
         res.redirect('/password-forgot/forgot-password');
         return res.json({code:400,err:err.message})
      
-    });
+    } **/
+    );
   });
 
 router.get('/get-all',async (req,res) => {
