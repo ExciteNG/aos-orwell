@@ -11,6 +11,7 @@ const resetPassTemplates = require('../emails/password_reset')
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 router.post('/recover-account', function(req, res, next) {
+  console.log(req.body.email)
     async.waterfall([
       function(done) {
         crypto.randomBytes(20, function(err, buf) {
@@ -21,36 +22,34 @@ router.post('/recover-account', function(req, res, next) {
       function(token, done) {
         BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
-              res.json({code:500,message:"No account with that email address exists."});
-            return res.redirect('/password-forgot/forgot-password');
+             return res.json({code:500,message:"No account with that email address exists."});
+            // return res.redirect('/password-forgot/forgot-password');
           }
-  
           user.Token = token;
           user.resetToken = Date.now() + 3600000; // 1 hour
-  
           user.save(function(err) {
             done(err, token, user);
           });
         });
       },
-      function(token, user, done) {
-        nodeoutlook.sendEmail({
-            auth: {
-                user: "enquiry@exciteafrica.com",
-                pass: "ExciteManagement123$"
-            },
-            from: 'enquiry@exciteafrica.com',
-            to: user.email,
-            subject: 'Excite Account Password Reset',
-            html: resetPassTemplates(token,user.email),
-            text: resetPassTemplates(token,user.email),
-            replyTo: 'enquiry@exciteafrica.com',
-            onError: (e) => console.log(e),
-            onSuccess: (i) => console.log(i),
-            secure:false,
-        })
-        done(err,'done')
-      }
+      // function(token, user, done) {
+      //   nodeoutlook.sendEmail({
+      //       auth: {
+      //           user: "enquiry@exciteafrica.com",
+      //           pass: "ExciteManagement123$"
+      //       },
+      //       from: 'enquiry@exciteafrica.com',
+      //       to: user.email,
+      //       subject: 'Excite Account Password Reset',
+      //       html: resetPassTemplates(token,user.email),
+      //       text: resetPassTemplates(token,user.email),
+      //       replyTo: 'enquiry@exciteafrica.com',
+      //       onError: (e) => console.log(e),
+      //       onSuccess: (i) => console.log(i),
+      //       secure:false,
+      //   })
+      //   done('done')
+      // }
     ], function(err) {
       if (err) return next(err);
       res.redirect('/password-forgot/forgot-password');
