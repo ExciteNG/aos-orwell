@@ -55,6 +55,7 @@ const getCheckNameApplicants = async (req, res) => {
   const reservations = await CheckName.find();
   res.json({ code: 201, reservations: reservations });
 };
+
 const approvedReservation = async (req, res) => {
   const { email } = req.user;
   const { id, update ,status} = req.body;
