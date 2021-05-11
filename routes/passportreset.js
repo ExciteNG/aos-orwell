@@ -6,6 +6,7 @@ const async = require('async');
 const crypto = require('crypto');
 const User = require('../models/User');
 const BackupCollection = require('../models/backup');
+const Profile = require('../models/Profiles')
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const resetPassTemplates = require('../emails/password_reset')
 //const resetPasswordConfirmation = require('../emails/password_reset_confirm');
@@ -70,7 +71,7 @@ router.get('/reset/:token/:email', async (req, res) => {
               res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
               return res.redirect('/password-forgot/forgot-password');
             }
-            res.json({user:req.user})
+            res.json({user:req.user,email:req.email})
           });
     } catch (err) {
         res.json({status:500,err:err.message})  
@@ -81,25 +82,27 @@ router.get('/reset/:token/:email', async (req, res) => {
 router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([
       function(done) {
-        BackupCollection.findOne({ Token: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
             res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             return res.redirect('/password-forgot/forgot-password');
           }//authenticate here
-            if (!req.body.firstName || !req.body.lastName) {
+            if (!req.body.password === !req.body.password2) {
               console.log(req.body);
-              return res.send({ code: 400, error: "No firstname or lastname provided." });
+              return res.send({ code: 400, error: "Password fields do not match" });
             } else {
                 // continue
                 const newUsers = {
-                  email: req.body.email,
-                  firstName: req.body.firstName,
-                  lastName: req.body.lastName,
-                  Token : undefined,
-                  resetToken:undefined
+                  email: req.params.email,
+                  name:user.firstName + ' ' + user.lastName,
+                  verifyToken:req.params.token,
+                  emailVerified:true,
+                  userType:"EX10AF",
+                  resetPasswordToken: undefined,
+                  resetPasswordExpires: undefined
                 };
-                const userInstance = new BackupCollection(newUsers);
-                BackupCollection.register(userInstance, req.body.password, (error, user) => {
+                const userInstance = new User(newUsers);
+                User.register(userInstance, req.body.password, (error, user) => {
                   if (error) {
                     // next(error);
                     res.json({ code: 401, mesage: "Failed to create account" });
@@ -112,14 +115,15 @@ router.post('/reset/:token/:email', function(req, res) {
                 profileInstance.save((err, doc) => {
                   if (err) {
                     // next(err);
-                    res.json({ code: 401, mesage: "Failed to create profile" });
+                    res.json({ code: 401, mesage: "Failed to recover profile" });
                     return;
                   }
                 });
                 // req.user = userInstance;
                 // next();
                 
-                res.json({ code: 201, mesage: "Account created" });
+                res.json({ code: 201, mesage: "Account recovered" });
+                done(err,user)
               }
             });
         //   user.password = req.body.password;
@@ -168,5 +172,52 @@ router.get('/get-all',async (req,res) => {
   }
   
 })
+
+//add jwt signatures
+const signJWTForUser = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  if (req.user.userType !== "EX10AF")
+    return res.status(400).json({ msg: "invalid login" });
+  const user = req.user;
+  const token = JWT.sign(
+    {
+      email: user.email,
+      userType: user.userType,
+    },
+    jwtSecret,
+    {
+      algorithm: jwtAlgorithm,
+      expiresIn: jwtExpiresIn,
+      subject: user._id.toString(),
+    }
+  );
+  // console.log(token);
+  res.json({ token });
+};
+
+passport.use(
+  new PassportJWT.Strategy(
+    {
+      jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: jwtSecret,
+      algorithms: [jwtAlgorithm],
+    },
+    (payload, done) => {
+      User.findById(payload.sub)
+        .then((user) => {
+          if (user) {
+            done(null, user);
+          } else {
+            done(null, false);
+          }
+        })
+        .catch((error) => {
+          done(error, false);
+        });
+    }
+  )
+);
+
 
 module.exports = router;
