@@ -22,7 +22,7 @@ router.post('/recover-account', function(req, res, next) {
         BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
               res.json({code:500,message:"No account with that email address exists."});
-            return res.redirect('/password-forgot/forgot-password');
+            // return res.redirect('/password-forgot/forgot-password');
           }
   
           user.Token = token;
