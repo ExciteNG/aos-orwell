@@ -11,7 +11,7 @@ const Loans = require('../models/loan');
 const multer = require('multer');
 const crypto = require('crypto');
 const otp = Math.floor(10000000*Math.random()).toString()
-
+const Controller = require('./../controller/loan');
 
 router.delete('/delete/:id', async (req,res) => {
 
@@ -106,6 +106,8 @@ router.post('/verify/new/user', async (req,res)=>{
     }
 })
 
+
+router.post('/finance/channel/create-account', Controller.createAccountChannel)
 //create a twillio helper function to send sms
 const sendSms = (phone, message) => {
     try {
@@ -122,5 +124,6 @@ const sendSms = (phone, message) => {
     }
   }
   
+
 
 module.exports = router
