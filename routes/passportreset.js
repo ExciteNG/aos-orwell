@@ -49,11 +49,11 @@ router.post('/recover-account', function(req, res, next) {
             onSuccess: (i) => console.log(i),
             secure:false,
         })
-        done(err,'done')
+        done('done')
       }
     ], function(err) {
       if (err) return next(err);
-      res.redirect('/password-forgot/forgot-password');
+      res.json({code:400,message:"error"});
     });
   });
 
