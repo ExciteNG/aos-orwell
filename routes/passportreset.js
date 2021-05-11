@@ -52,7 +52,7 @@ router.post('/recover-account', function(req, res, next) {
       // }
     ], function(err) {
       if (err) return next(err);
-      res.redirect('/password-forgot/forgot-password');
+      res.json({code:400,message:err.message});
     });
   });
 
