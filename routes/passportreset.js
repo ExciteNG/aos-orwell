@@ -53,7 +53,7 @@ router.post('/recover-account', function(req, res, next) {
       }
     ], function(err) {
       if (err) return next(err);
-      res.json({code:400,message:"error"});
+      res.json({code:400,message:err.message});
     });
   });
 
