@@ -28,31 +28,32 @@ router.post('/recover-account', function(req, res, next) {
           user.Token = token;
           user.resetToken = Date.now() + 3600000; // 1 hour
           user.save(function(err) {
+            res.json({token})
             done(err, token, user);
           });
         });
       },
-      // function(token, user, done) {
-      //   nodeoutlook.sendEmail({
-      //       auth: {
-      //           user: "enquiry@exciteafrica.com",
-      //           pass: "ExciteManagement123$"
-      //       },
-      //       from: 'enquiry@exciteafrica.com',
-      //       to: user.email,
-      //       subject: 'Excite Account Password Reset',
-      //       html: resetPassTemplates(token,user.email),
-      //       text: resetPassTemplates(token,user.email),
-      //       replyTo: 'enquiry@exciteafrica.com',
-      //       onError: (e) => console.log(e),
-      //       onSuccess: (i) => console.log(i),
-      //       secure:false,
-      //   })
-      //   done('done')
-      // }
+      function(token, user, done) {
+        nodeoutlook.sendEmail({
+            auth: {
+                user: "enquiry@exciteafrica.com",
+                pass: "ExciteManagement123$"
+            },
+            from: 'enquiry@exciteafrica.com',
+            to: user.email,
+            subject: 'Excite Account Password Reset',
+            html: resetPassTemplates(token,user.email),
+            text: resetPassTemplates(token,user.email),
+            replyTo: 'enquiry@exciteafrica.com',
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure:false,
+        })
+        done('done')
+      }
     ], function(err) {
-      if (err) return next(err);
-      res.json({code:400,message:err.message});
+      if (err) return 
+      // res.json({code:400,message:err.message});
     });
   });
 
