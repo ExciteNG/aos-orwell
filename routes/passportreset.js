@@ -10,7 +10,7 @@ const resetPassTemplates = require('../emails/password_reset')
 //const resetPasswordConfirmation = require('../emails/password_reset_confirm');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
-router.post('/forgot-password', function(req, res, next) {
+router.post('/recover-account', function(req, res, next) {
     async.waterfall([
       function(done) {
         crypto.randomBytes(20, function(err, buf) {
