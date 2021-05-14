@@ -11,7 +11,7 @@ const resetPassTemplates = require('../emails/password_reset')
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 router.post('/recover-account', function(req, res, next) {
-  console.log(req.body.email)
+  // console.log(req.body.email)
     async.waterfall([
       function(done) {
         crypto.randomBytes(20, function(err, buf) {
@@ -22,12 +22,11 @@ router.post('/recover-account', function(req, res, next) {
       function(token, done) {
         BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
-             return res.json({code:500,message:"No account with that email address exists."});
+             return res.json({code:500,message:"No previous account with that email address."});
           }
           user.Token = token;
           user.resetToken = Date.now() + 3600000; // 1 hour
           user.save(function(err) {
-            res.json({token})
             done(err, token, user);
           });
         });
@@ -48,6 +47,7 @@ router.post('/recover-account', function(req, res, next) {
             onSuccess: (i) => console.log(i),
             secure:false,
         })
+        return res.json({code:200,message:"Check your email for next step"})
         done('done')
       }
     ], function(err) {
@@ -61,15 +61,18 @@ router.post('/recover-account', function(req, res, next) {
 router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([
       function(done) {
-        BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
+        BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetToken: { $gt: Date.now() } }, async function(err, user) {
           if (!user) {
-            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+            return res.json({code:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
           }//authenticate here
             if (req.body.password !== req.body.password2) {
               // console.log(req.body);\
-              return res.json({ code: 400, error: "Password fields do not match" });
-            } else {
+              return res.json({ code: 401, error: "Password fields do not match" });
+            }
+
+            const exist = await User.findOne({email:req.params.email});
+            if(exist) return res.json({ code: 401, error: "Account Exist" });
                 // continue
                 const newUsers = {
                   email: req.params.email,
@@ -84,8 +87,8 @@ router.post('/reset/:token/:email', function(req, res) {
                 User.register(userInstance, req.body.password, (error, user) => {
                   if (error) {
                     // next(error);
-                    res.json({ code: 401, mesage: "Failed to create account" });
-                    return;
+                   return res.json({ code: 401, mesage: "Failed to create account" });
+                    
                   }
                 });
                 //
@@ -94,27 +97,17 @@ router.post('/reset/:token/:email', function(req, res) {
                 profileInstance.save((err, doc) => {
                   if (err) {
                     // next(err);
-                    res.json({ code: 401, mesage: "Failed to recover profile" });
-                    return;
+                   return res.json({ code: 401, mesage: "Failed to recover profile" });
+                  
                   }
                 });
                 // req.user = userInstance;
                 // next();
                 
-                res.json({ code: 201, mesage: "Account recovered" });
+                // res.json({ code: 201, mesage: "Account recovered, proceed to login" });
                 done(err,user)
-              }
+            
             });
-        //   user.password = req.body.password;
-        //   user.Token = undefined;
-        //   user.resetToken = undefined;
-  
-        //   user.save(function(err) {
-        //     req.logIn(user, function(err) {
-        //       done(err, user);
-        //     });
-        //   });
-        // });
       },
       function(user, done) {
         nodeoutlook.sendEmail({
@@ -133,6 +126,7 @@ router.post('/reset/:token/:email', function(req, res) {
             secure:false,
            
         });
+        return res.json({ code: 201, mesage: "Account recovered, proceed to login" });
         done("");
       }
     ], /***  function(err) {
@@ -142,17 +136,6 @@ router.post('/reset/:token/:email', function(req, res) {
     } **/
     );
   });
-
-router.get('/get-all',async (req,res) => {
-  try {
-    const allUsers = await BackupCollection.find({}).lean().sort({'createdAt':-1})
-    res.json({allUsers,length:allUsers.length})
-  } catch (error) {
-    res.json({err:error.message})
-  }
-  
-})
-
 
 // Version Two user password reset
 

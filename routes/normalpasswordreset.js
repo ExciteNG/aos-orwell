@@ -26,16 +26,15 @@ router.post('/forgot-password', function (req,res,next) {
              return   res.json({code:500,message:"No account with that email address exists."});
               // return res.redirect('/password-forgot/forgot-password');
             }
-            
             user.resetPasswordToken = token,
             user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    
             user.save(function(err) {
               done(err, token, user);
             });
           });
         },
         function(token, user, done) {
+          console.log(user)
           nodeoutlook.sendEmail({
               auth: {
                   user: "enquiry@exciteafrica.com",
@@ -48,10 +47,13 @@ router.post('/forgot-password', function (req,res,next) {
               text: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
-              onSuccess: (i) => console.log(i),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
               secure:false,
           })
-          // return res.json({token})
+          return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
           done('done')
         }
       ], function(err) {
@@ -76,7 +78,7 @@ router.post('/reset/:token/:email', function(req, res) {
             
           }//authenticate here
             if (req.body.password !== req.body.password2) {
-              console.log(req.body);
+              // console.log(req.body);
               return res.json({ code: 400, error: "Password fields do not match" });
             }
               //save new password
@@ -86,18 +88,13 @@ router.post('/reset/:token/:email', function(req, res) {
             user.setPassword(req.body.password, function(){
                             user.save(function(err){
                                 done(err,user)
-                               return res.json({code:200,message: 'password reset successful'});
-                               
+                              //  return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
                             });
                         });
-
-
-                  //
-
-
             });
       },
       function(user, done) {
+        // console.log(user)
         nodeoutlook.sendEmail({
             auth: {
                 user: "enquiry@exciteafrica.com",
@@ -110,12 +107,16 @@ router.post('/reset/:token/:email', function(req, res) {
             text: passwordResetConfirmation(user.email),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
-            onSuccess: (i) => console.log(i),
+            onSuccess: (i) => {
+              console.log(i)
+            },
             secure:false,
            
         });
+        return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
+
         done("done");
-        process.exit(1)
+        // process.exit(1)
       }
     ], /***  function(err) {
         res.redirect('/password-forgot/forgot-password');
