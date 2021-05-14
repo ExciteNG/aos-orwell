@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 
-const fakeSchema = new  mongoose.Schema({
+const backUpSchema = new  mongoose.Schema({
 
     firstName:{
         type:String,
@@ -27,4 +27,4 @@ const fakeSchema = new  mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('backups',fakeSchema);
+module.exports = mongoose.model('backup',backUpSchema);
