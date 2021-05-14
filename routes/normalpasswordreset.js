@@ -23,7 +23,7 @@ router.post('/forgot-password', function (req,res,next) {
         function(token, done) {
           User.findOne({ email: req.body.email }, function(err, user) {
             if (!user) {
-                res.json({code:500,message:"No account with that email address exists."});
+             return   res.json({code:500,message:"No account with that email address exists."});
               // return res.redirect('/password-forgot/forgot-password');
             }
             
@@ -51,9 +51,11 @@ router.post('/forgot-password', function (req,res,next) {
               onSuccess: (i) => console.log(i),
               secure:false,
           })
+          // return res.json({token})
           done('done')
         }
       ], function(err) {
+        console.log(err)
         if (err) return next(err);
         res.json({code:400,message:err.message});
       });
@@ -61,28 +63,14 @@ router.post('/forgot-password', function (req,res,next) {
 })
 
 
-router.get('/reset/:token/:email', async (req, res) => {
-    try {
-      User.findOne({ resetPasswordToken: req.params.token, email: req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-            if (!user) {
-              res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-             // return res.redirect('/password-forgot/forgot-password');
-            }
-            res.json({user:req.user,email:req.email})
-          });
-    } catch (err) {
-        res.json({status:500,err:err.message})  
-    }
-  });
-
-
 //verify the password reset
 router.post('/reset/:token/:email', function(req, res) {
+  // console.log(req.params.token)
     async.waterfall([
       function(done) {
         User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
-            res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+           return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
           }//authenticate here
             if (req.body.password !== req.body.password2) {
@@ -92,13 +80,7 @@ router.post('/reset/:token/:email', function(req, res) {
               //save new password
               user.resetPasswordToken = undefined;
               user.resetPasswordExpires = undefined;
-              //login user
-            //   user.save(function(err) {
-            //         req.logIn(user, function(err) {
-            //           done(err, user);
-            //         });
-            //       });
-            //       //
+            // setpassword
             user.setPassword(req.body.password, function(){
                             user.save(function(err){
                                 res.json({code:200,message: 'password reset successful'});
@@ -111,16 +93,6 @@ router.post('/reset/:token/:email', function(req, res) {
 
 
             });
-        //   user.password = req.body.password;
-        //   user.Token = undefined;
-        //   user.resetToken = undefined;
-  
-        //   user.save(function(err) {
-        //     req.logIn(user, function(err) {
-        //       done(err, user);
-        //     });
-        //   });
-        // });
       },
       function(user, done) {
         nodeoutlook.sendEmail({
@@ -139,7 +111,8 @@ router.post('/reset/:token/:email', function(req, res) {
             secure:false,
            
         });
-        done(err);
+        done("done");
+        process.exit(1)
       }
     ], /***  function(err) {
         res.redirect('/password-forgot/forgot-password');
