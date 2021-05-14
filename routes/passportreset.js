@@ -41,8 +41,8 @@ router.post('/recover-account', function(req, res, next) {
             from: process.env.EXCITE_ENQUIRY_USER,
             to: user.email,
             subject: 'Excite Account Password Reset',
-            html: resetPassTemplates(token,user.email),
-            text: resetPassTemplates(token,user.email),
+            html: resetPassTemplates(user.firstName,token,user.email),
+            text: resetPassTemplates(user.firstName,token,user.email),
             replyTo: 'enquiry@exciteafrica.com',
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
@@ -62,7 +62,7 @@ router.get('/reset/:token/:email', async (req, res) => {
       BackupCollection.findOne({ Token: req.params.token, email: req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
               res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-              return res.redirect('/password-forgot/forgot-password');
+              //return res.redirect('/password-forgot/forgot-password');
             }
             res.json({user:req.user,email:req.email})
           });
@@ -172,3 +172,4 @@ router.get('/get-all',async (req,res) => {
 
 
 module.exports = router;
+

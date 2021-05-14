@@ -36,6 +36,7 @@ app.use('/excite/partners', require('./routes/excite/partners'));
 app.use('/excite/banners', require('./routes/excite/banners'));
 app.use('/partners',require('./routes/partners/partners'));
 app.use('/password-forgot',require('./routes/passportreset'));
+app.use('/reset-password',require('./routes/normalpasswordreset'));
 
 app.use([
   require("./routes/auth"),
