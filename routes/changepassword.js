@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 router.post('/update', async (req,res) => {
     try {
-        const userId = await  User.findById({id:req.user._id}).lean()
+        const userId = await  User.findById({id:req.user.id}).lean()
         if (!userId){
             return res.json({code:400,message:"Error processing your request, please try again"})
         }
