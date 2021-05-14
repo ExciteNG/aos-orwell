@@ -21,7 +21,7 @@ router.post('/recover-account', function(req, res, next) {
       function(token, done) {
         BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
-              res.json({code:500,message:"No account with that email address exists."});
+              return res.json({code:500,message:"No account with that email address exists."});
             // return res.redirect('/password-forgot/forgot-password');
           }
   
@@ -62,7 +62,7 @@ router.get('/reset/:token/:email', async (req, res) => {
     try {
       BackupCollection.findOne({ Token: req.params.token, email: req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
-              res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+              return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
               //return res.redirect('/password-forgot/forgot-password');
             }
             res.json({user:req.user,email:req.email})
@@ -78,7 +78,7 @@ router.post('/reset/:token/:email', function(req, res) {
       function(done) {
         BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
-            res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
           }//authenticate here
             if (!req.body.password === !req.body.password2) {
