@@ -23,7 +23,7 @@ router.post('/forgot-password', function (req,res,next) {
         function(token, done) {
           User.findOne({ email: req.body.email }, function(err, user) {
             if (!user) {
-                res.json({code:500,message:"No account with that email address exists."});
+               return res.json({code:500,message:"No account with that email address exists."});
               // return res.redirect('/password-forgot/forgot-password');
             }
             
@@ -44,8 +44,8 @@ router.post('/forgot-password', function (req,res,next) {
               from: 'enquiry@exciteafrica.com',
               to: user.email,
               subject: 'Excite Account Password Reset',
-              html: normalResetPassTemplates(user.name,user.email,token),
-              text: normalResetPassTemplates(user.name,token,user.email),
+              html: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
+              text: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => console.log(i),
@@ -65,7 +65,7 @@ router.get('/reset/:token/:email', async (req, res) => {
     try {
       User.findOne({ resetPasswordToken: req.params.token, email: req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
             if (!user) {
-              res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+              return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
              // return res.redirect('/password-forgot/forgot-password');
             }
             res.json({user:req.user,email:req.email})
@@ -82,7 +82,7 @@ router.post('/reset/:token/:email', function(req, res) {
       function(done) {
         User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
-            res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+           return  res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
           }//authenticate here
             if (req.body.password !== req.body.password2) {
@@ -101,8 +101,9 @@ router.post('/reset/:token/:email', function(req, res) {
             //       //
             user.setPassword(req.body.password, function(){
                             user.save(function(err){
-                                res.json({code:200,message: 'password reset successful'});
                                 done(err,user)
+                               return res.json({code:200,message: 'password reset successful'});
+                               
                             });
                         });
 
