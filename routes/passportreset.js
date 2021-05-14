@@ -23,7 +23,6 @@ router.post('/recover-account', function(req, res, next) {
         BackupCollection.findOne({ email: req.body.email }, function(err, user) {
           if (!user) {
              return res.json({code:500,message:"No account with that email address exists."});
-            // return res.redirect('/password-forgot/forgot-password');
           }
           user.Token = token;
           user.resetToken = Date.now() + 3600000; // 1 hour
@@ -36,10 +35,10 @@ router.post('/recover-account', function(req, res, next) {
       function(token, user, done) {
         nodeoutlook.sendEmail({
             auth: {
-                user: "enquiry@exciteafrica.com",
-                pass: "ExciteManagement123$"
+                user: process.env.EXCITE_ENQUIRY_USER,
+                pass: process.env.EXCITE_ENQUIRY_PASS
             },
-            from: 'enquiry@exciteafrica.com',
+            from: process.env.EXCITE_ENQUIRY_USER,
             to: user.email,
             subject: 'Excite Account Password Reset',
             html: resetPassTemplates(token,user.email),
@@ -72,17 +71,17 @@ router.get('/reset/:token/:email', async (req, res) => {
     }
   });
 
-//verify the password reset
+//verify the password reset for old account
 router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([
       function(done) {
-        BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        BackupCollection.findOne({ Token: req.params.token, email:req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
           if (!user) {
-            res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
+            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
           }//authenticate here
-            if (!req.body.password === !req.body.password2) {
-              console.log(req.body);
+            if (req.body.password !== req.body.password2) {
+              // console.log(req.body);\
               return res.json({ code: 400, error: "Password fields do not match" });
             } else {
                 // continue
@@ -134,10 +133,10 @@ router.post('/reset/:token/:email', function(req, res) {
       function(user, done) {
         nodeoutlook.sendEmail({
             auth: {
-                user: "enquiry@exciteafrica.com",
-                pass: "ExciteManagement123$"
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS
             },
-            from: 'enquiry@exciteafrica.com',
+            from: process.env.EXCITE_ENQUIRY_USER,
             to: user.email,
             subject: 'Your password has been changed',
             html: passwordResetConfirmation(user.email),
@@ -148,7 +147,7 @@ router.post('/reset/:token/:email', function(req, res) {
             secure:false,
            
         });
-        done(err);
+        done("");
       }
     ], /***  function(err) {
         res.redirect('/password-forgot/forgot-password');
@@ -168,51 +167,8 @@ router.get('/get-all',async (req,res) => {
   
 })
 
-//add jwt signatures
-// const signJWTForUser = (req, res) => {
-//   // console.log('signing jwt', req.user)
-//   // check login route authorization
-//   if (req.user.userType !== "EX10AF")
-//     return res.status(400).json({ msg: "invalid login" });
-//   const user = req.user;
-//   const token = JWT.sign(
-//     {
-//       email: user.email,
-//       userType: user.userType,
-//     },
-//     jwtSecret,
-//     {
-//       algorithm: jwtAlgorithm,
-//       expiresIn: jwtExpiresIn,
-//       subject: user._id.toString(),
-//     }
-//   );
-//   // console.log(token);
-//   res.json({ token });
-// };
 
-// passport.use(
-//   new PassportJWT.Strategy(
-//     {
-//       jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
-//       secretOrKey: jwtSecret,
-//       algorithms: [jwtAlgorithm],
-//     },
-//     (payload, done) => {
-//       User.findById(payload.sub)
-//         .then((user) => {
-//           if (user) {
-//             done(null, user);
-//           } else {
-//             done(null, false);
-//           }
-//         })
-//         .catch((error) => {
-//           done(error, false);
-//         });
-//     }
-//   )
-// );
+// Version Two user password reset
 
 
 module.exports = router;
