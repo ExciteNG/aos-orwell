@@ -34,7 +34,7 @@ router.post('/forgot-password', function (req,res,next) {
           });
         },
         function(token, user, done) {
-          console.log(user)
+          // console.log(user)
           nodeoutlook.sendEmail({
               auth: {
                   user: "enquiry@exciteafrica.com",
@@ -58,8 +58,9 @@ router.post('/forgot-password', function (req,res,next) {
         }
       ], function(err) {
         console.log(err)
-        if (err) return next(err);
-        res.json({code:400,message:err.message});
+        if (err) {
+        return res.json({code:400,message:err.message});
+      }
       });
 
 })
@@ -69,7 +70,7 @@ router.post('/forgot-password', function (req,res,next) {
 
 //verify the password reset
 router.post('/reset/:token/:email', function(req, res) {
-  // console.log(req.params.token)
+  console.log(req.params.token)
     async.waterfall([
       function(done) {
         User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
