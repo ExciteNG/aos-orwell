@@ -57,20 +57,6 @@ router.post('/recover-account', function(req, res, next) {
   });
 
 
-router.get('/reset/:token/:email', async (req, res) => {
-    try {
-      BackupCollection.findOne({ Token: req.params.token, email: req.params.email, resetToken: { $gt: Date.now() } }, function(err, user) {
-            if (!user) {
-              res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
-              //return res.redirect('/password-forgot/forgot-password');
-            }
-            res.json({user:req.user,email:req.email})
-          });
-    } catch (err) {
-        res.json({status:500,err:err.message})  
-    }
-  });
-
 //verify the password reset for old account
 router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([

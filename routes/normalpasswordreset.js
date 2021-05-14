@@ -44,8 +44,8 @@ router.post('/forgot-password', function (req,res,next) {
               from: 'enquiry@exciteafrica.com',
               to: user.email,
               subject: 'Excite Account Password Reset',
-              html: normalResetPassTemplates(user.name,user.email,token),
-              text: normalResetPassTemplates(user.name,token,user.email),
+              html: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
+              text: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => console.log(i),
@@ -61,6 +61,8 @@ router.post('/forgot-password', function (req,res,next) {
       });
 
 })
+
+
 
 
 //verify the password reset
@@ -83,8 +85,9 @@ router.post('/reset/:token/:email', function(req, res) {
             // setpassword
             user.setPassword(req.body.password, function(){
                             user.save(function(err){
-                                res.json({code:200,message: 'password reset successful'});
                                 done(err,user)
+                               return res.json({code:200,message: 'password reset successful'});
+                               
                             });
                         });
 
