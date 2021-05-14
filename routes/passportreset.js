@@ -6,7 +6,7 @@ const User = require('../models/User');
 const BackupCollection = require('../models/backup');
 const Profile = require('../models/Profiles')
 var nodeoutlook = require('nodejs-nodemailer-outlook');
-const resetPassTemplates = require('../emails/password_reset')
+const resetPassTemplates = require('../emails/password_reset');
 //const resetPasswordConfirmation = require('../emails/password_reset_confirm');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
