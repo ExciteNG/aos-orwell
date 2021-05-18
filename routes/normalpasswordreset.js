@@ -36,10 +36,10 @@ router.post('/forgot-password', function (req,res,next) {
         function(token, user, done) {
           // console.log(user)
           nodeoutlook.sendEmail({
-              auth: {
-                  user: "enquiry@exciteafrica.com",
-                  pass: "ExciteManagement123$"
-              },
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
               from: 'enquiry@exciteafrica.com',
               to: user.email,
               subject: 'Excite Account Password Reset',
@@ -97,10 +97,10 @@ router.post('/reset/:token/:email', function(req, res) {
       function(user, done) {
         // console.log(user)
         nodeoutlook.sendEmail({
-            auth: {
-                user: "enquiry@exciteafrica.com",
-                pass: "ExciteManagement123$"
-            },
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
             from: 'enquiry@exciteafrica.com',
             to: user.email,
             subject: 'Your password has been changed',
