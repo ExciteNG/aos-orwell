@@ -150,6 +150,25 @@ router.post('/upload/banner',upload, async (req,res)=>{
    }
    res.status(200).json({code:201,data});
  });
+});
+
+// upload loan
+router.post('/upload/loan-applications/doc',upload, async (req,res)=>{
+ // console.log(req)
+ let myFile = req.file.originalname.split(".");
+ const fileType = myFile[myFile.length - 1];
+ const params = {
+   Bucket: process.env.AWS_STORAGE_BUCKET_NAME,
+   Key: `${"Enterprise-Images/LoanDocuments"}/${uuidv4()}.${fileType}`,
+   Body: req.file.buffer,
+   ACL: "public-read",
+ };
+ s3.upload(params, (error, data) => {
+   if (error) {
+     res.status(500).send(error);
+   }
+   res.status(200).json({code:201,data});
+ });
 })
 
 module.exports = router;

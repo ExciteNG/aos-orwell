@@ -23,7 +23,7 @@ const createLimiter = rateLimit({
 router.get('/all',requireJWT, async (req,res) => {
     const {email} = req.user;
     try {
-        const register =  await busRegister.findOne({email:email})
+        const register =  await busRegister.find({email:email})
         .sort({createdAt: -1 })
     .lean();
     if(!register) return res.status(200).json({records:[]})

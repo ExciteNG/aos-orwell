@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Controller = require('../../controller/partners/partners');
+const LoanController = require('./../../controller/partners/loans/loan')
 const {requireJWT} = require('./../../middleware/auth')
 
 router.get('/profile/myprofile',requireJWT, Controller.myProfile);
@@ -14,6 +15,12 @@ router.get('/business/business-names-reg/get-all-applicants',requireJWT,Controll
 
 // Approved name reservation
 router.put('/business/check-names-reg/approve-applicants',requireJWT,Controller.approvedReservation)
+
+
+
+// Loan
+router.get('/loan/channelle/new-account/get-all-applicants', LoanController.getAccountAppChannelle);
+router.get('/loan/channelle/new-account/get-applicantion/:application', LoanController.getApplicationInfo);
 
 
 module.exports = router

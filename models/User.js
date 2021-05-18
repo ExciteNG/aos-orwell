@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require('./init')
 const passportLocalMongoose = require('passport-local-mongoose')
+//email regex validation
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const userSchema = new mongoose.Schema({
@@ -24,7 +25,10 @@ const userSchema = new mongoose.Schema({
     default:""
   },
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires:{
+    type:Number,
+     default:Date.now()
+}
 })
 
 userSchema.plugin(passportLocalMongoose, {

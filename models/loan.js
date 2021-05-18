@@ -4,70 +4,132 @@ let phoRegexVal = new RegExp('^\\+\[0-9]+$');
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const loanSchema = mongoose.Schema({
-    surname:{
+    BVN: {
         type:String,
-        required:true
+        default:""
     },
-    firstName:{
-            type:String,
-            required:true
-    },
-    middleName:{
+    addressRes: {
         type:String,
+        default:""
+    },
+    annualRent: {
+        type:String,
+        default:""
+    },
+    authPin:{
+        type:String,
+        default:""
+    },
+    authPinHidden: {
+        type:String,
+        default:""
+    },
+    bvnPhone: {
+        type:String,
+        default:""
+    },
+    dob: {
+        type:String,
+        default:""
+    },
+    email: {
+        type:String,
+        default:""
+    },
+    employmentStatus: {
+        type:String,
+        default:""
+    },
+    firstName: {
+        type:String,
+        default:""
     },
     gender: {
-        type: String,
-        enum : ['Male','Female'],
-        default:"Male",
-        required:true
+        type:String,
+        default:""
     },
-    dob:{
-        type:Date,
-        required:true
+    identification: {
+        type:String,
+        default:""
     },
-    stateOrigin:{
-        type:String
+    lgaOrigin: {
+        type:String,
+        default:""
     },
-    lgaOrigin:{
-        type:String
+    maritalStatus: {
+        type:String,
+        default:""
+    },
+    middleName: {
+        type:String,
+        default:""
+    },
+    monthlyIncome: {
+        type:String,
+        default:""
+    },
+    outstandingLoan: {
+        type:String,
+        default:""
+    },
+    passport: {
+        type:String,
+        default:""
+
+    },
+    phoneNumber: {
+        type:String,
+        default:""
+
+    },
+    phoneNumberAlt: {
+        type:String,
+        default:""
+
+    },
+    qualification: {
+        type:String,
+        default:""
+
+    },
+    salaryPayDay: {
+        type:String,
+        default:""
+
+    },
+    signature: {
+        type:String,
+        default:""
+
+    },
+    stateOrigin: {
+        type:String,
+        default:""
+
     },
     streetNumber:{
-        type:String
-    },
-    ResidentialAddress:{
-        type:String
-    },
-    Email:{
         type:String,
-        unique:true,
-        validate:{
-            validator:function(v){
-                return emailRegexVal.test(v)
-            },
-            message:mail => `${mail.value} is not a valid email address !`
-        },
-        required:[true,'Please enter your email address']
+        default:""
+
     },
-    MobileNumber:{
+    surname: {
         type:String,
-        validate:{
-            validator:function(v){
-                return phoRegexVal.test(v)
-            },
-            message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
-        },
-        required: [true, 'phone number required'],  
-        unique:true
+        default:""
+
     },
-    MobileNumber2:{
+    utility:{
         type:String,
-        required:false,
-        validate:{
-            validator:function(v){
-                return phoRegexVal.test(v)
-            },
-            message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`
-        }
+        default:""
+
+    },
+    workAddress:{
+        type:String,
+        default:""
+
+    },
+    workPlace:{
+        type:String,
+        default:""
     },
     nextOfKin:{
         type:Array,
@@ -76,86 +138,14 @@ const loanSchema = mongoose.Schema({
             middleName:{type:String},
             firstName:{type:String,required:true},
             Relationship:{type:String},
-            Email:{type:String,validate:{ validator:function(v){return emailRegexVal.test(v)},message:mail => `${mail.value} is not a valid email address !`}}}],
-            MobileNo:{type:String,validate:{validator:function(v){return phoRegexVal.test(v)},message: props => `${props.value} is not a valid phone number!, please enter your phonee number with a country code with no spaces`}}
-    },
-    EmploymentStatus:{
+            Email:{type:String},
+            MobileNo:{type:String}
+    }]},
+    fundingPartner:{
         type:String,
-        enum:['Employed','Unemployed'],
-        required:true
-    },
-    EducationalBackground:{
-        type:String,
-        required:true
-    },
-    MonthlyIncome:{
-        type:String,
-    },
-    PayDay:{
-        type:Date,
-    },
-    MaritalStatus:{
-        type:String,
-    },
-    AnnualRent:{
-        type:String,
-    },
-    OutstandingLoan:{
-        type:String,
-    },
-    authy_id:{
-        type:String
-    },
-    token:{
-        type:String
-    },
-    Signature:{
-        type:String
-    },
-    verified:{
-        type:String,
-        default:false
+        default:""
     }
 })
 
 
 module.exports=mongoose.model("loan",loanSchema)
-
-
-// surname: "",
-// firstName: "",
-// middleName: "",
-// gender: "",
-// dob: "",
-// stateOrigin:"",
-// lgaOrigin:"",
-// streetNumber:"",
-// addressRes:"",
-// phoneNumber: "",
-// phoneNumberAlt: "",
-// BVN:"",
-// bvnPhone:"",
-// authPin:"",
-// email: "",
-// kinOneSurname:"",
-// kinOneMiddleName:"",
-// kinOneFirstName:"",
-// kinOneRelationship:"",
-// kinOneEmail:"",
-// kinOneNumber:"",
-// kinTwoSurname:"",
-// kinTwoMiddleName:"",
-// kinTwoFirstName:"",
-// kinTwoRelationship:"",
-// kinTwoEmail:"",
-// kinTwoNumber:"",
-// employmentStatus:"",
-// qualification:"",
-// monthlyIncome:"",
-// salaryPayDay:"",
-// maritalStatus:"",
-// annualRent:"",
-// outstandingLoan:"",
-// utility:"",
-// passport:"",
-// signature:"",

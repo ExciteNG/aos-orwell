@@ -121,8 +121,12 @@ const businessRegistrationSchema =  new mongoose.Schema({
         type:String
     },
     signature:{
-        type:Object
+        type:String
     },
+    status:{
+        type:String,
+        default:"Pending"
+    }
 });
 
 module.exports = mongoose.model('businessRegSchema',businessRegistrationSchema);
