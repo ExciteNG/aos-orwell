@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const LoanModel = require('../models/loan');
 
 const createAccountChannel = (req, res) => {
@@ -62,6 +63,7 @@ const createAccountChannel = (req, res) => {
     phone:kinTwoNumber,
     },
   ]
+  // eslint-disable-next-line prettier/prettier
   const newAcct = new LoanModel({...req.body,nextOfKin:NOK, fundingPartner:"CHANNELLE"});
   newAcct.save()
     .then((record) => {
