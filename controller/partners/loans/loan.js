@@ -11,8 +11,18 @@ const getAccountAppChannelle = async (req, res) => {
   return res.json({acct:null})
 };
 
+const getApplicationInfo = async (req,res)=>{
+
+  const application = await Loan.findById(req.params.application);
+  if(application){
+   return res.json({code:200,doc:application})
+  }
+  return res.json({code:404, doc:[]})
+}
+
 
 module.exports = {
   getAccountAppChannelle,
+  getApplicationInfo
   
 };

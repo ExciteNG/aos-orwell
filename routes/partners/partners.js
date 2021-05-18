@@ -19,7 +19,8 @@ router.put('/business/check-names-reg/approve-applicants',requireJWT,Controller.
 
 
 // Loan
-router.get('/loan/channelle/new-account/get-all-applicants', LoanController.getAccountAppChannelle)
+router.get('/loan/channelle/new-account/get-all-applicants', LoanController.getAccountAppChannelle);
+router.get('/loan/channelle/new-account/get-applicantion/:application', LoanController.getApplicationInfo);
 
 
 module.exports = router
