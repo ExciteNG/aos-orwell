@@ -64,7 +64,7 @@ router.post('/app/profile/get/profile', async (req,res)=>{
 
 // springboard approved status for affiliate
 router.put('/app/profile/get/profile/approved', async (req,res)=>{
-    const {profile} = req.body
+    const {profile,state} = req.body
     // const {email,userType} = req.user
     // if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 const generateRefNo = Randomstring.generate({
@@ -73,14 +73,26 @@ const generateRefNo = Randomstring.generate({
     readable:true
 })
     //
-    let affiliate = await Profiles.findOne({_id:profile})
-
+    let affiliate = await Profiles.findOne({_id:profile});
+    if(state==="Accept"){
         affiliate.regStatus.isApproved=true;
-        affiliate.regStatus.dateApproved='3/2/2019'
+        affiliate.regStatus.dateApproved=new Date().toLocaleDateString();
         affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus')
         affiliate.save()
-        res.json({code:201,affiliate})
+        return res.json({code:201,affiliate})
+        //
+    }
+    if(state==="Decline"){
+        affiliate.regStatus.isApproved=false;
+        affiliate.regStatus.dateApproved="";
+        affiliate.affiliateCode=`AF${generateRefNo}`
+        affiliate.markModified('regStatus');
+        affiliate.save();
+        return res.json({code:201,affiliate})
+        //
+    }
+      
 
 })
 
