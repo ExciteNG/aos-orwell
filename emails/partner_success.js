@@ -968,3 +968,5 @@ const partnerSuccess = () => {
 }
 
 module.exports = partnerSuccess;
+
+v=08090525599
