@@ -28,7 +28,7 @@ const getOfferById = async (req,res)=>{
 
 
 const addElectronics = async (req,res)=>{
-    const {title,description,price,brand,subCategory,condition,images} = req.body
+    const {title,description,price,brand,subCategory,condition,images,quantity,salesTarget,} = req.body
        // console.log(req.body)
        const {email} = req.user
        const profile = await Profiles.findOne({email:email})
