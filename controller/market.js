@@ -46,7 +46,7 @@ const addElectronics = async (req,res)=>{
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
-       res.json({code:201,msg:"posted to social",added:true});
+       return res.json({code:201,msg:"posted to social",added:true});
 }
 const addFashion = async (req,res)=>{
     const {title,description,price,brand,subCategory,condition,size,gender,images} = req.body
