@@ -16,8 +16,8 @@ const updatePartner = async (req, res) => {
       //send mail
       nodeoutlook.sendEmail({
         auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$",
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_USER,
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
@@ -33,8 +33,8 @@ const updatePartner = async (req, res) => {
       //send mail
       nodeoutlook.sendEmail({
         auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$",
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_USER,
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,

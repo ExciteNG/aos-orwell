@@ -12,6 +12,7 @@ const { use } = require("passport");
 const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
+const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -74,8 +75,8 @@ const signUp = async (req, res, next) => {
       //send mail
       nodeoutlook.sendEmail({
         auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$",
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
@@ -188,8 +189,8 @@ const signUpPartner = (req, res, next) => {
         //send mail
         nodeoutlook.sendEmail({
           auth: {
-            user: "enquiry@exciteafrica.com",
-            pass: "ExciteManagement123$",
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
@@ -294,6 +295,22 @@ const signUpAffiliates = async (req, res, next) => {
         }
       });
       // req.user = userInstance;
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "Welcome",
+        html: affiliateAcknowledge(),
+        text: affiliateAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
       res.json({ code: 201, mesage: "Account created" });
       // next();
     }
@@ -361,6 +378,22 @@ const signUpRefCode = async (req, res, next) => {
         refBy.affiliateCount = currentCnt + 1;
         refBy.markModified("affiliateCount");
         refBy.save();
+              //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "Welcome",
+        html: affiliateAcknowledge(),
+        text: affiliateAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
         res.json({ code: 201, mesage: "Account created" });
       }
       // req.user = userInstance;

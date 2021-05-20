@@ -3,7 +3,10 @@ const { requireJWT } = require('../middleware/auth')
 const Randomstring = require('randomstring')
 const router = express.Router()
 const Profiles = require('../models/Profiles')
-
+const affiliateAccept = require('../emails/affiliate_success');
+const affiliateDecline = require('../emails/affiliate_decline');
+var nodeoutlook = require('nodejs-nodemailer-outlook');
+const affiliateSuccess = require('../emails/affiliate_success')
 
 
 // my affiliate profile
@@ -79,9 +82,27 @@ const generateRefNo = Randomstring.generate({
         affiliate.regStatus.dateApproved=new Date().toLocaleDateString();
         affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus')
-        affiliate.save()
+        affiliate.save();
+
+        //send acceptance email
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS
+            },
+            from: process.env.EXCITE_ENQUIRY_USER,
+            to: affiliate.email,
+            subject: 'NOTIFICATION ON AFFILIATE APPLICATION',
+            html: affiliateSuccess(),
+            text: affiliateSuccess(),
+            replyTo: 'enquiry@exciteafrica.com',
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure:false,
+           
+        })
         return res.json({code:201,affiliate})
-        //
+        
     }
     if(state==="Decline"){
         affiliate.regStatus.isApproved=false;
@@ -89,8 +110,27 @@ const generateRefNo = Randomstring.generate({
         affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus');
         affiliate.save();
+        //send rejection email
+
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS
+            },
+            from: process.env.EXCITE_ENQUIRY_USER,
+            to: affiliate.email,
+            subject: 'NOTIFICATION ON AFFILIATE APPLICATION',
+            html: affiliateDecline(),
+            text: affiliateDecline(),
+            replyTo: 'enquiry@exciteafrica.com',
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure:false,
+           
+        })
+
         return res.json({code:201,affiliate})
-        //
+        
     }
       
 
