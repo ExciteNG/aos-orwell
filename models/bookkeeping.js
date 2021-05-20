@@ -13,7 +13,8 @@ const bookModel = new mongoose.Schema({
     required: true
   },
   quantity: {
-    type: Number
+    type: Number,
+    default: 1
   },
   cost: {
     type: Number,
