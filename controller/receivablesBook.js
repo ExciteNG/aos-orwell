@@ -15,6 +15,7 @@ const createRecord = async (req, res) => {
           storeInfo:storeInfo,
           email
         })
+        //send invoice mail
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
