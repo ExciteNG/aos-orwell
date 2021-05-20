@@ -1,5 +1,7 @@
 const ReceivablesModel = require('../models/receivablesBook');
 const Profiles = require('./../models/Profiles');
+var nodeoutlook = require("nodejs-nodemailer-outlook");
+const invoiceMail = require('../emails/invoice_mail')
 
 const createRecord = async (req, res) => {
   const {email, userType} = req.user;
@@ -16,6 +18,21 @@ const createRecord = async (req, res) => {
           email
         })
         //send invoice mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `INVOICE FOR ${thisSales.productName}`,
+          html: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
+          text: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
