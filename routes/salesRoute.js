@@ -1,27 +1,24 @@
 const router = require('express').Router();
-const Records = require('../models/bookkeeping');
+const Records = require('../models/salesBook');
 const Profiles = require('../models/Profiles');
 const bodyParser = require('body-parser');
 const {requireJWT} = require('../middleware/auth')
 router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
 
-// get all book keeping records
-router.get('/all',requireJWT, async (req, res) => {
+// get all sales records
+router.get('/all', requireJWT, async (req, res) => {
     const {email,userType} = req.user
 
     try {
         const records =  await Records.find({email:email})
         .sort({createdAt: 'asc' })
     .lean()
-    // if (records.length === 0){
-    //     return res.status(404).json({message:"no records yet"})
-    // }
    return res.status(200).json({"records":records})
     }
     catch (err){
         console.error(err)
-       return res.json({status:500,"error":err.message})
+       return res.json({status:500,"error": err.message})
     }
 })
 
@@ -43,9 +40,6 @@ router.get('/:id', async (req,res)=>{
 
 // update a new record
 router.put('/:id', async (req,res) =>{
-
-    // let hex = /[0-9A-Fa-f]{6}/g;
-    // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
     const id = req.params.id
     try {
         let record = await Records.findById({_id:id}).lean()
@@ -53,24 +47,21 @@ router.put('/:id', async (req,res) =>{
         res.json({status:404,message:"not found"})
    }
     else {
-
-        let {productName, price, quantity, buyersContact, description, salesTarget} = req.body
+        let {productName, price, buyersContact, description} = req.body
         record = await Records.findByIdAndUpdate({_id:id}, req.body,{
             new: true
-            // runValidators: true
         })
      }
-    return res.json({status:200,update:record})
+    return res.json({ status:200, update:record})
     }
     catch (err) {
         console.error(err)
-       return res.send({status:500,error:err.message})
+       return res.send({status:500, error: err.message})
     }
 })
 
-//delete a story from the database
+//delete a sale
 router.delete('/:id', async (req,res) => {
-
     const id = req.params.id
 
     try {
@@ -82,7 +73,6 @@ router.delete('/:id', async (req,res) => {
         await Records.remove({_id:id})
        return  res.status(200).send({message:"Delete successful !"})
           }
-
     } catch (err) {
         console.error(err)
         return res.send({status:500,error:err.message})
@@ -91,7 +81,6 @@ router.delete('/:id', async (req,res) => {
 
 // delete all records
 router.delete('/record', async (req,res) => {
-
     const id = req.params.id
 
     try {
@@ -102,7 +91,6 @@ router.delete('/record', async (req,res) => {
         await Records.deleteMany()
        return  res.status(200).send({message:"Wipedown complete and successful !"})
     }
-
     } catch (err) {
         console.error(err)
         return res.send({status:500,error:err.message})
@@ -110,14 +98,18 @@ router.delete('/record', async (req,res) => {
 })
 
 // add a new record
-router.post('/' ,requireJWT, async (req,res) =>{
+router.post('/new' , requireJWT, async (req,res) =>{
+  // console.log(req.body,'this is from body');
   const {email,userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
     try {
         // req.body.user = req.user.id
+        const thisSales=req.body;
+       delete thisSales._id
+       console.log(thisSales)
         await Records.create({
-          ...req.body,
+          ...thisSales,
           storeInfo:storeInfo,
           email
         })

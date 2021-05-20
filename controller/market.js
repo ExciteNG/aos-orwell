@@ -3,6 +3,8 @@ const Profiles = require('../models/Profiles');
 const Banners = require('./../models/adBanner');
 const Deals = require('./../models/deals')
 const {PostToSocialMedia} = require('./../social/social')
+const ProductRecord =require('../models/bookkeeping');
+// const re {  } from '../models/receivablesBook';
 
 const getCategory = async (req,res)=>{
     const {category} =req.body
@@ -14,14 +16,14 @@ const getCategory = async (req,res)=>{
 const getItemById = async (req,res)=>{
     const id = req.params.id
     // console.log(id)
-    // 
+    //
     const item = await Products.findOne({_id:id})
     res.json({code:201,item})
 }
 const getOfferById = async (req,res)=>{
     const id = req.params.id
     // console.log(id)
-    // 
+    //
     const item = await Deals.findOne({_id:id})
     res.json({code:201,item})
 }
@@ -37,10 +39,34 @@ const addElectronics = async (req,res)=>{
        const priority=profile.subscriptionLevel
        const item = {title,description,price,brand,subCategory,condition,storeInfo,category:'electronics',email:email,priority,images:images}
        const newProduct = new Products(item)
+       // newProduct.save()
+       //
+       // stock code
+       const stockRecord = {
+         productName:title,
+         cost:Number(0),
+         price:Number(price),
+         total:Number(quantity) * Number(price),
+         quantity:Number(quantity),
+         salesTarget:Number(quantity),
+         description,
+         storeInfo,
+         email,
+       }
+
+       const newStock = new ProductRecord(stockRecord);
+       const stockId = newStock._id;
+       newProduct.stock=stockId;
        newProduct.save()
-   
+       try {
+         newStock.save()
+       } catch  (error) {
+         console.log(error);
+       }
+
+
        if(profile.subscriptionLevel !== 3) return res.json({code:201, msg:"product added"});
-   
+
        // Post to social media
        const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
        const socialPosting =await PostToSocialMedia(email,data);

@@ -43,6 +43,8 @@ app.use(morgan('short'));
 
 // Routes
 // define further routes
+app.use('/sales', require('./routes/salesRoute'));
+app.use('/receivables', require('./routes/receivablesRoute'));
 app.use('/book-keeping', require('./routes/book'));
 app.use('/kiosk',require('./routes/kioskroutes'));
 app.use('/deals', require('./routes/dealroutes'));
@@ -71,7 +73,6 @@ app.use([
   require('./routes/adbanner'),
   require('./routes/tax'),
   require('./routes/confirmation')
-
 ])
 
 // Error handling

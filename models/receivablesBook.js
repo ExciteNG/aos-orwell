@@ -2,7 +2,7 @@
 const mongoose = require('./init')
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const bookModel = new mongoose.Schema({
+const receivablesModel = mongoose.Schema({
   productName: {
     type: String,
     required: true,
@@ -13,8 +13,7 @@ const bookModel = new mongoose.Schema({
     required: true
   },
   quantity: {
-    type: Number,
-    default: 1
+    type: Number
   },
   cost: {
     type: Number,
@@ -45,7 +44,7 @@ const bookModel = new mongoose.Schema({
   },
   typeOfLedger: {
     type: String,
-    default: "Income"
+    default: "sales"
   },
   salesTarget: {
     type: Number
@@ -53,6 +52,7 @@ const bookModel = new mongoose.Schema({
   storeInfo:{
     type:Object,
   }
-})
+},
+{ timestamps: true });
 
-const bookrecords = (module.exports = mongoose.model('bookrecord', bookModel))
+module.exports = mongoose.model('ReceivablesRecord', receivablesModel);
