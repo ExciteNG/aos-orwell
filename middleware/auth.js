@@ -502,7 +502,7 @@ const signJWTForUser = (req, res) => {
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  // console.log('sign  ing jwt', req.user)
+  console.log('sign  ing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
