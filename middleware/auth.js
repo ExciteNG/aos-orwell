@@ -682,6 +682,7 @@ const passwordReset = (req,res) => {
 module.exports = {
   initialize: passport.initialize(),
   signUp,
+  signUpAffiliates,
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
