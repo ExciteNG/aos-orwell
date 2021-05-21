@@ -12,7 +12,7 @@ const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
 router.post('/forgot-password', function (req,res,next) {
-
+  console.log(req.body.email)
     async.waterfall([
         function(done) {
           crypto.randomBytes(20, function(err, buf) {
