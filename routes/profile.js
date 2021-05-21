@@ -3,7 +3,10 @@ const { requireJWT } = require('../middleware/auth')
 const Randomstring = require('randomstring')
 const router = express.Router()
 const Profiles = require('../models/Profiles')
-
+const affiliateAccept = require('../emails/affiliate_success');
+const affiliateDecline = require('../emails/affiliate_decline');
+var nodeoutlook = require('nodejs-nodemailer-outlook');
+const affiliateSuccess = require('../emails/affiliate_success')
 
 
 // my affiliate profile
@@ -21,7 +24,7 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
     const {bank,accountNo,accountName,paymentMode} = req.body
     const {email,userType} = req.user
     console.log(userType)
-    if(userType !== "EX20AF") return res.status(401).json({message:'Unauthorized'})
+    if(userType !== "EX20AF") return res.json({code:401,message:'Unauthorized'})
     const profile = await Profiles.findOne({email:email});
 
     profile.accountDetails={bank:bank,accountName:accountName,accountNo:accountNo,paymentMode:paymentMode,bvn:"",branch:""}
@@ -29,6 +32,21 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
     profile.save()
 
     res.json(profile)
+})
+// affilites update profile
+
+router.put('/app/profile-self-upgrade/affiliate', requireJWT, async (req,res)=>{
+    //do something
+    const {email,userType} = req.user
+    if(userType !== "EX20AF") return res.json({code:401,message:'Unauthorized'})
+    const profile = await Profiles.findOne({email:email});
+    profile.identification = {id:req.body.id,idType:req.body.idType,passport:req.body.passport}
+    profile.fullname = req.body.fullname
+    profile.phone=req.body.phone
+    profile.markModified('identification')
+    profile.markModified('fullname')
+    profile.markModified('phone')
+    profile.save()
 })
 
 
@@ -79,9 +97,27 @@ const generateRefNo = Randomstring.generate({
         affiliate.regStatus.dateApproved=new Date().toLocaleDateString();
         affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus')
-        affiliate.save()
+        affiliate.save();
+
+        //send acceptance email
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS
+            },
+            from: process.env.EXCITE_ENQUIRY_USER,
+            to: affiliate.email,
+            subject: 'NOTIFICATION ON AFFILIATE APPLICATION',
+            html: affiliateSuccess(),
+            text: affiliateSuccess(),
+            replyTo: 'enquiry@exciteafrica.com',
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure:false,
+           
+        })
         return res.json({code:201,affiliate})
-        //
+        
     }
     if(state==="Decline"){
         affiliate.regStatus.isApproved=false;
@@ -89,8 +125,27 @@ const generateRefNo = Randomstring.generate({
         affiliate.affiliateCode=`AF${generateRefNo}`
         affiliate.markModified('regStatus');
         affiliate.save();
+        //send rejection email
+
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS
+            },
+            from: process.env.EXCITE_ENQUIRY_USER,
+            to: affiliate.email,
+            subject: 'NOTIFICATION ON AFFILIATE APPLICATION',
+            html: affiliateDecline(),
+            text: affiliateDecline(),
+            replyTo: 'enquiry@exciteafrica.com',
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure:false,
+           
+        })
+
         return res.json({code:201,affiliate})
-        //
+        
     }
       
 

@@ -1,10 +1,6 @@
 const AdbannerModel = require('../models/adBanner');
 const Profiles = require('./../models/Profiles')
-
-
-
-
-// 
+ 
 const createAdbanner = async(req, res) => {
   const {email,userType}= req.user;
   console.log(email)

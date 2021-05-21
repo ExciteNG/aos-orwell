@@ -58,7 +58,7 @@ const ProductSchema = new mongoose.Schema({
       },
       message:mail => `${mail.value} is not a valid email address !`
   },
-  required:[true,'Please enter your email address'] 
+  required:[true,'Please enter your email address']
   },
   priority:{
     type:Number,
@@ -80,6 +80,10 @@ const ProductSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  stock:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"bookrecord"
+  }
 });
 
 const Product = (module.exports = mongoose.model("Product", ProductSchema));

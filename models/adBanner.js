@@ -2,7 +2,6 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require('./init');
 
-
 const adbannerSchema = mongoose.Schema({
   categories: { type: String, required: true },
   purpose: { type: String, required: true },

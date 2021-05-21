@@ -12,6 +12,7 @@ const { use } = require("passport");
 const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
+const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -27,6 +28,9 @@ passport.use(User.createStrategy());
 const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
+  }
+  if (req.body.password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
   // console.log(req.body);
   await User.findOne({ email: req.body.email }, (err, doc) => {
@@ -74,8 +78,8 @@ const signUp = async (req, res, next) => {
       //send mail
       nodeoutlook.sendEmail({
         auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$",
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
@@ -125,7 +129,10 @@ const signUpPartner = (req, res, next) => {
   };
   // console.log(req.body)
   if (!email || !password) {
-    res.status(400).send("No username or password provided.");
+    return res.status(400).send({code:400,error:"No email or password provided."}); 
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
   User.findOne({ email: email }, (err, doc) => {
     if (doc) {
@@ -188,8 +195,8 @@ const signUpPartner = (req, res, next) => {
         //send mail
         nodeoutlook.sendEmail({
           auth: {
-            user: "enquiry@exciteafrica.com",
-            pass: "ExciteManagement123$",
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
@@ -228,7 +235,10 @@ const signUpAffiliates = async (req, res, next) => {
     address,
   } = req.body;
   if (!email || !password) {
-    res.json({ status: 400, code: "No username or password provided" });
+    return res.json({ status: 400, code: "No email or password provided" });
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
 
   const validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email);
@@ -294,6 +304,22 @@ const signUpAffiliates = async (req, res, next) => {
         }
       });
       // req.user = userInstance;
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "ACKNOWLEDGEMENT EMAIL",
+        html: affiliateAcknowledge(),
+        text: affiliateAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
       res.json({ code: 201, mesage: "Account created" });
       // next();
     }
@@ -316,7 +342,10 @@ const signUpAffiliates = async (req, res, next) => {
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No username or password provided.");
+    res.status(400).send("No email or password provided.");
+  }
+  if (req.body.password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -361,6 +390,22 @@ const signUpRefCode = async (req, res, next) => {
         refBy.affiliateCount = currentCnt + 1;
         refBy.markModified("affiliateCount");
         refBy.save();
+              //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "ACKNOWLEDGEMENT EMAIL",
+        html: affiliateAcknowledge(),
+        text: affiliateAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
         res.json({ code: 201, mesage: "Account created" });
       }
       // req.user = userInstance;
@@ -372,9 +417,9 @@ const signUpRefCode = async (req, res, next) => {
 
 const setUpSpringBoard = (req, res, next) => {
   if (req.body.token !== process.env.SPRING_BOARD_ACCESS_TOKEN)
-    return res.status(400).json({ msg: "Invalid Token" });
+    return res.json({code:400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No username or password provided.");
+    res.send({code:400,error:"No username or password provided."});
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -403,9 +448,9 @@ const setUpSpringBoard = (req, res, next) => {
 };
 const setUpAdmin = async (req, res, next) => {
   if (req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN)
-    return res.status(400).json({ msg: "Invalid Token" });
+    return res.json({code:400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send("No username or password provided.");
+    return res.send({code:400,error:"No email or password provided."});
   }
   // console.log(req.body)
   User.findOne({ email: req.body.email }, async (err, doc) => {
