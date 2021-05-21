@@ -12,7 +12,7 @@ const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
 router.post('/forgot-password', function (req,res,next) {
-
+  console.log(req.body.email)
     async.waterfall([
         function(done) {
           crypto.randomBytes(20, function(err, buf) {
@@ -22,6 +22,7 @@ router.post('/forgot-password', function (req,res,next) {
         },
         function(token, done) {
           User.findOne({ email: req.body.email }, function(err, user) {
+            
             if (!user) {
              return   res.json({code:500,message:"No account with that email address exists."});
               // return res.redirect('/password-forgot/forgot-password');

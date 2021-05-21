@@ -134,12 +134,12 @@ const loanSchema = mongoose.Schema({
     nextOfKin:{
         type:Array,
         default:[{
-            Surname:{type:String,required:true},
+            surname:{type:String},
             middleName:{type:String},
-            firstName:{type:String,required:true},
-            Relationship:{type:String},
-            Email:{type:String},
-            MobileNo:{type:String}
+            firstName:{type:String},
+            relationship:{type:String},
+            email:{type:String},
+            phone:{type:String}
     }]},
     fundingPartner:{
         type:String,

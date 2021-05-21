@@ -5,13 +5,14 @@ const createTax = (req, res) => {
   const taxModel = new TaxModel({
   payer: req.body.payer,
   address: req.body.address,
-  businessNatue: req.body.businessNatue,
-  rcNumber: req.body.rcNumber,
-  taxType: req.body.taxType,
+  businessNature: req.body.businessNature,
+  rc: req.body.rc,
+  type: req.body.type,
   payerId: req.body.payerId,
-  fromDate: req.body.fromDate,
-  toDate: req.body.toDate,
+  from: req.body.from,
+  to: req.body.to,
   amount: req.body.amount,
+  details:req.body.reference
   // email:email
   });
   taxModel.save()
@@ -20,7 +21,7 @@ const createTax = (req, res) => {
         message: 'Tax record posted successful!ly'
       });
     })
-    .catch((err) => {
+    .catch((err) => {console.log(err)
       res.status(400).json({
         message: 'Oops! Something went wrong.',
         err

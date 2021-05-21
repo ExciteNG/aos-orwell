@@ -24,7 +24,7 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
     const {bank,accountNo,accountName,paymentMode} = req.body
     const {email,userType} = req.user
     console.log(userType)
-    if(userType !== "EX20AF") return res.status(401).json({message:'Unauthorized'})
+    if(userType !== "EX20AF") return res.json({code:401,message:'Unauthorized'})
     const profile = await Profiles.findOne({email:email});
 
     profile.accountDetails={bank:bank,accountName:accountName,accountNo:accountNo,paymentMode:paymentMode,bvn:"",branch:""}
@@ -32,6 +32,21 @@ router.put('/app/profile/get-my-profile/bank-update', requireJWT, async (req,res
     profile.save()
 
     res.json(profile)
+})
+// affilites update profile
+
+router.put('/app/profile-self-upgrade/affiliate', requireJWT, async (req,res)=>{
+    //do something
+    const {email,userType} = req.user
+    if(userType !== "EX20AF") return res.json({code:401,message:'Unauthorized'})
+    const profile = await Profiles.findOne({email:email});
+    profile.identification = {id:req.body.id,idType:req.body.idType,passport:req.body.passport}
+    profile.fullname = req.body.fullname
+    profile.phone=req.body.phone
+    profile.markModified('identification')
+    profile.markModified('fullname')
+    profile.markModified('phone')
+    profile.save()
 })
 
 

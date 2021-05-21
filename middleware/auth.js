@@ -29,7 +29,10 @@ const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
-  console.log(req.body);
+  if (req.body.password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
+  }
+  // console.log(req.body);
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
@@ -126,7 +129,10 @@ const signUpPartner = (req, res, next) => {
   };
   // console.log(req.body)
   if (!email || !password) {
-    res.status(400).send("No username or password provided.");
+    return res.status(400).send({code:400,error:"No email or password provided."}); 
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
   User.findOne({ email: email }, (err, doc) => {
     if (doc) {
@@ -229,7 +235,10 @@ const signUpAffiliates = async (req, res, next) => {
     address,
   } = req.body;
   if (!email || !password) {
-    res.json({ status: 400, code: "No username or password provided" });
+    return res.json({ status: 400, code: "No email or password provided" });
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
 
   const validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email);
@@ -303,7 +312,7 @@ const signUpAffiliates = async (req, res, next) => {
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
-        subject: "Welcome",
+        subject: "ACKNOWLEDGEMENT EMAIL",
         html: affiliateAcknowledge(),
         text: affiliateAcknowledge(),
         replyTo: "enquiry@exciteafrica.com",
@@ -333,7 +342,10 @@ const signUpAffiliates = async (req, res, next) => {
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No username or password provided.");
+    res.status(400).send("No email or password provided.");
+  }
+  if (req.body.password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -386,7 +398,7 @@ const signUpRefCode = async (req, res, next) => {
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
-        subject: "Welcome",
+        subject: "ACKNOWLEDGEMENT EMAIL",
         html: affiliateAcknowledge(),
         text: affiliateAcknowledge(),
         replyTo: "enquiry@exciteafrica.com",
@@ -405,9 +417,9 @@ const signUpRefCode = async (req, res, next) => {
 
 const setUpSpringBoard = (req, res, next) => {
   if (req.body.token !== process.env.SPRING_BOARD_ACCESS_TOKEN)
-    return res.status(400).json({ msg: "Invalid Token" });
+    return res.json({code:400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No username or password provided.");
+    res.send({code:400,error:"No username or password provided."});
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -436,9 +448,9 @@ const setUpSpringBoard = (req, res, next) => {
 };
 const setUpAdmin = async (req, res, next) => {
   if (req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN)
-    return res.status(400).json({ msg: "Invalid Token" });
+    return res.json({code:400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send("No username or password provided.");
+    return res.send({code:400,error:"No email or password provided."});
   }
   // console.log(req.body)
   User.findOne({ email: req.body.email }, async (err, doc) => {
@@ -470,8 +482,8 @@ const setUpAdmin = async (req, res, next) => {
 const signJWTForUser = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
-  if (req.user.userType !== "EX10AF")
-    return res.status(400).json({ msg: "invalid login" });
+  // if (req.user.userType !== "EX10AF")
+  //   return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
   const token = JWT.sign(
     {
@@ -490,7 +502,7 @@ const signJWTForUser = (req, res) => {
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  // console.log('sign  ing jwt', req.user)
+  console.log('sign  ing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
