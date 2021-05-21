@@ -17,23 +17,29 @@ const createRecord = async (req, res) => {
           storeInfo:storeInfo,
           email
         })
-        //send invoice mail
-        nodeoutlook.sendEmail({
-          auth: {
-            user: process.env.EXCITE_ENQUIRY_USER,
-            pass: process.env.EXCITE_ENQUIRY_PASS,
-          },
-          from: "enquiry@exciteafrica.com",
-          to: user.email,
-          subject: `INVOICE FOR ${thisSales.productName}`,
-          html: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
-          text: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
-          replyTo: "enquiry@exciteafrica.com",
-          onError: (e) => console.log(e),
-          onSuccess: (i) => console.log(i),
-          secure: false,
-        });
-        return res.status(201).send({message:"success"})
+        //send invoice mail if email is present
+        if (thisSales.buyersEmail){
+          //sendmail
+          nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+            from: "enquiry@exciteafrica.com",
+            to: thisSales.buyersEmail,
+            subject: `INVOICE FOR ${thisSales.productName}`,
+            html: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
+            text: invoiceMail(thisSales.productName, thisSales.price, thisSales.quantity, thisSales.total),
+            replyTo: "enquiry@exciteafrica.com",
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i),
+            secure: false,
+          });
+          
+        }else{
+          console.log('invoice generated successfully')
+        }
+        return res.send({code:201,message:"success"})
     } catch (err) {
         console.error(err)
         res.send({status:500, message:err.message})
