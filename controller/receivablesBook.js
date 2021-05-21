@@ -7,6 +7,9 @@ const createRecord = async (req, res) => {
   const storeInfo = profiles.storeInfo;
     try {
         // req.body.user = req.user.id
+        // if (req.body.quantity === null) req.body.quantity = 1;
+        //
+        // req.body.qtySum = 1 * req.body.price;
         const thisSales=req.body;
        delete thisSales._id
        console.log(thisSales)
