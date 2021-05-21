@@ -44,9 +44,13 @@ const myBankUpdate = async (req, res) => {
 const getTaxApplicants = async (req, res) => {
   const { email } = req.user;
   //  console.log(email)
-
-  const tax = await Tax.find();
-  res.json({ code: 201, tax: tax });
+  try {
+    const tax = await Tax.find();
+  return res.json({ code: 201, tax: tax });
+  } catch (error) {
+    return res.status(500).json({message:"Server Error"})
+  }
+  
 };
 
 const getCheckNameApplicants = async (req, res) => {

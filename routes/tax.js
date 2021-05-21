@@ -8,7 +8,7 @@ const taxCtrl = require('../controller/tax');
 
 // Tax ROUTES
 // post taxs
-router.post('/tax/new', taxCtrl.createTax);
+router.post('/tax/new', requireJWT, taxCtrl.createTax);
 
 // update a tax
 router.put('/tax/:id', taxCtrl.updateTax);

@@ -28,7 +28,7 @@ const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
-  console.log(req.body);
+  // console.log(req.body);
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
@@ -437,8 +437,8 @@ const setUpAdmin = async (req, res, next) => {
 const signJWTForUser = (req, res) => {
   // console.log('signing jwt', req.user)
   // check login route authorization
-  if (req.user.userType !== "EX10AF")
-    return res.status(400).json({ msg: "invalid login" });
+  // if (req.user.userType !== "EX10AF")
+  //   return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
   const token = JWT.sign(
     {
