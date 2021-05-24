@@ -11,6 +11,8 @@ const createKiosk =async (req, res) => {
       res.status(201).json({
         message: 'Application submitted successfully'
       });
+
+      //Send Email Here
     })
     .catch((err) => {console.log(err)
       res.status(400).json({
