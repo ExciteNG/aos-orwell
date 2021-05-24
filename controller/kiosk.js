@@ -1,4 +1,6 @@
 const KioskModel = require('../models/kiosk');
+const nodeoutlook = require('nodejs-nodemailer-outlook');
+const kioskAcknowledge=require('../emails/kiosk_acknowledge');
 
 const createKiosk =async (req, res) => {
   const {email, userType}= req.user;
@@ -11,6 +13,24 @@ const createKiosk =async (req, res) => {
       res.status(201).json({
         message: 'Application submitted successfully'
       });
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+          from: 'enquiry@exciteafrica.com',
+          to: data.email,
+          subject: 'KIOSK ACKNOWLEDGEMENT EMAIL',
+          html: kioskAcknowledge(),
+          text: kioskAcknowledge(),
+          replyTo: 'enquiry@exciteafrica.com',
+          onError: (e) => console.log(e),
+          onSuccess: (i) => {
+          // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+          console.log(i)
+          },
+          secure:false,
+      })
 
       //Send Email Here
     })
