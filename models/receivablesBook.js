@@ -13,7 +13,8 @@ const receivablesModel = mongoose.Schema({
     required: true
   },
   quantity: {
-    type: Number
+    type: Number,
+    default: 1
   },
   cost: {
     type: Number,
@@ -31,6 +32,16 @@ const receivablesModel = mongoose.Schema({
   },
   description: {
     type: String
+  },
+  buyersEmail: {
+    type: String,
+    validate:{
+      validator:function(v){
+          return emailRegexVal.test(v)
+      },
+      message:mail => `${mail.value} is not a valid email address !`
+  },
+  // required:[true,'Please enter your email address']
   },
   email:{
       type:String,

@@ -38,6 +38,45 @@ router.get('/:id', async (req,res)=>{
     }
 })
 
+// get a specific record by product name
+router.get('/name/:id', async (req,res)=>{
+    const productName = req.params.id
+    try {
+        const storeId = await Records.find({productName:productName})
+        if (storeId.length < 1){
+            return res.send({status:404,message:"not found"})
+        }
+        return res.status(200).json({record:storeId})
+
+    } catch (err) {
+        console.error(err)
+        res.json({status:500,error:err.message})
+    }
+})
+
+// update record by product name
+router.put('/name/:id', async (req,res) =>{
+    const productName = req.params.id
+    try {
+        let record = await Records.find({productName:productName}).lean()
+    if (record.length < 1){
+      return  res.json({status:404, message:"not found"});
+   }
+    else {
+        let {productName, price, buyersContact, description} = req.body
+        record = await Records.find({productName:productName}, req.body,{
+            new: true
+        })
+     }
+    return res.json({ status:200, update:record})
+    }
+    catch (err) {
+        console.error(err)
+       return res.send({status:500, error: err.message})
+    }
+})
+
+
 // update a new record
 router.put('/:id', async (req,res) =>{
     const id = req.params.id
@@ -105,6 +144,12 @@ router.post('/new' , requireJWT, async (req,res) =>{
   const storeInfo = profiles.storeInfo;
     try {
         // req.body.user = req.user.id
+
+        // if (req.body.quantity === null){
+        //   req.body.quantity = 1;
+        //   req.body.total = 1 * req.body.price;
+        // }
+
         const thisSales=req.body;
        delete thisSales._id
        console.log(thisSales)

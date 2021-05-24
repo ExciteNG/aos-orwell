@@ -49,6 +49,9 @@ const salesModel = new mongoose.Schema({
   salesTarget: {
     type: Number
   },
+  qtySum: {
+    type: Number
+  },
   storeInfo:{
     type:Object,
   }

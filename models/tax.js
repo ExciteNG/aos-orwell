@@ -4,13 +4,15 @@ const mongoose = require('mongoose');
 const tax = mongoose.Schema({
   payer: { type: String, required: true },
   address: { type: String },
-  businessNatue: { type: String, required: true },
-  rcNumber: {type: Number, required: true},
-  taxType: {type: String, required: true},
+  businessNature: { type: String, required: true },
+  rc: {type: String, required: true},
+  type: {type: String, required: true},
+  subType:{type: String, default:""},
   payerId: {type: String, required: true},
-  fromDate: {type: String, required: true},
-  toDate: {type: String, required: true},
+  from: {type: String, required: true},
+  to: {type: String, required: true},
   amount: {type: String, required: true},
+  details:{type:Object,required:true}
   // email: {type: String, required: true}
 },
 { timestamps: true });

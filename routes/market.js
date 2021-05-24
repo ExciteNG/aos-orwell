@@ -23,7 +23,7 @@ router.post("/marketplace/store-set-up", requireJWT, async (req, res) => {
   // very important : telling mongoose that this field has been modified
   profile.markModified("storeInfo");
   let updatedProfile = await profile.save();
-  res.json({ store: updatedProfile });
+  return res.json({code:201, store: updatedProfile.storeInfo });
 
   // res.json({email})
 });

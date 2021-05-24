@@ -9,6 +9,7 @@ const kioskSchema = mongoose.Schema({
     },
     email:{
         type:String,
+        required:true
     },
     phoneNumber:{
         type:String,
@@ -19,37 +20,38 @@ const kioskSchema = mongoose.Schema({
         required:true
     },
     lga:{
-        type:String
+        type:String,
+        required:true
     },
     state:{
-        type:String
-    },
-    productType:{
-        type:String
+        type:String,
+        required:true
     },
     businessDesc:{
         type:String
     },
     kioskType:{
-        type:String
-    },
-    floor:{
-        type:String
-    },
-    roof:{
-        type:String
-    },
-    doors:{
-        type:String
+        type:String,
+        required:true
     },
     price:{
-        type:String
+        type:String,
+        required:true
+    },
+    amountPaid:{
+        type:Number,
+        default:0
     },
     paymentType:{
-        type:String
+        type:String,
+        required:true
     },
-    kioskType:{
-        type:String
+    status:{
+        type:String,
+        default:"Pending"
+    },
+    reference:{
+        type:Object,
     }
 })
 

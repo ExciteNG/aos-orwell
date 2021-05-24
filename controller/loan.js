@@ -45,6 +45,7 @@ const createAccountChannel = (req, res) => {
     signature,
     identification,
   } = req.body;
+  // console.log(req.body)
   const NOK = [
     {
       surname:kinOneSurname,
@@ -64,15 +65,16 @@ const createAccountChannel = (req, res) => {
     },
   ]
   // eslint-disable-next-line prettier/prettier
-  const newAcct = new LoanModel({...req.body,nextOfKin:NOK, fundingPartner:"CHANNELLE"});
-  newAcct.save()
+  const newAcct = LoanModel.create({...req.body,nextOfKin:NOK, fundingPartner:"CHANNELLE"});
+  newAcct
     .then((record) => {
-      res.status(201).json({
+      return res.status(201).json({
         message: 'Loan record posted successful!ly'
       });
     })
     .catch((err) => {
-      res.status(400).json({
+      console.log(err)
+      return res.status(400).json({
         message: 'Oops! Something went wrong.',
         err
       });
