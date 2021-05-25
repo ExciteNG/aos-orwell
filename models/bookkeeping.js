@@ -13,8 +13,7 @@ const bookModel = new mongoose.Schema({
     required: true
   },
   quantity: {
-    type: Number,
-    default: 1
+    type: Number
   },
   cost: {
     type: Number,
@@ -32,6 +31,18 @@ const bookModel = new mongoose.Schema({
   },
   description: {
     type: String
+  },
+  qtySold: {
+    type: Number,
+    default: 0
+  },
+  totalPaid: {
+    type: Number,
+    default: 0
+  },
+  sumTotalPaid: {
+    type: Number,
+    default: 0
   },
   email:{
       type:String,

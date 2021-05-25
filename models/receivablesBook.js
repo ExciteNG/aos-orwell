@@ -53,7 +53,7 @@ const receivablesModel = mongoose.Schema({
     },
     required:[true,'Please enter your email address']
   },
-  
+
   buyersEmail:{
       type:String,
       validate:{
@@ -74,7 +74,23 @@ const receivablesModel = mongoose.Schema({
   },
   storeInfo:{
     type:Object,
-  }
+  },
+  salesRef:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"bookrecord"
+  },
+  qtySold: {
+    type: Number,
+    default: 0
+  },
+  totalPaid: {
+    type: Number,
+    default: 0
+  },
+  sumTotalPaid: {
+    type: Number,
+    default: 0
+  },
 },
 { timestamps: true });
 
