@@ -2,7 +2,7 @@ const KioskModel = require('../models/kiosk');
 const nodeoutlook = require('nodejs-nodemailer-outlook');
 const kioskAcknowledge=require('../emails/kiosk_acknowledge');
 
-const createKiosk =async (req, res) => {
+const createKiosk = async (req, res) => {
   const {email, userType}= req.user;
 // console.log(req.body)
   const data={...req.body, email}
@@ -13,6 +13,7 @@ const createKiosk =async (req, res) => {
       res.status(201).json({
         message: 'Application submitted successfully'
       });
+      //Send Email Here
       nodeoutlook.sendEmail({
         auth: {
           user: process.env.EXCITE_ENQUIRY_USER,
@@ -31,8 +32,6 @@ const createKiosk =async (req, res) => {
           },
           secure:false,
       })
-
-      //Send Email Here
     })
     .catch((err) => {console.log(err)
       res.status(400).json({
@@ -46,3 +45,5 @@ const createKiosk =async (req, res) => {
 module.exports = {
   createKiosk
 }
+
+// http://192.168.0.1

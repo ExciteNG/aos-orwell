@@ -7,19 +7,30 @@ const createRecord = async (req, res) => {
   const {email, userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
+  // console.log('receivables thisSales', thisSales);
     try {
         // req.body.user = req.user.id
-        // if (req.body.quantity === null) req.body.quantity = 1;
-        //
+        if (req.body.quantity === null){
+          req.body.quantity = 1;
+          req.body.total = req.body.price;
+        }
+
         // req.body.qtySum = 1 * req.body.price;
         const thisSales=req.body;
+        // const data= {
+        //   productName:req.body.productName,
+        //   productID:req.body._id,
+        // }
+        const refSales = thisSales._id;
        delete thisSales._id
-       console.log(thisSales)
+       // console.log(thisSales)
         await ReceivablesModel.create({
           ...thisSales,
           storeInfo:storeInfo,
-          email
+          email,
+          salesRef:refSales
         })
+
         //send invoice mail if email is present
         if (thisSales.buyersEmail){
           //sendmail
@@ -38,8 +49,7 @@ const createRecord = async (req, res) => {
             onSuccess: (i) => console.log(i),
             secure: false,
           });
-          
-        }else{
+        } else{
           console.log('invoice generated successfully')
         }
         return res.send({code:201,message:"success"})
@@ -52,12 +62,13 @@ const createRecord = async (req, res) => {
 const updateRecord = async (req, res) => {
   const id = req.params.id
   try {
-    let record = await ReceivablesModel.findById({_id:id}).lean()
+    let record = await ReceivablesModel.findById({_id:id})
+    // let record = await ReceivablesModel.findById({_id:id}).lean()/
     if (!record){
       res.json({status:404,message:"not found"})
     }
     else {
-        let {productName, price, buyersContact, description} = req.body
+        let {productName, price, buyersContact, description, qtySold, totalPaid, sumTotalPaid} = req.body
         record = await ReceivablesModel.findByIdAndUpdate({_id:id}, req.body,{
             new: true
         })
@@ -107,7 +118,7 @@ const deleteOneRecord = async (req, res) => {
     if (!record) {
       return res.send({status:404,message:"not found"})
     } else {
-      await ReceivablesModel.remove({_id:id})
+      await ReceivablesModel.deleteOne({_id:id})
       return  res.status(200).send({message:"Delete successful !"})
     }
   } catch (err) {
