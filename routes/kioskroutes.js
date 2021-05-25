@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const Kiosk = require('../models/kiosk');
 const {requireJWT} =require("./../middleware/auth")
-
+const Controller = require("./../controller/kiosk")
 
 
 
@@ -97,17 +97,7 @@ router.delete('/delete-kiosk/:id', async (req,res) => {
 
 //post a new kiosk
 // add a new record
-router.post('/new-kiosk', requireJWT, async (req,res) =>{
-    const {email} = req.user
-    try {
-        // req.body.user = req.user.id
-        await Kiosk.create({...req.body,email})
-        return res.status(201).send({message:"success"})
-    } catch (err) {
-        console.error(err)
-        res.send({status:500,message:err.message})
-    }
-})
+router.post('/new-kiosk', requireJWT, Controller.createKiosk)
 
 // delete all kiosks
 router.delete('/delete-all-kiosk', async (req,res) => {
