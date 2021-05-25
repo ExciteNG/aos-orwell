@@ -145,11 +145,6 @@ router.post('/new' , requireJWT, async (req,res) =>{
     try {
         // req.body.user = req.user.id
 
-        // if (req.body.quantity === null){
-        //   req.body.quantity = 1;
-        //   req.body.total = 1 * req.body.price;
-        // }
-
         const thisSales=req.body;
        delete thisSales._id
        console.log(thisSales)

@@ -41,36 +41,103 @@ router.get('/:id', async (req,res)=>{
     }
 })
 
-// update a new record
-router.put('/:id', async (req,res) =>{
+// Sales Plan update products
+router.put('/update/:id', (req, res) => {
+  let record = new Records({
+    _id: req.params.id,
+    productName: req.body.productName,
+    price: req.body.price,
+    // quantity: req.body.quantity,
+    buyersContact: req.body.buyersContact,
+    description: req.body.description,
+    // cost: req.body.cost,
+    salesTarget: req.body.salesTarget,
+    qtySold: req.body.qtySold,
+    // qtySold: req.body.qtySold + req.body.quantity,
+    totalPaid: req.body.totalPaid,
+    sumTotalPaid: req.body.sumTotalPaid,
+  });
 
+  Records.updateOne({ _id: req.params.id }, record).lean()
+    .then(() => {
+      res.status(202).json({
+        message: 'record updated successfully!'
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        message: 'Oops! Something went wrong.',
+        error
+      });
+    });
+});
+
+// update a record by id (general use)
+router.put('/:id', async (req,res) =>{
     // let hex = /[0-9A-Fa-f]{6}/g;
     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
     const id = req.params.id
     try {
-        let record = await Records.findById({_id:id}).lean()
-    if (!record){
-        res.json({status:404,message:"not found"})
-   }
-    else {
+      let record = await Records.findOne({_id:id});
+      console.log('record is ', record)
+      if (!record){
+          res.json({status:404,message:"not found"})
+      }
+      else {
+        let {productName, price, quantity, buyersContact, description, salesTarget, qtySold, totalPaid, sumTotalPaid} = req.body;
 
-        let {productName, price, quantity, buyersContact, description, salesTarget} = req.body
+        qtySold = record.qtySold + quantity;
+        totalPaid = qtySold * price;
+        sumTotalPaid = sumTotalPaid + totalPaid;
+
+        // record.markModified("qtySold");
+
+        Records.updateOne({ _id: req.params.id }, record);
+        record.save();
+
         record = await Records.findByIdAndUpdate({_id:id}, req.body,{
             new: true
             // runValidators: true
         })
-     }
-    return res.json({status:200,update:record})
+      }
+    return res.json({status:200, update:record})
     }
     catch (err) {
         console.error(err)
-       return res.send({status:500,error:err.message})
+       return res.send({status:500, error: err.message})
     }
 })
 
-//delete a story from the database
-router.delete('/:id', async (req,res) => {
 
+
+// // update a record by product name
+// router.put('/name/:id', async (req,res) =>{
+//     // let hex = /[0-9A-Fa-f]{6}/g;
+//     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
+//     const productName = req.params.id
+//     try {
+//         let record = await Records.find({productName:productName}).lean()
+//     if (!record){
+//         res.json({status:404,message:"not found"})
+//    }
+//     else {
+//         let {productName, price, quantity, buyersContact, description, qtySum, salesTarget} = req.body
+//         record = await Records.findByIdAndUpdate({_id:id}, req.body,{
+//             new: true
+//             // runValidators: true
+//         })
+//      }
+//     return res.json({status:200,update:record})
+//     }
+//     catch (err) {
+//         console.error(err)
+//        return res.send({status:500,error:err.message})
+//     }
+// })
+
+
+//delete a record from the database
+router.delete('/:id', async (req,res) => {
     const id = req.params.id
 
     try {
