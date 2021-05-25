@@ -85,47 +85,38 @@ const loanSchema = mongoose.Schema({
     phoneNumberAlt: {
         type:String,
         default:""
-
     },
     qualification: {
         type:String,
         default:""
-
     },
     salaryPayDay: {
         type:String,
         default:""
-
     },
     signature: {
         type:String,
         default:""
-
     },
     stateOrigin: {
         type:String,
         default:""
-
     },
     streetNumber:{
         type:String,
         default:""
-
     },
     surname: {
         type:String,
         default:""
-
     },
     utility:{
         type:String,
         default:""
-
     },
     workAddress:{
         type:String,
         default:""
-
     },
     workPlace:{
         type:String,
