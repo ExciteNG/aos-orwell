@@ -1,4 +1,3 @@
-const feedback = require('../models/feedback');
 const FeedBack = require('../models/feedback');
 
 const feedbackEnq = async (req,res) => {
@@ -23,7 +22,6 @@ const feedbackNews = async (req,res) => {
     } catch (err) {
         return res.json({code:400,message:err.message});
     }
-
 }
 
 

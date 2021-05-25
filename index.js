@@ -79,7 +79,8 @@ else {
     app.use('/password-forgot',require('./routes/passportreset'));
     app.use('/reset-password',require('./routes/normalpasswordreset'));
     app.use('/change-password',require('./routes/changepassword'));
-    app.use('/payments',require('./routes/payment'))
+    app.use('/payments',require('./routes/payment'));
+    app.use('/support',require('./routes/feedbackroutes'));
     
     app.use([
       require("./routes/auth"),
