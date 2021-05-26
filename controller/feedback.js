@@ -2,9 +2,9 @@ const FeedBack = require('../models/feedback');
 
 const feedbackEnq = async (req,res) => {
     try {
-        let feedback = FeedBack.create(req.body);
+        let feedback = new FeedBack(req.body);
         feedback.mode = "Enquiries"
-        await feedback.markModified("mode");
+        // await feedback.markModified("mode");
         feedback.save();
         return res.json({code:200,success:"Feedback sent successfully !, we will get back to you as soon as possible"})
     } catch (err) {
@@ -13,10 +13,12 @@ const feedbackEnq = async (req,res) => {
 }
 
 const feedbackNews = async (req,res) => {
+    console.log(req.body)
     try {
-        let feedbacknews = Feedback.create(req.body)
+        let feedbacknews = new FeedBack(req.body);
         feedbacknews.mode = "Newsletter"
-        await feedbacknews.markModified("mode")
+        // await feedbacknews.markModified("mode")
+        console.log('hi')
         feedbacknews.save()
         return res.json({code:200,success:"sent successfully !, expect a notification in your mail"})
     } catch (err) {
