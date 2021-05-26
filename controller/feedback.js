@@ -18,7 +18,7 @@ const feedbackNews = async (req,res) => {
         let feedbacknews = new FeedBack(req.body);
         feedbacknews.mode = "Newsletter"
         // await feedbacknews.markModified("mode")
-        console.log('hi')
+        // console.log('hi')
         feedbacknews.save()
         return res.json({code:200,success:"sent successfully !, expect a notification in your mail"})
     } catch (err) {
