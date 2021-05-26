@@ -29,7 +29,7 @@ const addDeals = async (req, res) => {
     endDate,endDate,
     desc:desc,
     email:email,
-    discnt:`-${Math.round(percent)}%`
+    discnt:`${Math.round(percent)}%`
     })
   try {
     await addDeals.save();

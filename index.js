@@ -94,7 +94,7 @@ else {
       require('./routes/adbanner'),
       require('./routes/tax'),
       require('./routes/confirmation'),
-      // require('./routes/social')
+      require('./routes/social')
     ])
     
     // Error handling
