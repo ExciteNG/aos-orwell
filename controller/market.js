@@ -68,7 +68,7 @@ const addElectronics = async (req,res)=>{
        if(profile.subscriptionLevel !== 3) return res.json({code:201, msg:"product added"});
 
        // Post to social media
-       const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
+       const data = {title:`${title} for ${price}`, imageUrl:images[0]}
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
@@ -112,7 +112,7 @@ const addFashion = async (req,res)=>{
     //   social commerce
        if(profile.subscriptionLevel !== 3) return res.json({code:201, msg:"product added"});
        // Post to social media
-       const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
+       const data = {title:`${title} for ${price}`, imageUrl:images[0]}
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
@@ -157,7 +157,7 @@ const addPhoneTablet = async (req,res)=>{
     // social commerce
        if(profile.subscriptionLevel !== 3) return res.json({code:201, msg:"product added"});
        // Post to social media
-       const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
+       const data = {title:`${title} for ${price}`, imageUrl:images[0]}
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
@@ -200,7 +200,7 @@ const addHome = async (req,res)=>{
         //   social commerce
        if(profile.subscriptionLevel !== 3) return res.json({code:201, msg:"product added"});
        // Post to social media
-       const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
+       const data = {title:`${title} for ${price}`, imageUrl:images[0]}
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
@@ -245,7 +245,7 @@ const addVehicle = async (req,res)=>{
 
        if(profile.subscriptionLevel !== 3)return res.json({code:201, msg:"product added"});
        // Post to social media
-       const data = {title:`${title} for ${price}`, imageUrl:"https://picsum.photos/200/300"}
+       const data = {title:`${title} for ${price}`, imageUrl:images[0]}
        const socialPosting =await PostToSocialMedia(email,data);
        if(!socialPosting) return res.json({code:400,msg:"Failed to post to social media"});
        // Posted
