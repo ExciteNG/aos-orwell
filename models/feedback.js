@@ -10,7 +10,7 @@ const feedbackModel = new mongoose.Schema({
         type:String,
         required:[true,'please enter your email address']
     },
-    text:{
+    message:{
         type:String,
         default:""
     },
