@@ -1,4 +1,4 @@
-,const KioskModel = require('../models/kiosk');
+const KioskModel = require('../models/kiosk');
 const nodeoutlook = require('nodejs-nodemailer-outlook');
 const kioskAcknowledge=require('../emails/kiosk_acknowledge');
 

@@ -43,6 +43,28 @@ router.get('/:id', async (req,res)=>{
 
 // Sales Plan update products
 router.put('/update/:id', (req, res) => {
+  // if (req.body.quantityToRevert) {
+  //   let record = await Records.findOne({_id: req.params.id});
+  //   record.quantity = record.quantity + req.body.quantityToRevert;
+  //   console.log('record qty ', record.quantity);
+  //   Records.updateOne({ _id: req.params.id }, record);
+  //   record.save();
+  //   return res.status(202).json({message: 'record updated!'});
+  // }
+    if (req.body.quantityToRevert) {
+      Records.findOne({_id: req.params.id})
+      .then((record) => {
+        record.quantity = record.quantity + req.body.quantityToRevert;
+        const total = req.body.price * req.body.quantity;
+        record.total = record.total + total;
+        console.log('body qty ', req.body.quantity);
+        Records.updateOne({ _id: req.params.id }, record);
+        record.save();
+        return;
+      });
+      return res.status(202).json({message: 'record updated!'});
+    }
+
   let record = new Records({
     _id: req.params.id,
     productName: req.body.productName,
@@ -57,7 +79,7 @@ router.put('/update/:id', (req, res) => {
     totalPaid: req.body.totalPaid,
     sumTotalPaid: req.body.sumTotalPaid,
   });
-
+  // console.log('Records is ', Records);
   Records.updateOne({ _id: req.params.id }, record).lean()
     .then(() => {
       res.status(202).json({
@@ -79,10 +101,12 @@ router.put('/:id', async (req,res) =>{
     const id = req.params.id
     try {
       let record = await Records.findOne({_id:id});
-      console.log('record is ', record)
+      // console.log('record is ', record.quantity)
+      // console.log('req is ', req.body)
       if (!record){
-          res.json({status:404,message:"not found"})
+        return res.json({status:404,message:"not found"})
       }
+
       else {
         let {productName, price, quantity, buyersContact, description, salesTarget, qtySold, totalPaid, sumTotalPaid} = req.body;
 
