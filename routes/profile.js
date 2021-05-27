@@ -6,7 +6,7 @@ const Profiles = require('../models/Profiles')
 const affiliateAccept = require('../emails/affiliate_success');
 const affiliateDecline = require('../emails/affiliate_decline');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
-const affiliateSuccess = require('../emails/affiliate_success')
+const affiliateSuccess = require('../emails/affiliate_success');
 
 
 // my affiliate profile
