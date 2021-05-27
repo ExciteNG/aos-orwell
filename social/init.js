@@ -10,20 +10,23 @@ const social_media_link =
   "https://app.ayrshare.com/social-accounts?domain=exciteafrica&jwt=TOKEN";
 
 const privateKey = `-----BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQCM/SHKWzw+8Qa9SuikDMmi/n60pu1uva3iqvAjTqSnDGUx8FWA
-a2FRufJVFTKO2PqbRU7DYawPhr7LyzW89n1jr10qqsKyeeuWG+kJ41WvY3nJ2KMq
-/kLb8YvoVUqJ6TgrMz1ogRH52IddbGWzumSHUF0w1vwn7u7PEfcqIZ2OpQIDAQAB
-AoGABhuFFjYDkxpv101ibJDdP0FVDdBZYr22xaXwByeF/HKOA67MlWaRba/nboYf
-jY6atJU5Bz+462dD5qIj7s6iudlNxxlrWQLRd76cKzNgvjkajP7MRwsaTcaE1oN4
-o2d5xFREYB/K1t2h/MD/7S8fP++dXq80FHr5ILHhlmKQQlUCQQDAl5Gqr1X5KtlY
-G8XBeYJW9hNVTXX72+PtqGCUVo8VcK8FHQgKS6eFDCEKsc7lB6ngagS+9LZfmQs5
-tFukKGP7AkEAu2g7kE+8+P/83tyFuob/tLTwMSm3lxDGWJiA9oB63LDeji/Z6UwU
-EH8UE18ddRwGkXdtsBTRUYMPxPBGUNq13wJAYmkQtfcCJ2ANz0fhtQsx3t2+40fB
-kgC6ZyYys5nHY11BEYvUH+6omwOnnp9c6QsRcuq5ohnJVvANHF9ctHUvIQJBAJu/
-upDq1ACUrtGAsFseyvCh12TkaMHRnSYQSE2U5Yb4L144AoBTS/GRy1t2FwM28XZ/
-rNdD1dpKdBaWIbocqj0CQQCNxZhaExOhFGRoPYjQekHEX4fFQyniuOlEcXwnJ3uV
-LxNDLcAI0b568RE+yGXfqNyeT+qU/dbOM/vOsES3wfX9
+MIICWgIBAAKBgHe8JeR7qfR3M5afoTtjF+CZ2pHL/T/nRyZDKPrAOcQIJ7iMX26y
+HoWeu/07+9t6qZCZlUEdokbSqLh0UsFrMc79DoGNEoPQ5shPUhi9nM2DGXJ2mqc7
+E98a19kzeitGYZdRNttzAl8fFazAl9r/odQhX30lXI7ncD/e0yTdqrYRAgMBAAEC
+gYBSMbGdeJsB+/ZJFwn6l5rjjxpw7aTLAnxgMshl4iGFhcems44rklDLj10jiNLr
+JvhSEGxaR/qHPcOe5BOPPYPxyFL6MZMLHvzZnWKqco9OikBOwyNWQIdlOFQxBnVa
+NUtTx36I9e1WFhgPgTepcnOKlkCOjgBt0rF1aIgf2mhslQJBAOMH4QEWqTL0CIOz
+faBmnqRUnFzJDFrppa/nk0gpuyEbrSaEb1eSRVClm9i+xMlCxlgc1lndij39s7Sw
+VDRk998CQQCHA2ACnQhq+ZGD1zyNP7yLKZgTAzu/DiH/g98L7zdBlbtalxs6ha8Y
+GPv5qFn3RZhnDoM6PBtx8V80q951BdAPAkAlvtmZ5LqczhXcT6tDT8xwZeDZTFPR
+iacSZ94E0WtbRc6z6LDaTmdX0TDoCE+PZpqza5f3uO2TAOsvz2EwlNjhAkBnPxB7
+zyRx0foSbVVT2urPLPari2x0FVWwdWLrWHrT/7Hve+CJp1OXxPtkFvb9nk4GeVWn
+AfIm92NL/ya2LMTHAkBmyVDVaqMHwetZmldLm31FFeytORxkAUpVZCKVgMV2IEB6
+T8ib19zOAjILqAV53ioNK4KQdL/VUnY+hHSrJEtk
 -----END RSA PRIVATE KEY-----`;
+
+// const privateKey = process.env.ARYSHARE_PRIVATE_KEY
+
 
 const createProfileKey = async (userEmail) => {
     axios.defaults.headers = {
@@ -54,7 +57,7 @@ const createProfileKey = async (userEmail) => {
   
 const createJWTtoken = async (userProfileKey) => {
     const profileKey = userProfileKey;
-  
+  console.log(profileKey, 'profile')
     const endpoint = "https://app.ayrshare.com/api/profiles/generateJWT";
   
     axios.defaults.headers = {
