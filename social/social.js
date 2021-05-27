@@ -6,7 +6,7 @@ const Profiles = require('../models/Profiles')
 // 
 const {createProfileKey,createJWTtoken} = require('./init')
 
-// const API_KEY = "DK9XQB2-FRG4RPK-QB2905F-6AQ1XE5";
+
 const API_KEY = process.env.SOCIAL_API_KEY;
 
 
