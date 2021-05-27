@@ -97,7 +97,7 @@ const PostToSocialMedia = async (userID, data) => {
         } 
       })
       .catch((e) => {
-        console.log('from aryshare api', e.response?.data, e.response?.status, e);
+        console.log('from aryshare api',  e);
         return false;
       });
       return posting
