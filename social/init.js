@@ -3,8 +3,6 @@ const axios = require("axios");
 const API_KEY = process.env.SOCIAL_API_KEY;
 
 
-// const API_KEY = "DK9XQB2-FRG4RPK-QB2905F-6AQ1XE5";
-const postMsg = "Today is a great day!";
 
 const social_media_link =
   "https://app.ayrshare.com/social-accounts?domain=exciteafrica&jwt=TOKEN";
@@ -57,7 +55,7 @@ const createProfileKey = async (userEmail) => {
   
 const createJWTtoken = async (userProfileKey) => {
     const profileKey = userProfileKey;
-  console.log(profileKey, 'profile')
+  // console.log(profileKey, 'profile')
     const endpoint = "https://app.ayrshare.com/api/profiles/generateJWT";
   
     axios.defaults.headers = {
@@ -74,7 +72,7 @@ const createJWTtoken = async (userProfileKey) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
           return res.data["token"];
         } else {
           return null;

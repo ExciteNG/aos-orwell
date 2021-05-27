@@ -80,7 +80,7 @@ const PostToSocialMedia = async (userID, data) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${API_KEY}`,
     };
-    console.log(`uploading.... ${API_KEY}`)
+    // console.log(`uploading.... ${API_KEY}`)
     const posting =  await axios
       .post(endpoint, {
         post: title, // required
