@@ -12,8 +12,20 @@ const tax = mongoose.Schema({
   from: {type: String, required: true},
   to: {type: String, required: true},
   amount: {type: String, required: true},
-  details:{type:Object,required:true}
-  // email: {type: String, required: true}
+  details:{type:Object,required:true},
+  isAssigned: {
+    type: Boolean,
+    default: false
+  },
+  assignedTo: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Partner'
+  },
+  category:{
+    type: String, 
+    required: true
+  },
+  email: {type: String, required: true}
 },
 { timestamps: true });
 
