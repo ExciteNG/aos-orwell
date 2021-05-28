@@ -48,7 +48,7 @@ else {
       next();
     });
 
-    var whitelist = ['http://exciteenterprise.com', 'http://localhost:7000']
+    var whitelist = ['http://exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
 
     var corsOptions = {
       origin: function (origin, callback) {
