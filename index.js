@@ -48,8 +48,10 @@ else {
       next();
     });
 
+    //whitelist host addresses that can only consume  the backend APIS
     var whitelist = ['http://exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
 
+    //handle cors requests
     var corsOptions = {
       origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
