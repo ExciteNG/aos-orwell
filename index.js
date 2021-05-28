@@ -53,15 +53,15 @@ else {
 
     
     //handle cors requests
-    var corsOptions = {
-      origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true)
-        } else {
-          callback(new Error({code:401,message:'Not allowed by CORS'}))
-        }
-      }
-    }
+    // var corsOptions = {
+    //   origin: function (origin, callback) {
+    //     if (whitelist.indexOf(origin) !== -1) {
+    //       callback(null, true)
+    //     } else {
+    //       callback(new Error({code:401,message:'Not allowed by CORS'}))
+    //     }
+    //   }
+    // }
     
     
     // Middleware
@@ -70,7 +70,7 @@ else {
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
-    app.use(cors(corsOptions,{ credentials: true }));
+    app.use(cors({ credentials: true }));
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
     app.use(morgan('short'));
