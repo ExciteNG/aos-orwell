@@ -6,6 +6,42 @@ const {PostToSocialMedia} = require('./../social/social')
 const ProductRecord =require('../models/bookkeeping');
 // const re {  } from '../models/receivablesBook';
 
+
+//search filter funnctionality
+const filterProduct = async (req,res) =>  {
+
+  //store each individual product in an array
+  let individualProduct = [];
+
+  const allProducts = await Products.find({}).sort({'createdAt':-1}).lean();
+   allProducts.forEach((productList)=>{
+    individualProduct.push(productList.title)
+  })
+
+  console.log(individualProduct)
+  
+    // if (! req.query.product === producTitle) {
+    //   return res.json({code:400,message:"oops, There are no products with this name !"})
+
+    // }
+
+        //get the filtered product
+        console.log(allProducts.title)
+        // for (let products of allProducts) {
+        //   products.title = products.title.split(' ')
+          
+        // }
+    var productFilt = allProducts.filter(product=>product.title.split(' ').includes(req.query['product']));
+
+    if (productFilt.length === 0) return res.json({message:"oops, There are no products with this name !"})
+    // console.log(productFilt)
+    return res.json({code:200,product:productFilt})
+
+}
+
+
+
+
 const getCategory = async (req,res)=>{
     const {category} =req.body
     const data = await Products.find({category:category});
@@ -264,6 +300,7 @@ res.json({banner:approvedBanners,products:products,deals:deals})
 
 
 module.exports={
+  filterProduct,
     getCategory,
     getItemById,
     addElectronics,

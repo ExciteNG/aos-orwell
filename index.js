@@ -81,6 +81,7 @@ else {
     app.use('/change-password',require('./routes/changepassword'));
     app.use('/payments',require('./routes/payment'));
     app.use('/support',require('./routes/feedbackroutes'));
+    app.use('/marketplace',require('./routes/market'));
     
     app.use([
       require("./routes/auth"),

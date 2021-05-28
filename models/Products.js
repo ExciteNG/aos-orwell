@@ -79,11 +79,11 @@ const ProductSchema = new mongoose.Schema({
   storeInfo: {
     type: Object,
     required: true,
-  },
-  stock:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"bookrecord"
   }
+  // stock:{
+  //   type:mongoose.Schema.Types.ObjectId,
+  //   ref:"bookrecord"
+  // }
 });
 
 const Product = (module.exports = mongoose.model("Product", ProductSchema));
