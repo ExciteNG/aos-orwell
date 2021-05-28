@@ -47,6 +47,18 @@ else {
       res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
       next();
     });
+
+    var whitelist = ['http://exciteenterprise.com', 'http://localhost:7000']
+
+    var corsOptions = {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+    }
     
     
     // Middleware
@@ -55,7 +67,7 @@ else {
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
-    app.use(cors({ credentials: true }));
+    app.use(cors(corsOptions,{ credentials: true }));
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
     app.use(morgan('short'));

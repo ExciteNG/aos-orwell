@@ -31,7 +31,7 @@ const filterProduct = async (req,res) =>  {
         //   products.title = products.title.split(' ')
           
         // }
-    var productFilt = allProducts.filter(product=>product.title.split(' ').includes(req.query['product']));
+    var productFilt = allProducts.filter(product=>product.title.split(' ').includes(req.query['product']) || req.query['product'] === product.title);
 
     if (productFilt.length === 0) return res.json({message:"oops, There are no products with this name !"})
     // console.log(productFilt)
