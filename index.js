@@ -47,6 +47,21 @@ else {
       res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
       next();
     });
+
+    //whitelist host addresses that can only consume  the backend APIS
+    var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000','https://www.excite-frontend-dev.vercel.app']
+
+    
+    //handle cors requests
+    // var corsOptions = {
+    //   origin: function (origin, callback) {
+    //     if (whitelist.indexOf(origin) !== -1) {
+    //       callback(null, true)
+    //     } else {
+    //       callback(new Error({code:401,message:'Not allowed by CORS'}))
+    //     }
+    //   }
+    // }
     
     
     // Middleware
@@ -82,6 +97,7 @@ else {
     app.use('/change-password',require('./routes/changepassword'));
     app.use('/payments',require('./routes/payment'));
     app.use('/support',require('./routes/feedbackroutes'));
+    app.use('/marketplace',require('./routes/market'));
     
     app.use([
       require("./routes/auth"),
