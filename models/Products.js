@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -85,5 +86,9 @@ const ProductSchema = new mongoose.Schema({
   //   ref:"bookrecord"
   // }
 });
+
+//define an index for quick searching
+
+ProductSchema.index({'$**': 'text'});
 
 const Product = (module.exports = mongoose.model("Product", ProductSchema));

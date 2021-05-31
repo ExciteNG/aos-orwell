@@ -6,6 +6,21 @@ const {PostToSocialMedia} = require('./../social/social')
 const ProductRecord =require('../models/bookkeeping');
 // const re {  } from '../models/receivablesBook';
 
+//search functionality via mongodb text-search library
+const filterProducts = async (req,res) => {
+  try {
+
+    let findFilter = await Products.find({$text: {$search: req.query['product']}})
+
+    if (findFilter.length === 0) return res.json({code:404,message:"No products found !"})
+
+    res.json({code:200,message:findFilter})
+    
+  } catch (err) {
+    res.json({code:500,message:err.message})
+  }
+
+}
 
 //search filter funnctionality
 const filterProduct = async (req,res) =>  {
@@ -301,6 +316,7 @@ res.json({banner:approvedBanners,products:products,deals:deals})
 
 module.exports={
   filterProduct,
+  filterProducts,
     getCategory,
     getItemById,
     addElectronics,
