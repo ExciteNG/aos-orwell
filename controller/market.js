@@ -10,7 +10,7 @@ const ProductRecord =require('../models/bookkeeping');
 const filterProducts = async (req,res) => {
   try {
 
-    let findFilter = await Products.find({$text: {$search: req.query['product']}})
+    let findFilter = await Products.find({$text: {$search: req.query['product']}}).lean()
 
     if (findFilter.length === 0) return res.json({code:404,message:"No products found !"})
 
@@ -23,36 +23,36 @@ const filterProducts = async (req,res) => {
 }
 
 //search filter funnctionality
-const filterProduct = async (req,res) =>  {
+// const filterProduct = async (req,res) =>  {
 
-  //store each individual product in an array
-  let individualProduct = [];
+//   //store each individual product in an array
+//   let individualProduct = [];
 
-  const allProducts = await Products.find({}).sort({'createdAt':-1}).lean();
-   allProducts.forEach((productList)=>{
-    individualProduct.push(productList.title)
-  })
+//   const allProducts = await Products.find({}).sort({'createdAt':-1}).lean();
+//    allProducts.forEach((productList)=>{
+//     individualProduct.push(productList.title)
+//   })
 
-  console.log(individualProduct)
+//   console.log(individualProduct)
   
-    // if (! req.query.product === producTitle) {
-    //   return res.json({code:400,message:"oops, There are no products with this name !"})
+//     // if (! req.query.product === producTitle) {
+//     //   return res.json({code:400,message:"oops, There are no products with this name !"})
 
-    // }
+//     // }
 
-        //get the filtered product
-        console.log(allProducts.title)
-        // for (let products of allProducts) {
-        //   products.title = products.title.split(' ')
+//         //get the filtered product
+//         console.log(allProducts.title)
+//         // for (let products of allProducts) {
+//         //   products.title = products.title.split(' ')
           
-        // }
-    var productFilt = allProducts.filter(product=>product.title.split(' ').includes(req.query['product']) || req.query['product'] === product.title);
+//         // }
+//     var productFilt = allProducts.filter(product=>product.title.split(' ').includes(req.query['product']) || req.query['product'] === product.title);
 
-    if (productFilt.length === 0) return res.json({message:"oops, There are no products with this name !"})
-    // console.log(productFilt)
-    return res.json({code:200,product:productFilt})
+//     if (productFilt.length === 0) return res.json({message:"oops, There are no products with this name !"})
+//     // console.log(productFilt)
+//     return res.json({code:200,product:productFilt})
 
-}
+// }
 
 
 
