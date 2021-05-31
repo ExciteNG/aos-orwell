@@ -126,7 +126,15 @@ const businessRegistrationSchema =  new mongoose.Schema({
     status:{
         type:String,
         default:"Pending"
-    }
+    },
+    assignedTo: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Partner'
+      },
+      isAssigned:{
+          type:Boolean,
+          default:false
+      }
 });
 
 module.exports = mongoose.model('businessRegSchema',businessRegistrationSchema);

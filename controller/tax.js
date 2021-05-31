@@ -1,7 +1,7 @@
 const TaxModel = require('../models/tax');
 
 const createTax = (req, res) => {
-  // const {email, userType}= req.user;
+  const {email, userType}= req.user;
   const taxModel = new TaxModel({
   payer: req.body.payer,
   address: req.body.address,
@@ -12,8 +12,9 @@ const createTax = (req, res) => {
   from: req.body.from,
   to: req.body.to,
   amount: req.body.amount,
-  details:req.body.reference
-  // email:email
+  details:req.body.reference,
+  email:email,
+  category:req.body.category
   });
   taxModel.save()
     .then((record) => {

@@ -87,6 +87,7 @@ else {
     app.use('/check-business-name', require('./routes/checkname'));
     app.use('/statistic', require('./routes/statistic'));
     app.use('/excite/business', require('./routes/excite/business'));
+    app.use('/excite/tax', require('./routes/excite/tax'));
     app.use('/excite/payments', require('./routes/excite/payments'));
     app.use('/excite/partners', require('./routes/excite/partners'));
     app.use('/excite/banners', require('./routes/excite/banners'));

@@ -11,6 +11,7 @@ const myProfile = async (req, res) => {
   const { email } = req.user;
   //  console.log(email)
   const profile = await Partners.findOne({ email: email });
+  // console.log(profile)
   const user = {
     name: profile.fullname.split(" ")[0],
     partnerCode: profile.partnerCode,
