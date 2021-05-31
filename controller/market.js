@@ -315,7 +315,6 @@ res.json({banner:approvedBanners,products:products,deals:deals})
 
 
 module.exports={
-  filterProduct,
   filterProducts,
     getCategory,
     getItemById,
