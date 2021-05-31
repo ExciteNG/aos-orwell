@@ -3,9 +3,8 @@ const Tax = require("./../../models/tax");
 const CheckName = require("./../../models/Checkname");
 const BusinessReg = require("./../../models/businessreg");
 var nodeoutlook = require("nodejs-nodemailer-outlook");
-const rejectCheckName = require("./../../emails/business_decline")
-const successCheckName = require("./../../emails/business_name_success")
-
+const rejectCheckName = require("./../../emails/business_decline");
+const successCheckName = require("./../../emails/business_name_success");
 
 const myProfile = async (req, res) => {
   const { email } = req.user;
@@ -46,50 +45,53 @@ const getTaxApplicants = async (req, res) => {
   const { email } = req.user;
   //  console.log(email)
   try {
-    const tax = await Tax.find();
-  return res.json({ code: 201, tax: tax });
+    const profile = await Partners.findOne({email:email});
+    const partnerId = profile._id;
+    const tax = await Tax.find({assignedTo:partnerId});
+    return res.json({ code: 201, tax: tax });
   } catch (error) {
-    return res.status(500).json({message:"Server Error"})
+    return res.status(500).json({ message: "Server Error" });
   }
-  
 };
 
 const getCheckNameApplicants = async (req, res) => {
   const { email } = req.user;
   //  console.log(email)
-  const reservations = await CheckName.find();
+  const profile = await Partners.findOne({email:email});
+    const partnerId = profile._id;
+  const reservations = await CheckName.find({assignedTo:partnerId});
   res.json({ code: 201, reservations: reservations });
 };
 
 const approvedReservation = async (req, res) => {
   const { email } = req.user;
-  const { id, update ,status} = req.body;
-   console.log(status)
+  const { id, update, status } = req.body;
+  console.log(status);
   const reservations = await CheckName.findOne({ _id: id });
-  if(status==="Not Available"){
+  if (status === "Not Available") {
     reservations.mostPreferred.status = false;
     reservations.morePreferred.status = false;
-      //send mail
-      nodeoutlook.sendEmail({
-        auth: {
-          user: "enquiry@exciteafrica.com",
-          pass: "ExciteManagement123$",
-        },
-        from: "enquiry@exciteafrica.com",
-        to: reservations.email,
-        subject: "Welcome",
-        html: rejectCheckName(),
-        text: rejectCheckName(),
-        replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.log(e),
-        onSuccess: (i) => console.log(i),
-        secure: false,
-      });
-  }else{
+    //send mail
+    nodeoutlook.sendEmail({
+      auth: {
+        user: "enquiry@exciteafrica.com",
+        pass: "ExciteManagement123$",
+      },
+      from: "enquiry@exciteafrica.com",
+      to: reservations.email,
+      subject: "Welcome",
+      html: rejectCheckName(),
+      text: rejectCheckName(),
+      replyTo: "enquiry@exciteafrica.com",
+      onError: (e) => console.log(e),
+      onSuccess: (i) => console.log(i),
+      secure: false,
+    });
+  } else {
     reservations.mostPreferred = update.mostPreferred;
     reservations.morePreferred = update.morePreferred;
-     //send mail
-     nodeoutlook.sendEmail({
+    //send mail
+    nodeoutlook.sendEmail({
       auth: {
         user: "enquiry@exciteafrica.com",
         pass: "ExciteManagement123$",
@@ -116,7 +118,9 @@ const approvedReservation = async (req, res) => {
 const getBusinessNameApplicants = async (req, res) => {
   const { email } = req.user;
   //  console.log(email)
-  const businessNames = await BusinessReg.find();
+  const profile = await Partners.findOne({email:email});
+  const partnerId = profile._id;
+  const businessNames = await BusinessReg.find({assignedTo:partnerId});
   res.json({ code: 201, businessNames: businessNames });
 };
 
@@ -126,5 +130,5 @@ module.exports = {
   getTaxApplicants,
   getCheckNameApplicants,
   getBusinessNameApplicants,
-  approvedReservation
+  approvedReservation,
 };

@@ -4,6 +4,11 @@ const Controller = require('../../controller/partners/partners');
 const LoanController = require('./../../controller/partners/loans/loan')
 const {requireJWT} = require('./../../middleware/auth')
 
+
+
+
+
+// 
 router.get('/profile/myprofile',requireJWT, Controller.myProfile);
 router.put('/profile/myprofile/bank/update',requireJWT, Controller.myBankUpdate);
 

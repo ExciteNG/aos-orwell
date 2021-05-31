@@ -85,5 +85,5 @@ const ProductSchema = new mongoose.Schema({
   //   ref:"bookrecord"
   // }
 });
-
+ProductSchema.index({'$**': 'text'})
 const Product = (module.exports = mongoose.model("Product", ProductSchema));
