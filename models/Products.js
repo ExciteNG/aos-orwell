@@ -86,9 +86,5 @@ const ProductSchema = new mongoose.Schema({
   //   ref:"bookrecord"
   // }
 });
-
-//define an index for quick searching
-
-ProductSchema.index({'$**': 'text'});
-
+ProductSchema.index({'$**': 'text'})
 const Product = (module.exports = mongoose.model("Product", ProductSchema));
