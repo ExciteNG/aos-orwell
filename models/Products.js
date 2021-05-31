@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
