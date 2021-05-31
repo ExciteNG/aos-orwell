@@ -47,6 +47,21 @@ else {
       res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
       next();
     });
+
+    //whitelist host addresses that can only consume  the backend APIS
+    var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
+
+    
+    // handle cors requests
+    var corsOptions = {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error({code:401,message:'Not allowed by CORS'}))
+        }
+      }
+    }
     
     
     // Middleware
@@ -55,7 +70,7 @@ else {
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
-    app.use(cors({ credentials: true }));
+    app.use(cors({ credentials: true },corsOptions));
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
     app.use(morgan('short'));
@@ -72,6 +87,7 @@ else {
     app.use('/check-business-name', require('./routes/checkname'));
     app.use('/statistic', require('./routes/statistic'));
     app.use('/excite/business', require('./routes/excite/business'));
+    app.use('/excite/tax', require('./routes/excite/tax'));
     app.use('/excite/payments', require('./routes/excite/payments'));
     app.use('/excite/partners', require('./routes/excite/partners'));
     app.use('/excite/banners', require('./routes/excite/banners'));
@@ -81,6 +97,7 @@ else {
     app.use('/change-password',require('./routes/changepassword'));
     app.use('/payments',require('./routes/payment'));
     app.use('/support',require('./routes/feedbackroutes'));
+    app.use('/marketplace',require('./routes/market'));
     
     app.use([
       require("./routes/auth"),

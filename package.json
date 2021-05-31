@@ -21,7 +21,7 @@
     "express-rate-limit": "^5.2.6",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.1.0",
-    "moment": "^2.20.1",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.14",
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.19",

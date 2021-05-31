@@ -29,17 +29,17 @@ router.post(
     const handleExpire = () => {
       switch (cycle) {
         case "monthly":
-          return addMonth(1);
+          return Date.now() + 30 * 24 * 60* 60 * 1000;
         case "yearly":
-          return addYear(1);
+          return Date.now() + 365 * 24 * 60 * 60 * 1000;
         default:
           break;
       }
     };
     if (package === "Gold") {
       profile.subscriptionLevel = 3;
-      profile.subscriptionStart = todaysDate();
-      profile.subscriptionEnd = handleExpire();
+      profile.subscriptionStart = Date.now()
+      profile.subscriptionEnd = handleExpire()
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');
       profile.markModified('subscriptionEnd');
@@ -49,7 +49,7 @@ router.post(
     }
     if (package === "Silver") {
       profile.subscriptionLevel = 2;
-      profile.subscriptionStart = todaysDate();
+      profile.subscriptionStart = Date.now();
       profile.subscriptionEnd = handleExpire();
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');
@@ -60,7 +60,7 @@ router.post(
     }
     if (package === "Bronze") {
       profile.subscriptionLevel = 1;
-      profile.subscriptionStart = todaysDate();
+      profile.subscriptionStart = Date.now();
       profile.subscriptionEnd = handleExpire();
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');

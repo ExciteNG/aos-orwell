@@ -9,10 +9,11 @@ const {StoreUserSocailInformation} = require('./../social/social')
 
 // Activation
 router.get('/app/social-commerce/activate',requireJWT,async (req,res)=>{
-const {email,userType} = req.user
+const {email,userType} = req.user;
+
  const token = await StoreUserSocailInformation(email);
  if(!token) return res.status(401)
- res.json({code:201,token})
+ return res.json({code:201,token})
 
 })
 

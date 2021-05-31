@@ -20,10 +20,12 @@ const profileSchema = new mongoose.Schema({
     default: 0,
   },
   subscriptionStart:{
-    type:String,
+    type:Number,
+    default:0
   },
   subscriptionEnd:{
-    type:String,
+    type:Number,
+    default:0
   },
   AryshareProfileKey:{
     type:String,

@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable prettier/prettier */
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -79,11 +80,11 @@ const ProductSchema = new mongoose.Schema({
   storeInfo: {
     type: Object,
     required: true,
-  },
-  stock:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"bookrecord"
   }
+  // stock:{
+  //   type:mongoose.Schema.Types.ObjectId,
+  //   ref:"bookrecord"
+  // }
 });
-
+ProductSchema.index({'$**': 'text'})
 const Product = (module.exports = mongoose.model("Product", ProductSchema));

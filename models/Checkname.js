@@ -21,7 +21,7 @@ const CheckBusinessName = mongoose.Schema({
     },
     assignedTo: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Profiles'
+      ref: 'Partner'
     },
     email: {
         type:String,
