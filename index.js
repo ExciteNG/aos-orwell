@@ -49,7 +49,7 @@ else {
     });
 
     //whitelist host addresses that can only consume  the backend APIS
-    var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000','https://www.excite-frontend-dev.vercel.app']
+    var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
 
     
     // handle cors requests
