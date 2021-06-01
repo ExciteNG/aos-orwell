@@ -87,4 +87,4 @@ const ProductSchema = new mongoose.Schema({
   // }
 });
 ProductSchema.index({'$**': 'text'})
-const Product = (module.exports = mongoose.model("Product", ProductSchema));
+module.exports = mongoose.model("Product", ProductSchema);

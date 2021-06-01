@@ -21,11 +21,11 @@ router.delete('/delete/:id', async (req,res) => {
         let loans = await Loans.findById({_id:id}).lean()
   
         if (!loans) {
-          return res.status(404).send({message:"loan details not found"})
-        } else {``
+          return res.send({status:404, message:"loan details not found"})
+        } else {
         await Loans.deleteOne({_id:id})
-       return  res.status(200).send({message:"loan application successfully deleted !"})
-          }
+       return  res.send({status:200, message:"loan application successfully deleted !"})
+        }
         
     } catch (err) {
         console.error(err)

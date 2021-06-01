@@ -25,6 +25,7 @@ else {
     
     const express = require('express')
     const cors = require('cors')
+    const dbConnect = require('./models/init');
     const authMiddleware = require('./middleware/auth')
     const dotenv = require('dotenv')
     dotenv.config()
@@ -33,6 +34,7 @@ else {
     const helmet = require('helmet');
     
     const app = express()
+
     
     //middleware csp for protection against xss attacks 
     
