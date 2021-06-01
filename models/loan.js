@@ -24,6 +24,7 @@ const loanSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  cac: { type: String, default: "" },
   chequeNo: { type: String, default: "" },
   disbAcctName: { type: String, default: "" },
   disbAcctNo: { type: String, default: "" },
