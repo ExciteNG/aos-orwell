@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Records = require('../models/salesBook');
+const Books = require('../models/bookkeeping');
 const Profiles = require('../models/Profiles');
 const bodyParser = require('body-parser');
 const {requireJWT} = require('../middleware/auth')
@@ -146,8 +147,16 @@ router.post('/new' , requireJWT, async (req,res) =>{
         // req.body.user = req.user.id
 
         const thisSales=req.body;
+        let record = await Books.findOne({_id:req.body.salesRef})
        delete thisSales._id
-       console.log(thisSales)
+
+       // console.log(thisSales)
+       // console.log('record sold is ', record);
+
+       // ******** Consider TODO ***********
+       // import book keeping and update the record  for  store, orders and sales on backend (tip: use finddOne as in above).
+       // Also remove the record uppdate on frontend that uses modifiedData,qtySold etc
+
         await Records.create({
           ...thisSales,
           storeInfo:storeInfo,
