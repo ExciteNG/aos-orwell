@@ -5,7 +5,6 @@ const Deals = require("./../models/deals");
 const { PostToSocialMedia } = require("./../social/social");
 const ProductRecord = require("../models/bookkeeping");
 // const re {  } from '../models/receivablesBook';
-
 //search filter funnctionality
 
 const filterProducts = async (req,res) => {
@@ -15,7 +14,6 @@ const filterProducts = async (req,res) => {
     res.json({code:200,data:products})
   } catch (err) {
     res.json({code:500,err:err.message})
-    
   }
   
 
@@ -459,7 +457,7 @@ const getLandinpPage = async (req, res) => {
   const banners = await Banners.find();
   const deals = await Deals.find();
   const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find();
+  const products = await Products.find().sort({priority:-1});
   res.json({ banner: approvedBanners, products: products, deals: deals });
 };
 module.exports={
