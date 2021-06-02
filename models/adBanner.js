@@ -15,5 +15,4 @@ const adbannerSchema = mongoose.Schema({
   }
 })
 // { timestamps: true });
-
 module.exports = mongoose.model('AdBanner', adbannerSchema);

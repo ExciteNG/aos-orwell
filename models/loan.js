@@ -37,9 +37,16 @@ const loanSchema = mongoose.Schema({
     default: "",
   },
   email: {
-    type: String,
-    default: "",
-  },
+    type:String,
+    validate:{
+        validator:function(v){
+            return emailRegexVal.test(v)
+        },
+        message:mail => `${mail.value} is not a valid email address !`
+    },
+    required:[true,'Please enter your email address'],
+    unique:true
+},
   officialEmail: {
     type: String,
     default: "",
