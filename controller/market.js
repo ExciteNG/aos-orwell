@@ -63,10 +63,17 @@ const filterProducts = async (req,res) => {
 
 const getCategory = async (req, res) => {
   const { category } = req.body;
-  const data = await Products.find({ category: category });
-
-  res.json({ code: 201, category: data });
+  try {
+    const data = await Products.find({ category: category }).sort({priority:-1})
+    res.json({ code: 201, category: data });
+    
+  } catch (err) {
+    res.json({code:400,message:err.message})
+    
+  }
 };
+
+
 
 const getItemById = async (req, res) => {
   const id = req.params.id;
