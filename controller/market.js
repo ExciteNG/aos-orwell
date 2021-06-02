@@ -457,7 +457,7 @@ const getLandinpPage = async (req, res) => {
   const banners = await Banners.find();
   const deals = await Deals.find();
   const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find({category:category}).sort({priority:-1,"_id":1});
+  const products = await Products.find().sort({priority:-1,"_id":1});
   res.json({ banner: approvedBanners, products: products, deals: deals });
 };
 
