@@ -62,7 +62,7 @@ const filterProducts = async (req,res) => {
 const getCategory = async (req, res) => {
   const { category } = req.body;
   try {
-    const data = await Products.find({ category: category }).sort({priority:-1})
+    const data = await Products.find({ category: category }).sort({priority:-1,"_id":1})
     res.json({ code: 201, category: data });
     
   } catch (err) {
@@ -457,9 +457,11 @@ const getLandinpPage = async (req, res) => {
   const banners = await Banners.find();
   const deals = await Deals.find();
   const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find().sort({priority:-1});
+  const products = await Products.find().sort({priority:-1,"_id":1});
   res.json({ banner: approvedBanners, products: products, deals: deals });
 };
+
+
 module.exports={
   filterProducts,
     getCategory,
