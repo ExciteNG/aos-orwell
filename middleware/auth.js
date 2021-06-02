@@ -498,6 +498,7 @@ const signJWTForUser = (req, res) => {
     }
   );
   // console.log(token);
+  res.cookie('jwt',token,{ httpOnly: true ,maxAge:24*60*60*1000})
   res.json({ token });
 };
 // Affiliates Login
