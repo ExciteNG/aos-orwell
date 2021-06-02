@@ -157,6 +157,75 @@ const addElectronics = async (req, res) => {
   // Posted
   return res.json({ code: 201, msg: "posted to social", added: true });
 };
+const addHealth = async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    images,
+    quantity,
+    salesTarget,
+  } = req.body;
+  // console.log(req.body)
+  const { email } = req.user;
+  const profile = await Profiles.findOne({ email: email });
+  const storeInfo = profile.storeInfo;
+  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
+    return res.json({ code: 404, message: "Please update store info" });
+  const priority = profile.subscriptionLevel;
+  const item = {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    storeInfo,
+    category: "health",
+    email: email,
+    priority,
+    images: images,
+  };
+  const newProduct = new Products(item);
+  // newProduct.save()
+  //
+  // stock code
+  const stockRecord = {
+    productName: title,
+    cost: Number(0),
+    price: Number(price),
+    total: Number(quantity) * Number(price),
+    quantity: Number(quantity),
+    salesTarget: Number(quantity),
+    description,
+    storeInfo,
+    email,
+  };
+
+  const newStock = new ProductRecord(stockRecord);
+  const stockId = newStock._id;
+  newProduct.stock = stockId;
+  newProduct.save();
+  try {
+    newStock.save();
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (profile.subscriptionLevel !== 3)
+    return res.json({ code: 201, msg: "product added" });
+
+  // Post to social media
+  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const socialPosting = await PostToSocialMedia(email, data);
+  if (!socialPosting)
+    return res.json({ code: 400, msg: "Failed to post to social media" });
+  // Posted
+  return res.json({ code: 201, msg: "posted to social", added: true });
+};
 const addFashion = async (req, res) => {
   const {
     title,
@@ -471,6 +540,7 @@ module.exports={
     addPhoneTablet,
     addHome,
     addVehicle,
+    addHealth,
     getOfferById,
     getLandinpPage
 }

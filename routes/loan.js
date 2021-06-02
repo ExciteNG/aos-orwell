@@ -109,6 +109,7 @@ router.post('/verify/new/user', async (req,res)=>{
 
 router.post('/finance/channel/create-account', Controller.createAccountChannel);
 router.post('/finance/sonora/create-account', Controller.createAccountSonora);
+router.post('/finance/fb/create-account', Controller.createAccountFB);
 //create a twillio helper function to send sms
 // console.log('here')
 const sendSms = (phone, message) => {

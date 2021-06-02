@@ -26,7 +26,9 @@ router.put('/business/check-names-reg/approve-applicants',requireJWT,Controller.
 // Loan
 router.get('/loan/channelle/new-account/get-all-applicants', LoanController.getAccountAppChannelle);
 router.get('/loan/sonora/new-account/get-all-applicants', LoanController.getAccountAppSonora);
+router.get('/loan/fb/new-account/get-all-applicants', LoanController.getAccountAppFB);
 router.get('/loan/channelle/new-account/get-application/:application', LoanController.getApplicationInfo);
+router.get('/loan/fb/new-account/get-application/:application', LoanController.getApplicationInfoFB);
 router.get('/loan/sonora/get-loan-application/:application', LoanController.getLoanApplicationInfoSonora);
 
 
