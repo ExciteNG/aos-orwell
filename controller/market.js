@@ -7,19 +7,21 @@ const ProductRecord = require("../models/bookkeeping");
 // const re {  } from '../models/receivablesBook';
 //search filter funnctionality
 
-const filterProducts = async (req,res) => {
+const filterProducts = async (req, res) => {
   try {
-    const products =  await Products.find({$text: {$search: req.query['product']}}).lean()
-    if (products.length === 0) return res.json({code:200,data:"oops, There are no products with this name !"})
-    res.json({code:200,data:products})
+    const products = await Products.find({
+      $text: { $search: req.query["product"] },
+    }).lean();
+    if (products.length === 0)
+      return res.json({
+        code: 200,
+        data: "oops, There are no products with this name !",
+      });
+    res.json({ code: 200, data: products });
   } catch (err) {
-    res.json({code:500,err:err.message})
+    res.json({ code: 500, err: err.message });
   }
-  
-
-}
-
-
+};
 
 // const filterProduct = async (req, res) => {
 //   //store each individual product in an array
@@ -62,16 +64,15 @@ const filterProducts = async (req,res) => {
 const getCategory = async (req, res) => {
   const { category } = req.body;
   try {
-    const data = await Products.find({ category: category }).sort({priority:-1,"_id":1})
+    const data = await Products.find({ category: category }).sort({
+      priority: -1,
+      _id: 1,
+    });
     res.json({ code: 201, category: data });
-    
   } catch (err) {
-    res.json({code:400,message:err.message})
-    
+    res.json({ code: 400, message: err.message });
   }
 };
-
-
 
 const getItemById = async (req, res) => {
   const id = req.params.id;
@@ -121,6 +122,8 @@ const addElectronics = async (req, res) => {
     images: images,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+
   // newProduct.save()
   //
   // stock code
@@ -150,7 +153,12 @@ const addElectronics = async (req, res) => {
     return res.json({ code: 201, msg: "product added" });
 
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}, click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -190,7 +198,7 @@ const addHealth = async (req, res) => {
     images: images,
   };
   const newProduct = new Products(item);
-  const newProductId = newProduct._id
+  const newProductId = newProduct._id;
   // newProduct.save()
   //
   // stock code
@@ -220,7 +228,12 @@ const addHealth = async (req, res) => {
     return res.json({ code: 201, msg: "product added" });
 
   // Post to social media
-  const data = { title: `${title} for just ${price}, click here for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}, click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -527,21 +540,20 @@ const getLandinpPage = async (req, res) => {
   const banners = await Banners.find();
   const deals = await Deals.find();
   const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find().sort({priority:-1,"_id":1});
+  const products = await Products.find().sort({ priority: -1, _id: 1 });
   res.json({ banner: approvedBanners, products: products, deals: deals });
 };
 
-
-module.exports={
+module.exports = {
   filterProducts,
-    getCategory,
-    getItemById,
-    addElectronics,
-    addFashion,
-    addPhoneTablet,
-    addHome,
-    addVehicle,
-    addHealth,
-    getOfferById,
-    getLandinpPage
-}
+  getCategory,
+  getItemById,
+  addElectronics,
+  addFashion,
+  addPhoneTablet,
+  addHome,
+  addVehicle,
+  addHealth,
+  getOfferById,
+  getLandinpPage,
+};
