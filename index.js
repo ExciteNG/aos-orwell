@@ -1,9 +1,11 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable prettier/prettier */
 //scaling the application by increasing the worker processes (increasing concurrency and multithreading)
-const clusters = require('cluster')
+const clusters = require('cluster');
 //get the number of cpus which ideally should be 4
 const os = require('os').cpus().length;
+
+
 
 if (clusters.isMaster){
   console.log(`process ${process.pid} is currently running`)
@@ -30,6 +32,8 @@ else {
     const dotenv = require('dotenv')
     dotenv.config()
     const morgan = require('morgan');
+    const cronJob = require('node-cron');
+    const Profiles = require("./models/Profiles");
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
@@ -78,6 +82,24 @@ else {
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
     app.use(morgan('short'));
+
+    //run the cron job
+    //create the cron job helper function
+    
+  const checkSub = async () => {
+      let profiles = await Profiles.find();
+      profiles.forEach((profile) => {
+        if (profile.subscriptionEnd > Date.now()){
+          profile.subscriptionLevel= 0
+         profile.save()
+      }
+    })
+    return profiles
+  } 
+  
+
+  cronJob.schedule('0 0 * * *',()=>checkSub())
+
     
     // Routes
     // define further routes

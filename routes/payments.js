@@ -4,6 +4,8 @@ const { todaysDate, addMonth, addYear } = require("./../helper/date/date");
 const router = express.Router();
 const Payments = require("../models/Payments");
 const Profiles = require("../models/Profiles");
+//cron job
+const cronJob = require('node-cron');
 
 //add product
 
@@ -24,7 +26,7 @@ router.post(
       service: "marketplace",
     };
 
-    const profile = await Profiles.findOne({ email: email });
+    profile = await Profiles.findOne({ email: email });
 
     const handleExpire = () => {
       switch (cycle) {
@@ -36,6 +38,7 @@ router.post(
           break;
       }
     };
+
     if (package === "Gold") {
       profile.subscriptionLevel = 3;
       profile.subscriptionStart = Date.now()
@@ -69,6 +72,7 @@ router.post(
       const newPayment = new Payments(item);
       newPayment.save();
     }
+
 
     //credit affiliate
     const isRef = profile.referral.isReffered;
