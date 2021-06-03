@@ -219,7 +219,7 @@ const addHealth = async (req, res) => {
     return res.json({ code: 201, msg: "product added" });
 
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = { title: `<a href='https://exciteenterprise.com' target="_blank">${title} for just <span>&#8358;</span>${price}<a>`, imageUrl: images[0] };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
