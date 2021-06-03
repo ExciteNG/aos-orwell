@@ -24,6 +24,7 @@ const loanSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  cac: { type: String, default: "" },
   chequeNo: { type: String, default: "" },
   disbAcctName: { type: String, default: "" },
   disbAcctNo: { type: String, default: "" },
@@ -38,14 +39,7 @@ const loanSchema = mongoose.Schema({
   },
   email: {
     type:String,
-    validate:{
-        validator:function(v){
-            return emailRegexVal.test(v)
-        },
-        message:mail => `${mail.value} is not a valid email address !`
-    },
-    required:[true,'Please enter your email address'],
-    unique:true
+   default:""
 },
   officialEmail: {
     type: String,

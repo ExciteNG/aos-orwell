@@ -7,19 +7,21 @@ const ProductRecord = require("../models/bookkeeping");
 // const re {  } from '../models/receivablesBook';
 //search filter funnctionality
 
-const filterProducts = async (req,res) => {
+const filterProducts = async (req, res) => {
   try {
-    const products =  await Products.find({$text: {$search: req.query['product']}}).lean()
-    if (products.length === 0) return res.json({code:200,data:"oops, There are no products with this name !"})
-    res.json({code:200,data:products})
+    const products = await Products.find({
+      $text: { $search: req.query["product"] },
+    }).lean();
+    if (products.length === 0)
+      return res.json({
+        code: 200,
+        data: "oops, There are no products with this name !",
+      });
+    res.json({ code: 200, data: products });
   } catch (err) {
-    res.json({code:500,err:err.message})
+    res.json({ code: 500, err: err.message });
   }
-  
-
-}
-
-
+};
 
 // const filterProduct = async (req, res) => {
 //   //store each individual product in an array
@@ -62,16 +64,15 @@ const filterProducts = async (req,res) => {
 const getCategory = async (req, res) => {
   const { category } = req.body;
   try {
-    const data = await Products.find({ category: category }).sort({priority:-1,"_id":1})
+    const data = await Products.find({ category: category }).sort({
+      priority: -1,
+      _id: 1,
+    });
     res.json({ code: 201, category: data });
-    
   } catch (err) {
-    res.json({code:400,message:err.message})
-    
+    res.json({ code: 400, message: err.message });
   }
 };
-
-
 
 const getItemById = async (req, res) => {
   const id = req.params.id;
@@ -121,6 +122,8 @@ const addElectronics = async (req, res) => {
     images: images,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+
   // newProduct.save()
   //
   // stock code
@@ -150,7 +153,87 @@ const addElectronics = async (req, res) => {
     return res.json({ code: 201, msg: "product added" });
 
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
+  const socialPosting = await PostToSocialMedia(email, data);
+  if (!socialPosting)
+    return res.json({ code: 400, msg: "Failed to post to social media" });
+  // Posted
+  return res.json({ code: 201, msg: "posted to social", added: true });
+};
+const addHealth = async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    images,
+    quantity,
+    salesTarget,
+  } = req.body;
+  // console.log(req.body)
+  const { email } = req.user;
+  const profile = await Profiles.findOne({ email: email });
+  const storeInfo = profile.storeInfo;
+  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
+    return res.json({ code: 404, message: "Please update store info" });
+  const priority = profile.subscriptionLevel;
+  const item = {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    storeInfo,
+    category: "health",
+    email: email,
+    priority,
+    images: images,
+  };
+  const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+  // newProduct.save()
+  //
+  // stock code
+  const stockRecord = {
+    productName: title,
+    cost: Number(0),
+    price: Number(price),
+    total: Number(quantity) * Number(price),
+    quantity: Number(quantity),
+    salesTarget: Number(quantity),
+    description,
+    storeInfo,
+    email,
+  };
+
+  const newStock = new ProductRecord(stockRecord);
+  const stockId = newStock._id;
+  newProduct.stock = stockId;
+  newProduct.save();
+  try {
+    newStock.save();
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (profile.subscriptionLevel !== 3)
+    return res.json({ code: 201, msg: "product added" });
+
+  // Post to social media
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -196,6 +279,7 @@ const addFashion = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   // stock code
   const stockRecord = {
@@ -224,7 +308,12 @@ const addFashion = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -266,6 +355,7 @@ const addPhoneTablet = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   //
   // stock code
@@ -295,7 +385,12 @@ const addPhoneTablet = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -339,6 +434,7 @@ const addHome = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   // stock code
   const stockRecord = {
@@ -367,7 +463,12 @@ const addHome = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -416,6 +517,8 @@ const addVehicle = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+
   //    newProduct.save()
 
   // stock code
@@ -445,7 +548,12 @@ const addVehicle = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -457,20 +565,20 @@ const getLandinpPage = async (req, res) => {
   const banners = await Banners.find();
   const deals = await Deals.find();
   const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find().sort({priority:-1,"_id":1});
+  const products = await Products.find().sort({ priority: -1, _id: 1 });
   res.json({ banner: approvedBanners, products: products, deals: deals });
 };
 
-
-module.exports={
+module.exports = {
   filterProducts,
-    getCategory,
-    getItemById,
-    addElectronics,
-    addFashion,
-    addPhoneTablet,
-    addHome,
-    addVehicle,
-    getOfferById,
-    getLandinpPage
-}
+  getCategory,
+  getItemById,
+  addElectronics,
+  addFashion,
+  addPhoneTablet,
+  addHome,
+  addVehicle,
+  addHealth,
+  getOfferById,
+  getLandinpPage,
+};
