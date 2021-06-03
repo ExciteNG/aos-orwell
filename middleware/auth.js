@@ -47,7 +47,7 @@ const signUp = async (req, res, next) => {
       });
 
       const user = {
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,

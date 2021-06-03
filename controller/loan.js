@@ -160,6 +160,7 @@ const createAccountFB = (req, res) => {
     });
 };
 const createAccountSonora = (req, res) => {
+  
   const {
     surname,
     firstName,
@@ -214,7 +215,7 @@ const createAccountSonora = (req, res) => {
     phone:kinOneNumber,
     }
   ]
-  // eslint-disable-next-line prettier/prettier
+  // 
   const newAcct = LoanModel.create({...req.body,nextOfKin:NOK, fundingPartner:"SONORA"});
   newAcct
     .then((record) => {
