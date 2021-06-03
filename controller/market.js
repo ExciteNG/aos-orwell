@@ -279,6 +279,7 @@ const addFashion = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   // stock code
   const stockRecord = {
@@ -307,7 +308,12 @@ const addFashion = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -349,6 +355,7 @@ const addPhoneTablet = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   //
   // stock code
@@ -378,7 +385,12 @@ const addPhoneTablet = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -422,6 +434,7 @@ const addHome = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
 
   // stock code
   const stockRecord = {
@@ -450,7 +463,12 @@ const addHome = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
@@ -499,6 +517,8 @@ const addVehicle = async (req, res) => {
     salesTarget,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+
   //    newProduct.save()
 
   // stock code
@@ -528,7 +548,12 @@ const addVehicle = async (req, res) => {
   if (profile.subscriptionLevel !== 3)
     return res.json({ code: 201, msg: "product added" });
   // Post to social media
-  const data = { title: `${title} for ${price}`, imageUrl: images[0] };
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
