@@ -156,7 +156,7 @@ const addElectronics = async (req, res) => {
   const data = {
     title: `Get ${title} for just N${Number(price).toLocaleString(
       "en-US"
-    )}, click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
     imageUrl: images[0],
   };
   const socialPosting = await PostToSocialMedia(email, data);
@@ -231,7 +231,7 @@ const addHealth = async (req, res) => {
   const data = {
     title: `Get ${title} for just N${Number(price).toLocaleString(
       "en-US"
-    )}, click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
     imageUrl: images[0],
   };
   const socialPosting = await PostToSocialMedia(email, data);
