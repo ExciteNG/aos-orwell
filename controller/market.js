@@ -190,6 +190,7 @@ const addHealth = async (req, res) => {
     images: images,
   };
   const newProduct = new Products(item);
+  const newProductId = newProduct._id
   // newProduct.save()
   //
   // stock code
@@ -219,7 +220,7 @@ const addHealth = async (req, res) => {
     return res.json({ code: 201, msg: "product added" });
 
   // Post to social media
-  const data = { title: `<a href='https://exciteenterprise.com' target="_blank">${title} for just <span>&#8358;</span>${price}<a>`, imageUrl: images[0] };
+  const data = { title: `${title} for just ${price}, click here for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`, imageUrl: images[0] };
   const socialPosting = await PostToSocialMedia(email, data);
   if (!socialPosting)
     return res.json({ code: 400, msg: "Failed to post to social media" });
