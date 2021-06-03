@@ -144,7 +144,7 @@ const createAccountFB = (req, res) => {
     },
   ]
   // eslint-disable-next-line prettier/prettier
-  const newAcct = LoanModel.create({...req.body,nextOfKin:NOK, fundingPartner:"CHANNELLE"});
+  const newAcct = LoanModel.create({...req.body,nextOfKin:NOK, fundingPartner:"FB"});
   newAcct
     .then((record) => {
       return res.status(201).json({
