@@ -1,15 +1,23 @@
 /* eslint-disable standard/object-curly-even-spacing */
 /* eslint-disable prettier/prettier */
 const mongoose = require('./init');
+let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const kioskSchema = mongoose.Schema({
     fullName:{
         type:String,
         required:true
     },
-    email:{
+    email: {
         type:String,
-        required:true
+        validate:{
+            validator:function(v){
+                return emailRegexVal.test(v)
+            },
+            message:mail => `${mail.value} is not a valid email address !`
+        },
+        required:[true,'Please enter your email address'],
+        unique:true
     },
     phoneNumber:{
         type:String,

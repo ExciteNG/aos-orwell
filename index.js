@@ -23,14 +23,15 @@ else {
       require('dotenv').config()
     }
     
-    const express = require('express')
-    const cors = require('cors')
+    const express = require('express');
+    const cors = require('cors');
     const dbConnect = require('./models/init');
-    const authMiddleware = require('./middleware/auth')
+    const authMiddleware = require('./middleware/auth');
     const dotenv = require('dotenv')
     dotenv.config()
-    const morgan = require('morgan')
-    const bodyParser=require('body-parser')
+    const morgan = require('morgan');
+    const bodyParser=require('body-parser');
+    const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
     
     const app = express()
@@ -72,6 +73,7 @@ else {
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
+    app.use(cookieParser())
     app.use(cors({ credentials: true },corsOptions));
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);

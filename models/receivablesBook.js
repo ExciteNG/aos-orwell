@@ -54,16 +54,16 @@ const receivablesModel = mongoose.Schema({
     required:[true,'Please enter your email address']
   },
 
-  buyersEmail:{
-      type:String,
-      validate:{
-        validator:function(v){
-            return emailRegexVal.test(v)
-        },
-        message:mail => `${mail.value} is not a valid email address !`
-    },
-    // required:[true,'Please enter your email address']
-  },
+  // buyersEmail:{
+  //     type:String,
+  //     validate:{
+  //       validator:function(v){
+  //           return emailRegexVal.test(v)
+  //       },
+  //       message:mail => `${mail.value} is not a valid email address !`
+  //   },
+  //   // required:[true,'Please enter your email address']
+  // },
 
   typeOfLedger: {
     type: String,
