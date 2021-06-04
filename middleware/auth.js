@@ -497,7 +497,7 @@ const signJWTForUser = (req, res) => {
       subject: user._id.toString(),
     }
   );
-  console.log("not coming");
+  // console.log("not coming");
   res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
   // console.log(token)
