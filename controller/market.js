@@ -4,7 +4,11 @@ const Banners = require("./../models/adBanner");
 const Deals = require("./../models/deals");
 const { PostToSocialMedia } = require("./../social/social");
 const ProductRecord = require("../models/bookkeeping");
-// const re {  } from '../models/receivablesBook';
+
+
+
+
+
 //search filter funnctionality
 
 const filterProducts = async (req, res) => {
@@ -15,7 +19,7 @@ const filterProducts = async (req, res) => {
     if (products.length === 0)
       return res.json({
         code: 200,
-        data: "oops, There are no products with this name !",
+        data: [],
       });
     res.json({ code: 200, data: products });
   } catch (err) {
