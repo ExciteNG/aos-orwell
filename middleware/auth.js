@@ -640,7 +640,7 @@ var cookieExtractor = function(req){
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest:PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },
