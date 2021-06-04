@@ -498,7 +498,7 @@ const signJWTForUser = (req, res) => {
     }
   );
   // console.log(token);
-  res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+  res.cookie('jwt',token,{ httpOnly: true,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
   // console.log(token)
   res.send({ token });
@@ -628,7 +628,7 @@ const authPageSpringBoard = (req, res) => {
 
 
 //cookie-extractor helper function for storing JWTs in cookies for sessionless authentication
-var cookieExtractor = (req) => {
+var cookieExtractor = function(req){
   let token = null;
   if (req && req.cookies) token = req.cookies['jwt'];
   console.log(token)
@@ -640,7 +640,7 @@ var cookieExtractor = (req) => {
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest:cookieExtractor,
+      jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },
