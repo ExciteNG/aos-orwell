@@ -485,18 +485,16 @@ const signJWTForUser = (req, res) => {
   // if (req.user.userType !== "EX10AF")
   //   return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
-  const token = JWT.sign(
+  const token = JWT.sign(JSON.stringify(
     {
       email: user.email,
       userType: user.userType,
-    },
-    jwtSecret,
-    {
+      jwtSecret,
       algorithm: jwtAlgorithm,
       expiresIn: jwtExpiresIn,
       subject: user._id.toString(),
     }
-  );
+  ));
   // console.log(token);
   res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
@@ -626,8 +624,10 @@ const authPageSpringBoard = (req, res) => {
 };
 
 
-var cookieExtractor = function(req) {
-  var token = null;
+
+//cookie-extractor helper function for storing JWTs in cookies for sessionless authentication
+var cookieExtractor = (req) => {
+  let token = null;
   if (req && req.cookies) token = req.cookies['jwt'];
   console.log(token)
   return token;
