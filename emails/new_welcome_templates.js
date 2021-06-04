@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const emailHost = require('./email_host')
 const welcomeMail = (userName) =>{
 

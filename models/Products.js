@@ -80,6 +80,10 @@ const ProductSchema = new mongoose.Schema({
   storeInfo: {
     type: Object,
     required: true,
+  },
+  merchant:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Profile"
   }
   // stock:{
   //   type:mongoose.Schema.Types.ObjectId,
