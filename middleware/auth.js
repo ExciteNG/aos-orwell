@@ -500,7 +500,7 @@ const signJWTForUser = (req, res) => {
   // console.log(token);
   res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
-  console.log(token)
+  // console.log(token)
   res.send({ token });
 };
 // Affiliates Login
