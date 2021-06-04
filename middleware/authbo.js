@@ -47,7 +47,7 @@ const signUp = async (req, res, next) => {
       });
 
       const user = {
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,
@@ -497,12 +497,15 @@ const signJWTForUser = (req, res) => {
       subject: user._id.toString(),
     }
   );
-  // console.log(token);
-  res.json({ token });
+  // console.log("not coming");
+  res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+  //res.append('Set-Cookie', 'jwt='+token+';');
+  // console.log(token)
+  res.send({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  console.log('sign  ing jwt', req.user)
+  // console.log('signing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
@@ -520,7 +523,7 @@ const signJWTForAffiliates = (req, res) => {
     }
   );
   // console.log(token);
-  res.json({ token });
+  res.send({ token });
 };
 
 // Partners Login
@@ -622,10 +625,22 @@ const authPageSpringBoard = (req, res) => {
   res.json({ code: 200, auth: true });
 };
 
+
+
+//cookie-extractor helper function for storing JWTs in cookies for sessionless authentication
+var cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) token = req.cookies['jwt'];
+  console.log(token)
+  return token;
+};
+
+
+
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest:cookieExtractor,
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },
