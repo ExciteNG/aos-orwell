@@ -485,16 +485,18 @@ const signJWTForUser = (req, res) => {
   // if (req.user.userType !== "EX10AF")
   //   return res.status(400).json({ msg: "invalid login" });
   const user = req.user;
-  const token = JWT.sign(JSON.stringify(
+  const token = JWT.sign(
     {
       email: user.email,
       userType: user.userType,
-      jwtSecret,
+    },
+    jwtSecret,
+    {
       algorithm: jwtAlgorithm,
       expiresIn: jwtExpiresIn,
       subject: user._id.toString(),
     }
-  ));
+  );
   // console.log(token);
   res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
