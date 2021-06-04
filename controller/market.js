@@ -104,6 +104,7 @@ const addElectronics = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -120,6 +121,7 @@ const addElectronics = async (req, res) => {
     email: email,
     priority,
     images: images,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -182,6 +184,7 @@ const addHealth = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -198,6 +201,7 @@ const addHealth = async (req, res) => {
     email: email,
     priority,
     images: images,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -262,6 +266,7 @@ const addFashion = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -282,6 +287,7 @@ const addFashion = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -343,6 +349,7 @@ const addPhoneTablet = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -361,6 +368,7 @@ const addPhoneTablet = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -424,6 +432,7 @@ const addHome = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -443,6 +452,7 @@ const addHome = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -508,6 +518,7 @@ const addVehicle = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
@@ -529,6 +540,7 @@ const addVehicle = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
+    merchant:merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
