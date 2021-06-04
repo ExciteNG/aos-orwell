@@ -480,7 +480,7 @@ const setUpAdmin = async (req, res, next) => {
 /*                  SIGN JWTS                        */
 // Merchants Login
 const signJWTForUser = (req, res) => {
-  console.log('signing jwt', req.user)
+  // console.log('signing jwt', req.user)
   // check login route authorization
   // if (req.user.userType !== "EX10AF")
   //   return res.status(400).json({ msg: "invalid login" });
@@ -498,14 +498,14 @@ const signJWTForUser = (req, res) => {
     }
   );
   // console.log("not coming");
-  res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+  // res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
   // console.log(token)
   res.send({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  console.log('signing jwt', req.user)
+  // console.log('signing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
