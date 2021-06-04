@@ -123,7 +123,9 @@ const addElectronics = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
-
+  // saving profile ref
+  profile.product.push(newProductId);
+  profile.save();
   // newProduct.save()
   //
   // stock code
@@ -199,6 +201,9 @@ const addHealth = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
+  // saving profile ref
+   profile.product.push(newProductId);
+   profile.save();
   // newProduct.save()
   //
   // stock code
@@ -280,6 +285,9 @@ const addFashion = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+   profile.save();
 
   // stock code
   const stockRecord = {
@@ -356,6 +364,9 @@ const addPhoneTablet = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+   profile.save();
 
   //
   // stock code
@@ -435,6 +446,9 @@ const addHome = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+   profile.save();
 
   // stock code
   const stockRecord = {
@@ -518,6 +532,9 @@ const addVehicle = async (req, res) => {
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+   profile.save();
 
   //    newProduct.save()
 

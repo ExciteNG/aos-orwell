@@ -118,7 +118,9 @@ const profileSchema = new mongoose.Schema({
         commission:0
       }
     ]
-  }
+  },
+  product:[{type:mongoose.Schema.Types.ObjectId,
+    ref:"Product"}]
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));
