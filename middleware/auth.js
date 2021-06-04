@@ -498,7 +498,7 @@ const signJWTForUser = (req, res) => {
     }
   );
   // console.log("not coming");
-  // res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+  res.cookie('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
   //res.append('Set-Cookie', 'jwt='+token+';');
   // console.log(token)
   res.send({ token });
