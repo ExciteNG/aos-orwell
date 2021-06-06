@@ -128,6 +128,7 @@ else {
     app.use('/marketplace',require('./routes/market'));
     
     app.use([
+      require("./routes/angolia"),
       require("./routes/auth"),
       require("./routes/products"),
       require("./routes/profile"),
