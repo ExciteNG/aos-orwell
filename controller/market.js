@@ -131,6 +131,7 @@ const addElectronics = async (req, res) => {
   const newProductId = newProduct._id;
   // saving profile ref
   profile.product.push(newProductId);
+  profile.markModified('product');
   profile.save();
   // newProduct.save()
   //
@@ -211,6 +212,7 @@ const addHealth = async (req, res) => {
   const newProductId = newProduct._id;
   // saving profile ref
    profile.product.push(newProductId);
+  profile.markModified('product');
    profile.save();
   // newProduct.save()
   //
@@ -297,6 +299,7 @@ const addFashion = async (req, res) => {
   const newProductId = newProduct._id;
    // saving profile ref
    profile.product.push(newProductId);
+  profile.markModified('product');
    profile.save();
 
   // stock code
@@ -378,6 +381,7 @@ const addPhoneTablet = async (req, res) => {
   const newProductId = newProduct._id;
    // saving profile ref
    profile.product.push(newProductId);
+  profile.markModified('product');
    profile.save();
 
   //
@@ -462,6 +466,7 @@ const addHome = async (req, res) => {
   const newProductId = newProduct._id;
    // saving profile ref
    profile.product.push(newProductId);
+  profile.markModified('product');
    profile.save();
 
   // stock code
@@ -550,6 +555,7 @@ const addVehicle = async (req, res) => {
   const newProductId = newProduct._id;
    // saving profile ref
    profile.product.push(newProductId);
+  profile.markModified('product');
    profile.save();
 
   //    newProduct.save()
