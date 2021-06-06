@@ -9,11 +9,11 @@ const Profile = require("../models/Profiles");
 const Partners = require("../models/Partners");
 const randomstring = require("randomstring");
 const { use } = require("passport");
-const sgMail = require("@sendgrid/mail");
+// const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
 const jwtAlgorithm = "HS256";
@@ -21,7 +21,7 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 //email templating
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
-
+const Cookies = require('cookies');
 /*                  SIGNUPs                         */
 
 // Merchants
@@ -498,7 +498,12 @@ const signJWTForUser = (req, res) => {
     }
   );
   // console.log(token);
-  res.json({ token });
+  const cookies = new Cookies(req,res);
+  // cookies.set('jwt',token,{path:'/',httpOnly:false})
+  // res.setHeader('jwt',token)
+  // res.setHeader('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+
+  return res.json({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
@@ -622,10 +627,14 @@ const authPageSpringBoard = (req, res) => {
   res.json({ code: 200, auth: true });
 };
 
+
+
+
+
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest:PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },
