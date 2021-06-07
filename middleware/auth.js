@@ -628,12 +628,12 @@ const authPageSpringBoard = (req, res) => {
 
 
 //cookie-extractor helper function for storing JWTs in cookies for sessionless authentication
-var cookieExtractor = function(req){
-  let token = null;
-  if (req && req.cookies) token = req.cookies['jwt'];
-  console.log(token)
-  return token;
-};
+// var cookieExtractor = function(req){
+//   let token = null;
+//   if (req && req.cookies) token = req.cookies['jwt'];
+//   console.log(token)
+//   return token;
+// };
 
 
 

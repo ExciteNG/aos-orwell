@@ -27,7 +27,6 @@ else {
     
     const express = require('express');
     const cors = require('cors');
-    const dbConnect = require('./models/init');
     const authMiddleware = require('./middleware/auth');
     const dotenv = require('dotenv')
     dotenv.config()
