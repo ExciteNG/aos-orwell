@@ -122,7 +122,7 @@ const profileSchema = new mongoose.Schema({
   cycle:{
     type:String,
     default:""
-  }
+  },
   product:[{type:mongoose.Schema.Types.ObjectId,
     ref:"Product"}]
 });
