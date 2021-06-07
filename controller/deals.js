@@ -17,7 +17,7 @@ const addDeals = async (req, res) => {
     endDate,
     subCategory,
   } = req.body;
-  const percent = (prevPrice-dealPrice)*100/prevPrice
+  const percent = (dealPrice-prevPrice)*100/prevPrice
   const addDeals = new Deals({
     category: category,
     dealImg: dealImg,
