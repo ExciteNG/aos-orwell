@@ -7,6 +7,7 @@ const verifyCookie=async (req,res,next)=>{
   const decodedToken = jwt(token);
   if(!decodedToken) return res.status(401);
   req.user = decodedToken.userType;
+  req.profile = decodedToken.email
   next();
 
 }
