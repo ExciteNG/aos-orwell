@@ -27,7 +27,6 @@ else {
     
     const express = require('express');
     const cors = require('cors');
-    const dbConnect = require('./models/init');
     const authMiddleware = require('./middleware/auth');
     const authMiddleware2 = require('./middleware/cookieAuth');
     const dotenv = require('dotenv')

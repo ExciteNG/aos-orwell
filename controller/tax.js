@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const TaxModel = require('../models/tax');
 
 const createTax = (req, res) => {
