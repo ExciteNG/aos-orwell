@@ -9,11 +9,11 @@ const Profile = require("../models/Profiles");
 const Partners = require("../models/Partners");
 const randomstring = require("randomstring");
 const { use } = require("passport");
-// const sgMail = require("@sendgrid/mail");
+const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
 const jwtAlgorithm = "HS256";
@@ -21,7 +21,7 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 //email templating
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
-const Cookies = require('cookies');
+
 /*                  SIGNUPs                         */
 
 // Merchants
@@ -47,7 +47,7 @@ const signUp = async (req, res, next) => {
       });
 
       const user = {
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,
@@ -497,17 +497,15 @@ const signJWTForUser = (req, res) => {
       subject: user._id.toString(),
     }
   );
-  // console.log(token);
-  const cookies = new Cookies(req,res);
-  // cookies.set('jwt',token,{path:'/',httpOnly:false})
-  // res.setHeader('jwt',token)
-  // res.setHeader('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
-
-  return res.json({ token });
+  // console.log("not coming");
+  res.setHeader('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
+  //res.append('Set-Cookie', 'jwt='+token+';');
+  // console.log(token)
+  res.send({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  console.log('sign  ing jwt', req.user)
+  // console.log('signing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
@@ -525,7 +523,7 @@ const signJWTForAffiliates = (req, res) => {
     }
   );
   // console.log(token);
-  res.json({ token });
+  res.send({ token });
 };
 
 // Partners Login
@@ -629,12 +627,20 @@ const authPageSpringBoard = (req, res) => {
 
 
 
+//cookie-extractor helper function for storing JWTs in cookies for sessionless authentication
+var cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) token = req.cookies['jwt'];
+  console.log(token)
+  return token;
+};
+
 
 
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest:PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest:cookieExtractor,
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },

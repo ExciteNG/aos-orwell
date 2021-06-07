@@ -28,6 +28,7 @@ else {
     const express = require('express');
     const cors = require('cors');
     const authMiddleware = require('./middleware/auth');
+    const authMiddleware2 = require('./middleware/cookieAuth');
     const dotenv = require('dotenv')
     dotenv.config()
     const morgan = require('morgan');
@@ -80,6 +81,7 @@ else {
     app.use(cors({ credentials: true },corsOptions));
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
+    // app.use(authMiddleware2.initialize);
     app.use(morgan('short'));
 
     //run the cron job

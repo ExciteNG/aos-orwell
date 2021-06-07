@@ -1,5 +1,6 @@
 const express = require('express')
 const { requireJWT } = require('../middleware/auth')
+const { requireJWTCookie } = require('../middleware/cookieAuth')
 const Randomstring = require('randomstring')
 const router = express.Router()
 const Profiles = require('../models/Profiles')
@@ -153,7 +154,8 @@ const generateRefNo = Randomstring.generate({
 
 // Merchants Profile by email
 router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
-    const {profile} = req.body
+    const {profile} = req.body;
+    console.log('passed')
     const {email,userType} = req.user
 //
     Profiles.findOne({email:email},(err,doc)=>{

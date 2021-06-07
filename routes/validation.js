@@ -1,27 +1,22 @@
 const express = require('express')
+const { verifyCookie } = require('../middleware/cookieAuth')
+const router = express.Router();
 
-const { requireJWT } = require('../middleware/auth')
 
-const router = express.Router()
-
-router.get('/validation',requireJWT,(req, res) => {
-  // console.log(req.user['_doc'].userType, 'valid');
-
-  //Ensure this user a client, check client code
-  if(req.user['_doc'].userType!='CL04') return res.status(401);
-  //
-  res.json({status:200,message:'you are signed in'})
-
+router.get('/merchants',verifyCookie,(req, res) => {
+  if(req.user!=="EX10AF") return res.status(401)
+  return res.json({user:true})
   })
-router.get('/validation-01',requireJWT,(req, res) => {
-  // console.log(req.user['_doc'].userType, 'valid');
-
-  //Ensure this user a client, check client code
-  if(req.user['_doc'].userType!='HR01') return res.json({status:401,message:'relogin'});
-  //
-  res.json({status:200,message:'you are signed in'})
-
+router.get('/affiliates',verifyCookie,(req, res) => {
+  if(req.user!=="EX20AF") return res.status(401)
+  return res.json({user:true})
   })
-
-
+router.get('/consultants',verifyCookie,(req, res) => {
+  if(req.user!=="EX10AF") return res.status(401)
+  return res.json({user:true})
+  })
+router.get('/spring-board',verifyCookie,(req, res) => {
+  if(req.user!=="EXSBAF") return res.status(401)
+  return res.json({user:true})
+  })
 module.exports = router

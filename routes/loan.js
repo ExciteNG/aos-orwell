@@ -36,7 +36,7 @@ router.delete('/delete/:id', async (req,res) => {
 router.get('/all', async (req,res)=>{
     try {
         let loans = await Loans.find({}).lean().sort({createdAt:-1})
-        if (loans.length === 0) return res.status(404).json({empty:"You have no loan records"})
+        if (loans.length === 0) return res.json({code:404,empty:"You have no loan records"})
         return res.status(200).json({loans:loans})
     } catch (err) {
         console.error(err)

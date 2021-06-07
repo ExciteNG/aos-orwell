@@ -43,9 +43,11 @@ router.post(
       profile.subscriptionLevel = 3;
       profile.subscriptionStart = Date.now()
       profile.subscriptionEnd = handleExpire()
+      profile.cycle = item.cycle
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');
       profile.markModified('subscriptionEnd');
+      profile.markModified('cycle')
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -54,9 +56,11 @@ router.post(
       profile.subscriptionLevel = 2;
       profile.subscriptionStart = Date.now();
       profile.subscriptionEnd = handleExpire();
+      profile.cycle = item.cycle
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');
       profile.markModified('subscriptionEnd');
+      profile.markModified('cycle')
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
@@ -65,9 +69,11 @@ router.post(
       profile.subscriptionLevel = 1;
       profile.subscriptionStart = Date.now();
       profile.subscriptionEnd = handleExpire();
+      profile.cycle = item.cycle
       profile.markModified('subscriptionLevel');
       profile.markModified('subscriptionStart');
       profile.markModified('subscriptionEnd');
+      profile.markModified('cycle')
       //Store Payment
       const newPayment = new Payments(item);
       newPayment.save();
