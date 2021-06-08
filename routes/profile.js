@@ -171,10 +171,10 @@ router.put("/app/profile/get/profile/approved", async (req, res) => {
 // Merchants Profile by email
 router.get("/app/profile/get/profile/email", requireJWT, async (req, res) => {
   const { email, userType } = req.user;
-  console.log(email)
+//   console.log(email)
   //
   try {
-    const profile =await Profiles.findOne({ email: email });
+    const profile = await Profiles.findOne({ email: email }).populate('product')
     // console.log(profile)
     if (profile) {
         // console.log('hello')
