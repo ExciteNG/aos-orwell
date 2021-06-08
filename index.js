@@ -27,6 +27,7 @@ else {
     
     const express = require('express');
     const cors = require('cors');
+    const compression = require('commpression');
     const authMiddleware = require('./middleware/auth');
     const authMiddleware2 = require('./middleware/cookieAuth');
     const dotenv = require('dotenv')
@@ -79,6 +80,7 @@ else {
     app.use(bodyParser.json());
     app.use(cookieParser())
     app.use(cors({ credentials: true },corsOptions));
+    app.use(compression())
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
     // app.use(authMiddleware2.initialize);
