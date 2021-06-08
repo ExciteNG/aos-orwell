@@ -27,7 +27,7 @@ else {
     
     const express = require('express');
     const cors = require('cors');
-    const compression = require('commpression');
+    const compression = require('compression');
     const authMiddleware = require('./middleware/auth');
     const authMiddleware2 = require('./middleware/cookieAuth');
     const dotenv = require('dotenv')
