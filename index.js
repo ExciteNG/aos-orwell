@@ -127,6 +127,7 @@ else {
     app.use('/payments',require('./routes/payment'));
     app.use('/support',require('./routes/feedbackroutes'));
     app.use('/marketplace',require('./routes/market'));
+    app.use('/paystack',require('./helper/payments/generate'));
     
     app.use([
       require("./routes/angolia"),
