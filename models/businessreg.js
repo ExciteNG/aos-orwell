@@ -128,7 +128,7 @@ const businessRegistrationSchema =  new mongoose.Schema({
         default:"Pending"
     },
     assignedTo: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Partner'
       },
       isAssigned:{

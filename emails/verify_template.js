@@ -830,7 +830,7 @@ button.es-button {
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td align="left" class="esd-block-text" bgcolor="#ffffff">
-                                                                                            <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work,Copy and paste the link below to your browser.</p><br><a href=${emailHost()}/confirmation/email/${email}_${tokenString}" style="font-size:medium;" target="_blank">${emailHost()}/confirmation/email/${email}_${tokenString}</a><br><br><br>
+                                                                                            <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work,Copy and paste the link below to your browser.</p><br><a href="${emailHost()}/confirmation/email/${email}_${tokenString}" style="font-size:medium;" target="_blank">${emailHost()}/confirmation/email/${email}_${tokenString}</a><br><br><br>
                                                                                             <p style="color: #000000; line-height: 100%; font-size:medium;">If you have any questions, just reply to this email, we are always happy to help out<br><br><br><br></p>
                                                                                             <p style="color: #000000; line-height: 100%; font-size:medium;">Cheers,<br>The Excite Team<br><br></p>
                                                                                         </td>

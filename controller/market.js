@@ -27,43 +27,6 @@ const filterProducts = async (req, res) => {
   }
 };
 
-// const filterProduct = async (req, res) => {
-//   //store each individual product in an array
-//   let individualProduct = [];
-
-//   const allProducts = await Products.find({})
-//     .sort({ createdAt: -1 })
-//     .lean();
-//   allProducts.forEach((productList) => {
-//     individualProduct.push(productList.title);
-//   });
-
-//   console.log(individualProduct);
-
-//   // if (! req.query.product === producTitle) {
-//   //   return res.json({code:400,message:"oops, There are no products with this name !"})
-
-//   // }
-
-//   //get the filtered product
-//   console.log(allProducts.title);
-//   // for (let products of allProducts) {
-//   //   products.title = products.title.split(' ')
-
-//   // }
-//   var productFilt = allProducts.filter(
-//     (product) =>
-//       product.title.split(" ").includes(req.query["product"]) ||
-//       req.query["product"] === product.title
-//   );
-
-//   if (productFilt.length === 0)
-//     return res.json({
-//       message: "oops, There are no products with this name !",
-//     });
-//   // console.log(productFilt)
-//   return res.json({ code: 200, product: productFilt });
-// };
 
 const getCategory = async (req, res) => {
   const { category } = req.body;
@@ -89,8 +52,15 @@ const getOfferById = async (req, res) => {
   const id = req.params.id;
   // console.log(id)
   //
-  const item = await Deals.findOne({ _id: id });
-  res.json({ code: 201, item });
+  try {
+    const item = await Deals.findOne({ _id: id });
+    console.log(item,id)
+  return res.json({ code: 201, item });
+  } catch (error) {
+    console.log(error)
+    return res.status(500)
+  }
+  
 };
 
 const addElectronics = async (req, res) => {
@@ -601,11 +571,22 @@ const addVehicle = async (req, res) => {
 };
 
 const getLandinpPage = async (req, res) => {
-  const banners = await Banners.find();
-  const deals = await Deals.find();
-  const approvedBanners = banners.filter((banner) => banner.approval);
-  const products = await Products.find().sort({ priority: -1, _id: 1 });
-  res.json({ banner: approvedBanners, products: products, deals: deals });
+  try {
+    const banners = await Banners.find();
+    const deals = await Deals.find();
+    const approvedBanners = banners.filter((banner) => banner.approval);
+    const products = await Products.find().populate([{
+      path: "merchant",
+      select:"product",
+        populate: {
+          path: "product",
+        },
+    }]).sort({ priority: -1, _id: 1 });
+    res.json({ banner: approvedBanners, products: products, deals: deals });
+  } catch (error) {
+    return res.status(500)
+  }
+ 
 };
 
 module.exports = {
