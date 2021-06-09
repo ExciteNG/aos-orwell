@@ -124,7 +124,9 @@ const profileSchema = new mongoose.Schema({
     default:""
   },
   product:[{type:mongoose.Schema.Types.ObjectId,
-    ref:"Product"}]
+    ref:"Product"}],
+  customers:[{type:mongoose.Schema.Types.ObjectId,
+      ref:"Customer"}],
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));

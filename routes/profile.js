@@ -115,10 +115,10 @@ const generateRefNo = Randomstring.generate({
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
             secure:false,
-           
+
         })
         return res.json({code:201,affiliate})
-        
+
     }
     if(state==="Decline"){
         affiliate.regStatus.isApproved=false;
@@ -142,13 +142,13 @@ const generateRefNo = Randomstring.generate({
             onError: (e) => console.log(e),
             onSuccess: (i) => console.log(i),
             secure:false,
-           
+
         })
 
         return res.json({code:201,affiliate})
-        
+
     }
-      
+
 
 })
 
@@ -157,10 +157,8 @@ router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
     const {profile} = req.body;
     console.log('passed')
     const {email,userType} = req.user
-//
-    Profiles.findOne({email:email},(err,doc)=>{
-        // console.log(doc)
-        res.json(doc)
+
+    Profiles.findOne({email:email},(err,doc)=>{res.json(doc).populate(['product','customers'])
 
     })
 
