@@ -16,7 +16,7 @@ router.get("/app/profile/get-my-profile", requireJWT, async (req, res) => {
   console.log(userType);
   if (userType !== "EX20AF")
     return res.status(401).json({ message: "Unauthorized" });
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Affiliates.findOne({ email: email });
 
   res.json(profile);
 });
