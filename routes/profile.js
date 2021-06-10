@@ -28,7 +28,7 @@ router.put(
   async (req, res) => {
     const { bank, accountNo, accountName, paymentMode } = req.body;
     const { email, userType } = req.user;
-    console.log(userType);
+    console.log(userType,'here');
     if (userType !== "EX20AF")
       return res.json({ code: 401, message: "Unauthorized" });
     const profile = await Affiliates.findOne({ email: email });
