@@ -16,8 +16,8 @@ const feedbackEnq = async (req,res) => {
               from: 'enquiry@exciteafrica.com',
               to: req.body.email,
               subject: 'RESPONSE FROM EXCITE CUSTOMER CARE',
-              html: autoResponse(req.body.name),
-              text: autoResponse(req.body.name),
+              html: autoResponse(req.body.email),
+              text: autoResponse(req.body.email),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => {
