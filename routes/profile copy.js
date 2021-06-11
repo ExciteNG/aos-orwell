@@ -16,7 +16,7 @@ router.get("/app/profile/get-my-profile", requireJWT, async (req, res) => {
   console.log(userType);
   if (userType !== "EX20AF")
     return res.status(401).json({ message: "Unauthorized" });
-  const profile = await Affiliates.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email });
 
   res.json(profile);
 });
@@ -28,10 +28,10 @@ router.put(
   async (req, res) => {
     const { bank, accountNo, accountName, paymentMode } = req.body;
     const { email, userType } = req.user;
-    console.log(userType,'here');
+    console.log(userType);
     if (userType !== "EX20AF")
       return res.json({ code: 401, message: "Unauthorized" });
-    const profile = await Affiliates.findOne({ email: email });
+    const profile = await Profiles.findOne({ email: email });
 
     profile.accountDetails = {
       bank: bank,
@@ -57,7 +57,7 @@ router.put(
     const { email, userType } = req.user;
     if (userType !== "EX20AF")
       return res.json({ code: 401, message: "Unauthorized" });
-    const profile = await Affiliates.findOne({ email: email });
+    const profile = await Profiles.findOne({ email: email });
     profile.identification = {
       id: req.body.id,
       idType: req.body.idType,
@@ -82,7 +82,7 @@ router.get(
       if (userType !== "EXSBAF")
         return res.status(401).json({ message: "Unauthorized" });
 
-      const affiliates = await Affiliates.find({ userType: "EX20AF" });
+      const affiliates = await Profiles.find({ userType: "EX20AF" });
 
       res.json({ code: 201, affiliates });
     } catch (error) {
@@ -98,8 +98,8 @@ router.post("/app/profile/get/profile", async (req, res) => {
   // if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 
   //
-  Affiliates.findOne({ _id: profile }, (err, doc) => {
-    console.log(doc,'updated')
+  Profiles.findOne({ _id: profile }, (err, doc) => {
+    // console.log(doc)
     res.json(doc);
   });
 });
@@ -115,7 +115,7 @@ router.put("/app/profile/get/profile/approved", async (req, res) => {
     readable: true,
   });
   //
-  let affiliate = await Affiliates.findOne({ _id: profile });
+  let affiliate = await Profiles.findOne({ _id: profile });
   if (state === "Accept") {
     affiliate.regStatus.isApproved = true;
     affiliate.regStatus.dateApproved = new Date().toLocaleDateString();

@@ -16,6 +16,7 @@ module.exports = function(req, res, next) {
           if(err) res.status(401).json({msg:"Expired token"})
         // if valid
         req.plan = payload;
+    
         next();
       }
     );
