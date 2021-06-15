@@ -15,11 +15,6 @@ const {
   signJWTForInfluencers,
   signJWTForPartners,
   signJWTForSpringBoard,
-  authPageMerchant,
-  authPageAffiliate,
-  authInfluencerMarketer,
-  authPagePartner,
-  authPageSpringBoard,
   signUpRefCode,
   setUpAdmin,
   passwordReset,
@@ -76,12 +71,5 @@ router.post('/auth/login/admin', signIn, signJWTForExcite)
 router.post('/auth/login/influencer', signIn, signJWTForInfluencers)
 
 
-//page authorization
 
-router.get('/verification/verify/ex10af',requireJWT,authPageMerchant)
-router.get('/verification/verify/ex20af',requireJWT,authPageAffiliate)
-router.get('/verification/verify/ex50af',requireJWT,authPagePartner)
-router.get('/verification/verify/exsbaf',requireJWT,authPageSpringBoard)
-//influencer marketer dashboard authorization
-router.get('/verification/verify/ex90if',requireJWT,authInfluencerMarketer)
 module.exports = router

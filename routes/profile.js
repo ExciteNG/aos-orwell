@@ -13,12 +13,15 @@ const affiliateSuccess = require("../emails/affiliate_success");
 // my affiliate profile
 router.get("/app/profile/get-my-profile", requireJWT, async (req, res) => {
   const { email, userType } = req.user;
-  console.log(userType);
+  // console.log(userType);
   if (userType !== "EX20AF")
     return res.status(401).json({ message: "Unauthorized" });
-  const profile = await Affiliates.findOne({ email: email });
-
-  res.json(profile);
+    try {
+      const profile = await Affiliates.findOne({ email: email }).populate([{path:'merchants',select:"fullname"}])
+     return res.json(profile);
+    } catch (error) {
+      return res.status(500)
+    }
 });
 
 // affiliate update bank information
@@ -49,10 +52,7 @@ router.put(
 );
 // affilites update profile
 
-router.put(
-  "/app/profile-self-upgrade/affiliate",
-  requireJWT,
-  async (req, res) => {
+router.put('/app/profile-self-upgrade/affiliate', requireJWT, async (req,res)=>{
     //do something
     const { email, userType } = req.user;
     if (userType !== "EX20AF")
@@ -73,35 +73,30 @@ router.put(
 );
 
 //springboard access to affiliates
-router.get(
-  "/app/profile/get-all-affiliates/profile",
-  requireJWT,
-  async (req, res) => {
+router.get('/app/profile/get-all-affiliates/profile', requireJWT, async (req,res)=>{
     try {
-      const { email, userType } = req.user;
-      if (userType !== "EXSBAF")
-        return res.status(401).json({ message: "Unauthorized" });
+      const {email,userType} = req.user
+      if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 
-      const affiliates = await Affiliates.find({ userType: "EX20AF" });
+      const affiliates = await Affiliates.find({ userType: "EX20AF" }).populate([{path:'merchants',select:"fullname"}])
 
-      res.json({ code: 201, affiliates });
+      return res.json({ code: 201, affiliates });
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
-  }
-);
+})
 
 //springborad access to an affiliate
 router.post("/app/profile/get/profile", async (req, res) => {
   const { profile } = req.body;
-  // const {email,userType} = req.user
-  // if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
-
-  //
-  Affiliates.findOne({ _id: profile }, (err, doc) => {
-    console.log(doc,'updated')
-    res.json(doc);
-  });
+ 
+  try {
+    const affiliate = await Affiliates.findOne({ _id: profile }).populate([{path:'merchants',select:"fullname"}]);
+    return  res.json({doc:affiliate});
+  } catch (error) {
+    return res.status(500).json(error);
+    
+  }
 });
 
 // springboard approved status for affiliate
@@ -170,35 +165,27 @@ router.put("/app/profile/get/profile/approved", async (req, res) => {
 });
 
 // Merchants Profile by email
-router.get("/app/profile/get/profile/email", requireJWT, async (req, res) => {
-  const { email, userType } = req.user;
-//   console.log(email)
-  //
-  try {
-    const profile = await Profiles.findOne({ email: email }).populate('product')
-    // console.log(profile)
-    if (profile) {
-        // console.log('hello')
-      return res.json(profile);
-    }
-  } catch (error) {
-      console.log(error)
-    return res.status(400).json({ err: error });
-  }
-});
-// Merchants name by email
-router.get(
-  "/app/profile/get/profile/email/name",
-  requireJWT,
-  async (req, res) => {
-    const { profile } = req.body;
-    const { email, userType } = req.user;
-    //
-    Profiles.findOne({ email: email }, (err, doc) => {
-      // console.log(doc)
-      res.json({ fullname: doc.fullname });
-    });
-  }
-);
+router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
+    const {profile} = req.body;
+    console.log('passed')
+    const {email,userType} = req.user
 
-module.exports = router;
+    Profiles.findOne({email:email},(err,doc)=>{res.json(doc).populate(['product'])
+
+    })
+
+})
+// Merchants name by email
+router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
+    const {profile} = req.body
+    const {email,userType} = req.user
+//
+    Profiles.findOne({email:email},(err,doc)=>{
+        // console.log(doc)
+        res.json({fullname:doc.fullname})
+
+    })
+
+})
+
+module.exports = router

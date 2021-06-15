@@ -24,7 +24,7 @@ else {
     if (process.env.NODE_ENV !== 'production') {
       require('dotenv').config()
     }
-    
+
     const express = require('express');
     const cors = require('cors');
     const compression = require('compression');
@@ -38,19 +38,19 @@ else {
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
-    
+
     const app = express()
 
-    
-    //middleware csp for protection against xss attacks 
-    
+
+    //middleware csp for protection against xss attacks
+
     app.use(function(req, res, next) {
       res.setHeader("Content-Security-Policy", "script-src 'self';");
       next();
     });
-    
+
     //middleware for protection against clickjacking attacks
-    
+
     app.use(function(req, res, next) {
       res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
       next();
@@ -59,7 +59,7 @@ else {
     //whitelist host addresses that can only consume  the backend APIS
     var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
 
-    
+
     // handle cors requests
     var corsOptions = {
       origin: function (origin, callback) {
@@ -70,8 +70,8 @@ else {
         }
       }
     }
-    
-    
+
+
     // Middleware
     //middleware against standard http header attacks
     app.use(helmet());
@@ -88,7 +88,7 @@ else {
 
     //run the cron job
     //create the cron job helper function
-    
+
   const checkSub = async () => {
       let profiles = await Profiles.find();
       profiles.forEach((profile) => {
@@ -98,12 +98,12 @@ else {
       }
     })
     return profiles
-  } 
-  
+  }
+
 
   cronJob.schedule('0 0 * * *',()=>checkSub())
 
-    
+
     // Routes
     // define further routes
     app.use('/sales', require('./routes/salesRoute'));
@@ -127,8 +127,10 @@ else {
     app.use('/payments',require('./routes/payment'));
     app.use('/support',require('./routes/feedbackroutes'));
     app.use('/marketplace',require('./routes/market'));
+    app.use('/customer',require('./routes/customer'));
+    app.use('/balance',require('./routes/balance'));
     app.use('/paystack',require('./helper/payments/generate'));
-    
+
     app.use([
       require("./routes/angolia"),
       require("./routes/auth"),
@@ -145,7 +147,7 @@ else {
       require('./routes/social'),
       require('./helper/migrations/migrate'),
     ])
-    
+
     // Error handling
     app.use((error, req, res, next) => {
       res.json({
@@ -155,11 +157,10 @@ else {
       })
     })
     const PORT = process.env.PORT || 7000
-    
+
     // Read port and host from the configuration file
     app.listen(PORT, () => console.log('Express listening on port ', PORT))
 
     console.log(`worker ${process.pid} has started`)
 
 }
-

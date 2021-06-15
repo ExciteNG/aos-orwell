@@ -6,6 +6,7 @@ const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profile = require("../models/Profiles");
+const Affiliates = require("../models/Affiliates");
 const Partners = require("../models/Partners");
 const Influencers = require('../models/influencer')
 const randomstring = require("randomstring");
@@ -280,7 +281,7 @@ const signUpAffiliates = async (req, res, next) => {
         }
       });
 
-      const profileInstance = new Profile(userInstance);
+      const profileInstance = new Affiliates(userInstance);
       profileInstance.fullname = fullname;
       profileInstance.phone = phone;
       profileInstance.cellInfo = {
@@ -328,18 +329,7 @@ const signUpAffiliates = async (req, res, next) => {
   });
 };
 
-//verify account via the email token
-// const verifyAffiliateToken =  (req,res) =>{
-//   User.findOne({ authToken: req.params.token}, function(err, user) {
-//     if (!user) {
-//       res.json('You are not valid user');
-//       res.redirect('/auth/affiliate/sign-up');
-//     } else {
-//       res.json("you are now registered and you can log In...")
-//       res.redirect('/auth/login/affiliates')
-//     }
-//   });
-// }
+
 
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
@@ -356,12 +346,13 @@ const signUpRefCode = async (req, res, next) => {
       next(err);
     } else {
       //continue
-
       const user = {
-        email: req.body.email,
-        name: req.body.name,
+        email: req.body.email.toLowerCase(),
         userType: "EX10AF",
         emailVerified: false,
+        fullname: req.body.fullname,
+        username: req.body.username,
+        name: req.body.fullname,
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -372,10 +363,12 @@ const signUpRefCode = async (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile(userInstance);
+      const profileInstance = new Profile({...userInstance,...user});
+      const profileId = profileInstance._id
       let profiler = profileInstance;
       profiler.referral.isReffered = true;
       profiler.referral.refCode = req.body.refCode;
+      profiler.refBy=req.body.refCode;
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -384,14 +377,14 @@ const signUpRefCode = async (req, res, next) => {
         }
       });
       // TODO restructure
-      const refBy = await Profile.findOne({ affiliateCode: req.body.refCode });
+      const refBy = await Affiliates.findOne({ affiliateCode: req.body.refCode });
+      console.log(refBy,'here',req.body.refCode);
 
       if (!refBy) return res.json({ code: 201, mesage: "Account created" });
       if (refBy) {
-        let currentCnt = refBy.affiliateCount;
-        refBy.affiliateCount = currentCnt + 1;
-        refBy.markModified("affiliateCount");
-        refBy.save();
+        refBy.merchants.push(profileId);
+        refBy.markModified('merchants');
+        await refBy.save();
               //send mail
       nodeoutlook.sendEmail({
         auth: {
@@ -410,9 +403,6 @@ const signUpRefCode = async (req, res, next) => {
       })
         res.json({ code: 201, mesage: "Account created" });
       }
-      // req.user = userInstance;
-
-      // next();
     }
   });
 };
@@ -603,17 +593,11 @@ const signJWTForUser = (req, res) => {
       subject: user._id.toString(),
     }
   );
-  // console.log(token);
-  const cookies = new Cookies(req,res);
-  // cookies.set('jwt',token,{path:'/',httpOnly:false})
-  // res.setHeader('jwt',token)
-  // res.setHeader('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
-
   return res.json({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  console.log('sign  ing jwt', req.user)
+  // console.log('sign  ing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
@@ -740,28 +724,6 @@ const signJWTForExcite = (req, res) => {
   res.json({ token });
 };
 
-//PAGE AUTHORIZATION
-
-const authPageMerchant = (req, res) => {
-  if (req.user.userType !== "EX10AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPageAffiliate = (req, res) => {
-  if (req.user.userType !== "EX20AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPagePartner = (req, res) => {
-  if (req.user.userType !== "EX50AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPageSpringBoard = (req, res) => {
-  if (req.user.userType !== "EXSBAF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
 
 //influencer dashbaord authorization
 const authInfluencerMarketer = (req, res) => {
@@ -849,9 +811,4 @@ module.exports = {
   signJWTForSpringBoard,
   signJWTForExcite,
   passwordReset,
-  authPageAffiliate,
-  authInfluencerMarketer,
-  authPageMerchant,
-  authPagePartner,
-  authPageSpringBoard,
 };
