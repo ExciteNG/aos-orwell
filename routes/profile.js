@@ -52,10 +52,7 @@ router.put(
 );
 // affilites update profile
 
-router.put(
-  "/app/profile-self-upgrade/affiliate",
-  requireJWT,
-  async (req, res) => {
+router.put('/app/profile-self-upgrade/affiliate', requireJWT, async (req,res)=>{
     //do something
     const { email, userType } = req.user;
     if (userType !== "EX20AF")
@@ -76,14 +73,10 @@ router.put(
 );
 
 //springboard access to affiliates
-router.get(
-  "/app/profile/get-all-affiliates/profile",
-  requireJWT,
-  async (req, res) => {
+router.get('/app/profile/get-all-affiliates/profile', requireJWT, async (req,res)=>{
     try {
-      const { email, userType } = req.user;
-      if (userType !== "EXSBAF")
-        return res.status(401).json({ message: "Unauthorized" });
+      const {email,userType} = req.user
+      if(userType !== "EXSBAF") return res.status(401).json({message:'Unauthorized'})
 
       const affiliates = await Affiliates.find({ userType: "EX20AF" }).populate([{path:'merchants',select:"fullname"}])
 
@@ -91,8 +84,7 @@ router.get(
     } catch (error) {
       return res.status(500).json(error);
     }
-  }
-);
+})
 
 //springborad access to an affiliate
 router.post("/app/profile/get/profile", async (req, res) => {
@@ -173,35 +165,27 @@ router.put("/app/profile/get/profile/approved", async (req, res) => {
 });
 
 // Merchants Profile by email
-router.get("/app/profile/get/profile/email", requireJWT, async (req, res) => {
-  const { email, userType } = req.user;
-//   console.log(email)
-  //
-  try {
-    const profile = await Profiles.findOne({ email: email }).populate('product')
-    // console.log(profile)
-    if (profile) {
-        // console.log('hello')
-      return res.json(profile);
-    }
-  } catch (error) {
-      console.log(error)
-    return res.status(400).json({ err: error });
-  }
-});
-// Merchants name by email
-router.get(
-  "/app/profile/get/profile/email/name",
-  requireJWT,
-  async (req, res) => {
-    const { profile } = req.body;
-    const { email, userType } = req.user;
-    //
-    Profiles.findOne({ email: email }, (err, doc) => {
-      // console.log(doc)
-      res.json({ fullname: doc.fullname });
-    });
-  }
-);
+router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
+    const {profile} = req.body;
+    console.log('passed')
+    const {email,userType} = req.user
 
-module.exports = router;
+    Profiles.findOne({email:email},(err,doc)=>{res.json(doc).populate(['product'])
+
+    })
+
+})
+// Merchants name by email
+router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
+    const {profile} = req.body
+    const {email,userType} = req.user
+//
+    Profiles.findOne({email:email},(err,doc)=>{
+        // console.log(doc)
+        res.json({fullname:doc.fullname})
+
+    })
+
+})
+
+module.exports = router

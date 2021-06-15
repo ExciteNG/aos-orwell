@@ -910,7 +910,7 @@ const autoResponse = (email) => {
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as a&nbsp;partner.</p>
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you made an enquiry/complaint or you opted to subscribe for our newsletter.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
