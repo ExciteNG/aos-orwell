@@ -9,7 +9,7 @@ const CustomerCtrl = require('../controller/customer');
 router.post('/new', requireJWT, CustomerCtrl.createCustomer);
 
 // update a customer
-router.put('/:id', requireJWT, CustomerCtrl.updateCustomer);
+router.put('/update/:id', requireJWT, CustomerCtrl.updateCustomer);
 
 // delete one customer
 router.delete('/:id', requireJWT, CustomerCtrl.deleteCustomer);

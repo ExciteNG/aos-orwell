@@ -123,6 +123,7 @@ const profileSchema = new mongoose.Schema({
     type:String,
     default:""
   },
+  netBalance:{type:Number, default:0},
   product:[{type:mongoose.Schema.Types.ObjectId,
     ref:"Product"}],
   customers:[{type:mongoose.Schema.Types.ObjectId,
