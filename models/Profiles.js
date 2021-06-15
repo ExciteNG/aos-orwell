@@ -123,6 +123,14 @@ const profileSchema = new mongoose.Schema({
     type:String,
     default:""
   },
+  productInfluencer:{
+    type:Array,
+    default:[
+      {name:"",email:"",
+      mobile:"",website:"",
+      Address:""}
+    ],
+  },
   product:[{type:mongoose.Schema.Types.ObjectId,
     ref:"Product"}]
 });
