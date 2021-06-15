@@ -1,16 +1,18 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
-const busRegister = require('../models/businessreg')
+const busRegister = require('../models/businessreg');
+const Checknames = require('../models/Checkname');
 //express-rate-limit middleware
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const { requireJWT } = require('../middleware/auth');
+const Checkname = require('../models/Checkname');
 router.use(bodyParser.urlencoded({extended:true}));
 router.use(bodyParser.json());
 
 
 
-// 
+// rate limiting to allow only editing after a couple of months
 const createLimiter = rateLimit({
     windowMs: 14*24*60 * 60 * 1000, // two weeks window
     max: 1, // start blocking after making a  request
@@ -35,11 +37,32 @@ router.get('/all',requireJWT, async (req,res) => {
     }
 })
 
-router.post('/new/sole-propietor', async (req,res)=>{
+router.post('/new/sole-propietor',requireJWT, async (req,res)=>{
+    const {email} = req.user;
+
     try {
-        // req.body.user = req.user.id
+        const singleCheckName = Checknames.find({email:email}).populate(
+            {path:'user',
+            select:email
+        })
+        // const singleBusReg = busRegister.find({email:email}).populate(
+        //     {path:'user',
+        //     select:email
+        // })
+        if (!singleCheckName){
+            return res.json({code:400,message:"Please check your buiness name reservation before taking this step !"})
+        }
+        if (!singleCheckName.email === email ){
+            return res.json({code:401,message:"unauthorized !"})
+        }
+
+        if (singleCheckName.status === 'pending'){
+            return res.json({code:400,message:"you cannot register your  business as your business name has not been approved yet"})
+        }else{
+            // req.body.user = req.user.id
         await busRegister.create({...req.body,businessRegType:"Sole Propietorship"})
         return res.status(201).send({message:"success"})
+        }
     } catch (err) {
         console.error(err)
         res.send({status:500,message:err.message})
@@ -47,7 +70,7 @@ router.post('/new/sole-propietor', async (req,res)=>{
 })
 
 //delete all  business
-router.delete('/item/all', async (req,res)=>{
+router.delete('/item/all',requireJWT, async (req,res)=>{
     try {
         let business = await busRegister.find().lean()
         if (business.length===0) {
@@ -63,7 +86,7 @@ router.delete('/item/all', async (req,res)=>{
 })
 
 //get a specific user business
-router.get('/:id',async (req,res)=>{
+router.get('/:id',requireJWT,async (req,res)=>{
         const id = req.params.id
         try {
             const busId = await busRegister.findById({_id:id})
@@ -79,7 +102,7 @@ router.get('/:id',async (req,res)=>{
 });
 
 //edit a specific  business detail
-router.put("/edit/:id",createLimiter, async (req,res)=>{
+router.put("/edit/:id",requireJWT,createLimiter, async (req,res)=>{
     const id = req.params.id
 
     try {
@@ -105,7 +128,7 @@ router.put("/edit/:id",createLimiter, async (req,res)=>{
 })
 
 
-router.delete('/item/:id', async (req,res)=>{
+router.delete('/item/:id',requireJWT, async (req,res)=>{
     const id = req.params.id
 
     try {

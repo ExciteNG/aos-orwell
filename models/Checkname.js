@@ -23,6 +23,10 @@ const CheckBusinessName = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
       ref: 'Partner'
     },
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
     email: {
         type:String,
         validate:{

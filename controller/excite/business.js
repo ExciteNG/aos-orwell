@@ -9,7 +9,7 @@ const getAllNameReservations = async (req,res)=>{
           {
             path:'assignedTo',
             select:'company'
-        });
+        }).populate('user');
         res.status(200).json({applications: nameReserve})
       } catch (e) {
         res.status(400).json({message: 'Oops! Something went wrong!'})
@@ -22,7 +22,7 @@ const getAllBusinessNameRegistrations =async (req,res)=>{
           {
             path:'assignedTo',
             select:'company'
-        });
+        }).populate('user');
         res.status(200).json({message: nameRegister})
       } catch (e) {
         res.status(400).json({message: 'Oops! Something went wrong!'})

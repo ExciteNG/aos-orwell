@@ -1,0 +1,4044 @@
+[{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133059"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/29041d04-628e-47dd-9338-5446aee13967.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/0ec1f78c-a982-429d-88db-4e75dc672db0.jpg",
+    "signature": ""
+  },
+  "phone": "08024337599",
+  "fullname": "James Adewunmi Ogunbiyi ",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/19/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFJtXCPU",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "strickersboot69@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "14,Adeoye Adeyemi Street wasimi,Maryland",
+    "state": "Lagos",
+    "lga": "Ikeja"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305e"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "driver-license",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08034466293",
+  "fullname": "Obayemi Folashade Olawumi ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "Folashade0327@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "4 AMINU Ajibode Street Abule Odu Blstop unity estate Lagos ",
+    "state": "Lagos",
+    "lga": ""
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305f"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08148701028",
+  "fullname": "Adetoun Ogungbile",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "adetounhezekiah@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "5, Abdulkareem Ecoway Araromi Bus stop Igando",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133060"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "09091836148",
+  "fullname": "Olusegun Adebisi Solomon",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "olusegunsolomon01@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "28, Alhaji Noah Street, Egan Igando",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133061"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08034009094",
+  "fullname": "Okafor Rose Anulika ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "anitaanuli63@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "18, Johnkay Crescent, Hotel Bus Stop, Lasu Isheri road ",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133062"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "others",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08153460497",
+  "fullname": "Abdulazeez Mariam Ifeanyi ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "lexxychristine@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "34, Joseph Street, Ejigbo Lagos ",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133063"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "09056856895",
+  "fullname": "Otali Emmanuel ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "otaliemmanuel2@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "12, Okoerin Street, Ikotun Kwara state ",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133064"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "07016977675",
+  "fullname": "Mariam oluwabumi fadonugbo",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Eti Osa",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "mariamjoke123@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "No 3 Odufuwa street ogombo off KK da silver ajah",
+    "state": "Lagos",
+    "lga": "Eti-Osa"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133065"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "driver-license",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08033539246",
+  "fullname": "Julius Adekola",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "juliusadekola@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "2, Medina way, Araromi , IGANDO . Lagos.",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133066"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08028286875",
+  "fullname": "Hogan Bassey",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Badagry",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "hoganeduekbassey@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Close 73 House 4 satellite town",
+    "state": "Lagos",
+    "lga": "Amuwo-Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133067"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/74c46ce4-02b4-420b-b308-2f4cb2441f45.jpg",
+    "signature": ""
+  },
+  "phone": "07087527621",
+  "fullname": "Olawale Onifade",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/19/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFZqopE7",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikorodu",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "lawalolaola1@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "11,alhaji sulaimon street, awobo estate igbogbo ikorodu lagos ",
+    "state": "Lagos",
+    "lga": "Ikorodu"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305a"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/09e97629-90c2-4df2-815a-d5a213a809e9.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/02cfdf08-1d70-40a2-b613-9db9c22ee889.jpg",
+    "signature": ""
+  },
+  "phone": "08086962547",
+  "fullname": "Adebiyi Fatai Damilola",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/21/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFNhT12X",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Island",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "fatai.adebiyi@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "5,Alice Tinubu street orile iganmu Lagos",
+    "state": "Lagos",
+    "lga": "Lagos-Island"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305d"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/54b6f613-ca39-46e5-9137-28fe2031d820.jpg",
+    "signature": ""
+  },
+  "phone": "08020745117",
+  "fullname": "Ismaila abayomi lukmon",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "lukmonismaila5@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "#7,orotedo street off ishaga road",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133054"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/07d22872-c55a-413b-8b5e-07f59ffa2830.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/476f1a1b-4a7a-40f7-8efd-dea0ae29dfac.jpg",
+    "signature": ""
+  },
+  "phone": "08036556277",
+  "fullname": "victor praise smith",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/21/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFuzVmtf",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "victorpraiseisaac@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "15,Paul Oluwatayo Oke street,off Isuti road egan igando",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133068"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/c09b79ee-2a64-4175-95e8-0eb4e7e9691f.jpg",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "07066617435",
+  "fullname": "Adeola Kuti ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ojo",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "kuti_adeola@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "155 Okeagbo road Ilogbo,Ajangbadi ",
+    "state": "Lagos",
+    "lga": "Ojo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305b"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/b2f1c9fa-fbb0-4172-ba27-f6c0e36a5523.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/d16a3f66-1848-4a01-a5ff-e64e623d43c5.jpg",
+    "signature": ""
+  },
+  "phone": "07030518766",
+  "fullname": "KADRI LATEEF OLAYINKA",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/21/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFjotfwS",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "lateefolayinkaa@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "43, HAASTRUP STREET SURULERE GOS",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133057"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08022634874",
+  "fullname": "Soluade Olusegun David ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Mushin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "soludavis@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "7 Amusa street mafoluku oshodi ",
+    "state": "Lagos",
+    "lga": "Oshodi-Isolo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13305c"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/23a6b644-6d25-48f4-8e5b-610dbd714a14.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/a2f7059d-3a3c-4b4b-a989-ead9e9128c86.jpg",
+    "signature": ""
+  },
+  "phone": "08109949391",
+  "fullname": "Ekundayo bukola",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Kosofe",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "freyafranca@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "23 Moses ogungbeye street olowora Berger Lagos",
+    "state": "Lagos",
+    "lga": ""
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133069"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/625fed1f-88db-4517-8484-bc48b4f11db3.jpg",
+    "signature": ""
+  },
+  "phone": "08122749884",
+  "fullname": "Yakubu Tawakalitu Omojowolo ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikorodu",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "ytawakalituomojowolo@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "3,glorious crescent bayeku road igbogbo ikorodu Lagos State ",
+    "state": "Lagos",
+    "lga": "Ikorodu"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133055"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/6f556e86-3aad-49a9-a84b-b23c60132951.jpg",
+    "signature": ""
+  },
+  "phone": "07051856079",
+  "fullname": "Akinbobola Olaolu Moses",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/20/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFLGKDtj",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Island",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "olaoluakinbobola@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "63, Ayilala street, offf cole street ojuelegba surulere lagos ",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133058"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/1aa63b24-ba42-466c-a2f4-bfcbf585f72d.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/e99b3c56-f4be-4ad0-a344-2ca7d60c6153.jpg",
+    "signature": ""
+  },
+  "phone": "08060424621",
+  "fullname": "Otuyelu Bukola",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Kosofe",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "bukyotuyelu@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "6a Ibironke Cresent Maryland ",
+    "state": "Lagos",
+    "lga": "Kosofe"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133056"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/cace2273-f452-4125-a2c4-be632a9c8a37.jpg",
+    "signature": ""
+  },
+  "phone": "08024278996",
+  "fullname": "FUJAH BUKOLA TAOFIK",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/20/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AF6M9RzP",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Mainland",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "fikyjay@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "18, mabo road surulere",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306a"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/523ab8c2-3963-4a65-938a-729d6f63e0e1.jpg",
+    "signature": ""
+  },
+  "phone": "08140838821",
+  "fullname": "Ojekunle Okiki Samson",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ifako Ijaye",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "famousmediang22@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "34, Adebari Street Meiran  Lagos",
+    "state": "Lagos",
+    "lga": "Ifako-Ijaiye"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306b"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08136158652",
+  "fullname": "Julius K. Ogungbemi",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Island",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "oluwadamilareyogungbemi93@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "19, Beecroft Street, Lagos Island",
+    "state": "Lagos",
+    "lga": "Lagos-Island"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306c"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "07039093516",
+  "fullname": "Isaac Babajide Oladipupo",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikeja",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "jideisaacs@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "1/3 Wilson Amer Street Akera",
+    "state": "Ogun",
+    "lga": "Ifo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306d"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "others",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "09099371074",
+  "fullname": "Oluremilekun Isaac",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikeja",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "remmyembassy@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "1/3 Wilson Ameye Street Akera",
+    "state": "Ogun",
+    "lga": "Ifo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306e"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "09077661819",
+  "fullname": "Alake oluwagberade Joshua ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikeja",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "alakejoboy19@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "39 isolo muchin road",
+    "state": "Lagos",
+    "lga": "Oshodi-Isolo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13306f"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/cfb7904c-e70a-474d-9e69-3733ec46c879.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/d437dbbc-8965-4822-ac3b-ab4c9ff974bb.jpg",
+    "signature": ""
+  },
+  "phone": "8024546459",
+  "fullname": "Michael Thomas",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/21/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFTNCgsx",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "thomasakinola09@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "41 haastrup street off Western avenue surulere lagos, 5 isolo street ilogbo eremi badagry lagos",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133070"
+  },
+  "storeInfo": {
+    "storeName": "Arthur",
+    "storeAddress": "iiiefoie",
+    "storePhone": "0980989908",
+    "storeLga": "Ika-North-East",
+    "storeState": "Delta"
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "driver-license",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/199ef4bf-b229-4873-a5a3-55834821e913.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/09b47cc2-cfd2-4c96-abdf-0b6f1870d4d7.jpg",
+    "signature": ""
+  },
+  "phone": "09988768889",
+  "fullname": "Kazeem",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/19/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AF713ZNo",
+  "affiliateCount": 4,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikorodu",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "FIDELITY BANK PLC",
+    "accountName": "",
+    "accountNo": "097868687",
+    "paymentMode": "Monthly",
+    "bvn": "",
+    "branch": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    },
+    {
+      "amount": 5000,
+      "email": "kazeem.again@gmail.com",
+      "package": "Silver",
+      "cycle": "monthly",
+      "commission": 750
+    },
+    {
+      "amount": 100000,
+      "email": "dangote-dummy@gmail.com",
+      "package": "Gold",
+      "cycle": "yearly",
+      "commission": 15000
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "kazeem.kazeem@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Ikeja Cantonment",
+    "state": "Lagos",
+    "lga": "Ikeja"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133071"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/7ccbf11a-346d-4c23-ae56-9eec69ef6039.jpg",
+    "signature": ""
+  },
+  "phone": "07038822917",
+  "fullname": "Daniel Bere",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/20/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFvKFzYr",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "danielkobanibere@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Close 23 satellite town, Lagos",
+    "state": "Rivers",
+    "lga": "Khana"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133072"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/19949648-a9bb-4fc2-b873-191232c603b5.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/20210520_100515+(1).jpg",
+    "signature": ""
+  },
+  "phone": "09063779243",
+  "fullname": "Emmanuel Barieeba Precious",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/20/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AF43B83d",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "mcmanny99@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "close 23 satellite town",
+    "state": "Lagos",
+    "lga": "Amuwo-Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133073"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "driver-license",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/86679382-1894-4a00-921f-4a713f8c70a7.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/3257e6c3-c362-415b-8603-8e67164407b1.jpg",
+    "signature": ""
+  },
+  "phone": "08098110088",
+  "fullname": "Umoren Ukeme Emmanuel",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "ukeme.umoren2@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Rd 2 Block 152 Apt 3 Navy Town",
+    "state": "Lagos",
+    "lga": "Amuwo-Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133074"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/abfc2b6e-11fc-4fb8-b106-e0ed6d0bd4cc.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/54055cbc-2792-4d28-8297-0d32731c0b6a.jpg",
+    "signature": ""
+  },
+  "phone": "08068347748",
+  "fullname": "Jide Kayode Sanya ",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/20/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFrXBW5a",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "jidesanya1@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "8 Agbado station Road ijaye ojokoro lagos ",
+    "state": "Lagos",
+    "lga": "Ifako-Ijaiye"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133075"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "07088135253",
+  "fullname": "Adelakin becky ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Island",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "Adelakinbekky@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "11b wemego crescent Christ avenue lekki phase 1",
+    "state": "Lagos",
+    "lga": "Lagos-Island"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133076"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08163084653",
+  "fullname": "Chidi ibekwute",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Mainland",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "chidiibekwute1@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "3 folarin street empire",
+    "state": "Lagos",
+    "lga": "Lagos-Mainland"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133077"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/157184d5-617e-4ab1-bfe4-6703f44223db.jpg",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "09027315999",
+  "fullname": "Adams Abraham",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Lagos Mainland",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "adamsabrahamjuice@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "No 3 Araote st off Montgomery Road ",
+    "state": "Lagos",
+    "lga": "Lagos-Mainland"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133078"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/04b53ba7-6e3c-4ebc-a3d3-0b431352df15.jpg",
+    "signature": ""
+  },
+  "phone": "09043477178",
+  "fullname": "Ossai Henry Chinosa ",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/21/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AF3bHvqr",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ojo",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "ossaih667@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "no 10 fishpond tedi/mowo lasu Road lagos ",
+    "state": "Lagos",
+    "lga": "Ojo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133079"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08104514299",
+  "fullname": "Olarewaju oluwasegun",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "harbayomi58@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "85,sari iganmu Road,orile iganmu lagos",
+    "state": "Kwara",
+    "lga": "Ifelodun"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307a"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/6bdb7127-0f7d-405a-b0b8-01d0b83b02e9.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/a9416d8d-38d0-48cf-9f2f-bdd020bea122.jpg",
+    "signature": ""
+  },
+  "phone": "08066351405",
+  "fullname": "Ofor Akpama Cecelia ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikeja",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "delectable1115@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "27 folawewo street off allen avenue ikeja lagos",
+    "state": "Lagos",
+    "lga": "Ikeja"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307b"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/004b3653-eec8-4155-b2be-0d68a603752f.jpg",
+    "signature": ""
+  },
+  "phone": "08179718859",
+  "fullname": "Oyetola Folorunsho philip ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ojo",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "oyetolaphilip@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "No 15 alaka street ajegunle lagos ",
+    "state": "Lagos",
+    "lga": "Apapa"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307c"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/34c39f99-affc-441b-9380-986cd15f16d8.jpg",
+    "signature": ""
+  },
+  "phone": "08179516659",
+  "fullname": "Iheatu Emmanuel ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "iheatuEmmanuel@mail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "13,abbi Avenue surulere lagos ",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307d"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "driver-license",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/97cf6988-9f5c-4f48-bd99-f0c8d5f3a806.jpg",
+    "signature": ""
+  },
+  "phone": "08037217134",
+  "fullname": "Ngozi Patricia Azubuike",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "triciang33@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "No 14, Sherifatu street, satallite town.",
+    "state": "Lagos",
+    "lga": "Amuwo Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307e"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/83ec9f40-46f8-4cf8-9448-4ae182e26be8.jpg",
+    "signature": ""
+  },
+  "phone": "09066706668",
+  "fullname": "Vanessa Joseph ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "vashj119@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "22road,festac town",
+    "state": "Lagos",
+    "lga": "Amuwo-Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c13307f"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/eae7b33e-ee59-4965-a02a-a0a2bb9b92e8.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.eu-west-2.amazonaws.com/Enterprise-Images/AffiliateMarketers/c69eb32e-83cd-4493-a3b9-cc4433b5b281.jpg",
+    "signature": ""
+  },
+  "phone": "08055385221",
+  "fullname": "Yinka eruotor",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "omoyinkae@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "7oremeji street iyana ipaja Lagos",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133080"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "voter-card",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "-08085625187",
+  "fullname": "Enebeli Quincy",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ojo",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "enebeliquincy@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "10 steven nwachukwu street victory estate iyana school",
+    "state": "Lagos",
+    "lga": "Ojo"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133081"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/bdd256e8-60e5-4735-b8bb-8260bcd27a0f.jpg",
+    "signature": ""
+  },
+  "phone": "07038387350",
+  "fullname": "Losa  Clementina Ngbolise",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "clementina_akpati@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "402road,B close, block 3, flat 4. Festac town Lagos.",
+    "state": "Lagos",
+    "lga": "Amuwo-Odofin"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133082"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "int-passport",
+    "id": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/28b7c295-7bf5-458a-9fc1-aaf34287a50f.jpg",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/7cbd2a7a-5793-4934-9e6f-8d58c51adc60.jpg",
+    "signature": ""
+  },
+  "phone": "08036359055",
+  "fullname": "Adeleke Tijani",
+  "regStatus": {
+    "isApproved": true,
+    "dateApproved": "5/27/2021",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "AFTGcukj",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Alimosho",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "lekeslim@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "7 Ade akanni street, Orisunbare, Akowonjo/Shasha",
+    "state": "Lagos",
+    "lga": "Alimosho"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133083"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08066751904",
+  "fullname": "Azuka Ijeoma Helen ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "helenijeoma70@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "No:20 Idowu Randle street Aguda Lagos ",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133084"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "others",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "07014024575",
+  "fullname": "Adeyemi ayomiposi ",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Ikeja",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "ayoliciousay1@gmail.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "14,adeoye adeyemi Rd, wasimi maryland. ",
+    "state": "Lagos",
+    "lga": "Ikeja"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133085"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "national-id",
+    "id": "",
+    "passport": "",
+    "signature": ""
+  },
+  "phone": "08022918485",
+  "fullname": "Ayinla Kazeem Tunde",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Surulere",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "ayinla_td@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Salawu Street",
+    "state": "Lagos",
+    "lga": "Surulere"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60c22fad3878c8368c133086"
+  },
+  "storeInfo": {
+    "storeName": "",
+    "storeAddress": "",
+    "storePhone": "",
+    "storeLga": "",
+    "storeState": ""
+  },
+  "subscriptionLevel": 0,
+  "subscriptionStart": 0,
+  "subscriptionEnd": 0,
+  "referral": {
+    "isReffered": false,
+    "refCode": "",
+    "count": 0
+  },
+  "emailVerified": false,
+  "identification": {
+    "idType": "others",
+    "id": "",
+    "passport": "https://excite-enterprise-bucket.s3.amazonaws.com/Enterprise-Images/AffiliateMarketers/6602cce2-2b93-4411-8c67-9fd38d2be1c1.jpeg",
+    "signature": ""
+  },
+  "phone": "08103822898",
+  "fullname": "Osita jeremiah chukwuebuka",
+  "regStatus": {
+    "isApproved": false,
+    "dateApproved": "",
+    "dateRegistered": ""
+  },
+  "affiliateCode": "",
+  "affiliateCount": 0,
+  "partnerCode": "",
+  "cellInfo": {
+    "cell": "Amuwo Odofin",
+    "cellGroup": "",
+    "isCellHead": false,
+    "isClusterHead": false,
+    "cluster": ""
+  },
+  "accountDetails": {
+    "bank": "",
+    "accountNo": "",
+    "branch": "",
+    "bvn": "",
+    "accountName": "",
+    "paymentMode": ""
+  },
+  "company": {
+    "name": "",
+    "address": "",
+    "rc": "",
+    "tin": "",
+    "nature": "",
+    "taxCert": "",
+    "cacCert": ""
+  },
+  "earnings": [
+    {
+      "amount": 0,
+      "email": "",
+      "package": "",
+      "cycle": "",
+      "commission": 0
+    }
+  ],
+  "cycle": "",
+  "product": [],
+  "email": "jeremiahchuks33@yahoo.com",
+  "userType": "EX20AF",
+  "location": {
+    "address": "Deeper life bustop Ijanikin ",
+    "state": "Lagos",
+    "lga": "Ojo"
+  },
+  "__v": 0
+}]

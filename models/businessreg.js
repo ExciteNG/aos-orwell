@@ -131,10 +131,23 @@ const businessRegistrationSchema =  new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Partner'
       },
+      user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
       isAssigned:{
           type:Boolean,
           default:false
       }
 });
+
+businessRegistrationSchema.post('save', function(doc, next) {
+    doc.populate('user').execPopulate().then(function() {
+      next();
+    })
+    .catch(function(err){
+        console.error(err)
+    })
+  });
 
 module.exports = mongoose.model('businessRegSchema',businessRegistrationSchema);
