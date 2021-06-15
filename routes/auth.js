@@ -12,10 +12,6 @@ const {
   signJWTForAffiliates,
   signJWTForPartners,
   signJWTForSpringBoard,
-  authPageMerchant,
-  authPageAffiliate,
-  authPagePartner,
-  authPageSpringBoard,
   signUpRefCode,
   setUpAdmin,
   passwordReset,
@@ -65,11 +61,6 @@ router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 router.post('/auth/login/admin', signIn, signJWTForExcite)
 
 
-//page authorization
 
-router.get('/verification/verify/ex10af',requireJWT,authPageMerchant)
-router.get('/verification/verify/ex20af',requireJWT,authPageAffiliate)
-router.get('/verification/verify/ex50af',requireJWT,authPagePartner)
-router.get('/verification/verify/exsbaf',requireJWT,authPageSpringBoard)
 
 module.exports = router

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const plans = require("./plans");
 const verify = require("./verify");
 const Profiles = require("./../../models/Profiles")
+const Affiliates = require("./../../models/Affiliates")
 const Payments = require("./../../models/Payments")
 
 router.get("/generate-payment", requireJWT, (req, res) => {
@@ -32,6 +33,7 @@ router.post("/confirm/subscription",verify, async (req, res) => {
     const item = { ...req.plan, package: name,ref:req.body.ref };
     try {
       const profile = await Profiles.findOne({ email: email });
+      const merchantId = profile._id
         // console.log(profile)
       const handleExpire = () => {
         switch (cycle) {
@@ -85,39 +87,35 @@ router.post("/confirm/subscription",verify, async (req, res) => {
       }
 
       //credit affiliate
-      const isRef = profile.referral.isReffered;
-      // console.log(isRef);
+      const isRef = profile.refBy;
+      // console.log(isRef, 'here');
       if (!isRef) {
         //save profile and return
         await profile.save();
         return res.json({ code: 201, msg: "added not reffered" });
       }
-      if (isRef && profile.referral.count === 1) {
-        // save profile and return
+      const affiliateProfile =await Affiliates.findOne({affiliateCode:isRef});
+      const prevEarn = affiliateProfile.earnings.filter(item=>`${item["merchant"]}`===`${merchantId}`);
+      //
+      if (prevEarn.length>0) {
+        // save profile
+        console.log('worked')
         await profile.save();
-        return res.json({ code: 201, msg: "reffered but count is one" });
-      }
-
-      if (isRef && profile.referral.count === 0) {
-        const isRefBy = profile.referral.refCode;
-        const affiliateProfile = await Profiles.findOne({
-          affiliateCode: isRefBy,
-        });
+        return res.json({ code: 201, msg: "reffered but prev earned from" });
+      }  
         let newCommission = {
-          amount: amount,
+          amount: amount/100,
           email: email,
           package: package,
           cycle: cycle,
-          commission: 0.15 * Number(amount),
+          commission: 0.15 * Number(amount/100),
+          merchant:merchantId
         };
         affiliateProfile.earnings.push(newCommission);
         affiliateProfile.markModified("earnings");
-        //change count to 1
-        profile.referral = { isReffered: true, refCode: isRefBy, count: 1 };
-        profile.markModified("referral");
         //  console.log(updated)
         const saved = await affiliateProfile.save();
-      }
+      
       await profile.save();
 
       return res.json({ code: 201, msg: "added, affiliate credited" });
