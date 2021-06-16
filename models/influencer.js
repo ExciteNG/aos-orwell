@@ -81,6 +81,18 @@ const influencerSChema = mongoose.Schema({
     regStatus: {
         type: Object,
         default: { isApproved: "pending", dateApproved: "", dateRegistered: "" },
+      },
+      pendingJobs:{
+          type:Number,
+          default:0
+      },
+      completedJobs:{
+          type:Number,
+          default:0
+      },
+      currentJobs:{
+          type:Number,
+          default:0
       }
 })
 
