@@ -8,12 +8,14 @@ const User = require("../models/User");
 const Profile = require("../models/Profiles");
 const Affiliates = require("../models/Affiliates");
 const Partners = require("../models/Partners");
+const Influencers = require('../models/influencer')
 const randomstring = require("randomstring");
 const { use } = require("passport");
 // const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
+const influencerAcknowledge = require('../emails/influencer_acknowledge');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -436,6 +438,107 @@ const setUpSpringBoard = (req, res, next) => {
     }
   });
 };
+
+//SIGN UP Influencers
+const signUpInfluencers = async (req,res) => {
+  const {
+    fullName,
+    email,
+    password,
+    Address,
+    mobile,
+    telephone,
+    country,
+    StateOfResidence,
+    website,
+    AverageDailyVisitors,
+    socialmediaplatform,
+    socialmediahandles,
+    marketingSpecialty,
+    AmountPerPost,
+    AbletoDiscount,
+    profilePhoto,
+    regStatus
+  } = req.body
+
+  if (!email || !password || !req.body) {
+    return res.json({ status: 400, code: "No email or password provided" });
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
+  }
+  await User.findOne({ email: req.body.email }, (err, doc) => {
+    if (err) {
+      res.json({ code: 401, msg: "An Error ocured" });
+    }
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    }else {
+      //continue
+
+      const user = {
+        email: email,
+        name: fullName,
+        userType: "EX901F",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance,password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 400, mesage: "Failed create account" });
+          return;
+        }
+
+      });
+      const newInfluencer = new Influencers(user)
+      newInfluencer.Address = Address;
+      newInfluencer.mobile = mobile;
+      newInfluencer.telephone = telephone;
+      newInfluencer.country = country;
+      newInfluencer.StateOfResidence = StateOfResidence;
+      newInfluencer.website = website;
+      newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
+      newInfluencer.socialmediaplatform = socialmediaplatform;
+      newInfluencer.socialmediahandles = socialmediahandles;
+      newInfluencer.marketingSpecialty = marketingSpecialty;
+      newInfluencer.AmountPerPost = AmountPerPost;
+      newInfluencer.AbletoDiscount = AbletoDiscount;
+      newInfluencer.profilePhoto = profilePhoto;
+      newInfluencer.regStatus = regStatus;
+
+      newInfluencer.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create influencer !" });
+          return;
+        }
+        
+      })
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: email,
+        subject: "ACKNOWLEDGEMENT EMAIL",
+        html: influencerAcknowledge(),
+        text: influencerAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
+      return res.json({code:201,success:"account created successfully"})
+    }
+  })
+
+}
+
 const setUpAdmin = async (req, res, next) => {
   if (req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN)
     return res.json({code:400, msg: "Invalid Token" });
@@ -464,8 +567,11 @@ const setUpAdmin = async (req, res, next) => {
       });
       return res.json({ code: 201, mesage: "Account Set Successfully." });
     }
+
+
   });
 };
+
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -543,6 +649,36 @@ const signJWTForPartners = (req, res) => {
     .json({ user: req.user.userType, msg: "invalid login" });
 };
 
+// influencer login JWT
+const signJWTForInfluencers = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  const org = req.user.userType;
+
+  if (
+    req.user.userType === "EX90IF"
+  ) {
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    return res.json({ token });
+  }
+  return res
+    .status(400)
+    .json({ user: req.user.userType, msg: "invalid login" });
+};
+
+
 // SpringBoards Login
 const signJWTForSpringBoard = (req, res) => {
   // console.log('signing jwt', req.user)
@@ -588,6 +724,13 @@ const signJWTForExcite = (req, res) => {
   res.json({ token });
 };
 
+
+//influencer dashbaord authorization
+const authInfluencerMarketer = (req, res) => {
+  if (req.user.userType !== "EX901F")
+    return res.status(400).json({ msg: "you are not authorized to view this resource" });
+  res.json({ code: 200, auth: true });
+};
 
 
 
@@ -654,6 +797,7 @@ module.exports = {
   initialize: passport.initialize(),
   signUp,
   signUpAffiliates,
+  signUpInfluencers,
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
@@ -662,6 +806,7 @@ module.exports = {
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,
+  signJWTForInfluencers,
   signJWTForPartners,
   signJWTForSpringBoard,
   signJWTForExcite,
