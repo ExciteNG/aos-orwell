@@ -170,9 +170,7 @@ router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
     console.log('passed')
     const {email,userType} = req.user
 
-    Profiles.findOne({email:email},(err,doc)=>{res.json(doc).populate(['product'])
-
-    })
+    Profiles.findOne({email:email},(err,doc)=>{res.json(doc)})
 
 })
 // Merchants name by email
