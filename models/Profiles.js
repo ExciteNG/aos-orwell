@@ -124,10 +124,19 @@ const profileSchema = new mongoose.Schema({
     default:""
   },
   netBalance:{type:Number, default:0},
+  incomeTotal:{type:Number, default:0},
+  expenseTotal:{type:Number, default:0},
+  costOfSaleTotal:{type:Number, default:0},
+  creditTotal:{type:Number, default:0},
+  debitTotal:{type:Number, default:0},
   product:[{type:mongoose.Schema.Types.ObjectId,
     ref:"Product"}],
   customers:[{type:mongoose.Schema.Types.ObjectId,
-      ref:"Customer"}],
+    ref:"Customer"}],
+  // transactionTotal: [{ type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Transaction"}],
+  transactions:[{type:mongoose.Schema.Types.ObjectId,
+    ref:"PostTransaction"}],
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));

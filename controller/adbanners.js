@@ -1,6 +1,6 @@
 const AdbannerModel = require('../models/adBanner');
 const Profiles = require('./../models/Profiles')
- 
+
 const createAdbanner = async(req, res) => {
   const {email,userType}= req.user;
   console.log(email)
@@ -18,9 +18,9 @@ const createAdbanner = async(req, res) => {
   // adbanner.save()
   const upd = await adbanner.save()
   if(upd) return res.json({
-        message: 'Banner posted successful!ly',
-        code:201
-      })
+      message: 'Banner posted successful!ly',
+      code:201
+    })
 };
 
 const updateAdbanner = (req, res) => {

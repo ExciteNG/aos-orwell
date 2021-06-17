@@ -9,16 +9,6 @@ const createBalance = async (req, res) => {
     const userProfile = await Profiles.findOne({ email: email });
     const userBalance = userProfile.netBalance;
     const userStore = userProfile.storeInfo;
-    // const balance = new BalanceModel({
-    // typeOFBalance: req.body.typeOFBalance,
-    // account: req.body.account,
-    // categoryOfBalance: req.body.categoryOfBalance,
-    // amount: req.body.amount,
-    // credit: req.body.credit,
-    // debit: req.body.debit,
-    // description:  req.body.description,
-    // recordBalance: req.body.recordBalance
-    // });
     let balance = {
       typeOFBalance: req.body.typeOFBalance,
       account: req.body.account,
