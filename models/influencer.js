@@ -41,6 +41,10 @@ const influencerSChema = mongoose.Schema({
         type:String,
         required:true
     },
+    influencerCategory:{
+        type:Object,
+        default:{Micro:"10000-50000",Mini:"50000-500000",Maxi:">500000"}
+    },
     website:{
         type:String
     },
@@ -51,7 +55,11 @@ const influencerSChema = mongoose.Schema({
         type:Array,
         default:[],
     },
-    socialmediahandles:{
+    socialmediahandlesFollowers:{
+        type:Object,
+        default:{twitter:"",instagram:"",youtube:""}
+    },
+    noOfFollowers:{
         type:Array,
         default:[]
     },
