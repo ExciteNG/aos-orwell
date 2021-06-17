@@ -115,7 +115,7 @@ const profileSchema = new mongoose.Schema({
         email:"",
         package:"",
         cycle:"",
-        commission:0
+        commission:0,
       }
     ]
   },
@@ -123,6 +123,8 @@ const profileSchema = new mongoose.Schema({
     type:String,
     default:""
   },
+  refBy:{type:String,
+    default:""},
   netBalance:{type:Number, default:0},
   incomeTotal:{type:Number, default:0},
   expenseTotal:{type:Number, default:0},

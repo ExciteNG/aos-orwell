@@ -6,13 +6,16 @@ const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profile = require("../models/Profiles");
+const Affiliates = require("../models/Affiliates");
 const Partners = require("../models/Partners");
+const Influencers = require('../models/influencer')
 const randomstring = require("randomstring");
 const { use } = require("passport");
 // const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
+const influencerAcknowledge = require('../emails/influencer_acknowledge');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -278,7 +281,7 @@ const signUpAffiliates = async (req, res, next) => {
         }
       });
 
-      const profileInstance = new Profile(userInstance);
+      const profileInstance = new Affiliates(userInstance);
       profileInstance.fullname = fullname;
       profileInstance.phone = phone;
       profileInstance.cellInfo = {
@@ -326,18 +329,7 @@ const signUpAffiliates = async (req, res, next) => {
   });
 };
 
-//verify account via the email token
-// const verifyAffiliateToken =  (req,res) =>{
-//   User.findOne({ authToken: req.params.token}, function(err, user) {
-//     if (!user) {
-//       res.json('You are not valid user');
-//       res.redirect('/auth/affiliate/sign-up');
-//     } else {
-//       res.json("you are now registered and you can log In...")
-//       res.redirect('/auth/login/affiliates')
-//     }
-//   });
-// }
+
 
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
@@ -354,12 +346,13 @@ const signUpRefCode = async (req, res, next) => {
       next(err);
     } else {
       //continue
-
       const user = {
-        email: req.body.email,
-        name: req.body.name,
+        email: req.body.email.toLowerCase(),
         userType: "EX10AF",
         emailVerified: false,
+        fullname: req.body.fullname,
+        username: req.body.username,
+        name: req.body.fullname,
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -370,10 +363,12 @@ const signUpRefCode = async (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile(userInstance);
+      const profileInstance = new Profile({...userInstance,...user});
+      const profileId = profileInstance._id
       let profiler = profileInstance;
       profiler.referral.isReffered = true;
       profiler.referral.refCode = req.body.refCode;
+      profiler.refBy=req.body.refCode;
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -382,14 +377,14 @@ const signUpRefCode = async (req, res, next) => {
         }
       });
       // TODO restructure
-      const refBy = await Profile.findOne({ affiliateCode: req.body.refCode });
+      const refBy = await Affiliates.findOne({ affiliateCode: req.body.refCode });
+      console.log(refBy,'here',req.body.refCode);
 
       if (!refBy) return res.json({ code: 201, mesage: "Account created" });
       if (refBy) {
-        let currentCnt = refBy.affiliateCount;
-        refBy.affiliateCount = currentCnt + 1;
-        refBy.markModified("affiliateCount");
-        refBy.save();
+        refBy.merchants.push(profileId);
+        refBy.markModified('merchants');
+        await refBy.save();
               //send mail
       nodeoutlook.sendEmail({
         auth: {
@@ -408,9 +403,6 @@ const signUpRefCode = async (req, res, next) => {
       })
         res.json({ code: 201, mesage: "Account created" });
       }
-      // req.user = userInstance;
-
-      // next();
     }
   });
 };
@@ -446,6 +438,107 @@ const setUpSpringBoard = (req, res, next) => {
     }
   });
 };
+
+//SIGN UP Influencers
+const signUpInfluencers = async (req,res) => {
+  const {
+    fullName,
+    email,
+    password,
+    Address,
+    mobile,
+    telephone,
+    country,
+    StateOfResidence,
+    website,
+    AverageDailyVisitors,
+    socialmediaplatform,
+    socialmediahandles,
+    marketingSpecialty,
+    AmountPerPost,
+    AbletoDiscount,
+    profilePhoto,
+    regStatus
+  } = req.body
+
+  if (!email || !password || !req.body) {
+    return res.json({ status: 400, code: "No email or password provided" });
+  }
+  if (password.length < 8){
+    return res.send({code:400, error:"password must be at least eight characters long"})
+  }
+  await User.findOne({ email: req.body.email }, (err, doc) => {
+    if (err) {
+      res.json({ code: 401, msg: "An Error ocured" });
+    }
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    }else {
+      //continue
+
+      const user = {
+        email: email,
+        name: fullName,
+        userType: "EX901F",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance,password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 400, mesage: "Failed create account" });
+          return;
+        }
+
+      });
+      const newInfluencer = new Influencers(user)
+      newInfluencer.Address = Address;
+      newInfluencer.mobile = mobile;
+      newInfluencer.telephone = telephone;
+      newInfluencer.country = country;
+      newInfluencer.StateOfResidence = StateOfResidence;
+      newInfluencer.website = website;
+      newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
+      newInfluencer.socialmediaplatform = socialmediaplatform;
+      newInfluencer.socialmediahandles = socialmediahandles;
+      newInfluencer.marketingSpecialty = marketingSpecialty;
+      newInfluencer.AmountPerPost = AmountPerPost;
+      newInfluencer.AbletoDiscount = AbletoDiscount;
+      newInfluencer.profilePhoto = profilePhoto;
+      newInfluencer.regStatus = regStatus;
+
+      newInfluencer.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create influencer !" });
+          return;
+        }
+        
+      })
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: email,
+        subject: "ACKNOWLEDGEMENT EMAIL",
+        html: influencerAcknowledge(),
+        text: influencerAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      })
+      return res.json({code:201,success:"account created successfully"})
+    }
+  })
+
+}
+
 const setUpAdmin = async (req, res, next) => {
   if (req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN)
     return res.json({code:400, msg: "Invalid Token" });
@@ -474,8 +567,11 @@ const setUpAdmin = async (req, res, next) => {
       });
       return res.json({ code: 201, mesage: "Account Set Successfully." });
     }
+
+
   });
 };
+
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -497,17 +593,11 @@ const signJWTForUser = (req, res) => {
       subject: user._id.toString(),
     }
   );
-  // console.log(token);
-  const cookies = new Cookies(req,res);
-  // cookies.set('jwt',token,{path:'/',httpOnly:false})
-  // res.setHeader('jwt',token)
-  // res.setHeader('jwt',token,{ httpOnly: false,maxAge: 24*60*60*1000})
-
   return res.json({ token });
 };
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
-  console.log('sign  ing jwt', req.user)
+  // console.log('sign  ing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
     return res.status(400).json({ msg: "invalid login" });
@@ -559,6 +649,36 @@ const signJWTForPartners = (req, res) => {
     .json({ user: req.user.userType, msg: "invalid login" });
 };
 
+// influencer login JWT
+const signJWTForInfluencers = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  const org = req.user.userType;
+
+  if (
+    req.user.userType === "EX90IF"
+  ) {
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    return res.json({ token });
+  }
+  return res
+    .status(400)
+    .json({ user: req.user.userType, msg: "invalid login" });
+};
+
+
 // SpringBoards Login
 const signJWTForSpringBoard = (req, res) => {
   // console.log('signing jwt', req.user)
@@ -604,26 +724,11 @@ const signJWTForExcite = (req, res) => {
   res.json({ token });
 };
 
-//PAGE AUTHORIZATION
 
-const authPageMerchant = (req, res) => {
-  if (req.user.userType !== "EX10AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPageAffiliate = (req, res) => {
-  if (req.user.userType !== "EX20AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPagePartner = (req, res) => {
-  if (req.user.userType !== "EX50AF")
-    return res.status(400).json({ msg: "invalid login" });
-  res.json({ code: 200, auth: true });
-};
-const authPageSpringBoard = (req, res) => {
-  if (req.user.userType !== "EXSBAF")
-    return res.status(400).json({ msg: "invalid login" });
+//influencer dashbaord authorization
+const authInfluencerMarketer = (req, res) => {
+  if (req.user.userType !== "EX901F")
+    return res.status(400).json({ msg: "you are not authorized to view this resource" });
   res.json({ code: 200, auth: true });
 };
 
@@ -692,6 +797,7 @@ module.exports = {
   initialize: passport.initialize(),
   signUp,
   signUpAffiliates,
+  signUpInfluencers,
   signUpPartner,
   signUpRefCode,
   setUpSpringBoard,
@@ -700,12 +806,9 @@ module.exports = {
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
   signJWTForAffiliates,
+  signJWTForInfluencers,
   signJWTForPartners,
   signJWTForSpringBoard,
   signJWTForExcite,
   passwordReset,
-  authPageAffiliate,
-  authPageMerchant,
-  authPagePartner,
-  authPageSpringBoard,
 };

@@ -1,21 +1,20 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable spaced-comment */
-const express = require('express')
+const express = require('express');
+
 const {
   signUp,
   signUpAffiliates,
+  signUpInfluencers,
   signUpPartner,
   setUpSpringBoard,
   signIn,
   requireJWT,
   signJWTForUser,
   signJWTForAffiliates,
+  signJWTForInfluencers,
   signJWTForPartners,
   signJWTForSpringBoard,
-  authPageMerchant,
-  authPageAffiliate,
-  authPagePartner,
-  authPageSpringBoard,
   signUpRefCode,
   setUpAdmin,
   passwordReset,
@@ -28,6 +27,9 @@ const router = express.Router()
 router.post('/auth/sign-up', signUp)
 // router.post('/auth/sign-up', signUp, signJWTForUser)
 
+//sign up influencers
+router.post('/auth/influencer-marketer/sign-up', signUpInfluencers)
+
 
 // Sign up affiliates
 router.post('/auth/affiliate/sign-up', signUpAffiliates)
@@ -39,6 +41,7 @@ router.post('/auth/affiliate/sign-up', signUpAffiliates)
 router.post('/auth/affiliate/sign-up/ref-system/', signUpRefCode)
 //verify sign up affiliates via token
 // router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
+
 
 
 // Sign up partner
@@ -64,12 +67,9 @@ router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 //sign in admin
 router.post('/auth/login/admin', signIn, signJWTForExcite)
 
+//sign in influencer
+router.post('/auth/login/influencer', signIn, signJWTForInfluencers)
 
-//page authorization
 
-router.get('/verification/verify/ex10af',requireJWT,authPageMerchant)
-router.get('/verification/verify/ex20af',requireJWT,authPageAffiliate)
-router.get('/verification/verify/ex50af',requireJWT,authPagePartner)
-router.get('/verification/verify/exsbaf',requireJWT,authPageSpringBoard)
 
 module.exports = router

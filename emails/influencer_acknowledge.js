@@ -1,4 +1,4 @@
-const partnerSuccess = () => {
+const influencerAcknowledge = () => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -766,11 +766,11 @@ const partnerSuccess = () => {
                 <tbody>
                     <tr>
                         <td class="esd-email-paddings" valign="top">
-                            <table cellpadding="0" cellspacing="0" class="es-header esd-header-popover" align="center">
+                            <table class="es-header esd-header-popover" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" align="center" esd-custom-block-id="88635" bgcolor="#000000" style="background-color: #000000;">
-                                            <table class="es-header-body" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#000000" style="background-color: #000000;">
+                                        <td class="esd-stripe" esd-custom-block-id="88635" style="background-color: #000000;" bgcolor="#000000" align="center">
+                                            <table class="es-header-body" style="background-color: #000000;" width="600" cellspacing="0" cellpadding="0" bgcolor="#000000" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure es-p10t es-p20b es-p15r es-p15l" esd-general-paddings-checked="false" align="left">
@@ -781,7 +781,7 @@ const partnerSuccess = () => {
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/28481619431982683.png" alt style="display: block;" height="82"></a></td>
+                                                                                        <td class="esd-block-image" style="font-size: 0px;" align="center"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/28481619431982683.png" alt style="display: block;" height="82"></a></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -797,27 +797,25 @@ const partnerSuccess = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                            <table cellpadding="0" cellspacing="0" class="es-content" align="center">
+                            <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
                                         <td class="esd-stripe" align="center">
-                                            <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600">
+                                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="es-p20t es-p20r es-p20l esd-structure" align="left">
-                                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="560" class="esd-container-frame" align="center" valign="top">
-                                                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                                        <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                                            <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#ffffff">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">NOTIFICATION ON PARTNER APPLICATION</h3>
+                                                                                        <td class="esd-block-text" bgcolor="#ffffff" align="center">
+                                                                                            <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">ACKNOWLEDGEMENT EMAIL</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear Prospective Partner,<br>&nbsp;Congratulations!<br>&nbsp;Your application as an excite partner has been accepted.<br>&nbsp;Kindly click the link below and fill the <strong>Agreement Form&nbsp;</strong>and revert to&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;support@exciteafrica.com<br>&nbsp;we await your revert<br>&nbsp; <a href target="_blank" style="font-size:large; text-decoration:upper;">LINK</a><br><br>We have also created a Whatsapp group chat exclusively for approved partners, Please kindly join the group via the link below:<br><br></p>
-                                                                                            <p style="text-align:left; color:black; font-size:medium;"><a href="https://chat.whatsapp.com/JXGjFRUw3sMGaPOaJCIBci">PARTNERS</a></p><br>
-                                                                                            <p style="text-align:left; color:black; font-size:medium;">Best Regards,<br>The excite team</p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear Prospective Influencer,<br>&nbsp; &nbsp; &nbsp;&nbsp;Your&nbsp;application has been received. Your certifications will be reviewed and our team will get back to you in due time.<br><br>Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -838,8 +836,8 @@ const partnerSuccess = () => {
                                 <tbody>
                                     <tr></tr>
                                     <tr>
-                                        <td class="esd-stripe" esd-custom-block-id="8126" align="center" bgcolor="#ffffff" style="background-color: #ffffff;">
-                                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="background-color: #ffffff;">
+                                        <td class="esd-stripe" esd-custom-block-id="8126" style="background-color: #ffffff;" bgcolor="#ffffff" align="center">
+                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure" align="left">
@@ -862,14 +860,14 @@ const partnerSuccess = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                            <table cellpadding="0" cellspacing="0" class="es-footer" align="center">
+                            <table class="es-footer" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" esd-custom-block-id="3511" align="center" bgcolor="#6fd20d" style="background-color: #6fd20d;">
-                                            <table class="es-footer-body" width="600" cellspacing="0" cellpadding="0" align="center" style="background-color: #000000;" bgcolor="#000">
+                                        <td class="esd-stripe" esd-custom-block-id="3511" style="background-color: #6fd20d;" bgcolor="#6fd20d" align="center">
+                                            <table class="es-footer-body" style="background-color: #000000;" width="600" cellspacing="0" cellpadding="0" bgcolor="#000" align="center">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="esd-structure es-p30t es-p30r es-p30l" esd-general-paddings-checked="false" align="left" bgcolor="#6fd20d" style="background-color: #6fd20d;">
+                                                        <td class="esd-structure es-p30t es-p30r es-p30l" esd-general-paddings-checked="false" style="background-color: #6fd20d;" bgcolor="#6fd20d" align="left">
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
@@ -877,24 +875,24 @@ const partnerSuccess = () => {
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#6fd20d">
+                                                                                        <td class="esd-block-text" bgcolor="#6fd20d" align="center">
                                                                                             <p style="color: #ffffff;"><br><br>This email was sent by Excite Africa.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text es-p15t es-p5b" align="center" bgcolor="#6fd20d">
+                                                                                        <td class="esd-block-text es-p15t es-p5b" bgcolor="#6fd20d" align="center">
                                                                                             <p style="color: #ffffff;">© Excite Inc.</p>
                                                                                             <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
                                                                                             <p style="color: #ffffff;">Company Number: 0701234522</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#6fd20d" esd-links-color="#ffffff" esd-links-underline="underline"><br>
+                                                                                        <td class="esd-block-text" esd-links-color="#ffffff" esd-links-underline="underline" bgcolor="#6fd20d" align="center"><br>
                                                                                             <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-social es-p10t es-p20b" align="center" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d">
+                                                                                        <td class="esd-block-social es-p10t es-p20b" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d" align="center">
                                                                                             <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
                                                                                                 <tbody>
                                                                                                     <tr>
@@ -908,8 +906,8 @@ const partnerSuccess = () => {
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as a&nbsp;partner.</p>
+                                                                                        <td class="esd-block-text" bgcolor="#6fd20d" align="center">
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as an influencer.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -926,11 +924,11 @@ const partnerSuccess = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="es-content esd-footer-popover" cellspacing="0" cellpadding="0" align="center">
+                            <table class="esd-footer-popover es-content" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" align="center" bgcolor="#ffffff" style="background-color: #ffffff;">
-                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#fff">
+                                        <td class="esd-stripe" style="background-color: #ffffff;" bgcolor="#ffffff" align="center">
+                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#fff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
@@ -941,7 +939,7 @@ const partnerSuccess = () => {
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/15671619429660563.png" alt style="display: block;" height="82"></a></td>
+                                                                                        <td class="esd-block-image" style="font-size: 0px;" align="center"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/15671619429660563.png" alt style="display: block;" height="82"></a></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -967,4 +965,4 @@ const partnerSuccess = () => {
     </html>`
 }
 
-module.exports = partnerSuccess;
+module.exports = influencerAcknowledge;

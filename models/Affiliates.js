@@ -5,35 +5,6 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 
 const affiliateSchema = new mongoose.Schema({
-  storeInfo: {
-    type: Object,
-    default: {
-      storeName: "",
-      storeAddress: "",
-      storePhone: "",
-      storeLga: "",
-      storeState: "",
-    },
-  },
-  subscriptionLevel: {
-    type: Number,
-    default: 0,
-  },
-  subscriptionStart:{
-    type:Number,
-    default:0
-  },
-  subscriptionEnd:{
-    type:Number,
-    default:0
-  },
-  AryshareProfileKey:{
-    type:String,
-  },
-  referral: {
-    type: Object,
-    default: { isReffered: false, refCode: "",count:0 },
-  },
   email: {
     type: String,
     validate:{
@@ -84,10 +55,6 @@ const affiliateSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  partnerCode:{
-    type:String,
-    default:""
-  },
   cellInfo: {
     type: Object,
     default: {
@@ -102,11 +69,6 @@ const affiliateSchema = new mongoose.Schema({
     type:Object,
     default:  { bank: "", accountNo: "", branch: "",bvn:"",accountName:"",paymentMode:"" },
   },
-
-  company:{
-    type:Object,
-    default:{name:"",address:"",rc:"",tin:"",nature:"",taxCert:"",cacCert:""}
-  },
   earnings:{
     type:Array,
     default:[
@@ -115,7 +77,8 @@ const affiliateSchema = new mongoose.Schema({
         email:"",
         package:"",
         cycle:"",
-        commission:0
+        commission:0,
+        merchant:""
       }
     ]
   },
@@ -123,8 +86,8 @@ const affiliateSchema = new mongoose.Schema({
     type:String,
     default:""
   },
-  product:[{type:mongoose.Schema.Types.ObjectId,
-    ref:"Product"}]
+  merchants:[{type:mongoose.Schema.Types.ObjectId,
+    ref:"Profile"}]
 });
 
 const Affiliate = (module.exports = mongoose.model("Affiliate", affiliateSchema));

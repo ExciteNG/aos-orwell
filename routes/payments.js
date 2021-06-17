@@ -25,7 +25,9 @@ router.post(
       service: "marketplace",
     };
 
-    profile = await Profiles.findOne({ email: email });
+   const profile = await Profiles.findOne({ email: email });
+   
+    const merchantId = profile._id
 
     const handleExpire = () => {
       switch (cycle) {
