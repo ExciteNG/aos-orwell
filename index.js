@@ -129,6 +129,8 @@ else {
     app.use('/marketplace',require('./routes/market'));
     app.use('/customer',require('./routes/customer'));
     app.use('/balance',require('./routes/balance'));
+    app.use('/transaction',require('./routes/transactions/transaction'));
+    app.use('/post-transaction',require('./routes/transactions/posttransaction'));
     app.use('/paystack',require('./helper/payments/generate'));
 
     app.use([
