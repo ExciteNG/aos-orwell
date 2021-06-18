@@ -16,7 +16,8 @@ const influencerSChema = mongoose.Schema({
             message:mail => `${mail.value} is not a valid email address !`
         },
         required:[true,'Please enter your email address'],
-        unique:true
+        unique:true,
+        lowercase:true
     },
     userType:{
         type:String,
@@ -43,7 +44,7 @@ const influencerSChema = mongoose.Schema({
     },
     influencerCategory:{
         type:Object,
-        default:{Micro:"10000-50000",Mini:"50000-500000",Maxi:">500000"}
+        default:{Micro:"10000-50000", Mini:"50000-500000", Maxi:">500000"}
     },
     website:{
         type:String

@@ -440,7 +440,7 @@ const setUpSpringBoard = (req, res, next) => {
 };
 
 //SIGN UP Influencers
-const signUpInfluencers = async (req,res) => {
+const signUpInfluencers = async (req,res,next) => {
   const {
     fullName,
     email,
@@ -484,7 +484,7 @@ const signUpInfluencers = async (req,res) => {
         userType: "EX901F",
         emailVerified: false,
       };
-      const userInstance = new User(user);
+      const userInstance = new User({...user});
       User.register(userInstance,password, (error, user) => {
         if (error) {
           // next(error);
@@ -509,14 +509,7 @@ const signUpInfluencers = async (req,res) => {
       newInfluencer.profilePhoto = profilePhoto;
       newInfluencer.regStatus = regStatus;
 
-      newInfluencer.save((err, doc) => {
-        if (err) {
-          // next(err);
-          res.json({ code: 401, mesage: "Failed to create influencer !" });
-          return;
-        }
-        
-      })
+      newInfluencer.save();
       //send mail
       nodeoutlook.sendEmail({
         auth: {
