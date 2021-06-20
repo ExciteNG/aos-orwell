@@ -81,7 +81,9 @@ const getInfluencerDashboard = async (req,res) => {
     try {
         const id = req.params.id
         const singleInfluencer = await Influencer.findById(id).lean()
-     
+        if (singleInfluencer.regStatus.isApproved === 'pending'){
+            return res.json({code:404,message:"No data yet, awaiting approval"})
+        } 
         return res.json({code:200,data:singleInfluencer})
         
     } catch (err) {
