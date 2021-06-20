@@ -3,6 +3,7 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 
 const merchantInfluencerSchema = mongoose.Schema({
+
     email:{
         type:String,
         validate:{

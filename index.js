@@ -132,6 +132,7 @@ else {
     app.use('/transaction',require('./routes/transactions/transaction'));
     app.use('/post-transaction',require('./routes/transactions/posttransaction'));
     app.use('/paystack',require('./helper/payments/generate'));
+    app.use('/influencer-marketing',require('./routes/influenceroutes'))
 
     app.use([
       require("./routes/angolia"),

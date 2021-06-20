@@ -42,9 +42,9 @@ const influencerSChema = mongoose.Schema({
         type:String,
         required:true
     },
-    influencerCategory:{
-        type:Object,
-        default:{Micro:"10000-50000", Mini:"50000-500000", Maxi:">500000"}
+    influencerLevel:{
+        type:String,
+        // default:{Micro:"10000-50000", Mini:"50000-500000", Maxi:">500000"}
     },
     website:{
         type:String
@@ -102,7 +102,9 @@ const influencerSChema = mongoose.Schema({
       currentJobs:{
           type:Number,
           default:0
-      }
-})
+      },
+      
+},
+{timestamps:true})
 
 module.exports = mongoose.model('influencer',influencerSChema)
