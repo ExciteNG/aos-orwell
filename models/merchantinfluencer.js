@@ -15,7 +15,8 @@ const merchantInfluencerSchema = mongoose.Schema({
         required:[true,'Please enter your email address']
     },
     userType:{
-        type:String
+        type:String,
+        default:"EX90IF"
     },
     productName:{
         type:String,
@@ -33,8 +34,8 @@ const merchantInfluencerSchema = mongoose.Schema({
         type:String
     },
     contactPreference:{
-        type:String,
-        default:""
+        type:Array,
+        default:[]
     },
     modeOfContact:{
         type:Array,
@@ -76,8 +77,18 @@ const merchantInfluencerSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    unitPost:{
+        type:Number,
+        default:1,
+        required:true
+    },
     durationOfPromotion:{
         type:String,
+        required:true
+    },
+    unitMonth:{
+        type:Number,
+        default:1,
         required:true
     },
     crossPlatformPromotion:{
@@ -97,10 +108,12 @@ const merchantInfluencerSchema = mongoose.Schema({
     },
     pricing:{
         type:Array,
-        default:[]
+        default:[0,0]
+    },
+    unitPricing:{
+        type:Array,
+        default:[0,0]
     }
-
-})
-
+}, {timestamps:true})
 
 module.exports = mongoose.model('merchantInfluencer',merchantInfluencerSchema)
