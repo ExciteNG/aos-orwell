@@ -85,10 +85,23 @@ const MerchantPickInfluencer = async (req,res) => {
         prices:[pricing,unitPricing]})
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
-        console.error(err)
+           console.error(err)
         return res.json({code:500,message:err.message})
     }
 } 
+
+//pick a specific influencer for negotiation
+const influencerNegotiation = async (req,res) => {
+    try {
+        const id = req.params.id
+        const getInfluencer = Influencer.findById(id).lean()
+        return res.json({code:200,data:getInfluencer})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+        
+    }
+}
 // POST metric influencer fill form
 // GET influencer dahsboard view
 const getInfluencerDashboard = async (req,res) => {
@@ -96,7 +109,7 @@ const getInfluencerDashboard = async (req,res) => {
         const id = req.params.id
         const singleInfluencer = await Influencer.findById(id).lean()
         if (singleInfluencer.regStatus.isApproved === 'pending'){
-            return res.json({code:404,message:"No data yet, awaiting approval"})
+            return res.json({code:404,message:"No data yet, awaiting approval",data:singleInfluencer})
         } 
         return res.json({code:200,data:singleInfluencer})
         
@@ -111,7 +124,7 @@ const getInfluencerDashboard = async (req,res) => {
 
 
 module.exports = {
-
     MerchantPickInfluencer,
-    getInfluencerDashboard
+    getInfluencerDashboard,
+    influencerNegotiation
 }

@@ -442,29 +442,38 @@ const setUpSpringBoard = (req, res, next) => {
 //SIGN UP Influencers
 const signUpInfluencers = async (req,res,next) => {
   const {
-    fullName,
-    email,
-    password,
-    Address,
+    // fullName,
+    // email,
+    // userType,
+    // emailVerified,
+    // password,
+    // Address,
     mobile,
-    telephone,
-    country,
     StateOfResidence,
-    website,
-    AverageDailyVisitors,
     socialmediaplatform,
     socialmediahandles,
-    marketingSpecialty,
+    noOfFollowers,
+    influencerLevel,
     AmountPerPost,
-    AbletoDiscount,
-    profilePhoto,
-    regStatus
+    country,
+    coverage,
+    marketingSpecialty,
+    Negotiable
+    // website,
+    // AverageDailyVisitors,
+    // socialmediaplatform,
+    // socialmediahandles,
+    // marketingSpecialty,
+    // AmountPerPost,
+    // AbletoDiscount,
+    // profilePhoto,
+    // regStatus
   } = req.body
 
-  if (!email || !password || !req.body) {
+  if (!req.body.email || !req.body.password || !req.body) {
     return res.json({ status: 400, code: "No email or password provided" });
   }
-  if (password.length < 8){
+  if (req.body.password.length < 8){
     return res.send({code:400, error:"password must be at least eight characters long"})
   }
   await User.findOne({ email: req.body.email }, (err, doc) => {
@@ -473,19 +482,19 @@ const signUpInfluencers = async (req,res,next) => {
     }
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "Account exist", doc });
+      res.json({ code: 401, msg: "This Account already exists", doc });
       next(err);
     }else {
       //continue
 
       const user = {
-        email: email,
-        name: fullName,
+        email: req.body.email,
+        name: req.body.fullName,
         userType: "EX901F",
         emailVerified: false,
       };
-      const userInstance = new User({...user});
-      User.register(userInstance,password, (error, user) => {
+      const userInstance = new User(user);
+      User.register(userInstance,req.body.password, (error, user) => {
         if (error) {
           // next(error);
           res.json({ code: 400, mesage: "Failed create account" });
@@ -493,21 +502,21 @@ const signUpInfluencers = async (req,res,next) => {
         }
 
       });
-      const newInfluencer = new Influencers(user)
-      newInfluencer.Address = Address;
-      newInfluencer.mobile = mobile;
-      newInfluencer.telephone = telephone;
-      newInfluencer.country = country;
-      newInfluencer.StateOfResidence = StateOfResidence;
-      newInfluencer.website = website;
-      newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
-      newInfluencer.socialmediaplatform = socialmediaplatform;
-      newInfluencer.socialmediahandles = socialmediahandles;
-      newInfluencer.marketingSpecialty = marketingSpecialty;
-      newInfluencer.AmountPerPost = AmountPerPost;
-      newInfluencer.AbletoDiscount = AbletoDiscount;
-      newInfluencer.profilePhoto = profilePhoto;
-      newInfluencer.regStatus = regStatus;
+      const newInfluencer = new Influencers({...user,...req.body})
+      // newInfluencer.Address = Address;
+      // newInfluencer.mobile = mobile;
+      // newInfluencer.telephone = telephone;
+      // newInfluencer.country = country;
+      // newInfluencer.StateOfResidence = StateOfResidence;
+      // newInfluencer.website = website;
+      // newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
+      // newInfluencer.socialmediaplatform = socialmediaplatform;
+      // newInfluencer.socialmediahandles = socialmediahandles;
+      // newInfluencer.marketingSpecialty = marketingSpecialty;
+      // newInfluencer.AmountPerPost = AmountPerPost;
+      // newInfluencer.AbletoDiscount = AbletoDiscount;
+      // newInfluencer.profilePhoto = profilePhoto;
+      // newInfluencer.regStatus = regStatus;
 
       newInfluencer.save();
       //send mail
@@ -517,7 +526,7 @@ const signUpInfluencers = async (req,res,next) => {
           pass: process.env.EXCITE_ENQUIRY_PASS,
         },
         from: "enquiry@exciteafrica.com",
-        to: email,
+        to: req.body.email,
         subject: "ACKNOWLEDGEMENT EMAIL",
         html: influencerAcknowledge(),
         text: influencerAcknowledge(),
