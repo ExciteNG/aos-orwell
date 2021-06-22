@@ -3,16 +3,19 @@ const declineInfluencer = require('../../emails/influencer_decline');
 const acceptInfluencer = require('../../emails/influencer_accept');
 
 const approveInfluencer =  async (req,res) => {
+
+  try {
     const id = req.params.id
-    const oneInfluencer =   Influencer.findById(id).lean()
-    const regStatus = oneInfluencer.regStatus;
-    regStatus.isApproved = req.body.isApproved;
-    regStatus.dateApproved = new Date().toDateString();
+    let oneInfluencer =   Influencer.findById(id).lean()
+    let regStatus = oneInfluencer.regStatus;
+    regStatus = req.body.regStatus;
+    oneInfluencer.dateApproved = new Date().toDateString();
     oneInfluencer.regStatus = regStatus;
     oneInfluencer.markModified("regStatus");
+    oneInfluencer.markModified("dateApproved");
     await oneInfluencer.save();
 
-    if (req.body.isApproved === "rejected") {
+    if (req.body.regStatus === "rejected") {
         //send mail
         nodeoutlook.sendEmail({
           auth: {
@@ -47,6 +50,11 @@ const approveInfluencer =  async (req,res) => {
           secure: false,
         });
       }
+      return res.json({code:200,message:"influencer successfully approved"})
+  } catch (err) {
+    console.error(err)
+    return res.json({code:500,message:err.message})
+  }
 }
 
 

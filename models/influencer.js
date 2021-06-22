@@ -82,14 +82,18 @@ const influencerSChema = mongoose.Schema({
     exciteClients:{
         type:Array,
         default:[{
-            storeInfo:{},
             fullname:"",
-            phone:""
+            phone:"",
+            storeInfo:{}
         }]
     },
     regStatus: {
-        type: Object,
-        default: { isApproved: "pending", dateApproved: "", dateRegistered: "" },
+        type: String,
+        default:"pending",
+      },
+      dateApproved:{
+          type:String,
+          default:""
       },
       pendingJobs:{
           type:Number,

@@ -1,7 +1,10 @@
 // required imports: controller modules, influencer models,merchant innfluencer models,merchant models 
 const influencerMerchantModel = require('../models/merchantinfluencer');
+const nodeoutlook = require('nodejs-nodemailer-outlook');
 const Influencer = require('../models/influencer');
 const bargainModel = require('../models/bargain');
+const influencerNotification = require('../emails/influencer_engagement')
+const Profiles = require('../models/Profiles')
 
 //todo access control vulnerabilities
 
@@ -77,10 +80,11 @@ const MerchantPickInfluencer = async (req,res) => {
         let newMerchantInfluencer = new influencerMerchantModel(req.body)
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
-        // influencerMerchantModel.markModified("pricing")
+        // influencerMerchantModel.markModified("pricing")/
         // influencerMerchantModel.markModified("unitPricing")
         await newMerchantInfluencer.save()
-       
+        //filter only the approved influencers
+    //    const approvedInfs = Influencer.find({regStatus:"accepted"})
         const matchedInfluencers = await Influencer.find({$or:[{marketingSpecialty:productServiceCategory},
             {influencerCategory:influencerLevel}]}) 
         //find an influencer based on these parameters
@@ -93,12 +97,41 @@ const MerchantPickInfluencer = async (req,res) => {
     }
 } 
 
+
 //pick a specific influencer for negotiation
 const influencerNegotiation = async (req,res) => {
     try {
+        const {email} = req.user
         const id = req.params.id
-        const getInfluencer = Influencer.findById(id).lean()
-        return res.json({code:200,data:getInfluencer})
+        //filter only the approved influencers
+        const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
+        const profile = Profiles.find({email:email}).lean()
+        const getInfluencer = approvedInfluencers.findById(id).lean()
+        let firstName = getInfluencer.fullName.split(' ')[0]
+        // let newClient = {profile.storeInfo, profile.fullname, profile.phone}
+        // getInfluencer.exciteClients.push(newClient)
+        // getInfluencer.markModified("exciteClients")
+        // await getInfluencer.save()
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: getInfluencer.email,
+              subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
+              html: influencerNotification(firstName,id),
+              text: influencerNotification(firstName,id),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+        return res.json({code:200,data:getInfluencer,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
+        merchantData:profile})
     } catch (err) {
         console.error(err)
         return res.json({code:500,message:err.message})
@@ -153,6 +186,7 @@ const bargainReceiveInfluencer = (req,res) => {
 // influencer accept offer
 
 //influencer reject offer
+// router.delete()
 
 
 module.exports = {
