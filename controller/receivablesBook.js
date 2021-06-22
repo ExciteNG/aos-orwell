@@ -15,7 +15,7 @@ const createRecord = async (req, res) => {
           req.body.quantity = 1;
           req.body.total = req.body.price;
         }
-
+3
         // req.body.qtySum = 1 * req.body.price;
         const thisSales=req.body;
         // const data= {

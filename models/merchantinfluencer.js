@@ -3,6 +3,7 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 
 const merchantInfluencerSchema = mongoose.Schema({
+
     email:{
         type:String,
         validate:{
@@ -13,6 +14,10 @@ const merchantInfluencerSchema = mongoose.Schema({
         },
         required:[true,'Please enter your email address']
     },
+    userType:{
+        type:String,
+        default:"EX90IF"
+    },
     productName:{
         type:String,
         required:true
@@ -21,16 +26,94 @@ const merchantInfluencerSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    productQualities:{
+    uniqueQualities:{
         type:String,
         required:true
+    },
+    permanentPosts:{
+        type:String
+    },
+    contactPreference:{
+        type:Array,
+        default:[]
+    },
+    modeOfContact:{
+        type:Array,
+        default:[]
+    },
+    mediaPlacement:{
+        type:Array,
+        default:[]
+    },
+    influencerLevel:{
+        type:String,
+        required:true
+    },
+    productUsers:{
+        type:Array,
+        default:[]
     },
     reach:{
         type:Number,
         required:true
+    },
+    productPrice:{
+        type:String,
+        required:true
+    },
+    competitors:{
+        type:Array,
+        default:[]
+    },
+    productServiceCategory:{
+        type:Array, 
+        default:[]
+    },
+    contentCreator:{
+        type:String,
+        required:true
+    },
+    noOfPosts:{
+        type:String,
+        required:true
+    },
+    unitPost:{
+        type:Number,
+        default:1,
+        required:true
+    },
+    durationOfPromotion:{
+        type:String,
+        required:true
+    },
+    unitMonth:{
+        type:Number,
+        default:1,
+        required:true
+    },
+    crossPlatformPromotion:{
+        type:String
+    },
+    deliverable:{
+        type:String,
+        default:""
+    },
+    deliveryType:{
+        type:Array,
+        default:[]
+    },
+     coverage:{
+        type:Array,
+        default:[]
+    },
+    pricing:{
+        type:Array,
+        default:[0,0]
+    },
+    unitPricing:{
+        type:Array,
+        default:[0,0]
     }
-
-})
-
+}, {timestamps:true})
 
 module.exports = mongoose.model('merchantInfluencer',merchantInfluencerSchema)
