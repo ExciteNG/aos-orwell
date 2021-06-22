@@ -1,6 +1,9 @@
 // required imports: controller modules, influencer models,merchant innfluencer models,merchant models 
 const influencerMerchantModel = require('../models/merchantinfluencer');
 const Influencer = require('../models/influencer');
+const bargainModel = require('../models/bargain');
+
+//todo access control vulnerabilities
 
 //create an influencer function to assert the level  of an influencer by numbers numerically
 // const getLevel = (level,posts) => {
@@ -99,11 +102,10 @@ const influencerNegotiation = async (req,res) => {
     } catch (err) {
         console.error(err)
         return res.json({code:500,message:err.message})
-        
     }
 }
 // POST metric influencer fill form
-// GET influencer dahsboard view
+// GET influencer dashboard view
 const getInfluencerDashboard = async (req,res) => {
     try {
         const id = req.params.id
@@ -122,9 +124,41 @@ const getInfluencerDashboard = async (req,res) => {
 // PAYMENT POPUP VIEW 
 //BARGAIN POP UP VIEW
 
+//POST SEND MESSAGE EITHER AS AN INFLUENCER OR MERCHANT
+const bargainSendInfluencer = async (req,res) => {
+    try {
+        const {email} = req.user
+        req.body.sender = email
+    const newBargainChat = new bargainModel(req.body)
+    await newBargainChat.save()
+    return res.json({code:200,data:newBargainChat})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+//GET recieved messages tailored to the merchant or influencer
+const bargainReceiveInfluencer = (req,res) => {
+    try {
+        const {email} = req.user
+        const filterReceivedMessages = bargainModel.find({receiver:email}).lean().sort({'receiver':-1});
+        return res.json({code:200,data:filterReceivedMessages})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+// influencer accept offer
+
+//influencer reject offer
+
 
 module.exports = {
     MerchantPickInfluencer,
     getInfluencerDashboard,
-    influencerNegotiation
+    influencerNegotiation,
+    bargainSendInfluencer,
+    bargainReceiveInfluencer
 }
