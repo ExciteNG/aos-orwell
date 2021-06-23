@@ -120,6 +120,7 @@ else {
     app.use('/excite/payments', require('./routes/excite/payments'));
     app.use('/excite/partners', require('./routes/excite/partners'));
     app.use('/excite/banners', require('./routes/excite/banners'));
+    app.use('/excite/influencers',require('./routes/excite/influencers'));
     app.use('/partners',require('./routes/partners/partners'));
     app.use('/password-forgot',require('./routes/passportreset'));
     app.use('/reset-password',require('./routes/normalpasswordreset'));
