@@ -4,7 +4,6 @@ var nodeoutlook = require("nodejs-nodemailer-outlook");
 const invoiceMail = require('../emails/invoice_mail')
 
 const createRecord = async (req, res) => {
-  console.log('req body ', req.body);
   const {email, userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
@@ -15,7 +14,7 @@ const createRecord = async (req, res) => {
           req.body.quantity = 1;
           req.body.total = req.body.price;
         }
-3
+
         // req.body.qtySum = 1 * req.body.price;
         const thisSales=req.body;
         // const data= {

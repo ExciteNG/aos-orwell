@@ -4,8 +4,8 @@ const TransactionsModel = require('../../models/transactions/transaction');
 
 const createPostTransaction = async (req, res) => {
   try {
-    const email = "vec@gmail.com";
-    // const {email,userType}= req.user;
+    // const email = "vec@gmail.com";
+    const {email,userType}= req.user;
     const userProfile = await Profiles.findOne({ email: email });
     // const userTransaction = userProfile.netTransaction;
     const userStore = userProfile.storeInfo;
@@ -18,7 +18,7 @@ const createPostTransaction = async (req, res) => {
       amount: req.body.amount,
       email:email
     };
-    
+    //
     const transactionType = await TransactionsModel.findOne({description:`${req.body.selectedTitle}`});
     const prevTotal = transactionType.total
     transactionType.total =prevTotal + Number(req.body.amount);

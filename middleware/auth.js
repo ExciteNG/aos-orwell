@@ -440,40 +440,31 @@ const setUpSpringBoard = (req, res, next) => {
 };
 
 //SIGN UP Influencers
-const signUpInfluencers = async (req,res,next) => {
+const signUpInfluencers = async (req,res) => {
   const {
-    // fullName,
-    // email,
-    // userType,
-    // emailVerified,
-    // password,
-    // Address,
+    fullName,
+    email,
+    password,
+    Address,
     mobile,
+    telephone,
+    country,
     StateOfResidence,
+    website,
+    AverageDailyVisitors,
     socialmediaplatform,
     socialmediahandles,
-    noOfFollowers,
-    influencerLevel,
-    AmountPerPost,
-    country,
-    coverage,
     marketingSpecialty,
-    Negotiable
-    // website,
-    // AverageDailyVisitors,
-    // socialmediaplatform,
-    // socialmediahandles,
-    // marketingSpecialty,
-    // AmountPerPost,
-    // AbletoDiscount,
-    // profilePhoto,
-    // regStatus
+    AmountPerPost,
+    AbletoDiscount,
+    profilePhoto,
+    regStatus
   } = req.body
 
-  if (!req.body.email || !req.body.password || !req.body) {
+  if (!email || !password || !req.body) {
     return res.json({ status: 400, code: "No email or password provided" });
   }
-  if (req.body.password.length < 8){
+  if (password.length < 8){
     return res.send({code:400, error:"password must be at least eight characters long"})
   }
   await User.findOne({ email: req.body.email }, (err, doc) => {
@@ -482,19 +473,19 @@ const signUpInfluencers = async (req,res,next) => {
     }
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "This Account already exists", doc });
+      res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     }else {
       //continue
 
       const user = {
-        email: req.body.email,
-        name: req.body.fullName,
+        email: email,
+        name: fullName,
         userType: "EX901F",
         emailVerified: false,
       };
       const userInstance = new User(user);
-      User.register(userInstance,req.body.password, (error, user) => {
+      User.register(userInstance,password, (error, user) => {
         if (error) {
           // next(error);
           res.json({ code: 400, mesage: "Failed create account" });
@@ -502,23 +493,30 @@ const signUpInfluencers = async (req,res,next) => {
         }
 
       });
-      const newInfluencer = new Influencers({...user,...req.body})
-      // newInfluencer.Address = Address;
-      // newInfluencer.mobile = mobile;
-      // newInfluencer.telephone = telephone;
-      // newInfluencer.country = country;
-      // newInfluencer.StateOfResidence = StateOfResidence;
-      // newInfluencer.website = website;
-      // newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
-      // newInfluencer.socialmediaplatform = socialmediaplatform;
-      // newInfluencer.socialmediahandles = socialmediahandles;
-      // newInfluencer.marketingSpecialty = marketingSpecialty;
-      // newInfluencer.AmountPerPost = AmountPerPost;
-      // newInfluencer.AbletoDiscount = AbletoDiscount;
-      // newInfluencer.profilePhoto = profilePhoto;
-      // newInfluencer.regStatus = regStatus;
+      const newInfluencer = new Influencers(user)
+      newInfluencer.Address = Address;
+      newInfluencer.mobile = mobile;
+      newInfluencer.telephone = telephone;
+      newInfluencer.country = country;
+      newInfluencer.StateOfResidence = StateOfResidence;
+      newInfluencer.website = website;
+      newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
+      newInfluencer.socialmediaplatform = socialmediaplatform;
+      newInfluencer.socialmediahandles = socialmediahandles;
+      newInfluencer.marketingSpecialty = marketingSpecialty;
+      newInfluencer.AmountPerPost = AmountPerPost;
+      newInfluencer.AbletoDiscount = AbletoDiscount;
+      newInfluencer.profilePhoto = profilePhoto;
+      newInfluencer.regStatus = regStatus;
 
-      newInfluencer.save();
+      newInfluencer.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create influencer !" });
+          return;
+        }
+        
+      })
       //send mail
       nodeoutlook.sendEmail({
         auth: {
@@ -526,7 +524,7 @@ const signUpInfluencers = async (req,res,next) => {
           pass: process.env.EXCITE_ENQUIRY_PASS,
         },
         from: "enquiry@exciteafrica.com",
-        to: req.body.email,
+        to: email,
         subject: "ACKNOWLEDGEMENT EMAIL",
         html: influencerAcknowledge(),
         text: influencerAcknowledge(),

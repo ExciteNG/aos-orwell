@@ -16,63 +16,62 @@ const influencerSChema = mongoose.Schema({
             message:mail => `${mail.value} is not a valid email address !`
         },
         required:[true,'Please enter your email address'],
-        unique:true,
-        lowercase:true
+        unique:true
     },
     userType:{
         type:String,
-        default:"EX901F",
         required:true
     },
-    emailVerified: {
-        type: Boolean,
-        default: false,
-      },
+    Address:{
+        type:String,
+        required:[true,'please enter address !']
+    },
     mobile:{
         type:String,
         required:[true,'Please enter your phone number']
     },
+    telephone:{
+        type:String
+    },
+    country:{
+        type:String,
+        required:true
+    },
     StateOfResidence:{
         type:String,
-        required:[true,'please enter address !']
+        required:true
+    },
+    influencerCategory:{
+        type:Object,
+        default:{Micro:"10000-50000",Mini:"50000-500000",Maxi:">500000"}
+    },
+    website:{
+        type:String
+    },
+    AverageDailyVisitors:{
+        type:Number
     },
     socialmediaplatform:{
         type:Array,
         default:[],
     },
-    socialmediahandles:{
-        type:Array,
-        default:[]
-        // default:{t.witter:"",instagram:"",youtube:""}
+    socialmediahandlesFollowers:{
+        type:Object,
+        default:{twitter:"",instagram:"",youtube:""}
     },
     noOfFollowers:{
         type:Array,
         default:[]
     },
-    influencerLevel:{
-        type:String,
-        // default:{Micro:"10000-50000", Mini:"50000-500000", Maxi:">500000"}
+    marketingSpecialty:{
+        type:Array,
+        default:[]
     },
     AmountPerPost:{
         type:Number,
         required:true
     },
-    // telephone:{
-    //     type:String
-    // },
-    country:{
-        type:String,
-        required:true
-    },
-    coverage:{
-        type:String,
-        required:true
-    },
-    marketingSpecialty:{
-        type:Array,
-        default:[]
-    },
-    Negotiable:{
+    AbletoDiscount:{
         type:String,
         required:true
     },
@@ -102,8 +101,7 @@ const influencerSChema = mongoose.Schema({
       currentJobs:{
           type:Number,
           default:0
-      },
-},
-{timestamps:true})
+      }
+})
 
 module.exports = mongoose.model('influencer',influencerSChema)
