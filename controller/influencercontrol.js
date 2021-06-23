@@ -67,8 +67,8 @@ const MerchantPickInfluencer = async (req,res) => {
             deliverable,
             deliveryType,
             coverage,
-            pricing,
-            unitPricing
+            // pricing,
+            // unitPricing
         } = req.body
         // req.body.email = email
         // req.body.userType = userType
@@ -77,7 +77,7 @@ const MerchantPickInfluencer = async (req,res) => {
         // console.log(getInfluencerLevel)
         pricing = getPricingRange(reach,noOfPosts,durationOfPromotion)
         unitPricing = unitPricingRange(reach)
-        let newMerchantInfluencer = new influencerMerchantModel(req.body)
+        let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing:getPricingRange(reach,noOfPosts,durationOfPromotion),unitPricing:unitPricingRange(reach)})
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
         // influencerMerchantModel.markModified("pricing")/
@@ -137,6 +137,7 @@ const influencerNegotiation = async (req,res) => {
         return res.json({code:500,message:err.message})
     }
 }
+
 // POST metric influencer fill form
 // GET influencer dashboard view
 const getInfluencerDashboard = async (req,res) => {

@@ -65,8 +65,8 @@ const influencerSChema = mongoose.Schema({
         required:true
     },
     coverage:{
-        type:String,
-        required:true
+        type:Array,
+        default:[]
     },
     marketingSpecialty:{
         type:Array,
