@@ -3,11 +3,11 @@ const TransactionModel = require("..//../models/transactions/transaction");
 
 const createTransaction = async (req, res) => {
   try {
-    const email = "vec@gmail.com";
-    // const {email,userType}= req.user;
-    // const userProfile = await Profiles.findOne({ email: email });
+    // const email = "vec@gmail.com";
+    const {email,userType}= req.user;
+    const userProfile = await Profiles.findOne({ email: email });
     // // const userTransaction = userProfile.netTransaction;
-    // const userStore = userProfile.storeInfo;
+    const userStore = userProfile.storeInfo;
 
 
     const transaction = new TransactionModel({
