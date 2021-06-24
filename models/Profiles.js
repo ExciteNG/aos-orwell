@@ -138,7 +138,7 @@ const profileSchema = new mongoose.Schema({
   // transactionTotal: [{ type: mongoose.Schema.Types.ObjectId,
   //   ref: "Transaction"}],
   transactions:[{type:mongoose.Schema.Types.ObjectId,
-    ref:"PostTransaction"}],
+    ref:"PostTransaction"}]
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));

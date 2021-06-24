@@ -41,13 +41,12 @@ const influencerSChema = mongoose.Schema({
         default:[],
     },
     socialmediahandles:{
-        type:Array,
-        default:[]
-        // default:{t.witter:"",instagram:"",youtube:""}
+        type:Object,
+        default:{facebook:"",instagram:"",youtube:""}
     },
     noOfFollowers:{
-        type:Array,
-        default:[]
+        type:Object,
+        default:{facebook:[],instagram:[],youtube:[]}
     },
     influencerLevel:{
         type:String,
