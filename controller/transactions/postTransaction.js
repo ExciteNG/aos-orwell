@@ -4,8 +4,8 @@ const TransactionsModel = require('../../models/transactions/transaction');
 
 const createPostTransaction = async (req, res) => {
   try {
-    const email = "vec@gmail.com";
-    // const {email,userType}= req.user;
+    // const email = "vec@gmail.com";
+    const {email,userType}= req.user;
     const userProfile = await Profiles.findOne({ email: email });
     // const userTransaction = userProfile.netTransaction;
     const userStore = userProfile.storeInfo;
