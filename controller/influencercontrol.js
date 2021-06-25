@@ -5,6 +5,7 @@ const Influencer = require('../models/influencer');
 const bargainModel = require('../models/bargain');
 const influencerNotification = require('../emails/influencer_engagement')
 const Profiles = require('../models/Profiles')
+const agreePrice = require('../models/agreeprice')
 
 //todo access control vulnerabilities
 
@@ -32,11 +33,11 @@ const Profiles = require('../models/Profiles')
 // }
 
 const getPricingRange = (Reach,posts,months) => {
-    return [2.4*Reach*posts*months, 4.4*Reach*posts*months]
+    return [2.2*Reach*posts*months, 4.2*Reach*posts*months]
 }
 
 const unitPricingRange = (Reach) => {
-    return [2.4*Reach,4.4*Reach]
+    return [2.2*Reach,4.2*Reach]
 }
 
 const MerchantPickInfluencer = async (req,res) => {
@@ -67,8 +68,8 @@ const MerchantPickInfluencer = async (req,res) => {
             deliverable,
             deliveryType,
             coverage,
-            pricing,
-            unitPricing
+            // pricing,
+            // unitPricing
         } = req.body
         // req.body.email = email
         // req.body.userType = userType
@@ -77,10 +78,10 @@ const MerchantPickInfluencer = async (req,res) => {
         // console.log(getInfluencerLevel)
         pricing = getPricingRange(reach,noOfPosts,durationOfPromotion)
         unitPricing = unitPricingRange(reach)
-        let newMerchantInfluencer = new influencerMerchantModel(req.body)
+        let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing:getPricingRange(reach,noOfPosts,durationOfPromotion),unitPricing:unitPricingRange(reach)})
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
-        // influencerMerchantModel.markModified("pricing")/
+        // influencerMerchantModel.markModified("pricing")
         // influencerMerchantModel.markModified("unitPricing")
         await newMerchantInfluencer.save()
         //filter only the approved influencers
@@ -104,46 +105,63 @@ const influencerNegotiation = async (req,res) => {
         const {email} = req.user
         const id = req.params.id
         //filter only the approved influencers
-        const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
-        const profile = Profiles.find({email:email}).lean()
-        const getInfluencer = approvedInfluencers.findById(id).lean()
+        // const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
+        let profile = await Profiles.find({email:email})
+        if (!profile) return res.json({code:404,message:"Not user profile with that email was found"})
+        const getInfluencer =  await Influencer.findById(id).lean()
+        if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
+        profile.influencers.push({influencerName:getInfluencer.fullName,status:"pending"})
+        profile.ongoingCampaigns = profile.ongoingCampaigns + 1
+        let pending = getInfluencer.pendingJobs
+        await profile.save()
+        await Influencer.findOneAndUpdate({_id:id},{pending:pending+1},{returnOriginal: false,runValidators:true},
+            function (err,docs){
+                if (err) console.error(err)
+                console.log(docs) 
+            })
+        // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
+        await getInfluencer.markModified("pendingJobs")
         let firstName = getInfluencer.fullName.split(' ')[0]
         // let newClient = {profile.storeInfo, profile.fullname, profile.phone}
         // getInfluencer.exciteClients.push(newClient)
         // getInfluencer.markModified("exciteClients")
         // await getInfluencer.save()
-        nodeoutlook.sendEmail({
-            auth: {
-              user: process.env.EXCITE_ENQUIRY_USER,
-              pass: process.env.EXCITE_ENQUIRY_PASS,
-            },
-              from: 'enquiry@exciteafrica.com',
-              to: getInfluencer.email,
-              subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-              html: influencerNotification(firstName,id),
-              text: influencerNotification(firstName,id),
-              replyTo: 'enquiry@exciteafrica.com',
-              onError: (e) => console.log(e),
-              onSuccess: (i) => {
-              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
-              console.log(i)
-              },
-              secure:false,
-          })
+        // nodeoutlook.sendEmail({
+        //     auth: {
+        //       user: process.env.EXCITE_ENQUIRY_USER,
+        //       pass: process.env.EXCITE_ENQUIRY_PASS,
+        //     },
+        //       from: 'enquiry@exciteafrica.com',
+        //       to: getInfluencer.email,
+        //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
+        //       html: influencerNotification(firstName,id),
+        //       text: influencerNotification(firstName,id),
+        //       replyTo: 'enquiry@exciteafrica.com',
+        //       onError: (e) => console.log(e),
+        //       onSuccess: (i) => {
+        //       // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+        //       console.log(i)
+        //       },
+        //       secure:false,
+        //   })
+        //   await getInfluencer.save((err,docs)=>{
+        //       console.log(err)
+        //   })
         return res.json({code:200,data:getInfluencer,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
-        merchantData:profile})
+        })
     } catch (err) {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
 }
+
 // POST metric influencer fill form
 // GET influencer dashboard view
 const getInfluencerDashboard = async (req,res) => {
     try {
         const id = req.params.id
         const singleInfluencer = await Influencer.findById(id).lean()
-        if (singleInfluencer.regStatus.isApproved === 'pending'){
+        if (singleInfluencer.regStatus === 'pending'){
             return res.json({code:404,message:"No data yet, awaiting approval",data:singleInfluencer})
         } 
         return res.json({code:200,data:singleInfluencer})
@@ -183,7 +201,41 @@ const bargainReceiveInfluencer = (req,res) => {
     }
 }
 
-// influencer accept offer
+//merchant dashboard
+const merchantDashboard = async (req,res) => {
+    try {
+        const id = req.params.id
+        let profile = Profiles.findById(id).lean()
+        //filter the list of influencers to the one with the same id
+        let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
+        return res.json({code:200,data:influencerData})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+
+
+}
+// influencer accept offer /agree route
+const influencerAgreePrice = async (req,res) => {
+    try {
+        // const {email,userType} = req.user
+        if (req.body.userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to view this resource"})
+        // req.body.email = email
+        // req.body.userType = userType
+        // req.body.createdAt = new Date().toString()
+        const newPrice = new agreePrice(req.body)
+        await newPrice.save()
+        //send mail
+        return res.json({code:200,data:newPrice})
+        
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+//influencer accept button
 
 //influencer reject offer
 // router.delete()
@@ -192,7 +244,9 @@ const bargainReceiveInfluencer = (req,res) => {
 module.exports = {
     MerchantPickInfluencer,
     getInfluencerDashboard,
+    merchantDashboard,
     influencerNegotiation,
     bargainSendInfluencer,
-    bargainReceiveInfluencer
+    bargainReceiveInfluencer,
+    influencerAgreePrice
 }

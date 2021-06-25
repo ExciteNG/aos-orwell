@@ -41,13 +41,12 @@ const influencerSChema = mongoose.Schema({
         default:[],
     },
     socialmediahandles:{
-        type:Array,
-        default:[]
-        // default:{t.witter:"",instagram:"",youtube:""}
+        type:Object,
+        default:{facebook:"",instagram:"",youtube:""}
     },
     noOfFollowers:{
-        type:Array,
-        default:[]
+        type:Object,
+        default:{facebook:[],instagram:[],youtube:[]}
     },
     influencerLevel:{
         type:String,
@@ -65,8 +64,8 @@ const influencerSChema = mongoose.Schema({
         required:true
     },
     coverage:{
-        type:String,
-        required:true
+        type:Array,
+        default:[]
     },
     marketingSpecialty:{
         type:Array,
@@ -107,6 +106,10 @@ const influencerSChema = mongoose.Schema({
           type:Number,
           default:0
       },
+      merchants:[{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"merchantInfluencer"
+      }]
 },
 {timestamps:true})
 

@@ -441,6 +441,7 @@ const setUpSpringBoard = (req, res, next) => {
 
 //SIGN UP Influencers
 const signUpInfluencers = async (req,res,next) => {
+  try {
   const {
     // fullName,
     // email,
@@ -537,8 +538,11 @@ const signUpInfluencers = async (req,res,next) => {
       })
       return res.json({code:201,success:"account created successfully"})
     }
-  })
 
+  })
+  } catch (err) {
+  return res.json({code:400,message:err.message})
+   }
 }
 
 const setUpAdmin = async (req, res, next) => {
@@ -582,6 +586,7 @@ const signJWTForUser = (req, res) => {
   // check login route authorization
   // if (req.user.userType !== "EX10AF")
   //   return res.status(400).json({ msg: "invalid login" });
+  try {
   const user = req.user;
   const token = JWT.sign(
     {
@@ -596,9 +601,14 @@ const signJWTForUser = (req, res) => {
     }
   );
   return res.json({ token });
+  } catch (err) {
+    return res.json({code:400,message:err.message})
+  }
 };
+
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
+  try {
   // console.log('sign  ing jwt', req.user)
   // check login route authorization
   if (req.user.userType !== "EX20AF")
@@ -617,11 +627,16 @@ const signJWTForAffiliates = (req, res) => {
     }
   );
   // console.log(token);
-  res.json({ token });
+  return res.json({ token });
+
+  } catch (err) {
+    return res.json({code:400,message:err.mesage})
+  }
 };
 
 // Partners Login
 const signJWTForPartners = (req, res) => {
+  try {
   // console.log('signing jwt', req.user)
   // check login route authorization
   const org = req.user.userType;
@@ -649,10 +664,15 @@ const signJWTForPartners = (req, res) => {
   return res
     .status(400)
     .json({ user: req.user.userType, msg: "invalid login" });
+    } catch (err) {
+      return res.json({code:400,meessage:err.message})
+    
+    }
 };
 
 // influencer login JWT
 const signJWTForInfluencers = (req, res) => {
+  try {
   // console.log('signing jwt', req.user)
   // check login route authorization
   const org = req.user.userType;
@@ -678,6 +698,9 @@ const signJWTForInfluencers = (req, res) => {
   return res
     .status(400)
     .json({ user: req.user.userType, msg: "invalid login" });
+  } catch (err) {
+      return res.json({code:500,message:err.message})
+    }
 };
 
 

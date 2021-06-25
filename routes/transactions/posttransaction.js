@@ -6,7 +6,7 @@ const router = express.Router();
 const PostTransactionCtrl = require('../../controller/transactions/postTransaction');
 
 // create transaction
-router.post('/new',  requireJWT, PostTransactionCtrl.createPostTransaction);
+router.post('/new', requireJWT, PostTransactionCtrl.createPostTransaction);
 
 // update a transaction
 router.put('/update/:id', requireJWT, PostTransactionCtrl.updatePostTransaction);
