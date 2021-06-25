@@ -36,6 +36,7 @@ const profileSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique:true,
     validate:{
       validator:function(v){
           return emailRegexVal.test(v)
@@ -126,10 +127,24 @@ const profileSchema = new mongoose.Schema({
   refBy:{type:String,
     default:""},
   netBalance:{type:Number, default:0},
+  incomeTotal:{type:Number, default:0},
+  expenseTotal:{type:Number, default:0},
+  costOfSaleTotal:{type:Number, default:0},
+  creditTotal:{type:Number, default:0},
+  debitTotal:{type:Number, default:0},
   product:[{type:mongoose.Schema.Types.ObjectId,
     ref:"Product"}],
   customers:[{type:mongoose.Schema.Types.ObjectId,
-      ref:"Customer"}],
+    ref:"Customer"}],
+  // transactionTotal: [{ type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Transaction"}],
+  transactions:[{type:mongoose.Schema.Types.ObjectId,
+    ref:"PostTransaction"}],
+  ongoingCampaigns:{type:Number, default:0},
+  completedCampaigns:{type:Number, default:0},
+  pendingCampaigns:{type:Number, default:0},
+  declinedCampaigns:{type:Number,default:0},
+  influencers:{type:Array,default:[{influencerName:"",status:""}]}
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));

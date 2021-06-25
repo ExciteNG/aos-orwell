@@ -112,6 +112,7 @@ else {
     app.use('/kiosk',require('./routes/kioskroutes'));
     app.use('/deals', require('./routes/dealroutes'));
     app.use('/business', require('./routes/busReg'));
+    app.use('/influencer-main-marketing',require('./routes/influenceroutes'))
     app.use('/loans',require('./routes/loan'));
     app.use('/check-business-name', require('./routes/checkname'));
     app.use('/statistic', require('./routes/statistic'));
@@ -120,6 +121,7 @@ else {
     app.use('/excite/payments', require('./routes/excite/payments'));
     app.use('/excite/partners', require('./routes/excite/partners'));
     app.use('/excite/banners', require('./routes/excite/banners'));
+    app.use('/excite/influencers',require('./routes/excite/influencers'));
     app.use('/partners',require('./routes/partners/partners'));
     app.use('/password-forgot',require('./routes/passportreset'));
     app.use('/reset-password',require('./routes/normalpasswordreset'));
@@ -129,6 +131,8 @@ else {
     app.use('/marketplace',require('./routes/market'));
     app.use('/customer',require('./routes/customer'));
     app.use('/balance',require('./routes/balance'));
+    app.use('/transaction',require('./routes/transactions/transaction'));
+    app.use('/post-transaction',require('./routes/transactions/posttransaction'));
     app.use('/paystack',require('./helper/payments/generate'));
 
     app.use([
