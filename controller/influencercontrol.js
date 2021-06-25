@@ -5,6 +5,7 @@ const Influencer = require('../models/influencer');
 const bargainModel = require('../models/bargain');
 const influencerNotification = require('../emails/influencer_engagement')
 const Profiles = require('../models/Profiles')
+const agreePrice = require('../models/agreeprice')
 
 //todo access control vulnerabilities
 
@@ -80,7 +81,7 @@ const MerchantPickInfluencer = async (req,res) => {
         let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing:getPricingRange(reach,noOfPosts,durationOfPromotion),unitPricing:unitPricingRange(reach)})
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
-        // influencerMerchantModel.markModified("pricing")/
+        // influencerMerchantModel.markModified("pricing")
         // influencerMerchantModel.markModified("unitPricing")
         await newMerchantInfluencer.save()
         //filter only the approved influencers
@@ -101,17 +102,16 @@ const MerchantPickInfluencer = async (req,res) => {
 //pick a specific influencer for negotiation
 const influencerNegotiation = async (req,res) => {
     try {
-        // const {email} = req.user
+        const {email} = req.user
         const id = req.params.id
         //filter only the approved influencers
         // const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
-        let profile = await Profiles.find({email:email}).populate("Product")
-        .populate("Customer")
-        .populate("PostTransaction")
-        .populate("influencer")
+        let profile = await Profiles.find({email:email})
+        if (!profile) return res.json({code:404,message:"Not user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
         if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
-        profile.influencers.push(getInfluencer._id)
+        profile.influencers.push({influencerName:getInfluencer.fullName,status:"pending"})
+        profile.ongoingCampaigns = profile.ongoingCampaigns + 1
         let pending = getInfluencer.pendingJobs
         await profile.save()
         await Influencer.findOneAndUpdate({_id:id},{pending:pending+1},{returnOriginal: false,runValidators:true},
@@ -205,10 +205,7 @@ const bargainReceiveInfluencer = (req,res) => {
 const merchantDashboard = async (req,res) => {
     try {
         const id = req.params.id
-        let profile = Profiles.findById(id).populate("Product")
-        .populate("Customer")
-        .populate("PostTransaction")
-        .populate("influencer")
+        let profile = Profiles.findById(id).lean()
         //filter the list of influencers to the one with the same id
         let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
         return res.json({code:200,data:influencerData})
@@ -219,7 +216,26 @@ const merchantDashboard = async (req,res) => {
 
 
 }
-// influencer accept offer
+// influencer accept offer /agree route
+const influencerAgreePrice = async (req,res) => {
+    try {
+        // const {email,userType} = req.user
+        if (req.body.userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to view this resource"})
+        // req.body.email = email
+        // req.body.userType = userType
+        // req.body.createdAt = new Date().toString()
+        const newPrice = new agreePrice(req.body)
+        await newPrice.save()
+        //send mail
+        return res.json({code:200,data:newPrice})
+        
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+//influencer accept button
 
 //influencer reject offer
 // router.delete()
@@ -231,5 +247,6 @@ module.exports = {
     merchantDashboard,
     influencerNegotiation,
     bargainSendInfluencer,
-    bargainReceiveInfluencer
+    bargainReceiveInfluencer,
+    influencerAgreePrice
 }

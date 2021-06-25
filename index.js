@@ -112,6 +112,7 @@ else {
     app.use('/kiosk',require('./routes/kioskroutes'));
     app.use('/deals', require('./routes/dealroutes'));
     app.use('/business', require('./routes/busReg'));
+    app.use('/influencer-main-marketing',require('./routes/influenceroutes'))
     app.use('/loans',require('./routes/loan'));
     app.use('/check-business-name', require('./routes/checkname'));
     app.use('/statistic', require('./routes/statistic'));

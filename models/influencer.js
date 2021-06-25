@@ -106,6 +106,10 @@ const influencerSChema = mongoose.Schema({
           type:Number,
           default:0
       },
+      merchants:[{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"merchantInfluencer"
+      }]
 },
 {timestamps:true})
 
