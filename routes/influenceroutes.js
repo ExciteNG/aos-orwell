@@ -12,7 +12,7 @@ router.get('/influencer-negotiation/:id',influencerNegotiation)
 router.post('/merchant/get-influencer', MerchantPickInfluencer)
 
 // merchant/influencer send message
-router.post('/send-message',bargainSendInfluencer)
+router.post('/send-message/:id',bargainSendInfluencer)
 
 //merchant agree price
 router.post('/merchant-agree-price',influencerAgreePrice)
