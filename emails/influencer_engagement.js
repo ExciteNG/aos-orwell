@@ -1,5 +1,5 @@
 const emailHost = require('./email_host')
-const influencerMailNotification = (firstName,id) => {
+const influencerMailNotification = (firstName,fullname,id) => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -816,8 +816,8 @@ const influencerMailNotification = (firstName,id) => {
                                                                                         <td class="esd-block-text" bgcolor="#ffffff" align="center">
                                                                                             <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">&nbsp;EXCITE&nbsp;INFLUENCER&nbsp;MARKETING&nbsp;ENGAGEMENT&nbsp;<br>NOTIFICATION</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear ${firstName},<br>&nbsp; You are receiving this email because a merchant has requested for your services as an influencer marketer to promote his/her products.</p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Please login to your dashboard via the link below to see who it was.<br>&nbsp; <a href= ${emailHost()}/influencer-marketing/influencer-dashboard/${id} target="_blank" style="font-size:large; text-decoration:upper;">GO TO DASHBOARD</a><br><br></p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear ${firstName},<br>&nbsp; You are receiving this email because a merchant with the name ${fullname} has requested for your services as an influencer marketer to promote his/her products.</p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Please login to your dashboard via the link below to learn more about the deal below.<br>&nbsp; <a href= ${emailHost()}/influencer-marketing/influencer-dashboard/${id} target="_blank" style="font-size:large; text-decoration:upper;">GO TO DASHBOARD</a><br><br></p>
                                                                                             <p style="text-align:left; color:black; font-size:medium;">Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
