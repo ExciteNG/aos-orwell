@@ -8,14 +8,14 @@ const User = require("../models/User");
 const Profile = require("../models/Profiles");
 const Affiliates = require("../models/Affiliates");
 const Partners = require("../models/Partners");
-const Influencers = require('../models/influencer')
+const Influencers = require("../models/influencer");
 const randomstring = require("randomstring");
 const { use } = require("passport");
 // const sgMail = require("@sendgrid/mail");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
-const affiliateAcknowledge = require('../emails/affiliate_acknowledge');
-const influencerAcknowledge = require('../emails/influencer_acknowledge');
+const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
+const influencerAcknowledge = require("../emails/influencer_acknowledge");
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -24,7 +24,7 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 //email templating
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
-const Cookies = require('cookies');
+const Cookies = require("cookies");
 /*                  SIGNUPs                         */
 
 // Merchants
@@ -32,8 +32,11 @@ const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
-  if (req.body.password.length < 8){
-    return res.send({code:400, error:"password must be at least eight characters long"})
+  if (req.body.password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
   }
   // console.log(req.body);
   await User.findOne({ email: req.body.email }, (err, doc) => {
@@ -132,10 +135,15 @@ const signUpPartner = (req, res, next) => {
   };
   // console.log(req.body)
   if (!email || !password) {
-    return res.status(400).send({code:400,error:"No email or password provided."}); 
+    return res
+      .status(400)
+      .send({ code: 400, error: "No email or password provided." });
   }
-  if (password.length < 8){
-    return res.send({code:400, error:"password must be at least eight characters long"})
+  if (password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
   }
   User.findOne({ email: email }, (err, doc) => {
     if (doc) {
@@ -236,12 +244,16 @@ const signUpAffiliates = async (req, res, next) => {
     idImg,
     passportImg,
     address,
+    broughtBy
   } = req.body;
   if (!email || !password) {
     return res.json({ status: 400, code: "No email or password provided" });
   }
-  if (password.length < 8){
-    return res.send({code:400, error:"password must be at least eight characters long"})
+  if (password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
   }
 
   const validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email);
@@ -284,6 +296,7 @@ const signUpAffiliates = async (req, res, next) => {
       const profileInstance = new Affiliates(userInstance);
       profileInstance.fullname = fullname;
       profileInstance.phone = phone;
+      profileInstance.broughtBy=broughtBy;
       profileInstance.cellInfo = {
         cell: cell,
         cellGroup: "",
@@ -322,22 +335,23 @@ const signUpAffiliates = async (req, res, next) => {
         onError: (e) => console.log(e),
         onSuccess: (i) => console.log(i),
         secure: false,
-      })
+      });
       res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
 };
 
-
-
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     res.status(400).send("No email or password provided.");
   }
-  if (req.body.password.length < 8){
-    return res.send({code:400, error:"password must be at least eight characters long"})
+  if (req.body.password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -363,12 +377,12 @@ const signUpRefCode = async (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile({...userInstance,...user});
-      const profileId = profileInstance._id
+      const profileInstance = new Profile({ ...userInstance, ...user });
+      const profileId = profileInstance._id;
       let profiler = profileInstance;
       profiler.referral.isReffered = true;
       profiler.referral.refCode = req.body.refCode;
-      profiler.refBy=req.body.refCode;
+      profiler.refBy = req.body.refCode;
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -377,30 +391,32 @@ const signUpRefCode = async (req, res, next) => {
         }
       });
       // TODO restructure
-      const refBy = await Affiliates.findOne({ affiliateCode: req.body.refCode });
-      console.log(refBy,'here',req.body.refCode);
+      const refBy = await Affiliates.findOne({
+        affiliateCode: req.body.refCode,
+      });
+      console.log(refBy, "here", req.body.refCode);
 
       if (!refBy) return res.json({ code: 201, mesage: "Account created" });
       if (refBy) {
         refBy.merchants.push(profileId);
-        refBy.markModified('merchants');
+        refBy.markModified("merchants");
         await refBy.save();
-              //send mail
-      nodeoutlook.sendEmail({
-        auth: {
-          user: process.env.EXCITE_ENQUIRY_USER,
-          pass: process.env.EXCITE_ENQUIRY_PASS,
-        },
-        from: "enquiry@exciteafrica.com",
-        to: user.email,
-        subject: "ACKNOWLEDGEMENT EMAIL",
-        html: affiliateAcknowledge(),
-        text: affiliateAcknowledge(),
-        replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.log(e),
-        onSuccess: (i) => console.log(i),
-        secure: false,
-      })
+        //send mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: "ACKNOWLEDGEMENT EMAIL",
+          html: affiliateAcknowledge(),
+          text: affiliateAcknowledge(),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
         res.json({ code: 201, mesage: "Account created" });
       }
     }
@@ -409,9 +425,9 @@ const signUpRefCode = async (req, res, next) => {
 
 const setUpSpringBoard = (req, res, next) => {
   if (req.body.token !== process.env.SPRING_BOARD_ACCESS_TOKEN)
-    return res.json({code:400, msg: "Invalid Token" });
+    return res.json({ code: 400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    res.send({code:400,error:"No username or password provided."});
+    res.send({ code: 400, error: "No username or password provided." });
   }
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
@@ -440,116 +456,117 @@ const setUpSpringBoard = (req, res, next) => {
 };
 
 //SIGN UP Influencers
-const signUpInfluencers = async (req,res,next) => {
+const signUpInfluencers = async (req, res, next) => {
   try {
-  const {
-    // fullName,
-    // email,
-    // userType,
-    // emailVerified,
-    // password,
-    // Address,
-    mobile,
-    StateOfResidence,
-    socialmediaplatform,
-    socialmediahandles,
-    noOfFollowers,
-    influencerLevel,
-    AmountPerPost,
-    country,
-    coverage,
-    marketingSpecialty,
-    Negotiable
-    // website,
-    // AverageDailyVisitors,
-    // socialmediaplatform,
-    // socialmediahandles,
-    // marketingSpecialty,
-    // AmountPerPost,
-    // AbletoDiscount,
-    // profilePhoto,
-    // regStatus
-  } = req.body
+    const {
+      // fullName,
+      // email,
+      // userType,
+      // emailVerified,
+      // password,
+      // Address,
+      mobile,
+      StateOfResidence,
+      socialmediaplatform,
+      socialmediahandles,
+      noOfFollowers,
+      influencerLevel,
+      AmountPerPost,
+      country,
+      coverage,
+      marketingSpecialty,
+      Negotiable,
+      // website,
+      // AverageDailyVisitors,
+      // socialmediaplatform,
+      // socialmediahandles,
+      // marketingSpecialty,
+      // AmountPerPost,
+      // AbletoDiscount,
+      // profilePhoto,
+      // regStatus
+    } = req.body;
 
-  if (!req.body.email || !req.body.password || !req.body) {
-    return res.json({ status: 400, code: "No email or password provided" });
-  }
-  if (req.body.password.length < 8){
-    return res.send({code:400, error:"password must be at least eight characters long"})
-  }
-  await User.findOne({ email: req.body.email }, (err, doc) => {
-    if (err) {
-      res.json({ code: 401, msg: "An Error ocured" });
+    if (!req.body.email || !req.body.password || !req.body) {
+      return res.json({ status: 400, code: "No email or password provided" });
     }
-    if (doc) {
-      // console.log(doc);
-      res.json({ code: 401, msg: "This Account already exists", doc });
-      next(err);
-    }else {
-      //continue
-
-      const user = {
-        email: req.body.email,
-        name: req.body.fullName,
-        userType: "EX901F",
-        emailVerified: false,
-      };
-      const userInstance = new User(user);
-      User.register(userInstance,req.body.password, (error, user) => {
-        if (error) {
-          // next(error);
-          res.json({ code: 400, mesage: "Failed create account" });
-          return;
-        }
-
+    if (req.body.password.length < 8) {
+      return res.send({
+        code: 400,
+        error: "password must be at least eight characters long",
       });
-      const newInfluencer = new Influencers({...user,...req.body})
-      // newInfluencer.Address = Address;
-      // newInfluencer.mobile = mobile;
-      // newInfluencer.telephone = telephone;
-      // newInfluencer.country = country;
-      // newInfluencer.StateOfResidence = StateOfResidence;
-      // newInfluencer.website = website;
-      // newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
-      // newInfluencer.socialmediaplatform = socialmediaplatform;
-      // newInfluencer.socialmediahandles = socialmediahandles;
-      // newInfluencer.marketingSpecialty = marketingSpecialty;
-      // newInfluencer.AmountPerPost = AmountPerPost;
-      // newInfluencer.AbletoDiscount = AbletoDiscount;
-      // newInfluencer.profilePhoto = profilePhoto;
-      // newInfluencer.regStatus = regStatus;
-
-      newInfluencer.save();
-      //send mail
-      nodeoutlook.sendEmail({
-        auth: {
-          user: process.env.EXCITE_ENQUIRY_USER,
-          pass: process.env.EXCITE_ENQUIRY_PASS,
-        },
-        from: "enquiry@exciteafrica.com",
-        to: req.body.email,
-        subject: "ACKNOWLEDGEMENT EMAIL",
-        html: influencerAcknowledge(),
-        text: influencerAcknowledge(),
-        replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.log(e),
-        onSuccess: (i) => console.log(i),
-        secure: false,
-      })
-      return res.json({code:201,success:"account created successfully"})
     }
+    await User.findOne({ email: req.body.email }, (err, doc) => {
+      if (err) {
+        res.json({ code: 401, msg: "An Error ocured" });
+      }
+      if (doc) {
+        // console.log(doc);
+        res.json({ code: 401, msg: "This Account already exists", doc });
+        next(err);
+      } else {
+        //continue
 
-  })
+        const user = {
+          email: req.body.email,
+          name: req.body.fullName,
+          userType: "EX901F",
+          emailVerified: false,
+        };
+        const userInstance = new User(user);
+        User.register(userInstance, req.body.password, (error, user) => {
+          if (error) {
+            // next(error);
+            res.json({ code: 400, mesage: "Failed create account" });
+            return;
+          }
+        });
+        const newInfluencer = new Influencers({ ...user, ...req.body });
+        // newInfluencer.Address = Address;
+        // newInfluencer.mobile = mobile;
+        // newInfluencer.telephone = telephone;
+        // newInfluencer.country = country;
+        // newInfluencer.StateOfResidence = StateOfResidence;
+        // newInfluencer.website = website;
+        // newInfluencer.AverageDailyVisitors = AverageDailyVisitors;
+        // newInfluencer.socialmediaplatform = socialmediaplatform;
+        // newInfluencer.socialmediahandles = socialmediahandles;
+        // newInfluencer.marketingSpecialty = marketingSpecialty;
+        // newInfluencer.AmountPerPost = AmountPerPost;
+        // newInfluencer.AbletoDiscount = AbletoDiscount;
+        // newInfluencer.profilePhoto = profilePhoto;
+        // newInfluencer.regStatus = regStatus;
+
+        newInfluencer.save();
+        //send mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: req.body.email,
+          subject: "ACKNOWLEDGEMENT EMAIL",
+          html: influencerAcknowledge(),
+          text: influencerAcknowledge(),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        return res.json({ code: 201, success: "account created successfully" });
+      }
+    });
   } catch (err) {
-  return res.json({code:400,message:err.message})
-   }
-}
+    return res.json({ code: 400, message: err.message });
+  }
+};
 
 const setUpAdmin = async (req, res, next) => {
   if (req.body.token !== process.env.EXCITE_ADMIN_ACCESS_TOKEN)
-    return res.json({code:400, msg: "Invalid Token" });
+    return res.json({ code: 400, msg: "Invalid Token" });
   if (!req.body.email || !req.body.password) {
-    return res.send({code:400,error:"No email or password provided."});
+    return res.send({ code: 400, error: "No email or password provided." });
   }
   // console.log(req.body)
   User.findOne({ email: req.body.email }, async (err, doc) => {
@@ -573,11 +590,8 @@ const setUpAdmin = async (req, res, next) => {
       });
       return res.json({ code: 201, mesage: "Account Set Successfully." });
     }
-
-
   });
 };
-
 
 /*                  SIGN JWTS                        */
 // Merchants Login
@@ -587,122 +601,117 @@ const signJWTForUser = (req, res) => {
   // if (req.user.userType !== "EX10AF")
   //   return res.status(400).json({ msg: "invalid login" });
   try {
-  const user = req.user;
-  const token = JWT.sign(
-    {
-      email: user.email,
-      userType: user.userType,
-    },
-    jwtSecret,
-    {
-      algorithm: jwtAlgorithm,
-      expiresIn: jwtExpiresIn,
-      subject: user._id.toString(),
-    }
-  );
-  return res.json({ token });
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    return res.json({ token });
   } catch (err) {
-    return res.json({code:400,message:err.message})
+    return res.json({ code: 400, message: err.message });
   }
 };
 
 // Affiliates Login
 const signJWTForAffiliates = (req, res) => {
   try {
-  // console.log('sign  ing jwt', req.user)
-  // check login route authorization
-  if (req.user.userType !== "EX20AF")
-    return res.status(400).json({ msg: "invalid login" });
-  const user = req.user;
-  const token = JWT.sign(
-    {
-      email: user.email,
-      userType: user.userType,
-    },
-    jwtSecret,
-    {
-      algorithm: jwtAlgorithm,
-      expiresIn: jwtExpiresIn,
-      subject: user._id.toString(),
-    }
-  );
-  // console.log(token);
-  return res.json({ token });
-
+    // console.log('sign  ing jwt', req.user)
+    // check login route authorization
+    if (req.user.userType !== "EX20AF")
+      return res.status(400).json({ msg: "invalid login" });
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    // console.log(token);
+    return res.json({ token });
   } catch (err) {
-    return res.json({code:400,message:err.mesage})
+    return res.json({ code: 400, message: err.mesage });
   }
 };
 
 // Partners Login
 const signJWTForPartners = (req, res) => {
   try {
-  // console.log('signing jwt', req.user)
-  // check login route authorization
-  const org = req.user.userType;
+    // console.log('signing jwt', req.user)
+    // check login route authorization
+    const org = req.user.userType;
 
-  if (
-    req.user.userType === "EX50AFTAX" ||
-    req.user.userType === "EX50AFBIZ" ||
-    req.user.userType === "EX50AFFIN"
-  ) {
-    const user = req.user;
-    const token = JWT.sign(
-      {
-        email: user.email,
-        userType: user.userType,
-      },
-      jwtSecret,
-      {
-        algorithm: jwtAlgorithm,
-        expiresIn: jwtExpiresIn,
-        subject: user._id.toString(),
-      }
-    );
-    return res.json({ token });
-  }
-  return res
-    .status(400)
-    .json({ user: req.user.userType, msg: "invalid login" });
-    } catch (err) {
-      return res.json({code:400,meessage:err.message})
-    
+    if (
+      req.user.userType === "EX50AFTAX" ||
+      req.user.userType === "EX50AFBIZ" ||
+      req.user.userType === "EX50AFFIN"
+    ) {
+      const user = req.user;
+      const token = JWT.sign(
+        {
+          email: user.email,
+          userType: user.userType,
+        },
+        jwtSecret,
+        {
+          algorithm: jwtAlgorithm,
+          expiresIn: jwtExpiresIn,
+          subject: user._id.toString(),
+        }
+      );
+      return res.json({ token });
     }
+    return res
+      .status(400)
+      .json({ user: req.user.userType, msg: "invalid login" });
+  } catch (err) {
+    return res.json({ code: 400, meessage: err.message });
+  }
 };
 
 // influencer login JWT
 const signJWTForInfluencers = (req, res) => {
   try {
-  // console.log('signing jwt', req.user)
-  // check login route authorization
-  const org = req.user.userType;
+    // console.log('signing jwt', req.user)
+    // check login route authorization
+    const org = req.user.userType;
 
-  if (
-    req.user.userType === "EX90IF"
-  ) {
-    const user = req.user;
-    const token = JWT.sign(
-      {
-        email: user.email,
-        userType: user.userType,
-      },
-      jwtSecret,
-      {
-        algorithm: jwtAlgorithm,
-        expiresIn: jwtExpiresIn,
-        subject: user._id.toString(),
-      }
-    );
-    return res.json({ token });
-  }
-  return res
-    .status(400)
-    .json({ user: req.user.userType, msg: "invalid login" });
-  } catch (err) {
-      return res.json({code:500,message:err.message})
+    if (req.user.userType === "EX90IF") {
+      const user = req.user;
+      const token = JWT.sign(
+        {
+          email: user.email,
+          userType: user.userType,
+        },
+        jwtSecret,
+        {
+          algorithm: jwtAlgorithm,
+          expiresIn: jwtExpiresIn,
+          subject: user._id.toString(),
+        }
+      );
+      return res.json({ token });
     }
+    return res
+      .status(400)
+      .json({ user: req.user.userType, msg: "invalid login" });
+  } catch (err) {
+    return res.json({ code: 500, message: err.message });
+  }
 };
-
 
 // SpringBoards Login
 const signJWTForSpringBoard = (req, res) => {
@@ -749,22 +758,19 @@ const signJWTForExcite = (req, res) => {
   res.json({ token });
 };
 
-
 //influencer dashbaord authorization
 const authInfluencerMarketer = (req, res) => {
   if (req.user.userType !== "EX901F")
-    return res.status(400).json({ msg: "you are not authorized to view this resource" });
+    return res
+      .status(400)
+      .json({ msg: "you are not authorized to view this resource" });
   res.json({ code: 200, auth: true });
 };
-
-
-
-
 
 passport.use(
   new PassportJWT.Strategy(
     {
-      jwtFromRequest:PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: PassportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtSecret,
       algorithms: [jwtAlgorithm],
     },
@@ -797,26 +803,31 @@ passport.use(
 // }
 
 //reset a user password
-const passwordReset = (req,res) => {
+const passwordReset = (req, res) => {
   //create a lookup to verify user
-  User.findOne({email:req.body.email},(err,doc)=>{
-    if (err){
-      return res.json({code:401,message:"You are unauthorized to view this resource"})
+  User.findOne({ email: req.body.email }, (err, doc) => {
+    if (err) {
+      return res.json({
+        code: 401,
+        message: "You are unauthorized to view this resource",
+      });
     }
-  })
-  let userTypeList = ["EX10AF","EX20AF","EX50AF","EXSBAF"];
-  if (!req.user.userType.includes(userTypeList)){
-    return res.json({code:401,message:"You are unauthorized to view this resource"})
+  });
+  let userTypeList = ["EX10AF", "EX20AF", "EX50AF", "EXSBAF"];
+  if (!req.user.userType.includes(userTypeList)) {
+    return res.json({
+      code: 401,
+      message: "You are unauthorized to view this resource",
+    });
   }
-  passport.setPassword(req.body.password,function(err,data){
-    if (err){
-      console.error(err)
-    }else{
-      console.log(data)
+  passport.setPassword(req.body.password, function(err, data) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(data);
     }
-  })
-
-}
+  });
+};
 
 module.exports = {
   initialize: passport.initialize(),

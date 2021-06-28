@@ -21,7 +21,7 @@ const influencerSChema = mongoose.Schema({
     },
     userType:{
         type:String,
-        default:"EX901F",
+        default:"EX90IF",
         required:true
     },
     emailVerified: {
@@ -32,15 +32,15 @@ const influencerSChema = mongoose.Schema({
         type:String,
         required:[true,'Please enter your phone number']
     },
-    StateOfResidence:{
+    stateOfResidence:{
         type:String,
         required:[true,'please enter address !']
     },
-    socialmediaplatform:{
+    socialMediaplatform:{
         type:Array,
         default:[],
     },
-    socialmediahandles:{
+    socialMediaHandles:{
         type:Object,
         default:{facebook:"",instagram:"",youtube:""}
     },
@@ -52,7 +52,7 @@ const influencerSChema = mongoose.Schema({
         type:String,
         // default:{Micro:"10000-50000", Mini:"50000-500000", Maxi:">500000"}
     },
-    AmountPerPost:{
+    amountPerPost:{
         type:Number,
         required:true
     },
@@ -71,7 +71,7 @@ const influencerSChema = mongoose.Schema({
         type:Array,
         default:[]
     },
-    Negotiable:{
+    negotiable:{
         type:String,
         required:true
     },
