@@ -6,6 +6,7 @@ const bargainModel = require('../models/bargain');
 const influencerNotification = require('../emails/influencer_engagement')
 const Profiles = require('../models/Profiles')
 const agreePrice = require('../models/agreeprice');
+const Negotiation = require('../models/infMerchantNegotiate');
 const { get } = require('mongoose');
 
 //todo access control vulnerabilities
@@ -74,6 +75,8 @@ const MerchantPickInfluencer = async (req,res) => {
         } = req.body
         // req.body.email = email
         // req.body.userType = userType
+        //verify that the user is a merchant
+        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //get the influencer level (could be one of micro,mini,max)
         // const getInfluencerLevel = influencerLevel.replaceAll(" ","").split("")[0].toLowerCase()
         // console.log(getInfluencerLevel)
@@ -111,6 +114,9 @@ const influencerNegotiation = async (req,res) => {
         // if (!profile) return res.json({code:404,message:"Not user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
         if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
+
+        //increase the merchant campaign
+
         // profile.influencers.push({influencerName:getInfluencer.fullName,status:"pending"})
         // profile.pendingCampaigns = profile.pendingCampaigns + 1
         let pending = getInfluencer.pendingJobs
@@ -137,8 +143,8 @@ const influencerNegotiation = async (req,res) => {
         //       from: 'enquiry@exciteafrica.com',
         //       to: getInfluencer.email,
         //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-        //       html: influencerNotification(firstName,id),
-        //       text: influencerNotification(firstName,id),
+        //       html: influencerNotification(firstName,profile.fullName,id),
+        //       text: influencerNotification(firstName,profile.fullName,id),
         //       replyTo: 'enquiry@exciteafrica.com',
         //       onError: (e) => console.log(e),
         //       onSuccess: (i) => {
@@ -179,30 +185,30 @@ const getInfluencerDashboard = async (req,res) => {
 //BARGAIN POP UP VIEW
 
 //POST SEND MESSAGE EITHER AS AN INFLUENCER OR MERCHANT
-const bargainSendInfluencer = async (req,res) => {
-    try {
-        const {email} = req.user
-        req.body.sender = email
-    const newBargainChat = new bargainModel(req.body)
-    await newBargainChat.save()
-    return res.json({code:200,data:newBargainChat})
-    } catch (err) {
-        console.error(err)
-        return res.json({code:500,message:err.message})
-    }
-}
+// const bargainSendInfluencer = async (req,res) => {
+//     try {
+//         const {email} = req.user
+//         req.body.sender = email
+//     const newBargainChat = new bargainModel(req.body)
+//     await newBargainChat.save()
+//     return res.json({code:200,data:newBargainChat})
+//     } catch (err) {
+//         console.error(err)
+//         return res.json({code:500,message:err.message})
+//     }
+// }
 
 //GET recieved messages tailored to the merchant or influencer
-const bargainSendMerchant = (req,res) => {
-    try {
-        const {email} = req.user
-        const filterReceivedMessages = bargainModel.find({receiver:email}).lean().sort({'receiver':-1});
-        return res.json({code:200,data:filterReceivedMessages})
-    } catch (err) {
-        console.error(err)
-        return res.json({code:500,message:err.message})
-    }
-}
+// const bargainSendMerchant = (req,res) => {
+//     try {
+//         const {email} = req.user
+//         const filterReceivedMessages = bargainModel.find({receiver:email}).lean().sort({'receiver':-1});
+//         return res.json({code:200,data:filterReceivedMessages})
+//     } catch (err) {
+//         console.error(err)
+//         return res.json({code:500,message:err.message})
+//     }
+// }
 
 //merchant dashboard
 const merchantDashboard = async (req,res) => {
@@ -240,7 +246,61 @@ const influencerAgreePrice = async (req,res) => {
 }
 
 //influencer accept button
+//influencer negotiate price
+const influencerNegotiatePrice = async (req,res) => {
+    try {
+        const {email} = req.user
 
+        //find the full name in the merchant database
+        let getMerchant = await Profiles.find({fullName:req.body.fullName}).lean()
+        if (!getMerchant) return res.json({code:404,message:"Merchant not found !, please check if you entered the merchant fullname properly from the received email address"})
+        req.body.influencerEmail = email
+        req.body.merchantEmail = getMerchant.email
+        let negotiation = new Negotiation(req.body)
+        // negotiation.influencerMessages.push(req.body.influencerMessages)
+        // await negotiation.markModified("influencerMessages")
+        await negotiation.save()
+
+        return res.json({code:201,data:negotiation})
+        
+    } catch (err) {
+        return res.json({code:500,message:err.message})
+    }
+}
+
+//send message back to influencer
+const merchantNegotiateOffer = async (req,res) => {
+    try {
+        const id = req.params.id
+        const {email} = req.user
+        //first conditional: send the message to the  right influencer
+        if (req.user.userType === "EX20AF"){
+        let merchantNegotiationEmail = await Negotiation.findById(id).lean()
+        if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found"})
+        let newMerchantMessages = merchantNegotiationEmail.merchantMessages
+        await Negotiation.findOneAndUpdate({_id:id},{newMerchantMessages:newMerchantMessages.push(req.body.merchantMessages)},
+        {new:true,runValidators:true},(err,docs)=>{
+            if (err) console.error(err)
+            console.log(docs)
+        }) 
+        return res.json({code:200,data:merchantNegotiationEmail})
+        // second conditional: influencer sends message back to merchant
+        } else if (req.user.userType === "EX90IF") {
+            let influencerNegotiationEmail = await Negotiation.findById(id).lean()
+            if (!influencerNegotiationEmail) return res.json({code:404,message:"Not found"})
+            let newInfluencerMessages = influencerNegotiationEmail.influencerMessages
+            await Negotiation.findOneAndUpdate({_id:id},{newInfluencerMessages:newInfluencerMessages.push(req.body.influencerMessages)},
+        {new:true,runValidators:true},(err,docs)=>{
+            if (err) console.error(err)
+            console.log(docs)
+        }) 
+        return res.json({code:200,data:influencerNegotiationEmail})
+        }
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
 //influencer reject offer
 // router.delete()
 // const influencerDeclineOffer = (req,res) => {
@@ -251,10 +311,10 @@ const influencerAgreePrice = async (req,res) => {
 
 module.exports = {
     MerchantPickInfluencer,
+    influencerNegotiation,
     getInfluencerDashboard,
     merchantDashboard,
-    influencerNegotiation,
-    bargainSendInfluencer,
-    bargainSendMerchant,
-    influencerAgreePrice
+    influencerAgreePrice,
+    influencerNegotiatePrice,
+    merchantNegotiateOffer
 }

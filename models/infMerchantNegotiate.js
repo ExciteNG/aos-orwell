@@ -1,6 +1,7 @@
 const mongoose = require('./init');
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+
 const NegotiateSchema = mongoose.Schema({
     influencerEmail:{
         type:String,
@@ -25,19 +26,19 @@ const NegotiateSchema = mongoose.Schema({
         lowercase:true
     },
     merchantMessages:{
-        type:String,
-        default:""
+        type:Array,
+        default:[]
     },
     influencerMessages:{
-        type:String,
-        default:""
+        type:Array,
+        default:[]
     },
     startDateStr:{
         type:String,
         default:""
     },
     startDate:{
-        type:Date,
+        type:Number,
         default:0
     },
     endDate:{
@@ -46,4 +47,4 @@ const NegotiateSchema = mongoose.Schema({
     }
 })
 
-module.exports = monngoose.model('Negotiate',NegotiateSchema)
+module.exports = mongoose.model('Negotiate',NegotiateSchema)
