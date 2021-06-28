@@ -3,6 +3,8 @@ const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
     merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
 
+const {requireJWT} = require('../middleware/auth')
+
 // merchant dashboard
 router.get('/merchant/dashboard/',merchantDashboard)
 

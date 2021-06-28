@@ -111,7 +111,7 @@ const influencerNegotiation = async (req,res) => {
         //filter only the approved influencers
         // const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
         // let profile = await Profiles.find({email:email})
-        // if (!profile) return res.json({code:404,message:"Not user profile with that email was found"})
+        // if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
         if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
 
@@ -183,34 +183,6 @@ const getInfluencerDashboard = async (req,res) => {
 }
 // GET weekly reports
 // PAYMENT POPUP VIEW 
-//BARGAIN POP UP VIEW
-
-//POST SEND MESSAGE EITHER AS AN INFLUENCER OR MERCHANT
-// const bargainSendInfluencer = async (req,res) => {
-//     try {
-//         const {email} = req.user
-//         req.body.sender = email
-//     const newBargainChat = new bargainModel(req.body)
-//     await newBargainChat.save()
-//     return res.json({code:200,data:newBargainChat})
-//     } catch (err) {
-//         console.error(err)
-//         return res.json({code:500,message:err.message})
-//     }
-// }
-
-//GET recieved messages tailored to the merchant or influencer
-// const bargainSendMerchant = (req,res) => {
-//     try {
-//         const {email} = req.user
-//         const filterReceivedMessages = bargainModel.find({receiver:email}).lean().sort({'receiver':-1});
-//         return res.json({code:200,data:filterReceivedMessages})
-//     } catch (err) {
-//         console.error(err)
-//         return res.json({code:500,message:err.message})
-//     }
-// }
-
 //merchant dashboard
 const merchantDashboard = async (req,res) => {
     try {
@@ -236,7 +208,7 @@ const influencerAgreePrice = async (req,res) => {
         // req.body.userType = userType
         // req.body.createdAt = new Date().toString()
         const newPrice = new agreePrice(req.body)
-        //send to paystack
+        //pay via paystack
         await newPrice.save()
         //send mail
         return res.json({code:200,data:newPrice})
@@ -248,6 +220,15 @@ const influencerAgreePrice = async (req,res) => {
 }
 
 //influencer accept button
+const influencerAcceptsPrice = async (req,res) => {
+    const {email} = req.user;
+    const id = req.params.id
+    //get the particular chat and make sure only the influencer accesses it
+    const selectInfluencer = await Negotiation.findById(id).lean()
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are unauthorized to access this resource"})
+    //send mail
+
+}
 //influencer negotiate price
 const influencerNegotiatePrice = async (req,res) => {
     try {
@@ -315,6 +296,32 @@ const merchantNegotiateOffer = async (req,res) => {
     }
 }
 //influencer reject offer
+const influencerDeclinePrice = async (req,res)  => {
+    try {
+        const {email} = req.user
+        const id = req.params.id
+        //get a specific chat
+        if (!req.user.userType === "EX90IF") return res.json({code:401,message:"you are unauthorized to view this page"})
+        const getChat = await Negotiation.findById(id).lean()
+        if (!getChat) return res.json({code:404,message:"Chat not found"})
+        //find the merchant that matches thee chat section
+        let matchProfile = await Profiles.find({email:getChat.merchantEmail}).lean()
+        if (!matchProfile) return res.json({code:404,message:"not found"})
+        matchProfile.pendingCampaigns = matchProfile.pendingCampaigns - 1
+        //find the influencer
+        let matchInfluencer = await Influencers.find({email:getChat.influencerEmail}).lean()
+        if (!matchInfluencer) return res.json({code:404,message:"Not found !"})
+        matchInfluencer.pendingJobs = matchInfluencer.pendingJobs - 1
+        //send mail
+        //delete the  chat history
+        await Negotiation.deleteOne({_id:id})
+        return res.json({status:200, message:"negotiation succesfully ran and completed !"})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+
+}
 // router.delete()
 // const influencerDeclineOffer = (req,res) => {
 
@@ -339,20 +346,6 @@ const getAllChats = async (req,res) => {
         return res.json({code:500,message:err.message})
     }
 }
-
-// const influencerAgreePrice = (req,res) => {
-//     try {
-//         const {email} = req.user
-//         const id = req.params.id
-//         if (req.user.userType !== "EX90IF") return res.json({code:401,message:"you are unauthorized to take this action"})
-//         //send mail
-        
-//     } catch (err) {
-//         console.error(err)
-//         return res.json({code:500,message:err.message})
-//     }
-
-// }
 
 module.exports = {
     merchantPickInfluencer,
