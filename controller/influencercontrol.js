@@ -169,8 +169,8 @@ const influencerNegotiation = async (req,res) => {
 const getInfluencerDashboard = async (req,res) => {
     try {
         const {email} = req.user
-        if (req.userType !== "EX90IF") return res.json({code:401,message:"you do not have permissions to view this resource"})
-        const singleInfluencer = await Influencer.find({email:email}).lean()
+        if (req.user.userType !== "EX90IF") return res.json({code:401,message:"you do not have permissions to view this resource"})
+        const singleInfluencer = await Influencer.findOne({email:email})
         if (singleInfluencer.regStatus === 'pending'){
             return res.json({code:404,message:"No data yet, awaiting approval",data:singleInfluencer})
         } 

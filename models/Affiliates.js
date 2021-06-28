@@ -3,17 +3,16 @@ const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-
 const affiliateSchema = new mongoose.Schema({
   email: {
     type: String,
-    validate:{
-      validator:function(v){
-          return emailRegexVal.test(v)
+    validate: {
+      validator: function(v) {
+        return emailRegexVal.test(v);
       },
-      message:mail => `${mail.value} is not a valid email address !`
-  },
-  required:[true,'Please enter your email address']
+      message: (mail) => `${mail.value} is not a valid email address !`,
+    },
+    required: [true, "Please enter your email address"],
   },
   userType: {
     type: String,
@@ -55,6 +54,10 @@ const affiliateSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  broughtBy: {
+    type: String,
+    default: "",
+  },
   cellInfo: {
     type: Object,
     default: {
@@ -66,28 +69,37 @@ const affiliateSchema = new mongoose.Schema({
     },
   },
   accountDetails: {
-    type:Object,
-    default:  { bank: "", accountNo: "", branch: "",bvn:"",accountName:"",paymentMode:"" },
+    type: Object,
+    default: {
+      bank: "",
+      accountNo: "",
+      branch: "",
+      bvn: "",
+      accountName: "",
+      paymentMode: "",
+    },
   },
-  earnings:{
-    type:Array,
-    default:[
+  earnings: {
+    type: Array,
+    default: [
       {
-        amount:0,
-        email:"",
-        package:"",
-        cycle:"",
-        commission:0,
-        merchant:""
-      }
-    ]
+        amount: 0,
+        email: "",
+        package: "",
+        cycle: "",
+        commission: 0,
+        merchant: "",
+      },
+    ],
   },
-  cycle:{
-    type:String,
-    default:""
+  cycle: {
+    type: String,
+    default: "",
   },
-  merchants:[{type:mongoose.Schema.Types.ObjectId,
-    ref:"Profile"}]
+  merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Profile" }],
 });
 
-const Affiliate = (module.exports = mongoose.model("Affiliate", affiliateSchema));
+const Affiliate = (module.exports = mongoose.model(
+  "Affiliate",
+  affiliateSchema
+));

@@ -169,10 +169,10 @@ router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
     const {profile} = req.body;
     console.log('passed')
     const {email,userType} = req.user
+    const doc = await Profiles.findOne({email:email}).populate(['product'])
+    return res.json(doc)
 
-    Profiles.findOne({email:email},(err,doc)=>{res.json(doc)})
-
-})
+    })
 // Merchants name by email
 router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
     const {profile} = req.body

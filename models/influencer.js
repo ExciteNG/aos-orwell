@@ -21,7 +21,7 @@ const influencerSChema = mongoose.Schema({
     },
     userType:{
         type:String,
-        default:"EX901F",
+        default:"EX90IF",
         required:true
     },
     emailVerified: {
@@ -71,7 +71,7 @@ const influencerSChema = mongoose.Schema({
         type:Array,
         default:[]
     },
-    Negotiable:{
+    negotiable:{
         type:String,
         required:true
     },

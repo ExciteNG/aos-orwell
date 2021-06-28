@@ -154,8 +154,8 @@ router.post('/new' , requireJWT, async (req,res) =>{
        // console.log('record sold is ', record);
 
        // ******** Consider TODO ***********
-       // import book keeping and update the record  for  store, orders and sales on backend (tip: use finddOne as in above).
-       // Also remove the record uppdate on frontend that uses modifiedData,qtySold etc
+       // import book keeping and update the record  for  store, orders and sales on backend (tip: use findOne as in above).
+       // Also remove the record update on frontend that uses modifiedData,qtySold etc
 
         await Records.create({
           ...thisSales,
