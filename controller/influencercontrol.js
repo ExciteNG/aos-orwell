@@ -42,7 +42,7 @@ const unitPricingRange = (Reach) => {
     return [2.2*Reach,4.2*Reach]
 }
 
-const MerchantPickInfluencer = async (req,res) => {
+const merchantPickInfluencer = async (req,res) => {
     try {
         // const {email,userType} = req.user;
         let {
@@ -307,14 +307,34 @@ const merchantNegotiateOffer = async (req,res) => {
 
 
 // }
+//display all chats
+const getAllChats = async (req,res) => {
+    try {
+        const {email} = req.user
+        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX20AF") return res.json({code:401,message:"you are unauthorized to view this resource !"})
+        if (req.user.userType === "EX90IF"){
+            let chatHistory = await Negotiation.find({influencerEmail:email}).lean()
+            if (!chatHistory) return res.json({code:404,message:"Not found"})
+            return  res.json({code:200,data:chatHistory})
+        } else if (req.user.userType === "EX20AF"){
+            let merchantChatHistory = await Negotiation.find({merchantEmail:email}).lean()
+            if (!merchantChatHistory) return res.json({code:404,message:"Not found"})
+            return res.json({code:200,data:merchantChatHistory})
+        }
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
 
 
 module.exports = {
-    MerchantPickInfluencer,
+    merchantPickInfluencer,
     influencerNegotiation,
     getInfluencerDashboard,
     merchantDashboard,
     influencerAgreePrice,
     influencerNegotiatePrice,
-    merchantNegotiateOffer
+    merchantNegotiateOffer,
+    getAllChats
 }

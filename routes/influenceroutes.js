@@ -1,7 +1,7 @@
 const router = require('express').Router()
-const {MerchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
+const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
-    merchantNegotiateOffer} = require('../controller/influencercontrol')
+    merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
 
 // influencer dashboard
 router.get('/merchant/dashboard/:id',merchantDashboard)
@@ -10,7 +10,7 @@ router.get('/influencer-dashboard/:id',getInfluencerDashboard)
 // merchant pick influencer for negotation
 router.put('/influencer-negotiation/:id',influencerNegotiation)
 //merchant form for influencer
-router.post('/merchant/get-influencer', MerchantPickInfluencer)
+router.post('/merchant/get-influencer', merchantPickInfluencer)
 
 //route when influencer clicks on the negotiate button
 router.post('/influencer/start-negotiation/:id',influencerNegotiatePrice)
@@ -20,7 +20,8 @@ router.put('/influencer-marketing/negotiation/:id',merchantNegotiateOffer)
 
 //merchant agree price
 router.post('/merchant-agree-price',influencerAgreePrice)
-//get received messages either as an influencer or merchant
+//get total  chats by each 
+router.get('/my-chats',getAllChats)
 
 
 
