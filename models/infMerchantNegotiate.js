@@ -14,6 +14,10 @@ const NegotiateSchema = mongoose.Schema({
         required:[true,'Please enter your email address'],
         lowercase:true
     },
+    influencerFullName:{
+        type:String,
+        default:""
+    },
     merchantEmail:{
         type:String,
         validate:{
@@ -24,6 +28,10 @@ const NegotiateSchema = mongoose.Schema({
         },
         required:[true,'Please enter your email address'],
         lowercase:true
+    },
+    merchantFullName:{
+        type:String,
+        default:""
     },
     merchantMessages:{
         type:Array,
