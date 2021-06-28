@@ -168,8 +168,9 @@ const influencerNegotiation = async (req,res) => {
 // GET influencer dashboard view
 const getInfluencerDashboard = async (req,res) => {
     try {
-        const id = req.params.id
-        const singleInfluencer = await Influencer.findById(id).lean()
+        const {email} = req.user
+        if (req.userType !== "EX90IF") return res.json({code:401,message:"you do not have permissions to view this resource"})
+        const singleInfluencer = await Influencer.find({email:email}).lean()
         if (singleInfluencer.regStatus === 'pending'){
             return res.json({code:404,message:"No data yet, awaiting approval",data:singleInfluencer})
         } 
@@ -213,8 +214,9 @@ const getInfluencerDashboard = async (req,res) => {
 //merchant dashboard
 const merchantDashboard = async (req,res) => {
     try {
-        const id = req.params.id
-        let profile = Profiles.findById(id).lean()
+        const {email} = req.user
+        let profile = Profiles.find({email:email}).lean()
+        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"you are not allowed to view this resource"})
         //filter the list of influencers to the one with the same id
         let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
         return res.json({code:200,data:influencerData})
@@ -251,17 +253,28 @@ const influencerNegotiatePrice = async (req,res) => {
     try {
         const {email} = req.user
 
+        //find the email address in the influencer database
+        let negotiateInfluencer = await Influencer.find({email:email}).lean()
         //find the full name in the merchant database
         let getMerchant = await Profiles.find({fullName:req.body.fullName}).lean()
         if (!getMerchant) return res.json({code:404,message:"Merchant not found !, please check if you entered the merchant fullname properly from the received email address"})
         req.body.influencerEmail = email
         req.body.merchantEmail = getMerchant.email
+        req.body.merchantFullName = req.body.fullName
+        req.body.influencerFullName = negotiateInfluencer.fullName
+        //check if this particular people has conversed before
+        let checkPreviousConversation = await Negotiation.find({influencerEmail:email,
+            merchantEmail:getMerchant.email}).lean()
+        if (!checkPreviousConversation) {
         let negotiation = new Negotiation(req.body)
         // negotiation.influencerMessages.push(req.body.influencerMessages)
         // await negotiation.markModified("influencerMessages")
         await negotiation.save()
 
         return res.json({code:201,data:negotiation})
+        }else{
+            return res.json({code:200,data:checkPreviousConversation})
+        }
         
     } catch (err) {
         return res.json({code:500,message:err.message})
@@ -327,6 +340,19 @@ const getAllChats = async (req,res) => {
     }
 }
 
+// const influencerAgreePrice = (req,res) => {
+//     try {
+//         const {email} = req.user
+//         const id = req.params.id
+//         if (req.user.userType !== "EX90IF") return res.json({code:401,message:"you are unauthorized to take this action"})
+//         //send mail
+        
+//     } catch (err) {
+//         console.error(err)
+//         return res.json({code:500,message:err.message})
+//     }
+
+// }
 
 module.exports = {
     merchantPickInfluencer,

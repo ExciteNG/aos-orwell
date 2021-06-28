@@ -3,10 +3,10 @@ const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
     merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
 
-// influencer dashboard
-router.get('/merchant/dashboard/:id',merchantDashboard)
+// merchant dashboard
+router.get('/merchant/dashboard/',merchantDashboard)
 
-router.get('/influencer-dashboard/:id',getInfluencerDashboard)
+router.get('/influencer-dashboard/',getInfluencerDashboard)
 // merchant pick influencer for negotation
 router.put('/influencer-negotiation/:id',influencerNegotiation)
 //merchant form for influencer
