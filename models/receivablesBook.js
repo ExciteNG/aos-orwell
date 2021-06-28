@@ -12,6 +12,9 @@ const receivablesModel = mongoose.Schema({
     type: Number,
     required: true
   },
+  inventoryPrice: {
+    type: Number
+  },
   quantity: {
     type: Number,
     default: 1
@@ -21,6 +24,9 @@ const receivablesModel = mongoose.Schema({
     default: 0
   },
   total: {
+    type: Number
+  },
+  inventoryTotal: {
     type: Number
   },
   buyersContact: {

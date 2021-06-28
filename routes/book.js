@@ -43,14 +43,6 @@ router.get('/:id', requireJWT, async (req,res)=>{
 
 // Sales Plan update products
 router.put('/update/:id', requireJWT, (req, res) => {
-  // if (req.body.quantityToRevert) {
-  //   let record = await Records.findOne({_id: req.params.id});
-  //   record.quantity = record.quantity + req.body.quantityToRevert;
-  //   console.log('record qty ', record.quantity);
-  //   Records.updateOne({ _id: req.params.id }, record);
-  //   record.save();
-  //   return res.status(202).json({message: 'record updated!'});
-  // }
     if (req.body.quantityToRevert) {
       Records.findOne({_id: req.params.id})
       .then((record) => {
@@ -68,7 +60,7 @@ router.put('/update/:id', requireJWT, (req, res) => {
   let record = new Records({
     _id: req.params.id,
     productName: req.body.productName,
-    price: req.body.price,
+    // price: req.body.price,
     // quantity: req.body.quantity,
     buyersContact: req.body.buyersContact,
     description: req.body.description,
@@ -96,8 +88,6 @@ router.put('/update/:id', requireJWT, (req, res) => {
 
 // update a record by id (general use)
 router.put('/:id', requireJWT, async (req,res) =>{
-    // let hex = /[0-9A-Fa-f]{6}/g;
-    // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
     const id = req.params.id
     try {
       let record = await Records.findOne({_id:id});
@@ -108,10 +98,10 @@ router.put('/:id', requireJWT, async (req,res) =>{
       }
 
       else {
-        let {productName, price, quantity, buyersContact, description, salesTarget, qtySold, totalPaid, sumTotalPaid} = req.body;
+        let {productName, salePrice, quantity, buyersContact, description, salesTarget, qtySold, totalPaid, sumTotalPaid} = req.body;
 
         qtySold = record.qtySold + quantity;
-        totalPaid = qtySold * price;
+        totalPaid = qtySold * salePrice;
         sumTotalPaid = sumTotalPaid + totalPaid;
 
         // record.markModified("qtySold");

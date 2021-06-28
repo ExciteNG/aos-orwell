@@ -16,7 +16,9 @@ const createRecord = async (req, res) => {
         }
 
         // req.body.qtySum = 1 * req.body.price;
-        const thisSales=req.body;
+        // req.body.qtySum = 1 * req.body.price;
+        let thisSales=req.body;
+        thisSales.inventoryTotal = req.body.quantity * req.body.inventoryPrice;
         // const data= {
         //   productName:req.body.productName,
         //   productID:req.body._id,
@@ -68,16 +70,16 @@ const updateRecord = async (req, res) => {
       res.json({status:404,message:"not found"})
     }
     else {
-        let {productName, price, buyersContact, description, qtySold, totalPaid, sumTotalPaid} = req.body
+        let {productName, price, inventoryPrice, buyersContact, description, qtySold, totalPaid, sumTotalPaid} = req.body
         record = await ReceivablesModel.findByIdAndUpdate({_id:id}, req.body,{
             new: true
         })
      }
-    return res.json({ status:200, update:record})
+    return res.status(200).json({ update:record})
   }
   catch (err) {
       console.error(err)
-     return res.send({status:500, error: err.message})
+     return res.status(500).json({error: err.message})
   }
 }
 
