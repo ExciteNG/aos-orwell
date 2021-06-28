@@ -1,14 +1,14 @@
 const TransactionModel = require("..//../models/transactions/transaction");
-// const Profiles = require("../../models/Profiles");
+const Profiles = require("../../models/Profiles");
 
 const createTransaction = async (req, res) => {
   try {
+    console.log('inside trandsaction post', req.body)
     // const email = "vec@gmail.com";
     const {email,userType}= req.user;
     const userProfile = await Profiles.findOne({ email: email });
     // // const userTransaction = userProfile.netTransaction;
     const userStore = userProfile.storeInfo;
-
 
     const transaction = new TransactionModel({
       accountType: req.body.accountType,

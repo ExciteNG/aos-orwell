@@ -12,6 +12,9 @@ const bookModel = new mongoose.Schema({
     type: Number,
     required: true
   },
+  salePrice: {
+    type: Number
+  },
   quantity: {
     type: Number
   },
