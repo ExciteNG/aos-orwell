@@ -36,7 +36,7 @@ const influencerSChema = mongoose.Schema({
         type:String,
         required:[true,'please enter address !']
     },
-    socialMediaplatform:{
+    socialMediaPlatform:{
         type:Array,
         default:[],
     },

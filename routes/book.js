@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 
 // get all book keeping records
 router.get('/all',requireJWT, async (req, res) => {
-    const {email,userType} = req.user
+    const {email,userType} = req.user;
 
     try {
         const records =  await Records.find({email:email})
@@ -26,7 +26,7 @@ router.get('/all',requireJWT, async (req, res) => {
 })
 
 // get a specific record by id
-router.get('/:id', async (req,res)=>{
+router.get('/:id', requireJWT, async (req,res)=>{
     const id = req.params.id
     try {
         const storeId = await Records.findById({_id:id})
@@ -42,7 +42,7 @@ router.get('/:id', async (req,res)=>{
 })
 
 // Sales Plan update products
-router.put('/update/:id', (req, res) => {
+router.put('/update/:id', requireJWT, (req, res) => {
   // if (req.body.quantityToRevert) {
   //   let record = await Records.findOne({_id: req.params.id});
   //   record.quantity = record.quantity + req.body.quantityToRevert;
@@ -95,7 +95,7 @@ router.put('/update/:id', (req, res) => {
 });
 
 // update a record by id (general use)
-router.put('/:id', async (req,res) =>{
+router.put('/:id', requireJWT, async (req,res) =>{
     // let hex = /[0-9A-Fa-f]{6}/g;
     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
     const id = req.params.id
@@ -133,35 +133,8 @@ router.put('/:id', async (req,res) =>{
 })
 
 
-
-// // update a record by product name
-// router.put('/name/:id', async (req,res) =>{
-//     // let hex = /[0-9A-Fa-f]{6}/g;
-//     // const id = (hex.test(req.params.id))? ObjectId(req.params.id) : req.params.id;
-//     const productName = req.params.id
-//     try {
-//         let record = await Records.find({productName:productName}).lean()
-//     if (!record){
-//         res.json({status:404,message:"not found"})
-//    }
-//     else {
-//         let {productName, price, quantity, buyersContact, description, qtySum, salesTarget} = req.body
-//         record = await Records.findByIdAndUpdate({_id:id}, req.body,{
-//             new: true
-//             // runValidators: true
-//         })
-//      }
-//     return res.json({status:200,update:record})
-//     }
-//     catch (err) {
-//         console.error(err)
-//        return res.send({status:500,error:err.message})
-//     }
-// })
-
-
 //delete a record from the database
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', requireJWT, async (req,res) => {
     const id = req.params.id
 
     try {
@@ -181,7 +154,7 @@ router.delete('/:id', async (req,res) => {
 })
 
 // delete all records
-router.delete('/record', async (req,res) => {
+router.delete('/record', requireJWT, async (req,res) => {
 
     const id = req.params.id
 
