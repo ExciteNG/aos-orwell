@@ -2,11 +2,11 @@ const router = require('express').Router()
 const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
     merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
-
+const {requireJWT} = require('./../middleware/auth')
 // merchant dashboard
 router.get('/merchant/dashboard/',merchantDashboard)
 
-router.get('/influencer-dashboard/',getInfluencerDashboard)
+router.get('/influencer-dashboard',requireJWT,getInfluencerDashboard)
 // merchant pick influencer for negotation
 router.put('/influencer-negotiation/:id',influencerNegotiation)
 //merchant form for influencer
