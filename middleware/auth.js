@@ -510,7 +510,7 @@ const signUpInfluencers = async (req, res, next) => {
         const user = {
           email: req.body.email,
           name: req.body.fullName,
-          userType: "EX901F",
+          userType: "EX90IF",
           emailVerified: false,
         };
         const userInstance = new User(user);
