@@ -78,14 +78,6 @@ const influencerSChema = mongoose.Schema({
     profilePhoto:{
         type:String
     },
-    exciteClients:{
-        type:Array,
-        default:[{
-            fullname:"",
-            phone:"",
-            storeInfo:{}
-        }]
-    },
     regStatus: {
         type: String,
         default:"pending",
@@ -106,9 +98,9 @@ const influencerSChema = mongoose.Schema({
           type:Number,
           default:0
       },
-      merchants:[{
+      exciteClients:[{
           type:mongoose.Schema.Types.ObjectId,
-          ref:"merchantInfluencer"
+          ref:"Profile"
       }]
 },
 {timestamps:true})

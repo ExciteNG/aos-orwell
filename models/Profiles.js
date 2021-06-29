@@ -144,7 +144,8 @@ const profileSchema = new mongoose.Schema({
   completedCampaigns:{type:Number, default:0},
   pendingCampaigns:{type:Number, default:0},
   declinedCampaigns:{type:Number,default:0},
-  influencers:{type:Array,default:[{influencerName:"",status:""}]}
+  influencers:[{type:mongoose.Schema.Types.ObjectId,
+    ref:"influencer"}]
 });
 
 const Profile = (module.exports = mongoose.model("Profile", profileSchema));

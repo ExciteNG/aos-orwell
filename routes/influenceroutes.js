@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
-    merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
+    merchantNegotiateOffer,getAllChats,influencerDeclinePrice,
+    influencerAcceptsPrice} = require('../controller/influencercontrol')
 const {requireJWT} = require('./../middleware/auth')
 // merchant dashboard
 router.get('/merchant/dashboard/',merchantDashboard)
@@ -23,6 +24,10 @@ router.post('/merchant-agree-price',influencerAgreePrice)
 //get total  chats by each 
 router.get('/my-chats',getAllChats)
 
+//influencer decline offer
+router.delete('/influencer-decline/:id',influencerDeclinePrice)
+//influencer accept offer
+router.put("/influencer-accept/:id",influencerAcceptsPrice)
 
 
 module.exports = router
