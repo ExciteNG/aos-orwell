@@ -308,10 +308,14 @@ const influencerDeclinePrice = async (req,res)  => {
         let matchProfile = await Profiles.find({email:getChat.merchantEmail}).lean()
         if (!matchProfile) return res.json({code:404,message:"not found"})
         matchProfile.pendingCampaigns = matchProfile.pendingCampaigns - 1
+        await matchProfile.markModified("pendingCampaigns")
+        await matchProfile.save()
         //find the influencer
         let matchInfluencer = await Influencers.find({email:getChat.influencerEmail}).lean()
         if (!matchInfluencer) return res.json({code:404,message:"Not found !"})
         matchInfluencer.pendingJobs = matchInfluencer.pendingJobs - 1
+        await matchInfluencer.markModified("pendingJobs")
+        await matchInfluencer.save()
         //send mail
         //delete the  chat history
         await Negotiation.deleteOne({_id:id})
