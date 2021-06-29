@@ -15,6 +15,9 @@ const salesModel = new mongoose.Schema({
   inventoryPrice: {
     type: Number
   },
+  inventoryTotal: {
+    type: Number
+  },
   quantity: {
     type: Number
   },
