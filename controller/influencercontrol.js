@@ -43,10 +43,8 @@ const unitPricingRange = (Reach) => {
 
 const merchantPickInfluencer = async (req,res) => {
     try {
-        // const {email,userType} = req.user;
+        const {email,userType} = req.user;
         let {
-            email,
-            userType,
             productName,
             ReasonForProm,
             uniqueQualities,
@@ -72,8 +70,8 @@ const merchantPickInfluencer = async (req,res) => {
             pricing,
             unitPricing
         } = req.body
-        // req.body.email = email
-        // req.body.userType = userType
+        req.body.email = email
+        req.body.userType = userType
         //verify that the user is a merchant
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //get the influencer level (could be one of micro,mini,max)
@@ -101,28 +99,27 @@ const merchantPickInfluencer = async (req,res) => {
     }
 } 
 
-
+//following th first request
 //pick a specific influencer for negotiation
 const influencerNegotiation = async (req,res) => {
     try {
         const {email} = req.user
         const id = req.params.id
+        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //filter only the approved influencers
-        // const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
+        // const approvedInfluencers = Influencer.find({regStatus:"accepted"})
         let profile = await Profiles.find({email:email})
         if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
-        if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
-
+        if (!getInfluencer) return res.json({code:404,message:"the influencer was not found !"})
         //increase the merchant campaign
-
-        profile.influencers.push({influencerName:getInfluencer.fullName,status:"pending"})
-        profile.pendingCampaigns = profile.pendingCampaigns + 1
+        profile.pendingCampaigns =await profile.pendingCampaigns + 1
+        await profile.markModified("pendingCampaigns")
+        await profile.save()
         //mark modify profiles
         let pending = getInfluencer.pendingJobs
         let newpending = pending + 1
         console.log(newpending)
-        // await profile.save()
         await Influencer.findOneAndUpdate({_id:id},{pendingJobs:newpending},{new:true,runValidators:true},
             function (err,docs){
                 if (err) console.error(err)
@@ -131,10 +128,6 @@ const influencerNegotiation = async (req,res) => {
         // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
         // await getInfluencer.markModified("pendingJobs")
         let firstName = getInfluencer.fullName.split(' ')[0]
-        // let newClient = {profile.storeInfo, profile.fullname, profile.phone}
-        // getInfluencer.exciteClients.push(newClient)
-        // getInfluencer.markModified("exciteClients")
-        // await getInfluencer.save()
         // nodeoutlook.sendEmail({
         //     auth: {
         //       user: process.env.EXCITE_ENQUIRY_USER,
