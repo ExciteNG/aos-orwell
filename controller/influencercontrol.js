@@ -8,37 +8,15 @@ const Profiles = require('../models/Profiles');
 const agreePrice = require('../models/agreeprice');
 const Negotiation = require('../models/infMerchantNegotiate');
 
-//todo access control vulnerabilities
-
-//create an influencer function to assert the level  of an influencer by numbers numerically
-// const getLevel = (level,posts) => {
-//     switch (level) {
-//         case 'micro':
-//             let range = [10000,50000];
-//             let pricing =  [2.4*10000*posts, 4.4*50000*posts]
-//             break;
-            
-//         case 'mini':
-//             let range = [50001,500000];
-//             let pricing =  [2.4*50001*posts, 4.4*500000*posts]
-//             break;
-        
-//         case 'maxi':
-//             let range = 500000
-//             let pricing =  [2.4*50001*posts, 4.4*500000*posts]
-//             break;
-//         default:
-//             let range = [10000,50000];
-//             break;
-//     }
-// }
+// todo access control vulnerabilities
+//restricting users where possibble
 
 const getPricingRange = (Reach,posts,months) => {
     return [2.2*Reach*posts*months, 4.2*Reach*posts*months]
 }
 
 const unitPricingRange = (Reach) => {
-    return [2.2*Reach,4.2*Reach]
+    return [2.2*Reach,4.2*Reach] 
 }
 
 const merchantPickInfluencer = async (req,res) => {
@@ -95,7 +73,7 @@ const merchantPickInfluencer = async (req,res) => {
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
            console.error(err)
-        return res.json({code:500,message:err.message})
+        return res.json({code:500,message:err.message,ip:req.ip})
     }
 } 
 

@@ -97,7 +97,7 @@ const signUp = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-      res.json({ code: 201, mesage: "Account created" });
+     return res.json({ code: 201, mesage: "Account created" });
     }
   });
 };
@@ -275,7 +275,7 @@ const signUpAffiliates = async (req, res, next) => {
         length: 12,
         charset: "alphanumeric",
         readable: true,
-      });
+     });
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
 
       const user = {

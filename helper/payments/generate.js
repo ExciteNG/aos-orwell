@@ -21,7 +21,7 @@ router.get("/generate-payment", requireJWT, (req, res) => {
       expiresIn: 10000,
     });
 
-    return res.send(token);
+    return res.send(token)
   } catch (error) {
     return res.status(500).json({ msg: "bad request" });
   }
