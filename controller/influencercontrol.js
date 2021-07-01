@@ -165,7 +165,7 @@ const getInfluencerDashboard = async (req,res) => {
 const merchantDashboard = async (req,res) => {
     try {
         const {email} = req.user
-        let profile = Profiles.find({email:email}).lean()
+        let profile = Profiles.findOne({email:email}).lean()
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"you are not allowed to view this resource"})
         //filter the list of influencers to the one with the same id
         let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
@@ -174,8 +174,6 @@ const merchantDashboard = async (req,res) => {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
-
-
 }
 // influencer accept offer /agree route
 const influencerAgreePrice = async (req,res) => {
