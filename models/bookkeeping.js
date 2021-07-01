@@ -22,6 +22,10 @@ const bookModel = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  inventoryCost: {
+    type: Number,
+    default: 0
+  },
   total: {
     type: Number
   },

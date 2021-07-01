@@ -15,17 +15,22 @@ const createTransaction = async (req, res) => {
     const transaction = new TransactionModel({
       accountType: req.body.accountType,
       description: req.body.description,
+      // inventoryCost: req.body.inventoryCost,
       email:email,
       merchant:email,
     });
-
     
     if(req.body.inventoryCost > 0){
       transaction.inventoryCost = req.body.inventoryCost;
+      inventoryRecord.save();
     }
-    if(inventoryRecord){
-      transaction.inventoryCost = inventoryRecord.price;
-    }
+    // if(inventoryRecord){
+    //   inventoryRecord.inventoryCost = req.body.inventoryCost; // already summed in frontend
+    //   inventoryRecord.save();
+    // }
+    
+    // console.log('req body inv is ', req.body.inventoryCost);
+    // console.log('inventory body is ', inventoryRecord.inventoryCost);
 
     const saved = transaction.save();
     if (saved) return res.status(201).json({message: 'Transaction created successfully!'});
