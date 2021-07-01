@@ -52,6 +52,10 @@ const NegotiateSchema = mongoose.Schema({
     endDate:{
         type:Number,
         default:0
+    },
+    negotiationStatus:{
+        type:String,
+        default:"neogtiating"
     }
 })
 

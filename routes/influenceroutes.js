@@ -1,28 +1,35 @@
-const router = require('express').Router()
+const router = require('express').Router();
 const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,influencerAgreePrice,influencerNegotiatePrice,
-    merchantNegotiateOffer,getAllChats} = require('../controller/influencercontrol')
+    merchantNegotiateOffer,getAllChats,influencerDeclinePrice,
+    influencerAcceptsPrice} = require('../controller/influencercontrol')
+const {requireJWT} = require('./../middleware/auth')
+//merchant form for influencer
+router.post('/merchant/get-influencer',requireJWT, merchantPickInfluencer)
+
+router.get('/influencer-dashboard',requireJWT,getInfluencerDashboard)
+
+// merchant pick influencer for negotation
+router.put('/influencer-negotiation/:id',requireJWT,influencerNegotiation)
 
 // merchant dashboard
-router.get('/merchant/dashboard/',merchantDashboard)
-
-router.get('/influencer-dashboard/',getInfluencerDashboard)
-// merchant pick influencer for negotation
-router.put('/influencer-negotiation/:id',influencerNegotiation)
-//merchant form for influencer
-router.post('/merchant/get-influencer', merchantPickInfluencer)
+router.get('/merchant/dashboard/',requireJWT,merchantDashboard)
+//merchant agree price
+router.post('/merchant-agree-price',requireJWT,influencerAgreePrice)
 
 //route when influencer clicks on the negotiate button
-router.post('/influencer/start-negotiation/:id',influencerNegotiatePrice)
+router.post('/influencer/start-negotiation/:id',requireJWT,influencerNegotiatePrice)
 // merchant/influencer send message
-router.put('/influencer-marketing/negotiation/:id',merchantNegotiateOffer)
+router.put('/influencer-marketing/negotiation/:id',requireJWT,merchantNegotiateOffer)
 //router.post('/send-message/:id',bargainSendInfluencer)
 
-//merchant agree price
-router.post('/merchant-agree-price',influencerAgreePrice)
 //get total  chats by each 
-router.get('/my-chats',getAllChats)
+router.get('/my-chats',requireJWT,getAllChats)
 
+//influencer decline offer
+router.delete('/influencer-decline/:id',requireJWT,influencerDeclinePrice)
+//influencer accept offer
+router.put("/influencer-accept/:id",requireJWT,influencerAcceptsPrice)
 
 
 module.exports = router

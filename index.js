@@ -92,7 +92,7 @@ else {
   const checkSub = async () => {
       let profiles = await Profiles.find();
       profiles.forEach((profile) => {
-        if (profile.subscriptionEnd > Date.now()){
+        if (Date.now() > profile.subscriptionEnd){
           profile.subscriptionLevel= 0
          profile.save()
       }

@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 const emailHost = require('./email_host')
+const socialMediaLinks = require('../emails/social_links');
 const welcomeMail = (userName) =>{
 
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -938,19 +939,7 @@ const welcomeMail = (userName) =>{
                                                                                 </tr>
                                                                                 
                                                                                     <tr>
-                                                                                    <td class="esd-block-social es-p10t es-p20b" align="center" style="font-size: 0px; background-color: #6fd20d;" bgcolor="#6fd20d">
-                                                                                    <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://twitter.com/ExciteBusiness"><img title="Twitter" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/twitter-square-gray.png" alt="Tw" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/Excite-Enterprise-109200980956538"><img title="Facebook" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/facebook-square-gray.png" alt="Fb" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/exciteenterprise/"><img title="Instagram" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/instagram-square-gray.png" alt="Ig" width="24" height="24" style></a></td>
-                                                                                                <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.linkedin.com/in/excite-africa-4632a71b9/"><img title="LinkedIn" src="https://stripo.email/cabinet/assets/editor/assets/img/social-icons/square-gray/linkedin-square-gray.png" alt="Ig" width="24" height="24"></a></td>
-                                                                                               
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </td>
+                                                                                    ${socialMediaLinks()}
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" align="center" bgcolor="#6fd20d">
@@ -1008,7 +997,7 @@ const welcomeMail = (userName) =>{
             </table>
         </div>
     </body>
-    </html>`
+    </html>`.replace('<p style="color: #ffffff;">Company Number: 0701234522</p>','');
 } 
 
 module.exports = welcomeMail;

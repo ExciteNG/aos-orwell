@@ -21,7 +21,7 @@ const influencerSChema = mongoose.Schema({
     },
     userType:{
         type:String,
-        default:"EX901F",
+        default:"EX90IF",
         required:true
     },
     emailVerified: {
@@ -71,20 +71,12 @@ const influencerSChema = mongoose.Schema({
         type:Array,
         default:[]
     },
-    Negotiable:{
+    negotiable:{
         type:String,
         required:true
     },
     profilePhoto:{
         type:String
-    },
-    exciteClients:{
-        type:Array,
-        default:[{
-            fullname:"",
-            phone:"",
-            storeInfo:{}
-        }]
     },
     regStatus: {
         type: String,
@@ -106,9 +98,9 @@ const influencerSChema = mongoose.Schema({
           type:Number,
           default:0
       },
-      merchants:[{
+      exciteClients:[{
           type:mongoose.Schema.Types.ObjectId,
-          ref:"merchantInfluencer"
+          ref:"Profile"
       }]
 },
 {timestamps:true})
