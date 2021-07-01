@@ -93,11 +93,11 @@ const signUp = async (req, res, next) => {
         html: verifyEmail(user.username, user.email, user.verifyToken),
         text: verifyEmail(user.username, user.email, user.verifyToken),
         replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.log(e),
+        onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-     return res.json({ code: 201, mesage: "Account created" });
+     return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
     }
   });
 };
@@ -221,7 +221,7 @@ const signUpPartner = (req, res, next) => {
         });
 
         // send mail
-        res.json({ code: 201, mesage: "Account created" });
+        res.json({ code: 201, mesage: "Your Account has been successfully created, please check your email for the next steps" });
       });
       // req.user = userInstance;
       // res.json({ code: 201, mesage: "Account created" });

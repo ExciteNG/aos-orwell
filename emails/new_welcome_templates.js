@@ -14,751 +14,751 @@ const welcomeMail = (userName) =>{
         <meta content="telephone=no" name="format-detection">
         <title></title>
         <!--[if (mso 16)]>
-        <style type="text/css">
-        a {text-decoration: none;}
-        </style>
-        <![endif]-->
+            <style type="text/css">
+            a {text-decoration: none;}
+            </style>
+            <![endif]-->
         <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
         <!--[if gte mso 9]>
-    <xml>
-        <o:OfficeDocumentSettings>
-        <o:AllowPNG></o:AllowPNG>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-    </xml>
-    <![endif]-->
-    <style>
-        /* CONFIG STYLES Please do not delete and edit CSS styles below */
-    /* IMPORTANT THIS STYLES MUST BE ON FINAL EMAIL */
-    #outlook a {
-        padding: 0;
-    }
-    
-    .ExternalClass {
-        width: 100%;
-    }
-    
-    .ExternalClass,
-    .ExternalClass p,
-    .ExternalClass span,
-    .ExternalClass font,
-    .ExternalClass td,
-    .ExternalClass div {
-        line-height: 100%;
-    }
-    
-    .es-button {
-        mso-style-priority: 100 !important;
-        text-decoration: none !important;
-    }
-    
-    a[x-apple-data-detectors] {
-        color: inherit !important;
-        text-decoration: none !important;
-        font-size: inherit !important;
-        font-family: inherit !important;
-        font-weight: inherit !important;
-        line-height: inherit !important;
-    }
-    
-    .es-desk-hidden {
-        display: none;
-        float: left;
-        overflow: hidden;
-        width: 0;
-        max-height: 0;
-        line-height: 0;
-        mso-hide: all;
-    }
-    
-    [data-ogsb] .es-button {
-        border-width: 0 !important;
-        padding: 10px 20px 10px 20px !important;
-    }
-    
-    /*
-    END OF IMPORTANT
-    */
-    s {
-        text-decoration: line-through;
-    }
-    
-    html,
-    body {
-        width: 100%;
-        font-family: tahoma, verdana, segoe, sans-serif;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-    }
-    
-    table {
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-        border-collapse: collapse;
-        border-spacing: 0px;
-    }
-    
-    table td,
-    html,
-    body,
-    .es-wrapper {
-        padding: 0;
-        Margin: 0;
-    }
-    
-    .es-content,
-    .es-header,
-    .es-footer {
-        table-layout: fixed !important;
-        width: 100%;
-    }
-    
-    img {
-        display: block;
-        border: 0;
-        outline: none;
-        text-decoration: none;
-        -ms-interpolation-mode: bicubic;
-    }
-    
-    table tr {
-        border-collapse: collapse;
-    }
-    
-    p,
-    hr {
-        Margin: 0;
-    }
-    
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-        Margin: 0;
-        line-height: 120%;
-        mso-line-height-rule: exactly;
-        font-family: tahoma, verdana, segoe, sans-serif;
-    }
-    
-    p,
-    ul li,
-    ol li,
-    a {
-        -webkit-text-size-adjust: none;
-        -ms-text-size-adjust: none;
-        mso-line-height-rule: exactly;
-    }
-    
-    .es-left {
-        float: left;
-    }
-    
-    .es-right {
-        float: right;
-    }
-    
-    .es-p5 {
-        padding: 5px;
-    }
-    
-    .es-p5t {
-        padding-top: 5px;
-    }
-    
-    .es-p5b {
-        padding-bottom: 5px;
-    }
-    
-    .es-p5l {
-        padding-left: 5px;
-    }
-    
-    .es-p5r {
-        padding-right: 5px;
-    }
-    
-    .es-p10 {
-        padding: 10px;
-    }
-    
-    .es-p10t {
-        padding-top: 10px;
-    }
-    
-    .es-p10b {
-        padding-bottom: 10px;
-    }
-    
-    .es-p10l {
-        padding-left: 10px;
-    }
-    
-    .es-p10r {
-        padding-right: 10px;
-    }
-    
-    .es-p15 {
-        padding: 15px;
-    }
-    
-    .es-p15t {
-        padding-top: 15px;
-    }
-    
-    .es-p15b {
-        padding-bottom: 15px;
-    }
-    
-    .es-p15l {
-        padding-left: 15px;
-    }
-    
-    .es-p15r {
-        padding-right: 15px;
-    }
-    
-    .es-p20 {
-        padding: 20px;
-    }
-    
-    .es-p20t {
-        padding-top: 20px;
-    }
-    
-    .es-p20b {
-        padding-bottom: 20px;
-    }
-    
-    .es-p20l {
-        padding-left: 20px;
-    }
-    
-    .es-p20r {
-        padding-right: 20px;
-    }
-    
-    .es-p25 {
-        padding: 25px;
-    }
-    
-    .es-p25t {
-        padding-top: 25px;
-    }
-    
-    .es-p25b {
-        padding-bottom: 25px;
-    }
-    
-    .es-p25l {
-        padding-left: 25px;
-    }
-    
-    .es-p25r {
-        padding-right: 25px;
-    }
-    
-    .es-p30 {
-        padding: 30px;
-    }
-    
-    .es-p30t {
-        padding-top: 30px;
-    }
-    
-    .es-p30b {
-        padding-bottom: 30px;
-    }
-    
-    .es-p30l {
-        padding-left: 30px;
-    }
-    
-    .es-p30r {
-        padding-right: 30px;
-    }
-    
-    .es-p35 {
-        padding: 35px;
-    }
-    
-    .es-p35t {
-        padding-top: 35px;
-    }
-    
-    .es-p35b {
-        padding-bottom: 35px;
-    }
-    
-    .es-p35l {
-        padding-left: 35px;
-    }
-    
-    .es-p35r {
-        padding-right: 35px;
-    }
-    
-    .es-p40 {
-        padding: 40px;
-    }
-    
-    .es-p40t {
-        padding-top: 40px;
-    }
-    
-    .es-p40b {
-        padding-bottom: 40px;
-    }
-    
-    .es-p40l {
-        padding-left: 40px;
-    }
-    
-    .es-p40r {
-        padding-right: 40px;
-    }
-    
-    .es-menu td {
-        border: 0;
-    }
-    
-    .es-menu td a img {
-        display: inline-block !important;
-    }
-    
-    /* END CONFIG STYLES */
-    a {
-        text-decoration: underline;
-    }
-    
-    h1 a {
-        text-align: left;
-    }
-    
-    h2 a {
-        text-align: left;
-    }
-    
-    h3 a {
-        text-align: left;
-    }
-    
-    p,
-    ul li,
-    ol li {
-        font-family: tahoma, verdana, segoe, sans-serif;
-        line-height: 150%;
-    }
-    
-    ul li,
-    ol li {
-        Margin-bottom: 15px;
-    }
-    
-    .es-menu td a {
-        text-decoration: none;
-        display: block;
-    }
-    
-    .es-wrapper {
-        width: 100%;
-        height: 100%;
-        background-image: ;
-        background-repeat: repeat;
-        background-position: center top;
-        background-color: #e8e8e4;
-    }
-    
-    .es-wrapper-color {
-        background-color: #e8e8e4;
-    }
-    
-    .es-header {
-        background-color: transparent;
-        background-image: ;
-        background-repeat: repeat;
-        background-position: center top;
-    }
-    
-    .es-header-body {
-        background-color: transparent;
-    }
-    
-    .es-header-body p,
-    .es-header-body ul li,
-    .es-header-body ol li {
-        color: #999999;
-        font-size: 14px;
-    }
-    
-    .es-header-body a {
-        color: #999999;
-        font-size: 14px;
-    }
-    
-    .es-content-body {
-        background-color: #ffffff;
-    }
-    
-    .es-content-body p,
-    .es-content-body ul li,
-    .es-content-body ol li {
-        color: #999999;
-        font-size: 14px;
-    }
-    
-    .es-content-body a {
-        color: #02951e;
-        font-size: 14px;
-    }
-    
-    .es-footer {
-        background-color: transparent;
-        background-image: ;
-        background-repeat: repeat;
-        background-position: center top;
-    }
-    
-    .es-footer-body {
-        background-color: transparent;
-    }
-    
-    .es-footer-body p,
-    .es-footer-body ul li,
-    .es-footer-body ol li {
-        color: #989898;
-        font-size: 14px;
-    }
-    
-    .es-footer-body a {
-        color: #989898;
-        font-size: 14px;
-    }
-    
-    .es-infoblock,
-    .es-infoblock p,
-    .es-infoblock ul li,
-    .es-infoblock ol li {
-        line-height: 120%;
-        font-size: 12px;
-        color: #999999;
-    }
-    
-    .es-infoblock a {
-        font-size: 12px;
-        color: #999999;
-    }
-    
-    h1 {
-        font-size: 30px;
-        font-style: normal;
-        font-weight: normal;
-        color: #333333;
-    }
-    
-    h2 {
-        font-size: 24px;
-        font-style: normal;
-        font-weight: normal;
-        color: #333333;
-    }
-    
-    h3 {
-        font-size: 20px;
-        font-style: normal;
-        font-weight: normal;
-        color: #333333;
-    }
-    
-    .es-header-body h1 a,
-    .es-content-body h1 a,
-    .es-footer-body h1 a {
-        font-size: 30px;
-    }
-    
-    .es-header-body h2 a,
-    .es-content-body h2 a,
-    .es-footer-body h2 a {
-        font-size: 24px;
-    }
-    
-    .es-header-body h3 a,
-    .es-content-body h3 a,
-    .es-footer-body h3 a {
-        font-size: 20px;
-    }
-    
-    a.es-button,
-    button.es-button {
-        border-style: solid;
-        border-color: #50b948;
-        border-width: 10px 20px 10px 20px;
-        display: inline-block;
-        background: #50b948;
-        border-radius: 4px;
-        font-size: 16px;
-        font-family: arial, 'helvetica neue', helvetica, sans-serif;
-        font-weight: normal;
-        font-style: normal;
-        line-height: 120%;
-        color: #ffffff;
-        text-decoration: none;
-        width: auto;
-        text-align: center;
-    }
-    
-    .es-button-border {
-        border-style: solid solid solid solid;
-        border-color: #50b948 #50b948 #50b948 #50b948;
-        background: #2cb543;
-        border-width: 0px 0px 0px 0px;
-        display: inline-block;
-        border-radius: 4px;
-        width: auto;
-    }
-    
-    /* RESPONSIVE STYLES Please do not delete and edit CSS styles below. If you don't need responsive layout, please delete this section. */
-    @media only screen and (max-width: 600px) {
-    
-        p,
-        ul li,
-        ol li,
-        a {
-            line-height: 150% !important;
-        }
-    
-        h1 {
-            font-size: 30px !important;
-            text-align: center;
-            line-height: 120% !important;
-        }
-    
-        h2 {
-            font-size: 26px !important;
-            text-align: center;
-            line-height: 120% !important;
-        }
-    
-        h3 {
-            font-size: 20px !important;
-            text-align: center;
-            line-height: 120% !important;
-        }
-    
-        h1 a {
-            text-align: center;
-        }
-    
-        .es-header-body h1 a,
-        .es-content-body h1 a,
-        .es-footer-body h1 a {
-            font-size: 30px !important;
-        }
-    
-        h2 a {
-            text-align: center;
-        }
-    
-        .es-header-body h2 a,
-        .es-content-body h2 a,
-        .es-footer-body h2 a {
-            font-size: 24px !important;
-        }
-    
-        h3 a {
-            text-align: center;
-        }
-    
-        .es-header-body h3 a,
-        .es-content-body h3 a,
-        .es-footer-body h3 a {
-            font-size: 20px !important;
-        }
-    
-        .es-menu td a {
-            font-size: 16px !important;
-        }
-    
-        .es-header-body p,
-        .es-header-body ul li,
-        .es-header-body ol li,
-        .es-header-body a {
-            font-size: 16px !important;
-        }
-    
-        .es-content-body p,
-        .es-content-body ul li,
-        .es-content-body ol li,
-        .es-content-body a {
-            font-size: 16px !important;
-        }
-    
-        .es-footer-body p,
-        .es-footer-body ul li,
-        .es-footer-body ol li,
-        .es-footer-body a {
-            font-size: 16px !important;
-        }
-    
-        .es-infoblock p,
-        .es-infoblock ul li,
-        .es-infoblock ol li,
-        .es-infoblock a {
-            font-size: 12px !important;
-        }
-    
-        *[class="gmail-fix"] {
-            display: none !important;
-        }
-    
-        .es-m-txt-c,
-        .es-m-txt-c h1,
-        .es-m-txt-c h2,
-        .es-m-txt-c h3 {
-            text-align: center !important;
-        }
-    
-        .es-m-txt-r,
-        .es-m-txt-r h1,
-        .es-m-txt-r h2,
-        .es-m-txt-r h3 {
-            text-align: right !important;
-        }
-    
-        .es-m-txt-l,
-        .es-m-txt-l h1,
-        .es-m-txt-l h2,
-        .es-m-txt-l h3 {
-            text-align: left !important;
-        }
-    
-        .es-m-txt-r img,
-        .es-m-txt-c img,
-        .es-m-txt-l img {
-            display: inline !important;
-        }
-    
-        .es-button-border {
-            display: block !important;
-        }
-    
-        a.es-button,
-        button.es-button {
-            font-size: 20px !important;
-            display: block !important;
-            border-width: 10px 0px 10px 0px !important;
-        }
-    
-        .es-btn-fw {
-            border-width: 10px 0px !important;
-            text-align: center !important;
-        }
-    
-        .es-adaptive table,
-        .es-btn-fw,
-        .es-btn-fw-brdr,
-        .es-left,
-        .es-right {
-            width: 100% !important;
-        }
-    
-        .es-content table,
-        .es-header table,
-        .es-footer table,
-        .es-content,
-        .es-footer,
-        .es-header {
-            width: 100% !important;
-            max-width: 600px !important;
-        }
-    
-        .es-adapt-td {
-            display: block !important;
-            width: 100% !important;
-        }
-    
-        .adapt-img {
-            width: 100% !important;
-            height: auto !important;
-        }
-    
-        .es-m-p0 {
-            padding: 0px !important;
-        }
-    
-        .es-m-p0r {
-            padding-right: 0px !important;
-        }
-    
-        .es-m-p0l {
-            padding-left: 0px !important;
-        }
-    
-        .es-m-p0t {
-            padding-top: 0px !important;
-        }
-    
-        .es-m-p0b {
-            padding-bottom: 0 !important;
-        }
-    
-        .es-m-p20b {
-            padding-bottom: 20px !important;
-        }
-    
-        .es-mobile-hidden,
-        .es-hidden {
-            display: none !important;
-        }
-    
-        tr.es-desk-hidden,
-        td.es-desk-hidden,
-        table.es-desk-hidden {
-            width: auto !important;
-            overflow: visible !important;
-            float: none !important;
-            max-height: inherit !important;
-            line-height: inherit !important;
-        }
-    
-        tr.es-desk-hidden {
-            display: table-row !important;
-        }
-    
-        table.es-desk-hidden {
-            display: table !important;
-        }
-    
-        td.es-desk-menu-hidden {
-            display: table-cell !important;
-        }
-    
-        .es-menu td {
-            width: 1% !important;
-        }
-    
-        table.es-table-not-adapt,
-        .esd-block-html table {
-            width: auto !important;
-        }
-    
-        table.es-social {
-            display: inline-block !important;
-        }
-    
-        table.es-social td {
-            display: inline-block !important;
-        }
-    
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-    }
-    
-    /* END RESPONSIVE STYLES */
-    </style>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG></o:AllowPNG>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <style>
+            /* CONFIG STYLES Please do not delete and edit CSS styles below */
+            /* IMPORTANT THIS STYLES MUST BE ON FINAL EMAIL */
+            #outlook a {
+                padding: 0;
+            }
+    
+            .ExternalClass {
+                width: 100%;
+            }
+    
+            .ExternalClass,
+            .ExternalClass p,
+            .ExternalClass span,
+            .ExternalClass font,
+            .ExternalClass td,
+            .ExternalClass div {
+                line-height: 100%;
+            }
+    
+            .es-button {
+                mso-style-priority: 100 !important;
+                text-decoration: none !important;
+            }
+    
+            a[x-apple-data-detectors] {
+                color: inherit !important;
+                text-decoration: none !important;
+                font-size: inherit !important;
+                font-family: inherit !important;
+                font-weight: inherit !important;
+                line-height: inherit !important;
+            }
+    
+            .es-desk-hidden {
+                display: none;
+                float: left;
+                overflow: hidden;
+                width: 0;
+                max-height: 0;
+                line-height: 0;
+                mso-hide: all;
+            }
+    
+            [data-ogsb] .es-button {
+                border-width: 0 !important;
+                padding: 10px 20px 10px 20px !important;
+            }
+    
+            /*
+        END OF IMPORTANT
+        */
+            s {
+                text-decoration: line-through;
+            }
+    
+            html,
+            body {
+                width: 100%;
+                font-family: tahoma, verdana, segoe, sans-serif;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+    
+            table {
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+                border-collapse: collapse;
+                border-spacing: 0px;
+            }
+    
+            table td,
+            html,
+            body,
+            .es-wrapper {
+                padding: 0;
+                Margin: 0;
+            }
+    
+            .es-content,
+            .es-header,
+            .es-footer {
+                table-layout: fixed !important;
+                width: 100%;
+            }
+    
+            img {
+                display: block;
+                border: 0;
+                outline: none;
+                text-decoration: none;
+                -ms-interpolation-mode: bicubic;
+            }
+    
+            table tr {
+                border-collapse: collapse;
+            }
+    
+            p,
+            hr {
+                Margin: 0;
+            }
+    
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                Margin: 0;
+                line-height: 120%;
+                mso-line-height-rule: exactly;
+                font-family: tahoma, verdana, segoe, sans-serif;
+            }
+    
+            p,
+            ul li,
+            ol li,
+            a {
+                -webkit-text-size-adjust: none;
+                -ms-text-size-adjust: none;
+                mso-line-height-rule: exactly;
+            }
+    
+            .es-left {
+                float: left;
+            }
+    
+            .es-right {
+                float: right;
+            }
+    
+            .es-p5 {
+                padding: 5px;
+            }
+    
+            .es-p5t {
+                padding-top: 5px;
+            }
+    
+            .es-p5b {
+                padding-bottom: 5px;
+            }
+    
+            .es-p5l {
+                padding-left: 5px;
+            }
+    
+            .es-p5r {
+                padding-right: 5px;
+            }
+    
+            .es-p10 {
+                padding: 10px;
+            }
+    
+            .es-p10t {
+                padding-top: 10px;
+            }
+    
+            .es-p10b {
+                padding-bottom: 10px;
+            }
+    
+            .es-p10l {
+                padding-left: 10px;
+            }
+    
+            .es-p10r {
+                padding-right: 10px;
+            }
+    
+            .es-p15 {
+                padding: 15px;
+            }
+    
+            .es-p15t {
+                padding-top: 15px;
+            }
+    
+            .es-p15b {
+                padding-bottom: 15px;
+            }
+    
+            .es-p15l {
+                padding-left: 15px;
+            }
+    
+            .es-p15r {
+                padding-right: 15px;
+            }
+    
+            .es-p20 {
+                padding: 20px;
+            }
+    
+            .es-p20t {
+                padding-top: 20px;
+            }
+    
+            .es-p20b {
+                padding-bottom: 20px;
+            }
+    
+            .es-p20l {
+                padding-left: 20px;
+            }
+    
+            .es-p20r {
+                padding-right: 20px;
+            }
+    
+            .es-p25 {
+                padding: 25px;
+            }
+    
+            .es-p25t {
+                padding-top: 25px;
+            }
+    
+            .es-p25b {
+                padding-bottom: 25px;
+            }
+    
+            .es-p25l {
+                padding-left: 25px;
+            }
+    
+            .es-p25r {
+                padding-right: 25px;
+            }
+    
+            .es-p30 {
+                padding: 30px;
+            }
+    
+            .es-p30t {
+                padding-top: 30px;
+            }
+    
+            .es-p30b {
+                padding-bottom: 30px;
+            }
+    
+            .es-p30l {
+                padding-left: 30px;
+            }
+    
+            .es-p30r {
+                padding-right: 30px;
+            }
+    
+            .es-p35 {
+                padding: 35px;
+            }
+    
+            .es-p35t {
+                padding-top: 35px;
+            }
+    
+            .es-p35b {
+                padding-bottom: 35px;
+            }
+    
+            .es-p35l {
+                padding-left: 35px;
+            }
+    
+            .es-p35r {
+                padding-right: 35px;
+            }
+    
+            .es-p40 {
+                padding: 40px;
+            }
+    
+            .es-p40t {
+                padding-top: 40px;
+            }
+    
+            .es-p40b {
+                padding-bottom: 40px;
+            }
+    
+            .es-p40l {
+                padding-left: 40px;
+            }
+    
+            .es-p40r {
+                padding-right: 40px;
+            }
+    
+            .es-menu td {
+                border: 0;
+            }
+    
+            .es-menu td a img {
+                display: inline-block !important;
+            }
+    
+            /* END CONFIG STYLES */
+            a {
+                text-decoration: underline;
+            }
+    
+            h1 a {
+                text-align: left;
+            }
+    
+            h2 a {
+                text-align: left;
+            }
+    
+            h3 a {
+                text-align: left;
+            }
+    
+            p,
+            ul li,
+            ol li {
+                font-family: tahoma, verdana, segoe, sans-serif;
+                line-height: 150%;
+            }
+    
+            ul li,
+            ol li {
+                Margin-bottom: 15px;
+            }
+    
+            .es-menu td a {
+                text-decoration: none;
+                display: block;
+            }
+    
+            .es-wrapper {
+                width: 100%;
+                height: 100%;
+                background-image: ;
+                background-repeat: repeat;
+                background-position: center top;
+                background-color: #e8e8e4;
+            }
+    
+            .es-wrapper-color {
+                background-color: #e8e8e4;
+            }
+    
+            .es-header {
+                background-color: transparent;
+                background-image: ;
+                background-repeat: repeat;
+                background-position: center top;
+            }
+    
+            .es-header-body {
+                background-color: transparent;
+            }
+    
+            .es-header-body p,
+            .es-header-body ul li,
+            .es-header-body ol li {
+                color: #999999;
+                font-size: 14px;
+            }
+    
+            .es-header-body a {
+                color: #999999;
+                font-size: 14px;
+            }
+    
+            .es-content-body {
+                background-color: #ffffff;
+            }
+    
+            .es-content-body p,
+            .es-content-body ul li,
+            .es-content-body ol li {
+                color: #999999;
+                font-size: 14px;
+            }
+    
+            .es-content-body a {
+                color: #02951e;
+                font-size: 14px;
+            }
+    
+            .es-footer {
+                background-color: transparent;
+                background-image: ;
+                background-repeat: repeat;
+                background-position: center top;
+            }
+    
+            .es-footer-body {
+                background-color: transparent;
+            }
+    
+            .es-footer-body p,
+            .es-footer-body ul li,
+            .es-footer-body ol li {
+                color: #989898;
+                font-size: 14px;
+            }
+    
+            .es-footer-body a {
+                color: #989898;
+                font-size: 14px;
+            }
+    
+            .es-infoblock,
+            .es-infoblock p,
+            .es-infoblock ul li,
+            .es-infoblock ol li {
+                line-height: 120%;
+                font-size: 12px;
+                color: #999999;
+            }
+    
+            .es-infoblock a {
+                font-size: 12px;
+                color: #999999;
+            }
+    
+            h1 {
+                font-size: 30px;
+                font-style: normal;
+                font-weight: normal;
+                color: #333333;
+            }
+    
+            h2 {
+                font-size: 24px;
+                font-style: normal;
+                font-weight: normal;
+                color: #333333;
+            }
+    
+            h3 {
+                font-size: 20px;
+                font-style: normal;
+                font-weight: normal;
+                color: #333333;
+            }
+    
+            .es-header-body h1 a,
+            .es-content-body h1 a,
+            .es-footer-body h1 a {
+                font-size: 30px;
+            }
+    
+            .es-header-body h2 a,
+            .es-content-body h2 a,
+            .es-footer-body h2 a {
+                font-size: 24px;
+            }
+    
+            .es-header-body h3 a,
+            .es-content-body h3 a,
+            .es-footer-body h3 a {
+                font-size: 20px;
+            }
+    
+            a.es-button,
+            button.es-button {
+                border-style: solid;
+                border-color: #50b948;
+                border-width: 10px 20px 10px 20px;
+                display: inline-block;
+                background: #50b948;
+                border-radius: 4px;
+                font-size: 16px;
+                font-family: arial, 'helvetica neue', helvetica, sans-serif;
+                font-weight: normal;
+                font-style: normal;
+                line-height: 120%;
+                color: #ffffff;
+                text-decoration: none;
+                width: auto;
+                text-align: center;
+            }
+    
+            .es-button-border {
+                border-style: solid solid solid solid;
+                border-color: #50b948 #50b948 #50b948 #50b948;
+                background: #2cb543;
+                border-width: 0px 0px 0px 0px;
+                display: inline-block;
+                border-radius: 4px;
+                width: auto;
+            }
+    
+            /* RESPONSIVE STYLES Please do not delete and edit CSS styles below. If you don't need responsive layout, please delete this section. */
+            @media only screen and (max-width: 600px) {
+    
+                p,
+                ul li,
+                ol li,
+                a {
+                    line-height: 150% !important;
+                }
+    
+                h1 {
+                    font-size: 30px !important;
+                    text-align: center;
+                    line-height: 120% !important;
+                }
+    
+                h2 {
+                    font-size: 26px !important;
+                    text-align: center;
+                    line-height: 120% !important;
+                }
+    
+                h3 {
+                    font-size: 20px !important;
+                    text-align: center;
+                    line-height: 120% !important;
+                }
+    
+                h1 a {
+                    text-align: center;
+                }
+    
+                .es-header-body h1 a,
+                .es-content-body h1 a,
+                .es-footer-body h1 a {
+                    font-size: 30px !important;
+                }
+    
+                h2 a {
+                    text-align: center;
+                }
+    
+                .es-header-body h2 a,
+                .es-content-body h2 a,
+                .es-footer-body h2 a {
+                    font-size: 24px !important;
+                }
+    
+                h3 a {
+                    text-align: center;
+                }
+    
+                .es-header-body h3 a,
+                .es-content-body h3 a,
+                .es-footer-body h3 a {
+                    font-size: 20px !important;
+                }
+    
+                .es-menu td a {
+                    font-size: 16px !important;
+                }
+    
+                .es-header-body p,
+                .es-header-body ul li,
+                .es-header-body ol li,
+                .es-header-body a {
+                    font-size: 16px !important;
+                }
+    
+                .es-content-body p,
+                .es-content-body ul li,
+                .es-content-body ol li,
+                .es-content-body a {
+                    font-size: 16px !important;
+                }
+    
+                .es-footer-body p,
+                .es-footer-body ul li,
+                .es-footer-body ol li,
+                .es-footer-body a {
+                    font-size: 16px !important;
+                }
+    
+                .es-infoblock p,
+                .es-infoblock ul li,
+                .es-infoblock ol li,
+                .es-infoblock a {
+                    font-size: 12px !important;
+                }
+    
+                *[class="gmail-fix"] {
+                    display: none !important;
+                }
+    
+                .es-m-txt-c,
+                .es-m-txt-c h1,
+                .es-m-txt-c h2,
+                .es-m-txt-c h3 {
+                    text-align: center !important;
+                }
+    
+                .es-m-txt-r,
+                .es-m-txt-r h1,
+                .es-m-txt-r h2,
+                .es-m-txt-r h3 {
+                    text-align: right !important;
+                }
+    
+                .es-m-txt-l,
+                .es-m-txt-l h1,
+                .es-m-txt-l h2,
+                .es-m-txt-l h3 {
+                    text-align: left !important;
+                }
+    
+                .es-m-txt-r img,
+                .es-m-txt-c img,
+                .es-m-txt-l img {
+                    display: inline !important;
+                }
+    
+                .es-button-border {
+                    display: block !important;
+                }
+    
+                a.es-button,
+                button.es-button {
+                    font-size: 20px !important;
+                    display: block !important;
+                    border-width: 10px 0px 10px 0px !important;
+                }
+    
+                .es-btn-fw {
+                    border-width: 10px 0px !important;
+                    text-align: center !important;
+                }
+    
+                .es-adaptive table,
+                .es-btn-fw,
+                .es-btn-fw-brdr,
+                .es-left,
+                .es-right {
+                    width: 100% !important;
+                }
+    
+                .es-content table,
+                .es-header table,
+                .es-footer table,
+                .es-content,
+                .es-footer,
+                .es-header {
+                    width: 100% !important;
+                    max-width: 600px !important;
+                }
+    
+                .es-adapt-td {
+                    display: block !important;
+                    width: 100% !important;
+                }
+    
+                .adapt-img {
+                    width: 100% !important;
+                    height: auto !important;
+                }
+    
+                .es-m-p0 {
+                    padding: 0px !important;
+                }
+    
+                .es-m-p0r {
+                    padding-right: 0px !important;
+                }
+    
+                .es-m-p0l {
+                    padding-left: 0px !important;
+                }
+    
+                .es-m-p0t {
+                    padding-top: 0px !important;
+                }
+    
+                .es-m-p0b {
+                    padding-bottom: 0 !important;
+                }
+    
+                .es-m-p20b {
+                    padding-bottom: 20px !important;
+                }
+    
+                .es-mobile-hidden,
+                .es-hidden {
+                    display: none !important;
+                }
+    
+                tr.es-desk-hidden,
+                td.es-desk-hidden,
+                table.es-desk-hidden {
+                    width: auto !important;
+                    overflow: visible !important;
+                    float: none !important;
+                    max-height: inherit !important;
+                    line-height: inherit !important;
+                }
+    
+                tr.es-desk-hidden {
+                    display: table-row !important;
+                }
+    
+                table.es-desk-hidden {
+                    display: table !important;
+                }
+    
+                td.es-desk-menu-hidden {
+                    display: table-cell !important;
+                }
+    
+                .es-menu td {
+                    width: 1% !important;
+                }
+    
+                table.es-table-not-adapt,
+                .esd-block-html table {
+                    width: auto !important;
+                }
+    
+                table.es-social {
+                    display: inline-block !important;
+                }
+    
+                table.es-social td {
+                    display: inline-block !important;
+                }
+    
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+            }
+    
+            /* END RESPONSIVE STYLES */
+        </style>
     </head>
     
     <body>
@@ -772,11 +772,11 @@ const welcomeMail = (userName) =>{
                 <tbody>
                     <tr>
                         <td class="esd-email-paddings" valign="top">
-                            <table cellpadding="0" cellspacing="0" class="es-header esd-header-popover" align="center">
+                            <table class="es-header esd-header-popover" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" align="center" esd-custom-block-id="88635" bgcolor="#000000" style="background-color: #000000;">
-                                            <table class="es-header-body" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#000000" style="background-color: #000000;">
+                                        <td class="esd-stripe" esd-custom-block-id="88635" style="background-color: #000000;" bgcolor="#000000" align="center">
+                                            <table class="es-header-body" style="background-color: #000000;" width="600" cellspacing="0" cellpadding="0" bgcolor="#000000" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure es-p10t es-p20b es-p15r es-p15l" esd-general-paddings-checked="false" align="left">
@@ -787,7 +787,7 @@ const welcomeMail = (userName) =>{
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/28481619431982683.png" alt style="display: block;" height="82"></a></td>
+                                                                                        <td class="esd-block-image" style="font-size: 0px;" align="center"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/28481619431982683.png" alt style="display: block;" height="82"></a></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -803,65 +803,72 @@ const welcomeMail = (userName) =>{
                                     </tr>
                                 </tbody>
                             </table>
-                            <table cellpadding="0" cellspacing="0" class="es-content" align="center">
+                            <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
                                         <td class="esd-stripe" align="center">
-                                            <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600">
+                                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="es-p20t es-p20r es-p20l esd-structure" align="left">
-                                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="560" class="esd-container-frame" align="center" valign="top">
-                                                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                                        <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                                            <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400;">WELCOME TO EXCITE</h3>
+                                                                                        <td class="esd-block-text" align="center">
+                                                                                            <h3 style="color: #6fd20d; font-weight: 400;">WELCOME TO EXCITE<br></h3>
                                                                                             <p style="color: #6fd20d;"><br></p>
-                                                                                            <p style="text-align: left; color:#000000; font-size: medium;">Dear ${userName},<br></p>
-                                                                                            <p style="color: #000000; font-size: medium;">We are excited to have you on our platform. Excite Enterprise deals with SMEs. Our aim is to provide accessible, affordable and effective business solutions that address the needs of Africa's growing businesses.</p>
+                                                                                            <p style="text-align: left; color:#000000; font-size: medium;">Dear ${userName},<br><br></p>
+                                                                                            <p style="color: #000000; font-size: medium;">We are excited to have you on our platform. Excite Enterprise deals with SMEs. Our aim is to provide accessible, affordable and effective business<br>solutions that address the needs of Africa's growing businesses.<br></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text"><br><br>
+                                                                                        <td class="esd-block-text" align="center"><br>
                                                                                             <p style="color: #000000; font-size:large;">Our services include, but not limited to:</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="left" class="esd-block-text">
+                                                                                        <td class="esd-block-text" align="left">
                                                                                             <p style="color: #000000; font-size:medium; "><br><strong>Access To Funds:</strong>&nbsp;Get access to funds to grow your business.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="left" class="esd-block-text" bgcolor="#ffffff">
+                                                                                        <td class="esd-block-text" bgcolor="#ffffff" align="left">
                                                                                             <p style="color: #000000; font-size:medium"><br><strong>Automation Tools (Ease of Business)</strong></p>
                                                                                             <ul>
-                                                                                                <li style="color: #000000; font-size:medium">Get your business registered within a week.</li>
-                                                                                                <li style="color: #000000; font-size:medium">Pay your taxes.</li>
-                                                                                                <li style="color: #000000; font-size:medium">All from the comfort of your home.</li>
+                                                                                                <li style="color: #000000; font-size:medium">Get your business registered within a week.<br></li>
+                                                                                                <li style="color: #000000; font-size:medium">Pay your taxes.<br></li>
+                                                                                                <li style="color: #000000; font-size:medium">All from the comfort of your home.<br></li>
                                                                                             </ul>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="left" class="esd-block-text">
+                                                                                        <td class="esd-block-text" align="left">
                                                                                             <p style="color: #000000; font-size:medium; font-weight:600;">Growth and Expansion Tools</p>
                                                                                             <ul>
                                                                                                 <li style="color: #000000;font-size:medium">Take advantage of our Excite Kiosk service and get your business place setup in no time</li>
                                                                                                 <li style="color: #000000;font-size:medium">Put your business in front of millions of potential customers with our Banner Advert services.</li>
-                                                                                                <li style="color: #000000;font-size:medium">List your products and services for free.</li>
+                                                                                                <li style="color: #000000;font-size:medium">List your pr<span style="font-size:17px;"></span>oducts and services for free.<br></li>
                                                                                             </ul>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text"><br><strong>And much more !</strong></td>
+                                                                                        <td class="esd-block-text" align="left"><br><strong>And much more !</strong></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td align="“left”" class="esd-block-text"><br>
-                                                                                            <p style="color:black; font-weight:600;">ONBOARDING</p><br>
-                                                                                            <p style="font-size:medium; color:#000000;">To get started, Click the link below to watch a short video explaining our Excite platform;<br><a href="https://youtu.be/E-QWZ-nyJLU">Video</a><br>To visit the Excite platform directly, kindly click excite link <a href>here</a><br>If you have any questions, kindly reply to this email or reach us on the following contacts:<br>070121533679<br><span>enquiry@exciteafrica.com</span><br></p>
+                                                                                        <td class="esd-block-text" align="“left”"><br>
+                                                                                            <p style="color:black; font-weight:600; text-align:center">ONBOARDING</p>
+                                                                                            <ul>
+                                                                                                <li style="font-size: medium; color: #000000;">To get started, Click the link below to watch a short video explaining our Excite platform <a style="font-size:medium" href="https://youtu.be/E-QWZ-nyJLU">Excite Africa</a></li>
+                                                                                                <li style="font-size: medium; color: #000000;">To visit the Excite platform directly, kindly click the link <a style="font-size:medium" href="https://www.exciteenterprise.com/" target="_blank">Here</a></li>
+                                                                                                <li style="font-size: medium; color: #000000;">Watch <a style="font-size:medium" href="https://www.youtube.com/watch?v=1qTetJbonN0" target="_blank">this</a> short video to get a detailed summary of what excite offers</li>
+                                                                                                <li style="font-size: medium; color: #000000;">Merchants can learn how to post products on the excite enterprise platform <a style="font-size:medium" href="https://youtu.be/p61A0Z7XbxQ" target="_blank">here</a></li>
+                                                                                                <li style="font-size: medium; color: #000000;">Also learn how to subscribe on the platform <a style="font-size:medium" href="https://youtu.be/7NiEuCqNNKs" target="_blank">here</a></li>
+                                                                                            </ul>
+                                                                                            <p style="font-size:medium; color:#000000;">If you have any questions, kindly reply to this email or reach us via the following contacts:<br>070121533679<br>enquiry@exciteafrica.com</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -882,8 +889,8 @@ const welcomeMail = (userName) =>{
                                 <tbody>
                                     <tr></tr>
                                     <tr>
-                                        <td class="esd-stripe" esd-custom-block-id="8126" align="center" bgcolor="#ffffff" style="background-color: #ffffff;">
-                                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="background-color: #ffffff;">
+                                        <td class="esd-stripe" esd-custom-block-id="8126" style="background-color: #ffffff;" bgcolor="#ffffff" align="center">
+                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure" align="left">
@@ -906,44 +913,39 @@ const welcomeMail = (userName) =>{
                                     </tr>
                                 </tbody>
                             </table>
-                            <table cellpadding="0" cellspacing="0" class="es-footer" align="center">
+                            <table class="es-footer" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" esd-custom-block-id="3511" align="center" bgcolor="#6fd20d" style="background-color: #6fd20d;">
-                                            <table class="es-footer-body" width="600" cellspacing="0" cellpadding="0" align="center" style="background-color: #000000;" bgcolor="#000">
+                                        <td class="esd-stripe" esd-custom-block-id="3511" style="background-color: #6fd20d;" bgcolor="#6fd20d" align="center">
+                                            <table class="es-footer-body" style="background-color: #000000;" width="600" cellspacing="0" cellpadding="0" bgcolor="#000" align="center">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="esd-structure es-p30t es-p30r es-p30l" esd-general-paddings-checked="false" align="left" bgcolor="#6fd20d" style="background-color: #6fd20d;">
+                                                        <td class="esd-structure es-p30t es-p30r es-p30l" esd-general-paddings-checked="false" style="background-color: #6fd20d;" bgcolor="#6fd20d" align="left">
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td class="esd-container-frame" width="540" valign="top" align="center">
-                                                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> ${socialMediaLinks()} <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-text" bgcolor="#6fd20d">
+                                                                                        <td class="esd-block-text" bgcolor="#6fd20d" align="center">
                                                                                             <p style="color: #ffffff;"><br><br>This email was sent by Excite Africa.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text es-p15t es-p5b" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="color: #ffffff;">© Excite Inc.</p>
-                                                                                            <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
-                                                                                            <p style="color: #ffffff;">Company Number: 0701234522</p>
+                                                                                        <td class="esd-block-text es-p15t es-p5b" bgcolor="#6fd20d" align="center">
+                                                                                            <p style="color: #ffffff;">© Excite Inc.<br></p>
+                                                                                            <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria<br></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                    <td align="center" class="esd-block-text" bgcolor="#6fd20d" esd-links-color="#ffffff" esd-links-underline="underline"><br>
-                                                                                        <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                
-                                                                                    <tr>
-                                                                                    ${socialMediaLinks()}
+                                                                                        <td class="esd-block-text" esd-links-color="#ffffff" esd-links-underline="underline" bgcolor="#6fd20d" align="center"><br>
+                                                                                            <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
+                                                                                        </td>
                                                                                     </tr>
+                                                                                    <tr></tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text" align="center" bgcolor="#6fd20d">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you have registered on the excite enterprise platform as an affiliate.</p>
+                                                                                        <td class="esd-block-text" bgcolor="#6fd20d" align="center">
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you are a registered user on the excite enterprise platform.<br></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -963,8 +965,8 @@ const welcomeMail = (userName) =>{
                             <table class="esd-footer-popover es-content" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                     <tr>
-                                        <td class="esd-stripe" align="center" bgcolor="#ffffff" style="background-color: #ffffff;">
-                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" align="center" bgcolor="#fff">
+                                        <td class="esd-stripe" style="background-color: #ffffff;" bgcolor="#ffffff" align="center">
+                                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#fff" align="center">
                                                 <tbody>
                                                     <tr>
                                                         <td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
@@ -975,7 +977,7 @@ const welcomeMail = (userName) =>{
                                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
-                                                                                        <td align="center" class="esd-block-image" style="font-size: 0px;"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/15671619429660563.png" alt style="display: block;" height="82"></a></td>
+                                                                                        <td class="esd-block-image" style="font-size: 0px;" align="center"><a target="_blank"><img class="adapt-img" src="https://liiueu.stripocdn.email/content/guids/824d24ad-c799-4852-9a7b-0f149e1a4cbb/images/15671619429660563.png" alt style="display: block;" height="82"></a></td>
                                                                                     </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -997,7 +999,8 @@ const welcomeMail = (userName) =>{
             </table>
         </div>
     </body>
-    </html>`.replace('<p style="color: #ffffff;">Company Number: 0701234522</p>','');
+    
+    </html>`
 } 
 
 module.exports = welcomeMail;
