@@ -144,14 +144,9 @@ router.post('/new' , requireJWT, async (req,res) =>{
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
     try {
-        // req.body.user = req.user.id
-
         const thisSales=req.body;
-        let record = await Books.findOne({_id:req.body.salesRef})
-       delete thisSales._id
-
-       // console.log(thisSales)
-       // console.log('record sold is ', record);
+        // let record = await Books.findOne({_id:req.body.salesRef})
+       delete thisSales._id;
 
        // ******** Consider TODO ***********
        // import book keeping and update the record  for  store, orders and sales on backend (tip: use findOne as in above).

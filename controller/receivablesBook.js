@@ -7,25 +7,16 @@ const createRecord = async (req, res) => {
   const {email, userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
-  // console.log('receivables thisSales', thisSales);
     try {
-        // req.body.user = req.user.id
         if (req.body.quantity === null){
           req.body.quantity = 1;
           req.body.total = req.body.price;
         }
 
-        // req.body.qtySum = 1 * req.body.price;
-        // req.body.qtySum = 1 * req.body.price;
         let thisSales=req.body;
         thisSales.inventoryTotal = req.body.quantity * req.body.inventoryPrice;
-        // const data= {
-        //   productName:req.body.productName,
-        //   productID:req.body._id,
-        // }
         const refSales = thisSales._id;
        delete thisSales._id
-       // console.log(thisSales)
         await ReceivablesModel.create({
           ...thisSales,
           storeInfo:storeInfo,

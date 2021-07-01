@@ -6,6 +6,8 @@ const transactionSchema = mongoose.Schema({
   merchant: { type: String, required:true },
   accountType: { type: String },
   description: { type: String, unique: true },
+  inventoryCost: { type: Number},
+  inventorytotal: { type: Number},
   total: { type: Number, default:0 },
   transactionsTotal:[{type:mongoose.Schema.Types.ObjectId,
     ref:"PostTransaction"}],
