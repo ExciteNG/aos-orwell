@@ -16,6 +16,7 @@ const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
 const influencerAcknowledge = require("../emails/influencer_acknowledge");
+const welcomeEmail = require('../emails/new_welcome_templates');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -25,6 +26,14 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 const Cookies = require("cookies");
+
+const generateRefNo = randomstring.generate({
+  length: 12,
+  charset: "alphanumeric",
+  readable: true,
+});
+
+
 /*                  SIGNUPs                         */
 
 // Merchants
@@ -45,13 +54,6 @@ const signUp = async (req, res, next) => {
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
-      // continue
-      const generateRefNo = randomstring.generate({
-        length: 12,
-        charset: "alphanumeric",
-        readable: true,
-      });
-
       const user = {
         email: req.body.email,
         fullname: req.body.fullname,
@@ -97,6 +99,23 @@ const signUp = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
+       //send welcome email 
+       nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${user.username}`,
+        html: welcomeEmail(user.username),
+        text: welcomeEmail(user.username),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+    
      return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
     }
   });
@@ -223,6 +242,23 @@ const signUpPartner = (req, res, next) => {
         });
 
         // send a general welcome mail
+          //send welcome email 
+       nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${fullname}`,
+        html: welcomeEmail(fullname),
+        text: welcomeEmail(fullname),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+        
         res.json({ code: 201, mesage: "Your Account has been successfully created, please check your email for the next steps" });
       });
       // req.user = userInstance;
@@ -339,6 +375,22 @@ const signUpAffiliates = async (req, res, next) => {
         secure: false,
       });
       //send a general welcome mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${fullname.split(' ')[0]}`,
+        html: welcomeEmail(fullname.split(' ')[0]),
+        text: welcomeEmail(fullname.split(' ')[0]),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+      
      return res.json({ code: 201, mesage: "Account created" });
       // next();
     }
@@ -370,6 +422,7 @@ const signUpRefCode = async (req, res, next) => {
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,
+        verifyToken:generateRefNo
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -420,6 +473,23 @@ const signUpRefCode = async (req, res, next) => {
           onSuccess: (i) => console.log(i),
           secure: false,
         });
+
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
+          html: welcomeEmail(user.fullname.split(' ')[0]),
+          text: welcomeEmail(user.fullname.split(' ')[0]),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        
         // nodeoutlook.sendEmail({
         //   auth: {
         //     user: process.env.EXCITE_ENQUIRY_USER,
@@ -563,12 +633,28 @@ const signUpInfluencers = async (req, res, next) => {
             pass: process.env.EXCITE_ENQUIRY_PASS,
           },
           from: "enquiry@exciteafrica.com",
-          to: req.body.email,
+          to: user.email,
           subject: "ACKNOWLEDGEMENT EMAIL",
           html: influencerAcknowledge(),
           text: influencerAcknowledge(),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        //send a general welcome mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${user.name.split(' ')[0]}`,
+          html: welcomeEmail(user.name.split(' ')[0]),
+          text: welcomeEmail(user.name.split(' ')[0]),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });

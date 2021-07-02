@@ -924,7 +924,7 @@ const welcomeMail = (userName) =>{
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> ${socialMediaLinks()} <table width="100%" cellspacing="0" cellpadding="0">
+                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
@@ -942,7 +942,9 @@ const welcomeMail = (userName) =>{
                                                                                             <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr></tr>
+                                                                                    <tr>
+                                                                                    ${socialMediaLinks()}
+                                                                                    </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
                                                                                             <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you are a registered user on the excite enterprise platform.<br></p>

@@ -6,11 +6,12 @@ const clusters = require('cluster');
 const os = require('os').cpus().length;
 
 
-
+//SET THE CPU WORKERS
+const WORKERS = process.env.WEB_CONCURRENCY || 4
 if (clusters.isMaster){
   console.log(`process ${process.pid} is currently running`)
 
-  for (var i=0;i<os;i++){
+  for (var i=0; i<WORKERS; i++){
     clusters.fork()
   }
 
