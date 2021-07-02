@@ -865,7 +865,7 @@ const invoiceMail =  (productName,Price,quantity,total)  => {
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td align="left" class="esd-block-text">
-                                                                                            <p style="color: #000000;font-size:medium;">${ProductName}</p>
+                                                                                            <p style="color: #000000;font-size:medium;">${productName}</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>

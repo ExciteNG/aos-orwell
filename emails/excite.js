@@ -882,7 +882,7 @@ let x = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
                                                                                     <td class="esd-block-text es-p15t es-p5b" align="center" bgcolor="#6fd20d">
                                                                                         <p style="color: #ffffff;">© Excite Inc.</p>
                                                                                         <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
-                                                                                        <p style="color: #ffffff;">Company Number: 0701234522</p>
+                                                                                
                                                                                     </td>
                                                                                 </tr>
 

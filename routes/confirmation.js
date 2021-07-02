@@ -34,7 +34,7 @@ router.post('/confirmation/email', async (req, res) => {
       onSuccess: (i) => console.log(i),
       secure:false
   });
-    return res.json({code:201,message:"account confirm",email:email}
+    return res.json({code:201,message:"account confirmed",email:email}
   )}else{
     res.json({code:400,message:"Invalid"})
   }

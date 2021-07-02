@@ -51,7 +51,7 @@ const merchantPickInfluencer = async (req,res) => {
         req.body.email = email
         req.body.userType = userType
         //verify that the user is a merchant
-        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
+        if (userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //get the influencer level (could be one of micro,mini,max)
         // const getInfluencerLevel = influencerLevel.replaceAll(" ","").split("")[0].toLowerCase()
         // console.log(getInfluencerLevel)
@@ -73,11 +73,11 @@ const merchantPickInfluencer = async (req,res) => {
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
            console.error(err)
-        return res.json({code:500,message:err.message,ip:req.ip})
+        return res.json({code:500,message:err.message})
     }
 } 
 
-//following th first request
+//following the first request
 //pick a specific influencer for negotiation
 const influencerNegotiation = async (req,res) => {
     try {
@@ -86,18 +86,25 @@ const influencerNegotiation = async (req,res) => {
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //filter only the approved influencers
         // const approvedInfluencers = Influencer.find({regStatus:"accepted"})
-        let profile = await Profiles.find({email:email})
+        let profile = await Profiles.findOne({email:email})
         if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
         if (!getInfluencer) return res.json({code:404,message:"the influencer was not found !"})
         //increase the merchant campaign
-        profile.pendingCampaigns =await profile.pendingCampaigns + 1
-        await profile.markModified("pendingCampaigns")
-        await profile.save()
+       let pendingIncrement = profile.pendingCampaigns + 1
+    //    profile.pendingCampaigns =await profile.pendingCampaigns + 1
+    //     profile.markModified("pendingCampaigns")
+    //     await profile.save()
         //mark modify profiles
         let pending = getInfluencer.pendingJobs
         let newpending = pending + 1
         console.log(newpending)
+        //update the merchant pending campaigns
+        await Profiles.findOneAndUpdate({email:email},{pendingCampaigns:pendingIncrement},{new:true,runValidators:true},
+            function (err,docs){
+                if (err) console.error(err)
+                console.log(docs) 
+            })
         await Influencer.findOneAndUpdate({_id:id},{pendingJobs:newpending},{new:true,runValidators:true},
             function (err,docs){
                 if (err) console.error(err)
@@ -127,7 +134,7 @@ const influencerNegotiation = async (req,res) => {
         //   await getInfluencer.save((err,docs)=>{
         //       console.log(err)
         //   })
-        return res.json({code:200,data:getInfluencer,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
+        return res.json({code:200,data:{...getInfluencer,...profile[fullName]},message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
         })
     } catch (err) {
         console.error(err)
@@ -158,7 +165,7 @@ const getInfluencerDashboard = async (req,res) => {
 const merchantDashboard = async (req,res) => {
     try {
         const {email} = req.user
-        let profile = Profiles.find({email:email}).lean()
+        let profile = Profiles.findOne({email:email}).lean()
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"you are not allowed to view this resource"})
         //filter the list of influencers to the one with the same id
         let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
@@ -167,8 +174,6 @@ const merchantDashboard = async (req,res) => {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
-
-
 }
 // influencer accept offer /agree route
 const influencerAgreePrice = async (req,res) => {
