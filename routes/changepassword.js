@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
 const User = require('../models/User');
+const {requireJWT} = require('../middleware/auth')
 
-router.post('/update', async (req,res) => {
+router.post('/update', requireJWT, async (req,res) => {
+    const {email,userType} = req.user
     try {
-        const userId = await  User.findById({id:req.user.id}).lean()
+        const userId = await  User.findOne({email:email}).lean()
         if (!userId){
             return res.json({code:400,message:"Error processing your request, please try again"})
         }

@@ -102,6 +102,8 @@ const signUp = async (req, res, next) => {
   });
 };
 
+// todo add welcome mails 
+
 // Partners
 const signUpPartner = (req, res, next) => {
   const {
@@ -220,7 +222,7 @@ const signUpPartner = (req, res, next) => {
           secure: false,
         });
 
-        // send mail
+        // send a general welcome mail
         res.json({ code: 201, mesage: "Your Account has been successfully created, please check your email for the next steps" });
       });
       // req.user = userInstance;
@@ -336,7 +338,8 @@ const signUpAffiliates = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-      res.json({ code: 201, mesage: "Account created" });
+      //send a general welcome mail
+     return res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -345,7 +348,7 @@ const signUpAffiliates = async (req, res, next) => {
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No email or password provided.");
+    res.json({code:400,message:"No email or password provided."});
   }
   if (req.body.password.length < 8) {
     return res.send({
@@ -401,7 +404,7 @@ const signUpRefCode = async (req, res, next) => {
         refBy.merchants.push(profileId);
         refBy.markModified("merchants");
         await refBy.save();
-        //send mail
+        //send verification mail
         nodeoutlook.sendEmail({
           auth: {
             user: process.env.EXCITE_ENQUIRY_USER,
@@ -409,15 +412,30 @@ const signUpRefCode = async (req, res, next) => {
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
-          subject: "ACKNOWLEDGEMENT EMAIL",
-          html: affiliateAcknowledge(),
-          text: affiliateAcknowledge(),
+          subject: "Verify Your Account",
+          html: verifyEmail(user.username, user.email, user.verifyToken),
+          text: verifyEmail(user.username, user.email, user.verifyToken),
           replyTo: "enquiry@exciteafrica.com",
-          onError: (e) => console.log(e),
+          onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });
-        res.json({ code: 201, mesage: "Account created" });
+        // nodeoutlook.sendEmail({
+        //   auth: {
+        //     user: process.env.EXCITE_ENQUIRY_USER,
+        //     pass: process.env.EXCITE_ENQUIRY_PASS,
+        //   },
+        //   from: "enquiry@exciteafrica.com",
+        //   to: user.email,
+        //   subject: "ACKNOWLEDGEMENT EMAIL",
+        //   html: affiliateAcknowledge(),
+        //   text: affiliateAcknowledge(),
+        //   replyTo: "enquiry@exciteafrica.com",
+        //   onError: (e) => console.log(e),
+        //   onSuccess: (i) => console.log(i),
+        //   secure: false,
+        // });
+        return res.json({ code: 201, mesage: "Account created successfully !, please check your email address to confirm your account" });
       }
     }
   });

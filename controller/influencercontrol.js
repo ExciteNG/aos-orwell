@@ -159,8 +159,7 @@ const getInfluencerDashboard = async (req,res) => {
         return res.json({code:200,message:err.message})
     }
 }
-// GET weekly reports
-// PAYMENT POPUP VIEW 
+
 //merchant dashboard
 const merchantDashboard = async (req,res) => {
     try {
@@ -361,6 +360,9 @@ const getAllChats = async (req,res) => {
         return res.json({code:500,message:err.message})
     }
 }
+
+// GET weekly reports
+// PAYMENT POPUP VIEW 
 
 module.exports = {
     merchantPickInfluencer,
