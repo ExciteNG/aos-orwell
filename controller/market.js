@@ -589,6 +589,78 @@ const getLandinpPage = async (req, res) => {
  
 };
 
+// add offered services 
+const addServices = async (req,res) => {
+  const {
+    title,
+    description,
+    images,
+    price,
+    brand,
+    subCategory
+  } = req.body
+
+  const {email} = req.user;
+  const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id;
+  const priority = profile.subscriptionLevel;
+  const item = {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    category: "services",
+    email: email,
+    priority,
+    images: images,
+    merchant:merchantId
+  };
+
+  const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+  profile.markModified('product');
+   await profile.save();
+
+   // stock code
+  const stockRecord = {
+    productName: title,
+    cost: Number(0),
+    price: Number(price),
+    total:Number(price),
+    email,
+  };
+  const newStock = new ProductRecord(stockRecord);
+  const stockId = newStock._id;
+  newProduct.stock = stockId;
+  await newProduct.save();
+  try {
+   await newStock.save();
+  } catch (error) {
+    console.error(error);
+  }
+  
+   //   social commerce
+  if (profile.subscriptionLevel !== 3)
+  return res.json({ code: 201, msg: "product added" });
+// Post to social media
+const data = {
+  title: `Get ${title} for just N${Number(price).toLocaleString(
+    "en-US"
+  )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+  imageUrl: images[0],
+};
+const socialPosting = await PostToSocialMedia(email, data);
+if (!socialPosting)
+  return res.json({ code: 400, msg: "Failed to post to social media" });
+// Posted
+return res.json({ code: 201, msg: "posted to social", added: true });
+
+
+}
+
 module.exports = {
   filterProducts,
   getCategory,
@@ -601,4 +673,5 @@ module.exports = {
   addHealth,
   getOfferById,
   getLandinpPage,
+  addServices
 };

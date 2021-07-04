@@ -89,7 +89,7 @@ const influencerNegotiation = async (req,res) => {
         let profile = await Profiles.findOne({email:email})
         if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
-        if (!getInfluencer) return res.json({code:404,message:"the influencer was not found !"})
+        if (!getInfluencer) return res.json({code:404,message:"this influencer was not found !"})
         //increase the merchant campaign
        let pendingIncrement = profile.pendingCampaigns + 1
     //    profile.pendingCampaigns =await profile.pendingCampaigns + 1
@@ -264,11 +264,11 @@ const merchantNegotiateOffer = async (req,res) => {
 //influencer accept button
 const influencerAcceptsPrice = async (req,res) => {
     const {email} = req.user;
-    const id = req.params.id
+    const id = req.params.id;
     //get the particular chat and make sure only the influencer accesses it
     const selectInfluencer = await Negotiation.findById(id).lean()
     if  (!selectInfluencer) return res.json({code:404,message:"Chat Not found"})
-    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are unauthorized to access this resource"})
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
     //verify that the system has a valid merchant and valid influencer to send mails to
     // update the merchant and influencer status
     let findMerchant = await Profiles.find({email:selectInfluencer.merchantEmail}).lean()
@@ -312,7 +312,7 @@ const influencerDeclinePrice = async (req,res)  => {
         const {email} = req.user
         const id = req.params.id
         //get a specific chat
-        if (!req.user.userType === "EX90IF") return res.json({code:401,message:"you are unauthorized to view this page"})
+        if (!req.user.userType === "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
         const getChat = await Negotiation.findById(id).lean()
         if (!getChat) return res.json({code:404,message:"Chat not found"})
         //find the merchant that matches thee chat section
@@ -361,6 +361,7 @@ const getAllChats = async (req,res) => {
     }
 }
 
+// get the overall design pattern to track the accepted seection to the payments section to the reports section to the payment tracking session 
 // GET weekly reports
 // PAYMENT POPUP VIEW 
 
