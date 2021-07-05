@@ -79,6 +79,7 @@ const merchantPickInfluencer = async (req,res) => {
 
 //following the first request
 //pick a specific influencer for negotiation
+
 const influencerNegotiation = async (req,res) => {
     try {
         const {email} = req.user
@@ -175,24 +176,35 @@ const merchantDashboard = async (req,res) => {
     }
 }
 // influencer accept offer /agree route
-const influencerAgreePrice = async (req,res) => {
+const merchantPaymentPrice = async (req,res) => {
+
     try {
-        // const {email,userType} = req.user
-        if (req.body.userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to view this resource"})
-        // req.body.email = email
-        // req.body.userType = userType
-        // req.body.createdAt = new Date().toString()
+        const {email,userType} = req.user
+        if (userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to access this resource !"})
+        req.body.email = email
+        req.body.userType = userType
+        req.body.createdAt = new Date().toString()
+        req.body.startDate = Date.now()
+        req.body.endDate = Number(req.body.startDate) + 3 * (30*24*60*60*1000)
+        req.body.amountToPay = Number(req.body.price) * Number(req.body.duration)
+        req.body.negotiationStatus = "accepted"
+        //find the influencer the paymment is meant for in the database
+        const influencerToPay = await Influencer.findOne({fullName:req.body.fullName})
+        if (!influencerToPay) return res.json({code:404,message:"Can't find this influencer, Please enter the influencer's name as you received it from your email"})
         const newPrice = new agreePrice(req.body)
         //pay via paystack
         await newPrice.save()
-        //send mail
-        return res.json({code:200,data:newPrice})
+        //update the negotiation status in the merchant negotation collection
+        //const negotiation = await Negotiation.findOne({merchantEmail:email,influencerEmail:influencerToPay.email})
         
+        //send mail to influencer while paystack sends a receipt to the merchant
+        return res.json({code:200,data:newPrice})
     } catch (err) {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
 }
+
 
 //influencer negotiate price
 const influencerNegotiatePrice = async (req,res) => {
@@ -203,13 +215,13 @@ const influencerNegotiatePrice = async (req,res) => {
         let negotiateInfluencer = await Influencer.find({email:email}).lean()
         //find the full name in the merchant database
         let getMerchant = await Profiles.find({fullName:req.body.fullName}).lean()
-        if (!getMerchant) return res.json({code:404,message:"Merchant not found !, please check if you entered the merchant fullname properly from the received email address"})
+        if (!getMerchant) return res.json({code:404,message:"Merchant not found !, please check if you entered the merchant fullname properly from the received email"})
         req.body.influencerEmail = email
         req.body.merchantEmail = getMerchant.email
         req.body.merchantFullName = req.body.fullName
         req.body.influencerFullName = negotiateInfluencer.fullName
         //check if this particular people has conversed before
-        let checkPreviousConversation = await Negotiation.find({influencerEmail:email,
+        let checkPreviousConversation = await Negotiation.findOne({influencerEmail:email,
             merchantEmail:getMerchant.email}).lean()
         if (!checkPreviousConversation) {
         let negotiation = new Negotiation(req.body)
@@ -233,7 +245,7 @@ const merchantNegotiateOffer = async (req,res) => {
         const id = req.params.id
         const {email} = req.user
         //first conditional: send the message to the  right influencer
-        if (req.user.userType === "EX20AF"){
+        if (req.user.userType === "EX10AF"){
         let merchantNegotiationEmail = await Negotiation.findById(id).lean()
         if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found"})
         let newMerchantMessages = merchantNegotiationEmail.merchantMessages
@@ -345,16 +357,31 @@ const influencerDeclinePrice = async (req,res)  => {
 const getAllChats = async (req,res) => {
     try {
         const {email} = req.user
-        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX20AF") return res.json({code:401,message:"you are unauthorized to view this resource !"})
+        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX10AF") return res.json({code:401,message:"you are unauthorized to view this resource !"})
         if (req.user.userType === "EX90IF"){
             let chatHistory = await Negotiation.find({influencerEmail:email}).lean()
             if (!chatHistory) return res.json({code:404,message:"Not found"})
             return  res.json({code:200,data:chatHistory})
-        } else if (req.user.userType === "EX20AF"){
+        } else if (req.user.userType === "EX10AF"){
             let merchantChatHistory = await Negotiation.find({merchantEmail:email}).lean()
             if (!merchantChatHistory) return res.json({code:404,message:"Not found"})
             return res.json({code:200,data:merchantChatHistory})
         }
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+//get a specific chat section
+const singleChat = async (req,res) => {
+    const {email,userType} = req.user
+    try {
+        if (!userType === "EX10AF" || !userType === "EX90IF") return res.json({code:401,message:"You do not have permission to view this resource"})
+       const id = req.params.id
+       const getSingleChat = await Negotiation.findById(id).lean()
+       if (!getSingleChat) return res.json({code:404,message:"chat not found"})
+       return res.json({code:200,message:getSingleChat})
     } catch (err) {
         console.error(err)
         return res.json({code:500,message:err.message})
@@ -370,10 +397,11 @@ module.exports = {
     influencerNegotiation,
     getInfluencerDashboard,
     merchantDashboard,
-    influencerAgreePrice,
+    merchantPaymentPrice,
     influencerNegotiatePrice,
     merchantNegotiateOffer,
     influencerAcceptsPrice,
     influencerDeclinePrice,
-    getAllChats
+    getAllChats,
+    singleChat
 }
