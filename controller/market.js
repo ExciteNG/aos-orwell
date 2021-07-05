@@ -30,6 +30,7 @@ const filterProducts = async (req, res) => {
 
 const getCategory = async (req, res) => {
   const { category } = req.body;
+  console.log(category)
   try {
     const data = await Products.find({ category: category }).sort({
       priority: -1,
@@ -78,6 +79,16 @@ const addElectronics = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
@@ -159,6 +170,16 @@ const addHealth = async (req, res) => {
   // console.log(req.body)
   const { email } = req.user;
   const profile = await Profiles.findOne({ email: email });
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
@@ -244,6 +265,16 @@ const addFashion = async (req, res) => {
   const profile = await Profiles.findOne({ email: email });
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
   const priority = profile.subscriptionLevel;
@@ -412,6 +443,17 @@ const addHome = async (req, res) => {
   const profile = await Profiles.findOne({ email: email });
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
+
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
   const priority = profile.subscriptionLevel;
@@ -499,6 +541,16 @@ const addVehicle = async (req, res) => {
   const profile = await Profiles.findOne({ email: email });
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
     return res.json({ code: 404, message: "Please update store info" });
   const priority = profile.subscriptionLevel;
@@ -589,6 +641,68 @@ const getLandinpPage = async (req, res) => {
  
 };
 
+
+// SERVICE LISTING
+const addServices = async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    subCategory,
+    images
+  } = req.body;
+  // console.log(req.body)
+  const { email } = req.user;
+  const profile = await Profiles.findOne({ email: email });
+  const merchantId = profile._id
+  const storeInfo = profile.storeInfo;
+
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if(subs===0 && merchantProduct.length >=5) {
+    return res.json({code:304, message:"Maximum number of product reached."})
+  }
+
+
+  // 
+  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
+    return res.json({ code: 404, message: "Please update store info" });
+  const priority = profile.subscriptionLevel;
+  const item = {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    storeInfo,
+    category: "services",
+    email: email,
+    priority,
+    room,
+    images: images,
+    quantity,
+    salesTarget,
+    merchant:merchantId
+  };
+  const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+   // saving profile ref
+   profile.product.push(newProductId);
+  profile.markModified('product');
+   profile.save();
+
+  // Posted
+  return res.json({ code: 201, msg: "posted to social", added: true });
+};
+
+
+
+
+
+// 
 module.exports = {
   filterProducts,
   getCategory,
