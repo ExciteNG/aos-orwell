@@ -51,6 +51,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  experience: {
+    type: Number,
+    default: 0,
+  },
   email: {
     type: String,
     validate:{

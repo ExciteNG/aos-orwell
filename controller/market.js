@@ -55,13 +55,13 @@ const getOfferById = async (req, res) => {
   //
   try {
     const item = await Deals.findOne({ _id: id });
-    console.log(item,id)
-  return res.json({ code: 201, item });
+    console.log(item, id)
+    return res.json({ code: 201, item });
   } catch (error) {
     console.log(error)
     return res.status(500)
   }
-  
+
 };
 
 const addElectronics = async (req, res) => {
@@ -83,8 +83,8 @@ const addElectronics = async (req, res) => {
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
 
-  if(subs===0 && merchantProduct.length >=5) {
-    return res.json({code:304, message:"Maximum number of product reached."})
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
   }
 
 
@@ -106,7 +106,7 @@ const addElectronics = async (req, res) => {
     email: email,
     priority,
     images: images,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
@@ -174,8 +174,8 @@ const addHealth = async (req, res) => {
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
 
-  if(subs===0 && merchantProduct.length >=5) {
-    return res.json({code:304, message:"Maximum number of product reached."})
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
   }
 
 
@@ -197,14 +197,14 @@ const addHealth = async (req, res) => {
     email: email,
     priority,
     images: images,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
   // saving profile ref
-   profile.product.push(newProductId);
+  profile.product.push(newProductId);
   profile.markModified('product');
-   profile.save();
+  profile.save();
   // newProduct.save()
   //
   // stock code
@@ -269,8 +269,8 @@ const addFashion = async (req, res) => {
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
 
-  if(subs===0 && merchantProduct.length >=5) {
-    return res.json({code:304, message:"Maximum number of product reached."})
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
   }
 
 
@@ -294,14 +294,14 @@ const addFashion = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
-   // saving profile ref
-   profile.product.push(newProductId);
+  // saving profile ref
+  profile.product.push(newProductId);
   profile.markModified('product');
-   profile.save();
+  profile.save();
 
   // stock code
   const stockRecord = {
@@ -376,14 +376,14 @@ const addPhoneTablet = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
-   // saving profile ref
-   profile.product.push(newProductId);
+  // saving profile ref
+  profile.product.push(newProductId);
   profile.markModified('product');
-   profile.save();
+  profile.save();
 
   //
   // stock code
@@ -448,8 +448,8 @@ const addHome = async (req, res) => {
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
 
-  if(subs===0 && merchantProduct.length >=5) {
-    return res.json({code:304, message:"Maximum number of product reached."})
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
   }
 
 
@@ -472,14 +472,14 @@ const addHome = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
-   // saving profile ref
-   profile.product.push(newProductId);
+  // saving profile ref
+  profile.product.push(newProductId);
   profile.markModified('product');
-   profile.save();
+  profile.save();
 
   // stock code
   const stockRecord = {
@@ -545,8 +545,8 @@ const addVehicle = async (req, res) => {
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
 
-  if(subs===0 && merchantProduct.length >=5) {
-    return res.json({code:304, message:"Maximum number of product reached."})
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
   }
 
 
@@ -571,14 +571,14 @@ const addVehicle = async (req, res) => {
     images: images,
     quantity,
     salesTarget,
-    merchant:merchantId
+    merchant: merchantId
   };
   const newProduct = new Products(item);
   const newProductId = newProduct._id;
-   // saving profile ref
-   profile.product.push(newProductId);
+  // saving profile ref
+  profile.product.push(newProductId);
   profile.markModified('product');
-   profile.save();
+  profile.save();
 
   //    newProduct.save()
 
@@ -629,87 +629,66 @@ const getLandinpPage = async (req, res) => {
     const approvedBanners = banners.filter((banner) => banner.approval);
     const products = await Products.find().populate([{
       path: "merchant",
-      select:"product",
-        populate: {
-          path: "product",
-        },
+      select: "product",
+      populate: {
+        path: "product",
+      },
     }]).sort({ priority: -1, _id: 1 });
     res.json({ banner: approvedBanners, products: products, deals: deals });
   } catch (error) {
     return res.status(500)
   }
- 
+
 };
 
 // add offered services 
-const addServices = async (req,res) => {
+const addServices = async (req, res) => {
   const {
     title,
     description,
     images,
-    price,
-    brand,
+    experience,
+    condition,
     subCategory
   } = req.body
-
-  const {email} = req.user;
-  const profile = await Profiles.findOne({ email: email });
-  const merchantId = profile._id;
-  const priority = profile.subscriptionLevel;
-  const item = {
-    title,
-    description,
-    price,
-    brand,
-    subCategory,
-    category: "services",
-    email: email,
-    priority,
-    images: images,
-    merchant:merchantId
-  };
-
-  const newProduct = new Products(item);
-  const newProductId = newProduct._id;
-   // saving profile ref
-   profile.product.push(newProductId);
-  profile.markModified('product');
-   await profile.save();
-
-   // stock code
-  const stockRecord = {
-    productName: title,
-    cost: Number(0),
-    price: Number(price),
-    total:Number(price),
-    email,
-  };
-  const newStock = new ProductRecord(stockRecord);
-  const stockId = newStock._id;
-  newProduct.stock = stockId;
-  await newProduct.save();
+  const { email } = req.user;
   try {
-   await newStock.save();
-  } catch (error) {
-    console.error(error);
-  }
-  
-   //   social commerce
-  if (profile.subscriptionLevel !== 3)
-  return res.json({ code: 201, msg: "product added" });
-// Post to social media
-const data = {
-  title: `Get ${title} for just N${Number(price).toLocaleString(
-    "en-US"
-  )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
-  imageUrl: images[0],
-};
-const socialPosting = await PostToSocialMedia(email, data);
-if (!socialPosting)
-  return res.json({ code: 400, msg: "Failed to post to social media" });
-// Posted
-return res.json({ code: 201, msg: "posted to social", added: true });
+    const profile = await Profiles.findOne({ email: email });
+    const merchantId = profile._id;
+    const storeInfo = profile.storeInfo;
+    const priority = profile.subscriptionLevel;
+    // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
 
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
+  }
+    const item = {
+      title,
+      description,
+      experience:Number(experience),
+      storeInfo,
+      subCategory,
+      condition,
+      category: "services",
+      email: email,
+      priority,
+      images: images,
+      merchant: merchantId
+    };
+    const newProduct = new Products(item);
+    await newProduct.save();
+    const newProductId = newProduct._id;
+    // saving profile ref
+    profile.product.push(newProductId);
+    profile.markModified('product');
+    await profile.save();
+    return res.json({ code: 201, msg: "Service listed successfully" });
+  } catch (error) {
+    return res.staus(400).json({ code: 201, msg: "posted to social" });
+  }
+ 
 
 }
 
