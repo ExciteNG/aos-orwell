@@ -2,9 +2,6 @@
 /* eslint-disable prettier/prettier */
 //scaling the application by increasing the worker processes (increasing concurrency and multithreading)
 const clusters = require('cluster');
-//get the number of cpus which ideally should be 4
-const os = require('os').cpus().length;
-
 
 //SET THE CPU WORKERS
 const WORKERS = process.env.WEB_CONCURRENCY || 4
@@ -51,13 +48,6 @@ else {
       next();
     });
 
-    //middleware for protection against clickjacking attacks
-
-    app.use(function(req, res, next) {
-      res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
-      next();
-    });
-
     //whitelist host addresses that can only consume  the backend APIS
     var whitelist = ['https://www.exciteenterprise.com', 'http://localhost:7000','http://localhost:3000']
 
@@ -75,13 +65,15 @@ else {
 
 
     // Middleware
+    
+    app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());
+    app.use(helmet.frameguard({action:"sameorigin"}))
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
     app.use(cookieParser())
-    app.use(cors({ credentials: true },corsOptions));
     app.use(compression())
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
