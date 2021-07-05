@@ -16,6 +16,7 @@ const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
 const influencerAcknowledge = require("../emails/influencer_acknowledge");
+const welcomeEmail = require('../emails/new_welcome_templates');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -25,6 +26,14 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 const Cookies = require("cookies");
+
+const generateRefNo = randomstring.generate({
+  length: 12,
+  charset: "alphanumeric",
+  readable: true,
+});
+
+
 /*                  SIGNUPs                         */
 
 // Merchants
@@ -45,13 +54,6 @@ const signUp = async (req, res, next) => {
       res.json({ code: 401, msg: "Account exist", doc });
       next(err);
     } else {
-      // continue
-      const generateRefNo = randomstring.generate({
-        length: 12,
-        charset: "alphanumeric",
-        readable: true,
-      });
-
       const user = {
         email: req.body.email,
         fullname: req.body.fullname,
@@ -93,14 +95,33 @@ const signUp = async (req, res, next) => {
         html: verifyEmail(user.username, user.email, user.verifyToken),
         text: verifyEmail(user.username, user.email, user.verifyToken),
         replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.log(e),
+        onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-     return res.json({ code: 201, mesage: "Account created" });
+       //send welcome email 
+       nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${user.username}`,
+        html: welcomeEmail(user.username),
+        text: welcomeEmail(user.username),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+    
+     return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
     }
   });
 };
+
+// todo add welcome mails 
 
 // Partners
 const signUpPartner = (req, res, next) => {
@@ -220,8 +241,25 @@ const signUpPartner = (req, res, next) => {
           secure: false,
         });
 
-        // send mail
-        res.json({ code: 201, mesage: "Account created" });
+        // send a general welcome mail
+          //send welcome email 
+       nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${fullname}`,
+        html: welcomeEmail(fullname),
+        text: welcomeEmail(fullname),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+        
+        res.json({ code: 201, mesage: "Your Account has been successfully created, please check your email for the next steps" });
       });
       // req.user = userInstance;
       // res.json({ code: 201, mesage: "Account created" });
@@ -275,7 +313,7 @@ const signUpAffiliates = async (req, res, next) => {
         length: 12,
         charset: "alphanumeric",
         readable: true,
-      });
+     });
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
 
       const user = {
@@ -336,7 +374,24 @@ const signUpAffiliates = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-      res.json({ code: 201, mesage: "Account created" });
+      //send a general welcome mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${fullname.split(' ')[0]}`,
+        html: welcomeEmail(fullname.split(' ')[0]),
+        text: welcomeEmail(fullname.split(' ')[0]),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+      
+     return res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
@@ -345,7 +400,7 @@ const signUpAffiliates = async (req, res, next) => {
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.status(400).send("No email or password provided.");
+    res.json({code:400,message:"No email or password provided."});
   }
   if (req.body.password.length < 8) {
     return res.send({
@@ -367,6 +422,7 @@ const signUpRefCode = async (req, res, next) => {
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,
+        verifyToken:generateRefNo
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -401,7 +457,7 @@ const signUpRefCode = async (req, res, next) => {
         refBy.merchants.push(profileId);
         refBy.markModified("merchants");
         await refBy.save();
-        //send mail
+        //send verification mail
         nodeoutlook.sendEmail({
           auth: {
             user: process.env.EXCITE_ENQUIRY_USER,
@@ -409,15 +465,47 @@ const signUpRefCode = async (req, res, next) => {
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
-          subject: "ACKNOWLEDGEMENT EMAIL",
-          html: affiliateAcknowledge(),
-          text: affiliateAcknowledge(),
+          subject: "Verify Your Account",
+          html: verifyEmail(user.username, user.email, user.verifyToken),
+          text: verifyEmail(user.username, user.email, user.verifyToken),
           replyTo: "enquiry@exciteafrica.com",
-          onError: (e) => console.log(e),
+          onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });
-        res.json({ code: 201, mesage: "Account created" });
+
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
+          html: welcomeEmail(user.fullname.split(' ')[0]),
+          text: welcomeEmail(user.fullname.split(' ')[0]),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        
+        // nodeoutlook.sendEmail({
+        //   auth: {
+        //     user: process.env.EXCITE_ENQUIRY_USER,
+        //     pass: process.env.EXCITE_ENQUIRY_PASS,
+        //   },
+        //   from: "enquiry@exciteafrica.com",
+        //   to: user.email,
+        //   subject: "ACKNOWLEDGEMENT EMAIL",
+        //   html: affiliateAcknowledge(),
+        //   text: affiliateAcknowledge(),
+        //   replyTo: "enquiry@exciteafrica.com",
+        //   onError: (e) => console.log(e),
+        //   onSuccess: (i) => console.log(i),
+        //   secure: false,
+        // });
+        return res.json({ code: 201, mesage: "Account created successfully !, please check your email address to confirm your account" });
       }
     }
   });
@@ -545,12 +633,28 @@ const signUpInfluencers = async (req, res, next) => {
             pass: process.env.EXCITE_ENQUIRY_PASS,
           },
           from: "enquiry@exciteafrica.com",
-          to: req.body.email,
+          to: user.email,
           subject: "ACKNOWLEDGEMENT EMAIL",
           html: influencerAcknowledge(),
           text: influencerAcknowledge(),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.log(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        //send a general welcome mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${user.name.split(' ')[0]}`,
+          html: welcomeEmail(user.name.split(' ')[0]),
+          text: welcomeEmail(user.name.split(' ')[0]),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });

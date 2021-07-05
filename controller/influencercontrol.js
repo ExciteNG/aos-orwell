@@ -8,45 +8,21 @@ const Profiles = require('../models/Profiles');
 const agreePrice = require('../models/agreeprice');
 const Negotiation = require('../models/infMerchantNegotiate');
 
-//todo access control vulnerabilities
-
-//create an influencer function to assert the level  of an influencer by numbers numerically
-// const getLevel = (level,posts) => {
-//     switch (level) {
-//         case 'micro':
-//             let range = [10000,50000];
-//             let pricing =  [2.4*10000*posts, 4.4*50000*posts]
-//             break;
-            
-//         case 'mini':
-//             let range = [50001,500000];
-//             let pricing =  [2.4*50001*posts, 4.4*500000*posts]
-//             break;
-        
-//         case 'maxi':
-//             let range = 500000
-//             let pricing =  [2.4*50001*posts, 4.4*500000*posts]
-//             break;
-//         default:
-//             let range = [10000,50000];
-//             break;
-//     }
-// }
+// todo access control vulnerabilities
+//restricting users where possibble
 
 const getPricingRange = (Reach,posts,months) => {
     return [2.2*Reach*posts*months, 4.2*Reach*posts*months]
 }
 
 const unitPricingRange = (Reach) => {
-    return [2.2*Reach,4.2*Reach]
+    return [2.2*Reach,4.2*Reach] 
 }
 
 const merchantPickInfluencer = async (req,res) => {
     try {
-        // const {email,userType} = req.user;
+        const {email,userType} = req.user;
         let {
-            email,
-            userType,
             productName,
             ReasonForProm,
             uniqueQualities,
@@ -72,10 +48,10 @@ const merchantPickInfluencer = async (req,res) => {
             pricing,
             unitPricing
         } = req.body
-        // req.body.email = email
-        // req.body.userType = userType
+        req.body.email = email
+        req.body.userType = userType
         //verify that the user is a merchant
-        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
+        if (userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //get the influencer level (could be one of micro,mini,max)
         // const getInfluencerLevel = influencerLevel.replaceAll(" ","").split("")[0].toLowerCase()
         // console.log(getInfluencerLevel)
@@ -101,28 +77,34 @@ const merchantPickInfluencer = async (req,res) => {
     }
 } 
 
-
+//following the first request
 //pick a specific influencer for negotiation
 const influencerNegotiation = async (req,res) => {
     try {
         const {email} = req.user
         const id = req.params.id
+        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //filter only the approved influencers
-        // const approvedInfluencers = Infuencer.find({regStatus:"accepted"})
-        let profile = await Profiles.find({email:email})
+        // const approvedInfluencers = Influencer.find({regStatus:"accepted"})
+        let profile = await Profiles.findOne({email:email})
         if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
-        if (!getInfluencer) return res.json({code:404,message:"no user with that identifier"})
-
+        if (!getInfluencer) return res.json({code:404,message:"this influencer was not found !"})
         //increase the merchant campaign
-
-        profile.influencers.push({influencerName:getInfluencer.fullName,status:"pending"})
-        profile.pendingCampaigns = profile.pendingCampaigns + 1
+       let pendingIncrement = profile.pendingCampaigns + 1
+    //    profile.pendingCampaigns =await profile.pendingCampaigns + 1
+    //     profile.markModified("pendingCampaigns")
+    //     await profile.save()
         //mark modify profiles
         let pending = getInfluencer.pendingJobs
         let newpending = pending + 1
         console.log(newpending)
-        // await profile.save()
+        //update the merchant pending campaigns
+        await Profiles.findOneAndUpdate({email:email},{pendingCampaigns:pendingIncrement},{new:true,runValidators:true},
+            function (err,docs){
+                if (err) console.error(err)
+                console.log(docs) 
+            })
         await Influencer.findOneAndUpdate({_id:id},{pendingJobs:newpending},{new:true,runValidators:true},
             function (err,docs){
                 if (err) console.error(err)
@@ -131,10 +113,6 @@ const influencerNegotiation = async (req,res) => {
         // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
         // await getInfluencer.markModified("pendingJobs")
         let firstName = getInfluencer.fullName.split(' ')[0]
-        // let newClient = {profile.storeInfo, profile.fullname, profile.phone}
-        // getInfluencer.exciteClients.push(newClient)
-        // getInfluencer.markModified("exciteClients")
-        // await getInfluencer.save()
         // nodeoutlook.sendEmail({
         //     auth: {
         //       user: process.env.EXCITE_ENQUIRY_USER,
@@ -156,7 +134,7 @@ const influencerNegotiation = async (req,res) => {
         //   await getInfluencer.save((err,docs)=>{
         //       console.log(err)
         //   })
-        return res.json({code:200,data:getInfluencer,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
+        return res.json({code:200,data:{...getInfluencer,...profile[fullName]},message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
         })
     } catch (err) {
         console.error(err)
@@ -181,13 +159,12 @@ const getInfluencerDashboard = async (req,res) => {
         return res.json({code:200,message:err.message})
     }
 }
-// GET weekly reports
-// PAYMENT POPUP VIEW 
+
 //merchant dashboard
 const merchantDashboard = async (req,res) => {
     try {
         const {email} = req.user
-        let profile = Profiles.find({email:email}).lean()
+        let profile = Profiles.findOne({email:email}).lean()
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"you are not allowed to view this resource"})
         //filter the list of influencers to the one with the same id
         let influencerData = {...profile.ongoingCampaigns,...profile.pendingCampaigns,...profile.influencer}
@@ -196,8 +173,6 @@ const merchantDashboard = async (req,res) => {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
-
-
 }
 // influencer accept offer /agree route
 const influencerAgreePrice = async (req,res) => {
@@ -289,11 +264,11 @@ const merchantNegotiateOffer = async (req,res) => {
 //influencer accept button
 const influencerAcceptsPrice = async (req,res) => {
     const {email} = req.user;
-    const id = req.params.id
+    const id = req.params.id;
     //get the particular chat and make sure only the influencer accesses it
     const selectInfluencer = await Negotiation.findById(id).lean()
     if  (!selectInfluencer) return res.json({code:404,message:"Chat Not found"})
-    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are unauthorized to access this resource"})
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
     //verify that the system has a valid merchant and valid influencer to send mails to
     // update the merchant and influencer status
     let findMerchant = await Profiles.find({email:selectInfluencer.merchantEmail}).lean()
@@ -337,7 +312,7 @@ const influencerDeclinePrice = async (req,res)  => {
         const {email} = req.user
         const id = req.params.id
         //get a specific chat
-        if (!req.user.userType === "EX90IF") return res.json({code:401,message:"you are unauthorized to view this page"})
+        if (!req.user.userType === "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
         const getChat = await Negotiation.findById(id).lean()
         if (!getChat) return res.json({code:404,message:"Chat not found"})
         //find the merchant that matches thee chat section
@@ -385,6 +360,10 @@ const getAllChats = async (req,res) => {
         return res.json({code:500,message:err.message})
     }
 }
+
+// get the overall design pattern to track the accepted seection to the payments section to the reports section to the payment tracking session 
+// GET weekly reports
+// PAYMENT POPUP VIEW 
 
 module.exports = {
     merchantPickInfluencer,

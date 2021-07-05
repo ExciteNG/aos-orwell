@@ -24,7 +24,7 @@ router.get('/all', requireJWT, async (req, res) => {
 })
 
 // get a specific record by id
-router.get('/:id', async (req,res)=>{
+router.get('/:id', requireJWT, async (req,res)=>{
     const id = req.params.id
     try {
         const storeId = await Records.findById({_id:id})
@@ -40,7 +40,7 @@ router.get('/:id', async (req,res)=>{
 })
 
 // get a specific record by product name
-router.get('/name/:id', async (req,res)=>{
+router.get('/name/:id', requireJWT, async (req,res)=>{
     const productName = req.params.id
     try {
         const storeId = await Records.find({productName:productName})
@@ -56,7 +56,7 @@ router.get('/name/:id', async (req,res)=>{
 })
 
 // update record by product name
-router.put('/name/:id', async (req,res) =>{
+router.put('/name/:id', requireJWT, async (req,res) =>{
     const productName = req.params.id
     try {
         let record = await Records.find({productName:productName}).lean()
@@ -79,7 +79,7 @@ router.put('/name/:id', async (req,res) =>{
 
 
 // update a new record
-router.put('/:id', async (req,res) =>{
+router.put('/:id', requireJWT, async (req,res) =>{
     const id = req.params.id
     try {
         let record = await Records.findById({_id:id}).lean()
@@ -101,7 +101,7 @@ router.put('/:id', async (req,res) =>{
 })
 
 //delete a sale
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', requireJWT, async (req,res) => {
     const id = req.params.id
 
     try {
@@ -120,7 +120,7 @@ router.delete('/:id', async (req,res) => {
 })
 
 // delete all records
-router.delete('/record', async (req,res) => {
+router.delete('/record', requireJWT, async (req,res) => {
     const id = req.params.id
 
     try {
@@ -144,17 +144,12 @@ router.post('/new' , requireJWT, async (req,res) =>{
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
     try {
-        // req.body.user = req.user.id
-
         const thisSales=req.body;
-        let record = await Books.findOne({_id:req.body.salesRef})
-       delete thisSales._id
-
-       // console.log(thisSales)
-       // console.log('record sold is ', record);
+        // let record = await Books.findOne({_id:req.body.salesRef})
+       delete thisSales._id;
 
        // ******** Consider TODO ***********
-       // import book keeping and update the record  for  store, orders and sales on backend (tip: use findOne as in above).
+       // import book keeping and update the record  for  store, orders and sales on backend.
        // Also remove the record update on frontend that uses modifiedData,qtySold etc
 
         await Records.create({

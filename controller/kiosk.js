@@ -45,5 +45,3 @@ const createKiosk = async (req, res) => {
 module.exports = {
   createKiosk
 }
-
-// http://192.168.0.1

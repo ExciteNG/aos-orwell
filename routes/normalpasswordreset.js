@@ -54,7 +54,7 @@ router.post('/forgot-password', function (req,res,next) {
               },
               secure:false,
           })
-          return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+          return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:user.userType});
           done('done')
         }
       ], function(err) {
@@ -75,6 +75,7 @@ router.post('/reset/:token/:email', function(req, res) {
     async.waterfall([
       function(done) {
         User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+          console.error(err)
           if (!user) {
            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
@@ -115,7 +116,7 @@ router.post('/reset/:token/:email', function(req, res) {
             secure:false,
            
         });
-        return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
+        return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
 
         done("done");
         // process.exit(1)

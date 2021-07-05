@@ -1,45 +1,49 @@
 const PostTransactionModel = require("../../models/transactions/postTransaction");
 const Profiles = require("../../models/Profiles");
 const TransactionsModel = require('../../models/transactions/transaction');
+const Inventory = require('../../models/bookkeeping');
+
 
 const createPostTransaction = async (req, res) => {
   try {
     // const email = "vec@gmail.com";
     const {email,userType}= req.user;
     const userProfile = await Profiles.findOne({ email: email });
-    // const userTransaction = userProfile.netTransaction;
     const userStore = userProfile.storeInfo;
+    const transactionRecord = await TransactionsModel.findOne({description: req.body.selectedTitle});
+    // const inventoryRecord = await Inventory.findOne({ productName: req.body.selectedTitle});
 
     let postTransaction = {
       account: req.body.account,
       accountType: req.body.accountType,
       postTransactionDescription: req.body.postTransactionDescription,
       selectedTitle: req.body.selectedTitle,
-      amount: req.body.amount,
+      amount: req.body.amount, 
       email:email
     };
-    //
+    
+    transactionRecord.inventoryCost = req.body.inventoryCost;
+    transactionRecord.markModified("inventoryCost");
+    transactionRecord.save();
+    
     const transactionType = await TransactionsModel.findOne({description:`${req.body.selectedTitle}`});
     const prevTotal = transactionType.total
     transactionType.total =prevTotal + Number(req.body.amount);
+    transactionType.inventoryTotal + Number(req.body.inventoryPrice);
     transactionType.save();
-
-    //
-
+    
     if (req.body.accountType === "income") {
-      // console.log('inside income ', req.body);
       postTransaction.credit = req.body.amount;
       userProfile.incomeTotal = userProfile.incomeTotal + req.body.amount;
       userProfile.creditTotal = userProfile.creditTotal + req.body.amount;
       userProfile.markModified("incomeTotal");
       userProfile.markModified("creditTotal");
       await userProfile.save();
-      // postTransaction.incomeTotal = userProfile.incomeTotal + req.body.amount;
       postTransaction.incomeTotal = userProfile.incomeTotal;
       postTransaction.creditTotal = userProfile.creditTotal;
       const saved = new PostTransactionModel(postTransaction);
       await saved.save();
-      res.status(201).json({message: 'Credit transaction saved successfully!'});
+      // res.status(201).json({message: 'Credit transaction saved successfully!'});
     }
 
     if (req.body.accountType === "expense") {
@@ -53,13 +57,17 @@ const createPostTransaction = async (req, res) => {
       postTransaction.debitTotal = userProfile.debitTotal;
       const saved = new PostTransactionModel(postTransaction);
       await saved.save();
-      res.status(201).json({message: 'Debit transaction saved successfully!'});
+      // res.status(201).json({message: 'Debit transaction saved successfully!'});
     }
 
-    if (req.body.accountType === "costOfSale") {
+    // console.log('outside costOfSale if');
+
+    if (req.body.accountType === "costOfSale" || req.body.inventoryCost > 0) {
+      // console.log('req body is ', req.body);
       postTransaction.debit = req.body.amount;
       userProfile.costOfSaleTotal = userProfile.costOfSaleTotal + req.body.amount;
       userProfile.debitTotal = userProfile.debitTotal + req.body.amount;
+      userProfile.inventoryCost = (userProfile.inventoryCost + req.body.inventoryCost) || 0;
       userProfile.markModified("costOfSaleTotal");
       userProfile.markModified("debitTotal");
       await userProfile.save();
@@ -67,16 +75,15 @@ const createPostTransaction = async (req, res) => {
       postTransaction.debitTotal = userProfile.debitTotal;
       const saved = new PostTransactionModel(postTransaction);
       await saved.save();
-      res.status(201).json({message: 'Cost Debit transaction saved successfully!'});
+      // res.status(201).json({message: 'Cost Debit transaction saved successfully!'});
     }
-
-    // const saved = postTransaction.save();
-    // if (saved) return res.status(201).json({message: 'Transaction created successfully!'});
-    // return res.status(400).json({message: 'Could not create Transaction!'});
+    
+      res.status(201).json({message: 'Transaction saved successfully!'});
   } catch (error) {
-    res.status(500).json({
+    console.log(error);
+    return res.status(500).json({
       message: "Oops! Something went wrong!",
-      error,
+      error: error
     });
   }
 };
@@ -138,7 +145,6 @@ const getOnePostTransaction = (req, res) => {
 const getAllPostTransactions = (req, res) => {
   PostTransactionModel.find()
     .then((response) => {
-      console.log("response ", response);
       res.status(200).json({
         message: "Found records!",
         result: response,

@@ -1,25 +1,42 @@
 const TransactionModel = require("..//../models/transactions/transaction");
 const Profiles = require("../../models/Profiles");
+const Inventory = require("../../models/bookkeeping");
 
 const createTransaction = async (req, res) => {
   try {
-    console.log('inside trandsaction post', req.body)
     // const email = "vec@gmail.com";
     const {email,userType}= req.user;
     const userProfile = await Profiles.findOne({ email: email });
-    // // const userTransaction = userProfile.netTransaction;
     const userStore = userProfile.storeInfo;
+
+    let {description} = req.body;
+    const inventoryRecord = await Inventory.findOne({productName: description});
 
     const transaction = new TransactionModel({
       accountType: req.body.accountType,
       description: req.body.description,
+      // inventoryCost: req.body.inventoryCost,
       email:email,
       merchant:email,
     });
+    
+    if(req.body.inventoryCost > 0){
+      transaction.inventoryCost = req.body.inventoryCost;
+      inventoryRecord.save();
+    }
+    // if(inventoryRecord){
+    //   inventoryRecord.inventoryCost = req.body.inventoryCost; // already summed in frontend
+    //   inventoryRecord.save();
+    // }
+    
+    // console.log('req body inv is ', req.body.inventoryCost);
+    // console.log('inventory body is ', inventoryRecord.inventoryCost);
+
     const saved = transaction.save();
     if (saved) return res.status(201).json({message: 'Transaction created successfully!'});
     return res.status(400).json({message: 'Could not create Transaction!'});
   } catch (error) {
+    console.log('error msg ', error);
     res.status(500).json({
       message: "Oops! Something went wrong!",
       error,
@@ -40,6 +57,7 @@ const updateTransaction = (req, res) => {
       });
     })
     .catch((error) => {
+      console.log('error msg ', error);
       res.status(500).json({
         message: "Oops! Something went wrong.",
         error,
@@ -55,6 +73,7 @@ const deleteTransaction = (req, res) => {
         message: "Reeord deleted successfully!",
       })
       .catch((error) => {
+        console.log('error msg ', error);
         res.status(500).json({
           message: "Oops! Something went wrong.",
           error,
@@ -74,6 +93,7 @@ const getOneTransaction = (req, res) => {
       });
     })
     .catch((error) => {
+      console.log('error msg ', error);
       res.status(500).json({
         message: "Oops! Something went wrong.",
         error,
@@ -91,6 +111,7 @@ const getAllTransactions = (req, res) => {
       });
     })
     .catch((error) => {
+      console.log('error msg ', error);
       res.status(500).json({
         message: "Oops! Something went wrong.",
         error,

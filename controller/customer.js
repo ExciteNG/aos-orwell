@@ -19,9 +19,9 @@ const createCustomer = async (req, res) => {
     // customer.syncIndexes();
     const customerId = customer._id;
     const merchant = await Profiles.findOne({email:email});
-    merchant.customers.push(customerId)
-    merchant.markModified('customers');
-    merchant.save();
+    await  merchant.customers.push(customerId)
+    await merchant.markModified('customers');
+    await merchant.save();
     // console.log(req.body)
     const saveAway = await customer.save()
     if(saveAway) return res.status(201).json({
