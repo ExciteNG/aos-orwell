@@ -36,6 +36,7 @@ else {
     const morgan = require('morgan');
     const cronJob = require('node-cron');
     const Profiles = require("./models/Profiles");
+    const Payments = require('./models/agreeprice');
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
@@ -101,8 +102,22 @@ else {
     return profiles
   }
 
+  //run a cronjob to check if the payment agreement for influencer marketing is expired
+  const checkStatus = async () => {
+    let payments = await Payments.find()
+    payments.forEach(payment => {
+      if (Date.now() > payment.endDate){
+        payment.negotiationStatus = "completed"
+        //send mails to the the respective influencers and merchants
+      }
+      
+    });
+
+  }
+
 
   cronJob.schedule('0 0 * * *',()=>checkSub())
+  cronJob.schedule('0 0 * * *', () => checkStatus())
 
 
     // Routes
