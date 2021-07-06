@@ -153,7 +153,7 @@ else {
 
 
   cronJob.schedule('0 0 * * *',()=>checkSub())
-  cronJob.schedule('0 0 * * *', () => checkStatus())
+  // cronJob.schedule('0 0 * * *', () => checkStatus())
 
 
     // Routes
