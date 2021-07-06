@@ -98,58 +98,58 @@ else {
   }
 
   //run a cronjob to check if the payment agreement for influencer marketing is expired
-  const checkStatus = async () => {
-    let payments = await Payments.find({negotiationStatus:"accepted"})
-    payments.forEach(async payment => {
-      if (Date.now() > payment.endDate){
-        payment.negotiationStatus = "completed"
-        let influencer = await Influencers.findOne({fullName:payment.influencerName})
-        let profile = await Profiles.findOne({email:payment.email})
-        //send mails to the the respective influencers and merchants
-        //merchant first
-           nodeoutlook.sendEmail({
-            auth: {
-              user: process.env.EXCITE_ENQUIRY_USER,
-              pass: process.env.EXCITE_ENQUIRY_PASS,
-            },
-              from: 'enquiry@exciteafrica.com',
-              to: profile.email,
-              subject: 'NOTIFICATION OF CONTRACT COMPLETION',
-              html: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
-              text: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
-              replyTo: 'enquiry@exciteafrica.com',
-              onError: (e) => console.log(e),
-              onSuccess: (i) => {
-              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
-              console.log(i)
-              },
-              secure:false,
-          })
-          //send influencer 
-          nodeoutlook.sendEmail({
-            auth: {
-              user: process.env.EXCITE_ENQUIRY_USER,
-              pass: process.env.EXCITE_ENQUIRY_PASS,
-            },
-              from: 'enquiry@exciteafrica.com',
-              to: influencer.email,
-              subject: 'NOTIFICATION OF CONTRACT COMPLETION',
-              html: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
-              text: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
-              replyTo: 'enquiry@exciteafrica.com',
-              onError: (e) => console.log(e),
-              onSuccess: (i) => {
-              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
-              console.log(i)
-              },
-              secure:false,
-          })
+  // const checkStatus = async () => {
+  //   let payments = await Payments.find({negotiationStatus:"accepted"})
+  //   payments.forEach(async payment => {
+  //     if (Date.now() > payment.endDate){
+  //       payment.negotiationStatus = "completed"
+  //       let influencer = await Influencers.findOne({fullName:payment.influencerName})
+  //       let profile = await Profiles.findOne({email:payment.email})
+  //       //send mails to the the respective influencers and merchants
+  //       //merchant first
+  //          nodeoutlook.sendEmail({
+  //           auth: {
+  //             user: process.env.EXCITE_ENQUIRY_USER,
+  //             pass: process.env.EXCITE_ENQUIRY_PASS,
+  //           },
+  //             from: 'enquiry@exciteafrica.com',
+  //             to: profile.email,
+  //             subject: 'NOTIFICATION OF CONTRACT COMPLETION',
+  //             html: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
+  //             text: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
+  //             replyTo: 'enquiry@exciteafrica.com',
+  //             onError: (e) => console.log(e),
+  //             onSuccess: (i) => {
+  //             // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+  //             console.log(i)
+  //             },
+  //             secure:false,
+  //         })
+  //         //send influencer 
+  //         nodeoutlook.sendEmail({
+  //           auth: {
+  //             user: process.env.EXCITE_ENQUIRY_USER,
+  //             pass: process.env.EXCITE_ENQUIRY_PASS,
+  //           },
+  //             from: 'enquiry@exciteafrica.com',
+  //             to: influencer.email,
+  //             subject: 'NOTIFICATION OF CONTRACT COMPLETION',
+  //             html: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
+  //             text: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
+  //             replyTo: 'enquiry@exciteafrica.com',
+  //             onError: (e) => console.log(e),
+  //             onSuccess: (i) => {
+  //             // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+  //             console.log(i)
+  //             },
+  //             secure:false,
+  //         })
 
-      }
+  //     }
       
-    });
+  //   });
 
-  }
+  // }
 
 
   cronJob.schedule('0 0 * * *',()=>checkSub())
