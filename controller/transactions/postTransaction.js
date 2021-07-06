@@ -11,26 +11,38 @@ const createPostTransaction = async (req, res) => {
     const userProfile = await Profiles.findOne({ email: email });
     const userStore = userProfile.storeInfo;
     const transactionRecord = await TransactionsModel.findOne({description: req.body.selectedTitle});
-    // const inventoryRecord = await Inventory.findOne({ productName: req.body.selectedTitle});
+    const inventoryRecord = await Inventory.findOne({ productName: req.body.selectedTitle});
 
     let postTransaction = {
       account: req.body.account,
       accountType: req.body.accountType,
       postTransactionDescription: req.body.postTransactionDescription,
       selectedTitle: req.body.selectedTitle,
-      amount: req.body.amount, 
+      amount: req.body.amount,
+      // quantity: req.body.quantity,
       email:email
     };
     
-    transactionRecord.inventoryCost = req.body.inventoryCost;
-    transactionRecord.markModified("inventoryCost");
-    transactionRecord.save();
+    // transactionRecord.inventoryCost = req.body.inventoryCost;
+    // transactionRecord.markModified("inventoryCost");
+    // transactionRecord.save();
     
+    // console.log('qty is ', req.body.quantity);
     const transactionType = await TransactionsModel.findOne({description:`${req.body.selectedTitle}`});
-    const prevTotal = transactionType.total
-    transactionType.total =prevTotal + Number(req.body.amount);
-    transactionType.inventoryTotal + Number(req.body.inventoryPrice);
-    transactionType.save();
+    if (transactionType) {
+      const prevTotal = transactionType.total;
+      transactionType.total =prevTotal + Number(req.body.amount);
+      transactionType.total + Number(req.body.inventoryPrice);
+      if(inventoryRecord){
+        const calcSum = inventoryRecord.price * Number(req.body.quantity);
+        transactionType.productSaleSum = transactionType.productSaleSum + calcSum; 
+      }
+      // if(postTransaction){
+      //   const calcSum = postTransaction.amount;
+      //   transactionType.productSaleSum = transactionType.productSaleSum + calcSum; 
+      // }
+      transactionType.save();
+    }
     
     if (req.body.accountType === "income") {
       postTransaction.credit = req.body.amount;

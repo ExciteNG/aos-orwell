@@ -11,10 +11,19 @@ const createTransaction = async (req, res) => {
 
     let {description} = req.body;
     const inventoryRecord = await Inventory.findOne({productName: description});
+    const transactionType = await TransactionModel.findOne({description:`${req.body.description}`});
+    if(transactionType){
+      console.log('transaction exists');
+      return res.status(200).json({message: "transaction already exists."})
+    }
+    // if(!transactionType){
+    //   console.log('transaction does not exists');
+    // }
 
     const transaction = new TransactionModel({
       accountType: req.body.accountType,
       description: req.body.description,
+      productSaleSum: req.body.productSaleSum,
       // inventoryCost: req.body.inventoryCost,
       email:email,
       merchant:email,
@@ -22,11 +31,18 @@ const createTransaction = async (req, res) => {
     
     if(req.body.inventoryCost > 0){
       transaction.inventoryCost = req.body.inventoryCost;
-      inventoryRecord.save();
+      // inventoryRecord.save();
+      transaction.save();
     }
     // if(inventoryRecord){
-    //   inventoryRecord.inventoryCost = req.body.inventoryCost; // already summed in frontend
+    //   transaction.inventoryCost = req.body.inventoryCost; // already summed in frontend
     //   inventoryRecord.save();
+    // }
+
+    // if(inventoryRecord){
+    //   console.log('inv record ', inventoryRecord);
+    //   // inventoryRecord.inventoryCost = req.body.inventoryCost; // already summed in frontend
+    //   // inventoryRecord.save();
     // }
     
     // console.log('req body inv is ', req.body.inventoryCost);
