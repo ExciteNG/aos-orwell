@@ -69,7 +69,7 @@ else {
 
 
     // Middleware
-    app.use(cors(corsOptions,{ credentials: true }));
+    app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());
     app.use(helmet.frameguard({action:"sameorigin"}))
