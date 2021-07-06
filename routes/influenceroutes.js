@@ -13,7 +13,7 @@ router.get('/influencer-dashboard',requireJWT,getInfluencerDashboard)
 router.put('/influencer-negotiation/:id',requireJWT,influencerNegotiation)
 
 // merchant dashboard
-router.get('/merchant/dashboard',requireJWT,merchantDashboard)
+router.get('/merchant/dashboard/',requireJWT,merchantDashboard)
 //merchant agree price
 router.post('/merchant-agree-price',requireJWT,merchantPaymentPrice)
 
