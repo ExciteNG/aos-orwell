@@ -623,6 +623,7 @@ const addVehicle = async (req, res) => {
 };
 
 const getLandinpPage = async (req, res) => {
+  console.log('back')
   try {
     const banners = await Banners.find();
     const deals = await Deals.find();
@@ -634,8 +635,10 @@ const getLandinpPage = async (req, res) => {
         path: "product",
       },
     }]).sort({ priority: -1, _id: 1 });
-    res.json({ banner: approvedBanners, products: products, deals: deals });
+    return res.json({code:201, banner: approvedBanners, products: products, deals: deals });
   } catch (error) {
+    console.log(error)
+    // return res.json({ banner: [], products: [], deals: [] });
     return res.status(500)
   }
 
