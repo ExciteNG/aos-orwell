@@ -9,6 +9,7 @@ const transactionSchema = mongoose.Schema({
   inventoryCost: { type: Number},
   inventorytotal: { type: Number},
   total: { type: Number, default:0 },
+  productSaleSum: { type: Number, default: 0},
   transactionsTotal:[{type:mongoose.Schema.Types.ObjectId,
     ref:"PostTransaction"}],
   // income: { type: Number },
