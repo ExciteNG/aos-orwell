@@ -1,7 +1,5 @@
-/* eslint-disable prettier/prettier */
-const emailHost = require('./email_host')
 const socialMediaLinks = require('../emails/social_links');
-const welcomeMail = (userName) =>{
+const influencerContractExpired = (fullName,merchantName,price,duration) => {
 
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -819,56 +817,15 @@ const welcomeMail = (userName) =>{
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" align="center">
-                                                                                            <h3 style="color: #6fd20d; font-weight: 400;">WELCOME TO EXCITE<br></h3>
+                                                                                            <h3 style="color: #6fd20d; font-weight: 400;">NOTIFICATION OF CONTRACT COMPLETION</h3>
                                                                                             <p style="color: #6fd20d;"><br></p>
-                                                                                            <p style="text-align: left; color:#000000; font-size: medium;">Dear ${userName},<br><br></p>
-                                                                                            <p style="color: #000000; font-size: medium;">We are excited to have you on our platform. Excite Enterprise deals with SMEs. Our aim is to provide accessible, affordable and effective business<br>solutions that address the needs of Africa's growing businesses.<br></p>
+                                                                                            <p style="text-align: left; color:#000000; font-size: medium;">Dear ${fullName},<br><br></p>
+                                                                                            <p style="color: #000000; font-size: medium;">This is to notify you that&nbsp; your contract with the merchant by the name of ${merchantName} costing ${price} for ${duration} months has expired.<br><br>You can sign another contract with this particular merchant or get another merchant by logging in to your dashboard&nbsp; <a href="https://www.exciteenterprise.com/influencer-marketing/influencer-dashboard" target="_blank" style="font-size: 16px;">Here</a>.<br><br>If you have any questions or enquiries, just reply to this mail and we will be in touch shortly.<br></p>
+                                                                                            <p style="color: #000000; font-size: medium;"><br></p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-text" align="center"><br>
-                                                                                            <p style="color: #000000; font-size:large;">Our services include, but not limited to:</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td class="esd-block-text" align="left">
-                                                                                            <p style="color: #000000; font-size:medium; "><br><strong>Access To Funds:</strong>&nbsp;Get access to funds to grow your business.</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td class="esd-block-text" bgcolor="#ffffff" align="left">
-                                                                                            <p style="color: #000000; font-size:medium"><br><strong>Automation Tools (Ease of Business)</strong></p>
-                                                                                            <ul>
-                                                                                                <li style="color: #000000; font-size:medium">Get your business registered within a week.<br></li>
-                                                                                                <li style="color: #000000; font-size:medium">Pay your taxes.<br></li>
-                                                                                                <li style="color: #000000; font-size:medium">All from the comfort of your home.<br></li>
-                                                                                            </ul>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td class="esd-block-text" align="left">
-                                                                                            <p style="color: #000000; font-size:medium; font-weight:600;">Growth and Expansion Tools</p>
-                                                                                            <ul>
-                                                                                                <li style="color: #000000;font-size:medium">Take advantage of our Excite Kiosk service and get your business place setup in no time</li>
-                                                                                                <li style="color: #000000;font-size:medium">Put your business in front of millions of potential customers with our Banner Advert services.</li>
-                                                                                                <li style="color: #000000;font-size:medium">List your pr<span style="font-size:17px;"></span>oducts and services for free.<br></li>
-                                                                                            </ul>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td class="esd-block-text" align="left"><br><strong>And much more !</strong></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td class="esd-block-text" align="“left”"><br>
-                                                                                            <p style="color:black; font-weight:600; text-align:center">ONBOARDING</p>
-                                                                                            <ul>
-                                                                                                <li style="font-size: medium; color: #000000;">To get started, Click the link below to watch a short video explaining our Excite platform <a style="font-size:medium" href="https://youtu.be/E-QWZ-nyJLU">Excite Africa</a></li>
-                                                                                                <li style="font-size: medium; color: #000000;">To visit the Excite platform directly, kindly click the link <a style="font-size:medium" href="https://www.exciteenterprise.com/" target="_blank">Here</a></li>
-                                                                                                <li style="font-size: medium; color: #000000;">Watch <a style="font-size:medium" href="https://www.youtube.com/watch?v=1qTetJbonN0" target="_blank">this</a> short video to get a detailed summary of what excite offers</li>
-                                                                                                <li style="font-size: medium; color: #000000;">Merchants can learn how to post products on the excite enterprise platform <a style="font-size:medium" href="https://youtu.be/p61A0Z7XbxQ" target="_blank">here</a></li>
-                                                                                                <li style="font-size: medium; color: #000000;">Also learn how to subscribe on the platform <a style="font-size:medium" href="https://youtu.be/7NiEuCqNNKs" target="_blank">here</a></li>
-                                                                                            </ul>
-                                                                                            <p style="font-size:medium; color:#000000;">If you have any questions, kindly reply to this email or reach us via the following contacts:<br>09138650923<br>enquiry@exciteafrica.com</p>
+                                                                                        <td class="esd-block-text" align="“left”">Best Regards,<p style="font-size:medium; color:#000000;">The excite team</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -924,7 +881,7 @@ const welcomeMail = (userName) =>{
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> <table width="100%" cellspacing="0" cellpadding="0">
+                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> ${socialMediaLinks()} <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
@@ -939,15 +896,13 @@ const welcomeMail = (userName) =>{
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" esd-links-color="#ffffff" esd-links-underline="underline" bgcolor="#6fd20d" align="center"><br>
-                                                                                            <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
+                                                                                            <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a><br><br></p>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr>
-                                                                                    ${socialMediaLinks()}
-                                                                                    </tr>
+                                                                                    <tr></tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
-                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you are a registered user on the excite enterprise platform.<br></p>
+                                                                                            <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because you are a registered influencer on the excite enterprise platform.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -1003,6 +958,6 @@ const welcomeMail = (userName) =>{
     </body>
     
     </html>`
-} 
+}
 
-module.exports = welcomeMail;
+module.exports = influencerContractExpired;

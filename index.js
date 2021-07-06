@@ -28,12 +28,16 @@ else {
     const compression = require('compression');
     const authMiddleware = require('./middleware/auth');
     const authMiddleware2 = require('./middleware/cookieAuth');
-    const dotenv = require('dotenv')
+    const dotenv = require('dotenv');
     dotenv.config()
     const morgan = require('morgan');
     const cronJob = require('node-cron');
+    const nodeoutlook = require('nodejs-nodemailer-outlook');
+    const Influencers = require('./models/influencer');
     const Profiles = require("./models/Profiles");
     const Payments = require('./models/agreeprice');
+    const merchantContractExpired = require('./emails/merchant_contract_expired');
+    const influencerContractExpired = require('./emails/influencer_contract_expired');
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
@@ -65,8 +69,7 @@ else {
 
 
     // Middleware
-    
-    app.use(cors({ credentials: true },corsOptions));
+    app.use(cors(corsOptions,{ credentials: true }));
     //middleware against standard http header attacks
     app.use(helmet());
     app.use(helmet.frameguard({action:"sameorigin"}))
@@ -96,11 +99,52 @@ else {
 
   //run a cronjob to check if the payment agreement for influencer marketing is expired
   const checkStatus = async () => {
-    let payments = await Payments.find()
-    payments.forEach(payment => {
+    let payments = await Payments.find({negotiationStatus:"accepted"})
+    payments.forEach(async payment => {
       if (Date.now() > payment.endDate){
         payment.negotiationStatus = "completed"
+        let influencer = await Influencers.findOne({fullName:payment.influencerName})
+        let profile = await Profiles.findOne({email:payment.email})
         //send mails to the the respective influencers and merchants
+        //merchant first
+           nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: profile.email,
+              subject: 'NOTIFICATION OF CONTRACT COMPLETION',
+              html: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
+              text: merchantContractExpired(profile.fullName,influencer.fullName,payment.amountToPay,payment.duration),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+          //send influencer 
+          nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: influencer.email,
+              subject: 'NOTIFICATION OF CONTRACT COMPLETION',
+              html: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
+              text: influencerContractExpired(influencer.fullName,profile.fullName,payment.amountToPay,payment.duration),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+
       }
       
     });
