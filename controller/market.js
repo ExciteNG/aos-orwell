@@ -639,7 +639,7 @@ const getLandinpPage = async (req, res) => {
   } catch (error) {
     console.log(error)
     // return res.json({ banner: [], products: [], deals: [] });
-    return res.status(500)
+    // return res.status(500)
   }
 
 };
