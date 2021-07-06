@@ -19,15 +19,10 @@ const createPostTransaction = async (req, res) => {
       postTransactionDescription: req.body.postTransactionDescription,
       selectedTitle: req.body.selectedTitle,
       amount: req.body.amount,
+      paymentMode: req.body.paymentMode,
       // quantity: req.body.quantity,
       email:email
     };
-    
-    // transactionRecord.inventoryCost = req.body.inventoryCost;
-    // transactionRecord.markModified("inventoryCost");
-    // transactionRecord.save();
-    
-    // console.log('qty is ', req.body.quantity);
     const transactionType = await TransactionsModel.findOne({description:`${req.body.selectedTitle}`});
     if (transactionType) {
       const prevTotal = transactionType.total;
@@ -37,10 +32,6 @@ const createPostTransaction = async (req, res) => {
         const calcSum = inventoryRecord.price * Number(req.body.quantity);
         transactionType.productSaleSum = transactionType.productSaleSum + calcSum; 
       }
-      // if(postTransaction){
-      //   const calcSum = postTransaction.amount;
-      //   transactionType.productSaleSum = transactionType.productSaleSum + calcSum; 
-      // }
       transactionType.save();
     }
     
@@ -55,7 +46,6 @@ const createPostTransaction = async (req, res) => {
       postTransaction.creditTotal = userProfile.creditTotal;
       const saved = new PostTransactionModel(postTransaction);
       await saved.save();
-      // res.status(201).json({message: 'Credit transaction saved successfully!'});
     }
 
     if (req.body.accountType === "expense") {
@@ -69,10 +59,7 @@ const createPostTransaction = async (req, res) => {
       postTransaction.debitTotal = userProfile.debitTotal;
       const saved = new PostTransactionModel(postTransaction);
       await saved.save();
-      // res.status(201).json({message: 'Debit transaction saved successfully!'});
     }
-
-    // console.log('outside costOfSale if');
 
     if (req.body.accountType === "costOfSale" || req.body.inventoryCost > 0) {
       // console.log('req body is ', req.body);

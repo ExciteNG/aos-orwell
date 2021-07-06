@@ -9,6 +9,7 @@ const postTransactionSchema = mongoose.Schema({
   postTransactionDescription: { type: String },
   selectedTitle: { type: String },
   amount: { type: String },
+  paymentMode: { type: String },
   income: { type: Number },
   expense: { type: Number },
   costOfSale: { type: Number },

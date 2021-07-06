@@ -4,6 +4,7 @@ var nodeoutlook = require("nodejs-nodemailer-outlook");
 const invoiceMail = require('../emails/invoice_mail')
 
 const createRecord = async (req, res) => {
+  console.log('receivables req body is', req.body);
   const {email, userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;

@@ -15,6 +15,9 @@ const receivablesModel = mongoose.Schema({
   inventoryPrice: {
     type: Number
   },
+  paymentMode: {
+    type: String,
+  },
   quantity: {
     type: Number,
     default: 1
