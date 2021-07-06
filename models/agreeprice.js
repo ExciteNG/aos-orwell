@@ -17,9 +17,32 @@ const AgreePriceSchema = mongoose.Schema({
         type:String,
         default:"EX10AF"
     },
+    influencerName:{
+        type:String,
+        required:true
+    },
     price:{
         type:Number,
         default:0
+    },
+    duration:{
+        type:Number,
+        default:1
+    },
+    amountToPay:{
+        type:Number,
+    },
+    startDate:{
+        type:Number,
+        default:0
+    },
+    endDate:{
+        type:Number,
+        default:0
+    },
+    negotiationStatus:{
+        type:String,
+        default:""
     },
     createdAt:{
         type:String,

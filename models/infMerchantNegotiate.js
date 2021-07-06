@@ -53,10 +53,10 @@ const NegotiateSchema = mongoose.Schema({
         type:Number,
         default:0
     },
-    negotiationStatus:{
-        type:String,
-        default:"neogtiating"
-    }
+    // negotiationStatus:{
+    //     type:String,
+    //     default:"neogtiating"
+    // }
 })
 
 module.exports = mongoose.model('Negotiate',NegotiateSchema)

@@ -2,9 +2,6 @@
 /* eslint-disable prettier/prettier */
 //scaling the application by increasing the worker processes (increasing concurrency and multithreading)
 const clusters = require('cluster');
-//get the number of cpus which ideally should be 4
-const os = require('os').cpus().length;
-
 
 //SET THE CPU WORKERS
 const WORKERS = process.env.WEB_CONCURRENCY || 4
@@ -36,6 +33,7 @@ else {
     const morgan = require('morgan');
     const cronJob = require('node-cron');
     const Profiles = require("./models/Profiles");
+    const Payments = require('./models/agreeprice');
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
     const helmet = require('helmet');
@@ -47,13 +45,6 @@ else {
 
     app.use(function(req, res, next) {
       res.setHeader("Content-Security-Policy", "script-src 'self';");
-      next();
-    });
-
-    //middleware for protection against clickjacking attacks
-
-    app.use(function(req, res, next) {
-      res.setHeader("Content-Security-Policy", "frame-ancestors 'self';");
       next();
     });
 
@@ -74,13 +65,15 @@ else {
 
 
     // Middleware
+    
+    app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());
+    app.use(helmet.frameguard({action:"sameorigin"}))
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
     app.use(cookieParser())
-    app.use(cors({ credentials: true },corsOptions));
     app.use(compression())
     app.set('trust proxy', 1);
     app.use(authMiddleware.initialize);
@@ -101,8 +94,22 @@ else {
     return profiles
   }
 
+  //run a cronjob to check if the payment agreement for influencer marketing is expired
+  const checkStatus = async () => {
+    let payments = await Payments.find()
+    payments.forEach(payment => {
+      if (Date.now() > payment.endDate){
+        payment.negotiationStatus = "completed"
+        //send mails to the the respective influencers and merchants
+      }
+      
+    });
+
+  }
+
 
   cronJob.schedule('0 0 * * *',()=>checkSub())
+  cronJob.schedule('0 0 * * *', () => checkStatus())
 
 
     // Routes
