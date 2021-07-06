@@ -16,9 +16,6 @@ const createTransaction = async (req, res) => {
       console.log('transaction exists');
       return res.status(200).json({message: "transaction already exists."})
     }
-    // if(!transactionType){
-    //   console.log('transaction does not exists');
-    // }
 
     const transaction = new TransactionModel({
       accountType: req.body.accountType,
@@ -34,19 +31,6 @@ const createTransaction = async (req, res) => {
       // inventoryRecord.save();
       transaction.save();
     }
-    // if(inventoryRecord){
-    //   transaction.inventoryCost = req.body.inventoryCost; // already summed in frontend
-    //   inventoryRecord.save();
-    // }
-
-    // if(inventoryRecord){
-    //   console.log('inv record ', inventoryRecord);
-    //   // inventoryRecord.inventoryCost = req.body.inventoryCost; // already summed in frontend
-    //   // inventoryRecord.save();
-    // }
-    
-    // console.log('req body inv is ', req.body.inventoryCost);
-    // console.log('inventory body is ', inventoryRecord.inventoryCost);
 
     const saved = transaction.save();
     if (saved) return res.status(201).json({message: 'Transaction created successfully!'});
@@ -80,7 +64,7 @@ const updateTransaction = (req, res) => {
       });
     });
 };
-//
+
 const deleteTransaction = (req, res) => {
   TransactionModel.deleteOne({ _id: req.params.id }).then(() => {
     res
@@ -120,7 +104,7 @@ const getOneTransaction = (req, res) => {
 const getAllTransactions = (req, res) => {
   TransactionModel.find()
     .then((response) => {
-      console.log("response ", response);
+      // console.log("response ", response);
       res.status(200).json({
         message: "Found records!",
         result: response,
