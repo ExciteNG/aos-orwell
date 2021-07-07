@@ -177,10 +177,17 @@ const merchantDashboard = async (req,res) => {
 }
 
 //allow merchant to cancel out a pending response
-// const merchantDecline = async (req,res)=> {
-
-// }
-
+const merchantDeclinePendings = async (req,res)=> {
+    const {email} = req.user
+    try {
+        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
+        const getNegotiateMerchant = await Negotiation.find({merchantEmail:email})
+        return res.json({code:200,data:getNegotiateMerchant})
+    } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
 
 // influencer accept offer /agree route
 const merchantPaymentPrice = async (req,res) => {
@@ -411,5 +418,6 @@ module.exports = {
     influencerAcceptsPrice,
     influencerDeclinePrice,
     getAllChats,
-    singleChat
+    singleChat,
+    merchantDeclinePendings
 }

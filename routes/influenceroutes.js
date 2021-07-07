@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,merchantPaymentPrice,influencerNegotiatePrice,
     merchantNegotiateOffer,getAllChats,influencerDeclinePrice,
-    influencerAcceptsPrice,singleChat} = require('../controller/influencercontrol')
+    influencerAcceptsPrice,singleChat, merchantDeclinePendings} = require('../controller/influencercontrol')
 const {requireJWT} = require('./../middleware/auth')
 //merchant form for influencer
 router.post('/merchant/get-influencer',requireJWT, merchantPickInfluencer)
@@ -14,6 +14,8 @@ router.put('/influencer-negotiation/:id',requireJWT,influencerNegotiation)
 
 // merchant dashboard
 router.get('/merchant/dashboard',requireJWT,merchantDashboard)
+// get a list of merchant pending jobs
+router.get('merchant/pending-jobs',requireJWT, merchantDeclinePendings)
 //merchant agree price
 router.post('/merchant-agree-price',requireJWT,merchantPaymentPrice)
 
@@ -28,7 +30,7 @@ router.get('/negotiation-chat/:id',requireJWT,singleChat)
 router.get('/my-chats',requireJWT,getAllChats)
 
 //influencer decline offer
-router.delete('/influencer-decline/:id',requireJWT,influencerDeclinePrice)
+router.delete('merchant/influencer-decline/:id',requireJWT,influencerDeclinePrice)
 //influencer accept offer
 router.put("/influencer-accept/:id",requireJWT,influencerAcceptsPrice)
 
