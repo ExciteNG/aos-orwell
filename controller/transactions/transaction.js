@@ -102,9 +102,8 @@ const getOneTransaction = (req, res) => {
 };
 
 const getAllTransactions = (req, res) => {
-  TransactionModel.find()
+  TransactionModel.find({merchant:req.user.email})
     .then((response) => {
-      // console.log("response ", response);
       res.status(200).json({
         message: "Found records!",
         result: response,

@@ -62,7 +62,6 @@ const createPostTransaction = async (req, res) => {
     }
 
     if (req.body.accountType === "costOfSale" || req.body.inventoryCost > 0) {
-      // console.log('req body is ', req.body);
       postTransaction.debit = req.body.amount;
       userProfile.costOfSaleTotal = userProfile.costOfSaleTotal + req.body.amount;
       userProfile.debitTotal = userProfile.debitTotal + req.body.amount;
