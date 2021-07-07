@@ -49,7 +49,6 @@ router.put('/update/:id', requireJWT, (req, res) => {
         record.quantity = record.quantity + req.body.quantityToRevert;
         const total = req.body.price * req.body.quantity;
         record.total = record.total + total;
-        console.log('body qty ', req.body.quantity);
         Records.updateOne({ _id: req.params.id }, record);
         record.save();
         return;
@@ -153,7 +152,7 @@ router.delete('/record', requireJWT, async (req,res) => {
         if (record.length===0) {
           return res.send({status:404,message:"records not found"})
         } else {
-        await Records.deleteMany()
+        await Records.deleteMany({merchant:req.user.email})
        return  res.status(200).send({message:"Wipedown complete and successful !"})
     }
 

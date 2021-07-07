@@ -4,7 +4,6 @@ var nodeoutlook = require("nodejs-nodemailer-outlook");
 const invoiceMail = require('../emails/invoice_mail')
 
 const createRecord = async (req, res) => {
-  console.log('receivables req body is', req.body);
   const {email, userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
@@ -129,7 +128,7 @@ const deleteAllRecords = async (req, res) => {
     if (record.length===0) {
       return res.send({status:404,message:"records not found"})
     } else {
-    await ReceivablesModel.deleteMany()
+    await ReceivablesModel.deleteMany({merchant:req.user.email})
     return  res.status(200).send({message:"Wipedown complete and successful !"})
   }
   } catch (err) {

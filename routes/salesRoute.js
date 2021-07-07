@@ -128,7 +128,7 @@ router.delete('/record', requireJWT, async (req,res) => {
         if (record.length===0) {
           return res.send({status:404,message:"records not found"})
         } else {
-        await Records.deleteMany()
+        await Records.deleteMany({merchant:req.user.email})
        return  res.status(200).send({message:"Wipedown complete and successful !"})
     }
     } catch (err) {
