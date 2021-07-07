@@ -139,7 +139,6 @@ router.delete('/record', requireJWT, async (req,res) => {
 
 // add a new record
 router.post('/new' , requireJWT, async (req,res) =>{
-  // console.log(req.body,'this is from body');
   const {email,userType} = req.user;
   const profiles = await Profiles.findOne({email:email});
   const storeInfo = profiles.storeInfo;
@@ -160,7 +159,7 @@ router.post('/new' , requireJWT, async (req,res) =>{
         return res.status(201).send({message:"success"})
     } catch (err) {
         console.error(err)
-        res.send({status:500,message:err.message})
+        res.status(500).json({message: err.message})
     }
 })
 
