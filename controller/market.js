@@ -46,8 +46,15 @@ const getItemById = async (req, res) => {
   const id = req.params.id;
   // console.log(id)
   //
-  const item = await Products.findOne({ _id: id });
-  res.json({ code: 201, item });
+  try {
+    const item = await Products.findOne({ _id: id });
+    if(!item) return res.json({code:400});
+    console.log(item)
+    return res.json({ code: 201, item });
+  } catch (error) {
+    return res.json({code:500})
+  }
+ 
 };
 const getOfferById = async (req, res) => {
   const id = req.params.id;
@@ -78,7 +85,7 @@ const addElectronics = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   // 
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
@@ -169,7 +176,7 @@ const addHealth = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   // 
   const subs = profile.subscriptionLevel;
   const merchantProduct = profile.product;
@@ -262,7 +269,7 @@ const addFashion = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   // 
@@ -356,7 +363,7 @@ const addPhoneTablet = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
@@ -440,7 +447,7 @@ const addHome = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
 
@@ -538,7 +545,7 @@ const addVehicle = async (req, res) => {
   } = req.body;
   // console.log(req.body)
   const { email } = req.user;
-  const profile = await Profiles.findOne({ email: email });
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
   const merchantId = profile._id
   const storeInfo = profile.storeInfo;
   // 
@@ -653,7 +660,7 @@ const addServices = async (req, res) => {
   } = req.body
   const { email } = req.user;
   try {
-    const profile = await Profiles.findOne({ email: email });
+    const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
     const merchantId = profile._id;
     const storeInfo = profile.storeInfo;
     const priority = profile.subscriptionLevel;
@@ -688,8 +695,58 @@ const addServices = async (req, res) => {
   } catch (error) {
     return res.staus(400).json({ code: 201, msg: "posted to social" });
   }
- 
+}
+// add property and estate
+const addProperty = async (req, res) => {
+  const {
+    title,
+    description,
+    images,
+    price,
+    state,
+    condition,
+    subCategory,
+    lga,
+  } = req.body
+  const { email } = req.user;
+  try {
+    const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
+    const merchantId = profile._id;
+    const storeInfo = profile.storeInfo;
+    const priority = profile.subscriptionLevel;
+    // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
 
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
+  }
+    const item = {
+      title,
+      description,
+      state,
+      lga,
+      price,
+      storeInfo,
+      subCategory,
+      condition,
+      category: "Property",
+      email: email,
+      priority,
+      images: images,
+      merchant: merchantId
+    };
+    const newProduct = new Products(item);
+    await newProduct.save();
+    const newProductId = newProduct._id;
+    // saving profile ref
+    profile.product.push(newProductId);
+    profile.markModified('product');
+    await profile.save();
+    return res.json({ code: 201, msg: "Service listed successfully" });
+  } catch (error) {
+    return res.staus(400).json({ code: 201, msg: "posted to social" });
+  }
 }
 
 module.exports = {
@@ -704,5 +761,6 @@ module.exports = {
   addHealth,
   getOfferById,
   getLandinpPage,
-  addServices
+  addServices,
+  addProperty
 };
