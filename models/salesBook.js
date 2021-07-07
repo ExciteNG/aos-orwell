@@ -8,6 +8,7 @@ const salesModel = new mongoose.Schema({
     required: true,
     trim: true
   },
+  paymentMode: { type: String },
   price: {
     type: Number,
     required: true

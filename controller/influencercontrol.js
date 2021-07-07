@@ -196,7 +196,7 @@ const merchantPaymentPrice = async (req,res) => {
         req.body.amountToPay = Number(req.body.price) * Number(req.body.duration)
         req.body.negotiationStatus = "accepted"
         //find the influencer the paymment is meant for in the database
-        const influencerToPay = await Influencer.findOne({fullName:req.body.influencerName})
+        const influencerToPay = await Influencer.findOne({fullName:req.body.fullName})
         if (!influencerToPay) return res.json({code:404,message:"Can't find this influencer, Please enter the influencer's name as you received it from your email"})
         const newPrice = new agreePrice(req.body)
         //pay via paystack
@@ -291,9 +291,9 @@ const influencerAcceptsPrice = async (req,res) => {
     if (req.user.userType !== "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
     //verify that the system has a valid merchant and valid influencer to send mails to
     // update the merchant and influencer status
-    let findMerchant = await Profiles.findOne({email:selectInfluencer.merchantEmail}).lean()
+    let findMerchant = await Profiles.find({email:selectInfluencer.merchantEmail}).lean()
     if (!findMerchant) return res.json({code:404,message:"Merchant not found!"})
-    let findInfluencer = await Influencer.findOne({email:selectInfluencer.influencerEmail}).lean()
+    let findInfluencer = await Influencer.find({email:selectInfluencer.influencerEmail}).lean()
     if (!findInfluencer) return res.json({code:404,message:"Influencer not found!"})
     //update the merchant pending campaigns
     findMerchant.pendingCampaigns = await findMerchant.pendingCampaigns - 1
@@ -322,8 +322,7 @@ const influencerAcceptsPrice = async (req,res) => {
             console.log(docs)
         }
     })
-    //send  merchant and influencer agree mail to the influencer and merchant
-
+    //send mail to the influencer and user 
 }
 
 
