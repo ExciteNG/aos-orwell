@@ -3,123 +3,123 @@ let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 
 
 const merchantInfluencerSchema = mongoose.Schema({
-    email:{
-        type:String,
-        validate:{
-            validator:function(v){
+    email: {
+        type: String,
+        validate: {
+            validator: function (v) {
                 return emailRegexVal.test(v)
             },
-            message:mail => `${mail.value} is not a valid email address !`
+            message: mail => `${mail.value} is not a valid email address !`
         },
-        required:[true,'Please enter your email address']
+        required: [true, 'Please enter your email address']
     },
-    userType:{
-        type:String,
-        default:"EX90IF"
+    userType: {
+        type: String,
+        default: "EX90IF"
     },
-    productName:{
-        type:String,
-        required:true
+    productName: {
+        type: String,
+        required: true
     },
-    ReasonForProm:{
-        type:String,
-        required:true
+    reasonForProm: {
+        type: String,
+        required: true
     },
-    uniqueQualities:{
-        type:String,
-        required:true
+    uniqueQualities: {
+        type: String,
+        required: true
     },
-    permanentPosts:{
-        type:String
+    permanentPosts: {
+        type: String
     },
-    contactPreference:{
-        type:Array,
-        default:[]
+    contactPreference: {
+        type: Array,
+        default: []
     },
-    modeOfContact:{
-        type:Array,
-        default:[]
+    modeOfContact: {
+        type: Array,
+        default: []
     },
-    mediaPlacement:{
-        type:Array,
-        default:[]
+    mediaPlacement: {
+        type: Array,
+        default: []
     },
-    influencerLevel:{
-        type:String,
-        required:true
+    influencerLevel: {
+        type: String,
+        required: true
     },
-    productUsers:{
-        type:Array,
-        default:[]
+    productUsers: {
+        type: Array,
+        default: []
     },
-    reach:{
-        type:Number,
-        required:true
+    reach: {
+        type: Number,
+        required: true
     },
-    productPrice:{
-        type:String,
-        required:true
+    productPrice: {
+        type: String,
+        required: true
     },
-    competitors:{
-        type:Array,
-        default:[]
+    competitors: {
+        type: Array,
+        default: []
     },
-    productServiceCategory:{
-        type:Array, 
-        default:[]
+    productServiceCategory: {
+        type: Array,
+        default: []
     },
-    contentCreator:{
-        type:String,
-        required:true
+    contentCreator: {
+        type: String,
+        required: true
     },
-    noOfPosts:{
-        type:String,
-        required:true
+    noOfPosts: {
+        type: String,
+        required: true
     },
-    unitPost:{
-        type:Number,
-        default:1,
-        required:true
+    unitPost: {
+        type: Number,
+        default: 1,
+        required: true
     },
-    durationOfPromotion:{
-        type:String,
-        required:true
+    durationOfPromotion: {
+        type: String,
+        required: true
     },
-    unitMonth:{
-        type:Number,
-        default:1,
-        required:true
+    unitMonth: {
+        type: Number,
+        default: 1,
+        required: true
     },
-    crossPlatformPromotion:{
-        type:String
+    crossPlatformPromotion: {
+        type: String
     },
-    deliverable:{
-        type:String,
-        default:""
+    deliverable: {
+        type: String,
+        default: ""
     },
-    deliveryType:{
-        type:Array,
-        default:[]
+    deliveryType: {
+        type: Array,
+        default: []
     },
-     coverage:{
-        type:Array,
-        default:[]
+    coverage: {
+        type: Array,
+        default: []
     },
-    pricing:{
-        type:Array,
-        default:[0,0]
+    pricing: {
+        type: Array,
+        default: [0, 0]
     },
-    unitPricing:{
-        type:Array,
-        default:[0,0]
+    unitPricing: {
+        type: Array,
+        default: [0, 0]
     },
-    bargain:{
-        type:Array,
-        default:[]
+    bargain: {
+        type: Array,
+        default: []
     },
-    assignedInfluencer:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"influencer"
+    assignedInfluencer: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "influencer"
     }]
-}, {timestamps:true})
-module.exports = mongoose.model('merchantInfluencer',merchantInfluencerSchema)
+}, { timestamps: true })
+module.exports = mongoose.model('merchantInfluencer', merchantInfluencerSchema)

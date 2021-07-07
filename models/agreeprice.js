@@ -31,9 +31,7 @@ const AgreePriceSchema = mongoose.Schema({
     },
     amountToPay:{
         type:Number,
-    },
-    startDate:{
-        type:Number,
+            type:Number,
         default:0
     },
     endDate:{
