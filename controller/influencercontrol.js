@@ -177,9 +177,9 @@ const merchantDashboard = async (req,res) => {
 }
 
 //allow merchant to cancel out a pending response
-const merchantDecline = async (req,res)=> {
+// const merchantDecline = async (req,res)=> {
 
-}
+// }
 
 
 // influencer accept offer /agree route
