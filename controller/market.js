@@ -349,6 +349,103 @@ const addFashion = async (req, res) => {
   // Posted
   res.json({ code: 201, msg: "posted to social", added: true });
 };
+
+
+// KIDDIES
+const addKids = async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    gender,
+    images,
+    quantity,
+    salesTarget,
+  } = req.body;
+  // console.log(req.body)
+  const { email } = req.user;
+  const profile = await Profiles.findOne({ email: email }).populate([{path:"product",select:"title"}])
+  const merchantId = profile._id
+  const storeInfo = profile.storeInfo;
+  // 
+  const subs = profile.subscriptionLevel;
+  const merchantProduct = profile.product;
+
+  if (subs === 0 && merchantProduct.length >= 5) {
+    return res.json({ code: 304, message: "Maximum number of listing reached. Please upgrade your account" })
+  }
+
+
+  // 
+  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
+    return res.json({ code: 404, message: "Please update store info" });
+  const priority = profile.subscriptionLevel;
+  const item = {
+    title,
+    description,
+    price,
+    brand,
+    subCategory,
+    condition,
+    storeInfo,
+    category: "kids",
+    email: email,
+    priority,
+    gender,
+    images: images,
+    quantity,
+    salesTarget,
+    merchant: merchantId
+  };
+  const newProduct = new Products(item);
+  const newProductId = newProduct._id;
+  // saving profile ref
+  profile.product.push(newProductId);
+  profile.markModified('product');
+  profile.save();
+
+  // stock code
+  const stockRecord = {
+    productName: title,
+    cost: Number(0),
+    price: Number(price),
+    total: Number(quantity) * Number(price),
+    quantity: Number(quantity),
+    salesTarget: Number(salesTarget),
+    description,
+    storeInfo,
+    email,
+  };
+
+  const newStock = new ProductRecord(stockRecord);
+  const stockId = newStock._id;
+  newProduct.stock = stockId;
+  newProduct.save();
+  try {
+    newStock.save();
+  } catch (error) {
+    console.log(error);
+  }
+
+  //   social commerce
+  if (profile.subscriptionLevel !== 3)
+    return res.json({ code: 201, msg: "product added" });
+  // Post to social media
+  const data = {
+    title: `Get ${title} for just N${Number(price).toLocaleString(
+      "en-US"
+    )}. Click for more details https://exciteenterprise.com/services/marketplace/products/item/${newProductId}`,
+    imageUrl: images[0],
+  };
+  const socialPosting = await PostToSocialMedia(email, data);
+  if (!socialPosting)
+    return res.json({ code: 400, msg: "Failed to post to social media" });
+  // Posted
+  res.json({ code: 201, msg: "posted to social", added: true });
+};
 const addPhoneTablet = async (req, res) => {
   const {
     title,
@@ -762,5 +859,6 @@ module.exports = {
   getOfferById,
   getLandinpPage,
   addServices,
-  addProperty
+  addProperty,
+  addKids
 };
