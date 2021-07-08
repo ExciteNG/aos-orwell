@@ -191,7 +191,7 @@ const merchantDeclinePendings = async (req,res)=> {
 
 // influencer accept offer /agree route
 const merchantPaymentPrice = async (req,res) => {
-
+    
     try {
         const {email,userType} = req.user
         if (userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to access this resource !"})
@@ -262,7 +262,7 @@ const merchantNegotiateOffer = async (req,res) => {
         //first conditional: send the message to the  right influencer
         if (req.user.userType === "EX10AF"){
         let merchantNegotiationEmail = await Negotiation.findById(id).lean()
-        if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found"})
+        if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found !,it has probably been declined and deleted by either merchant or influencer"})
         let newMerchantMessages = merchantNegotiationEmail.merchantMessages
         await Negotiation.findOneAndUpdate({_id:id},{newMerchantMessages:newMerchantMessages.push(req.body.merchantMessages)},
         {new:true,runValidators:true},(err,docs)=>{
@@ -273,7 +273,7 @@ const merchantNegotiateOffer = async (req,res) => {
         // second conditional: influencer sends message back to merchant
         } else if (req.user.userType === "EX90IF") {
             let influencerNegotiationEmail = await Negotiation.findById(id).lean()
-            if (!influencerNegotiationEmail) return res.json({code:404,message:"Not found"})
+            if (!influencerNegotiationEmail) return res.json({code:404,message:"Not found !,it has probably been declined and deleted by either merchant or influencer"})
             let newInfluencerMessages = influencerNegotiationEmail.influencerMessages
             await Negotiation.findOneAndUpdate({_id:id},{newInfluencerMessages:newInfluencerMessages.push(req.body.influencerMessages)},
         {new:true,runValidators:true},(err,docs)=>{
@@ -294,7 +294,7 @@ const influencerAcceptsPrice = async (req,res) => {
     const id = req.params.id;
     //get the particular chat and make sure only the influencer accesses it
     const selectInfluencer = await Negotiation.findById(id).lean()
-    if  (!selectInfluencer) return res.json({code:404,message:"Chat Not found"})
+    if  (!selectInfluencer) return res.json({code:404,message:"Chat Not found !,it has probably been declined and deleted by either merchant or influencer"})
     if (req.user.userType !== "EX90IF") return res.json({code:401,message:"Only the influencer can make this action"})
     //verify that the system has a valid merchant and valid influencer to send mails to
     // update the merchant and influencer status
@@ -334,14 +334,14 @@ const influencerAcceptsPrice = async (req,res) => {
 
 
 //influencer reject offer
-const influencerDeclinePrice = async (req,res)  => {
+const influencerMerchantDeclinePrice = async (req,res)  => {
     try {
         const {email} = req.user
         const id = req.params.id
         //get a specific chat
-        if (!req.user.userType === "EX90IF" || !req.user.userType === "EX10AF") return res.json({code:401,message:"Only the influencer can make this action"})
+        if (!req.user.userType === "EX90IF" || !req.user.userType === "EX10AF") return res.json({code:401,message:"Only the influencer or merchant can make this action"})
         const getChat = await Negotiation.findById(id).lean()
-        if (!getChat) return res.json({code:404,message:"Chat not found"})
+        if (!getChat) return res.json({code:404,message:"Chat not found !,it has probably been declined and deleted by either merchant or influencer"})
         //find the merchant that matches thee chat section
         let matchProfile = await Profiles.find({email:getChat.merchantEmail}).lean()
         if (!matchProfile) return res.json({code:404,message:"not found"})
@@ -372,14 +372,14 @@ const influencerDeclinePrice = async (req,res)  => {
 const getAllChats = async (req,res) => {
     try {
         const {email} = req.user
-        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX10AF") return res.json({code:401,message:"you are unauthorized to view this resource !"})
+        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX10AF") return res.json({code:401,message:"you are unauthorized to access this resource !"})
         if (req.user.userType === "EX90IF"){
             let chatHistory = await Negotiation.find({influencerEmail:email}).lean()
-            if (!chatHistory) return res.json({code:404,message:"Not found"})
+            if (!chatHistory) return res.json({code:404,message:"You have no chat history!"})
             return  res.json({code:200,data:chatHistory})
         } else if (req.user.userType === "EX10AF"){
             let merchantChatHistory = await Negotiation.find({merchantEmail:email}).lean()
-            if (!merchantChatHistory) return res.json({code:404,message:"Not found"})
+            if (!merchantChatHistory) return res.json({code:404,message:"you have no chat history!"})
             return res.json({code:200,data:merchantChatHistory})
         }
     } catch (err) {
@@ -395,7 +395,7 @@ const singleChat = async (req,res) => {
         if (!userType === "EX10AF" || !userType === "EX90IF") return res.json({code:401,message:"You do not have permission to view this resource"})
        const id = req.params.id
        const getSingleChat = await Negotiation.findById(id).lean()
-       if (!getSingleChat) return res.json({code:404,message:"chat not found"})
+       if (!getSingleChat) return res.json({code:404,message:"chat not found !, it has probably been declined and deleted by either merchant or influencer"})
        return res.json({code:200,message:getSingleChat})
     } catch (err) {
         console.error(err)
@@ -416,7 +416,7 @@ module.exports = {
     influencerNegotiatePrice,
     merchantNegotiateOffer,
     influencerAcceptsPrice,
-    influencerDeclinePrice,
+    influencerMerchantDeclinePrice,
     getAllChats,
     singleChat,
     merchantDeclinePendings
