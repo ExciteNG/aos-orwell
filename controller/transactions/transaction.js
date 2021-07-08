@@ -13,7 +13,7 @@ const createTransaction = async (req, res) => {
     const inventoryRecord = await Inventory.findOne({productName: description});
     const transactionType = await TransactionModel.findOne({description:`${req.body.description}`});
     if(transactionType){
-      console.log('transaction exists');
+      // console.log('transaction exists');
       return res.status(200).json({message: "transaction already exists."})
     }
 
@@ -28,8 +28,10 @@ const createTransaction = async (req, res) => {
     
     if(req.body.inventoryCost > 0){
       transaction.inventoryCost = req.body.inventoryCost;
+      // transaction.productSaleSum = req.body.inventoryCost;
+      // transaction.total = req.body.total;
       // inventoryRecord.save();
-      transaction.save();
+      // transaction.save();
     }
 
     const saved = transaction.save();

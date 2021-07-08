@@ -5,6 +5,7 @@ const Inventory = require('../../models/bookkeeping');
 
 
 const createPostTransaction = async (req, res) => {
+  console.log('post transaction req body is ', req.body);
   try {
     // const email = "vec@gmail.com";
     const {email,userType}= req.user;
@@ -32,6 +33,11 @@ const createPostTransaction = async (req, res) => {
         const calcSum = inventoryRecord.price * Number(req.body.quantity);
         transactionType.productSaleSum = transactionType.productSaleSum + calcSum; 
       }
+      transactionType.save();
+    }
+    if (!transactionType) {      
+      transactionType.productSaleSum = req.body.inventoryCost;
+      transactionType.total = req.body.amount;
       transactionType.save();
     }
     
@@ -141,7 +147,7 @@ const getOnePostTransaction = (req, res) => {
 };
 
 const getAllPostTransactions = (req, res) => {
-  PostTransactionModel.find()
+  PostTransactionModel.find({email:req.user.email})
     .then((response) => {
       res.status(200).json({
         message: "Found records!",

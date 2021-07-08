@@ -12,14 +12,8 @@ const transactionSchema = mongoose.Schema({
   productSaleSum: { type: Number, default: 0},
   transactionsTotal:[{type:mongoose.Schema.Types.ObjectId,
     ref:"PostTransaction"}],
-  // income: { type: Number },
-  // expense: { type: Number },
-  // costOfSale: { type: Number },
-  // credit: { type: Number },
-  // debit: { type: Number },
   storeInfo:{
     type:Object,
-    // required:true
   }
 },
 { timestamps: true })

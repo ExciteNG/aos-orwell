@@ -51,6 +51,14 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  state: {
+    type: String,
+    default: "",
+  },
+  lga: {
+    type: String,
+    default: "",
+  },
   experience: {
     type: Number,
     default: 0,

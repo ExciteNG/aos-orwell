@@ -4,7 +4,7 @@ const express = require('express')
 const { requireJWT } = require('../middleware/auth')
 const {PostToSocialMedia} = require('./../social/social')
 const router = express.Router()
-const { addElectronics,addFashion ,addPhoneTablet,addHome,addVehicle,addHealth, addServices} = require('../controller/market')
+const { addElectronics,addFashion ,addPhoneTablet,addHome,addVehicle,addHealth, addServices, addProperty} = require('../controller/market')
 
 
 
@@ -18,5 +18,6 @@ router.post('/app/marketplace/products/add-item/phone&tablet',requireJWT,addPhon
 router.post('/app/marketplace/products/add-item/home-kitchen-appliance',requireJWT,addHome)
 router.post('/app/marketplace/products/add-item/vehicle',requireJWT,addVehicle)
 router.post('/app/marketplace/products/add-item/services',requireJWT,addServices)
+router.post('/app/marketplace/products/add-item/property',requireJWT,addProperty)
 
 module.exports = router
