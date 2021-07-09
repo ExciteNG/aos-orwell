@@ -11,6 +11,7 @@ const Payments = require("./../../models/Payments")
 router.get("/generate-payment", requireJWT, (req, res) => {
   // console.log(req.query.item)
   const { email } = req.user;
+  // console.log(email)
   try {
     const details = plans[req.query.item];
     if (!details) return res.status(404).json({ msg: "not found" });
