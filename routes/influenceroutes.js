@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
     ,merchantDashboard,merchantPaymentPrice,influencerNegotiatePrice,
-    merchantNegotiateOffer,getAllChats,influencerDeclinePrice,
+    merchantNegotiateOffer,getAllChats,influencerMerchantDeclinePrice,
     influencerAcceptsPrice,singleChat, merchantDeclinePendings} = require('../controller/influencercontrol')
 const {requireJWT} = require('./../middleware/auth')
 //merchant form for influencer
@@ -30,7 +30,7 @@ router.get('/negotiation-chat/:id',requireJWT,singleChat)
 router.get('/my-chats',requireJWT,getAllChats)
 
 //influencer decline offer
-router.delete('merchant/influencer-decline/:id',requireJWT,influencerDeclinePrice)
+router.delete('merchant/influencer-decline/:id',requireJWT,influencerMerchantDeclinePrice)
 //influencer accept offer
 router.put("/influencer-accept/:id",requireJWT,influencerAcceptsPrice)
 
