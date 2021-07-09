@@ -868,7 +868,7 @@ const welcomeMail = (userName) =>{
                                                                                                 <li style="font-size: medium; color: #000000;">Merchants can learn how to post products on the excite enterprise platform <a style="font-size:medium" href="https://youtu.be/p61A0Z7XbxQ" target="_blank">here</a></li>
                                                                                                 <li style="font-size: medium; color: #000000;">Also learn how to subscribe on the platform <a style="font-size:medium" href="https://youtu.be/7NiEuCqNNKs" target="_blank">here</a></li>
                                                                                             </ul>
-                                                                                            <p style="font-size:medium; color:#000000;">If you have any questions, kindly reply to this email or reach us via the following contacts:<br>070121533679<br>enquiry@exciteafrica.com</p>
+                                                                                            <p style="font-size:medium; color:#000000;">If you have any questions, kindly reply to this email or reach us via the following contacts:<br>09138650923<br>enquiry@exciteafrica.com</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>

@@ -154,7 +154,6 @@ const getInfluencerDashboard = async (req,res) => {
             return res.json({code:404,message:"No data yet, awaiting approval",data:singleInfluencer}) 
         } 
         return res.json({code:200,data:singleInfluencer})
-        
     } catch (err) {
         console.error(err)
         return res.json({code:200,message:err.message})
@@ -191,7 +190,6 @@ const merchantDeclinePendings = async (req,res)=> {
 
 // influencer accept offer /agree route
 const merchantPaymentPrice = async (req,res) => {
-    
     try {
         const {email,userType} = req.user
         if (userType !== "EX10AF") return res.json({code:401,message:"You are not authorized to access this resource !"})
