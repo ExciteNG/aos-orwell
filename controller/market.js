@@ -30,7 +30,7 @@ const filterProducts = async (req, res) => {
 
 const getCategory = async (req, res) => {
   const { category } = req.body;
-  console.log(category)
+  // console.log(category)
   try {
     const data = await Products.find({ category: category }).sort({
       priority: -1,
@@ -49,7 +49,7 @@ const getItemById = async (req, res) => {
   try {
     const item = await Products.findOne({ _id: id });
     if(!item) return res.json({code:400});
-    console.log(item)
+    // console.log(item)
     return res.json({ code: 201, item });
   } catch (error) {
     return res.json({code:500})
@@ -62,10 +62,10 @@ const getOfferById = async (req, res) => {
   //
   try {
     const item = await Deals.findOne({ _id: id });
-    console.log(item, id)
+    // console.log(item, id)
     return res.json({ code: 201, item });
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return res.status(500)
   }
 
