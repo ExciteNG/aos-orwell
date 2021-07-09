@@ -4,6 +4,7 @@ const nodeoutlook = require('nodejs-nodemailer-outlook');
 const Influencer = require('../models/influencer');
 const bargainModel = require('../models/bargain');
 const influencerNotification = require('../emails/influencer_engagement');
+const paymentInfluencerNotification = require('../emails/payment_notification');
 const Profiles = require('../models/Profiles');
 const agreePrice = require('../models/agreeprice');
 const Negotiation = require('../models/infMerchantNegotiate');
@@ -200,6 +201,8 @@ const merchantPaymentPrice = async (req,res) => {
         req.body.endDate = Number(req.body.startDate) + 3 * (30*24*60*60*1000)
         req.body.amountToPay = Number(req.body.price) * Number(req.body.duration)
         req.body.negotiationStatus = "accepted"
+        //get the merchant details and name
+        const merchant = await Profiles.findOne({email:email})
         //find the influencer the paymment is meant for in the database
         const influencerToPay = await Influencer.findOne({fullName:req.body.fullName})
         if (!influencerToPay) return res.json({code:404,message:"Can't find this influencer, Please enter the influencer's name as you received it from your email"})
@@ -210,6 +213,25 @@ const merchantPaymentPrice = async (req,res) => {
         //const negotiation = await Negotiation.findOne({merchantEmail:email,influencerEmail:influencerToPay.email})
         
         //send mail to influencer while paystack sends a receipt to the merchant
+        
+        //  nodeoutlook.sendEmail({
+        //     auth: {
+        //       user: process.env.EXCITE_ENQUIRY_USER,
+        //       pass: process.env.EXCITE_ENQUIRY_PASS,
+        //     },
+        //       from: 'enquiry@exciteafrica.com',
+        //       to: influencerToPay.email,
+        //       subject: 'NOTIFICATION OF PAYMENT BY MERCHANT FOR INFLUENCER MARKETING',
+        //       html: paymentInfluencerNotification(influencerToPay.fullName,merchant.fullName,req.body.amountToPay,req.body.duration),
+        //       text: paymentInfluencerNotification(influencerToPay.fullName,merchant.fullName,req.body.amountToPay,req.body.duration),
+        //       replyTo: 'enquiry@exciteafrica.com',
+        //       onError: (e) => console.log(e),
+        //       onSuccess: (i) => {
+        //       // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+        //       console.log(i)
+        //       },
+        //       secure:false,
+        //   })
         return res.json({code:200,data:newPrice})
     } catch (err) {
         console.error(err)
