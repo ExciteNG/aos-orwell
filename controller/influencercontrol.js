@@ -310,6 +310,7 @@ const merchantNegotiateOffer = async (req,res) => {
 
 //influencer accept button
 const influencerAcceptsPrice = async (req,res) => {
+    try {
     const {email} = req.user;
     const id = req.params.id;
     //get the particular chat and make sure only the influencer accesses it
@@ -348,8 +349,14 @@ const influencerAcceptsPrice = async (req,res) => {
             }
             console.log(docs)
         }
+
     })
     //send mail to the influencer and user 
+    return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
+   } catch (err) {
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
 }
 
 
