@@ -65,8 +65,8 @@ const merchantInfluencerSchema = mongoose.Schema({
         default: []
     },
     productServiceCategory: {
-        type: Array,
-        default: []
+        type: String,
+        default: ""
     },
     contentCreator: {
         type: String,

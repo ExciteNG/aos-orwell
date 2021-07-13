@@ -5,12 +5,15 @@ const Influencer = require('../models/influencer');
 const bargainModel = require('../models/bargain');
 const influencerNotification = require('../emails/influencer_engagement');
 const paymentInfluencerNotification = require('../emails/payment_notification');
+const influencerAgreePrice = require('../emails/influencer_agreement');
+const merchantAgreePrice = require('../emails/merchant_agreement');
 const Profiles = require('../models/Profiles');
 const agreePrice = require('../models/agreeprice');
 const Negotiation = require('../models/infMerchantNegotiate');
 
 // todo access control vulnerabilities
 //restricting users where possible
+
 
 const getPricingRange = (Reach,posts,months) => {
     return [2.2*Reach*posts*months, 4.2*Reach*posts*months]
@@ -210,8 +213,7 @@ const merchantPaymentPrice = async (req,res) => {
         //pay via paystack
         await newPrice.save()
         //update the negotiation status in the merchant negotation collection
-        //const negotiation = await Negotiation.findOne({merchantEmail:email,influencerEmail:influencerToPay.email})
-        
+        //const negotiation = await Negotiation.findOne({merchantEmail:email,influencerEmail:influencerToPay.email}) 
         //send mail to influencer while paystack sends a receipt to the merchant
         
         //  nodeoutlook.sendEmail({
@@ -250,7 +252,7 @@ const influencerNegotiatePrice = async (req,res) => {
         let negotiateInfluencer = await Influencer.find({email:email}).lean()
         //find the full name in the merchant database
         let getMerchant = await Profiles.find({fullName:req.body.fullName}).lean()
-        if (!getMerchant) return res.json({code:404,message:"Merchant not found !, please check if you entered the merchant fullname properly from the received email"})
+        if (!getMerchant) return res.json({code:404,message:"Merchant not found, this merchant has either declined the offer or you are entering his/her name in the wrong format !"})
         req.body.influencerEmail = email
         req.body.merchantEmail = getMerchant.email
         req.body.merchantFullName = req.body.fullName
@@ -270,6 +272,8 @@ const influencerNegotiatePrice = async (req,res) => {
         }
         
     } catch (err) {
+
+        console.error(err)
         return res.json({code:500,message:err.message})
     }
 }
@@ -349,9 +353,10 @@ const influencerAcceptsPrice = async (req,res) => {
             }
             console.log(docs)
         }
-
     })
-    //send mail to the influencer and user 
+    
+    //send mail to the influencer and merchant
+
     return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
    } catch (err) {
         console.error(err)
@@ -360,7 +365,7 @@ const influencerAcceptsPrice = async (req,res) => {
 }
 
 
-//influencer reject offer
+//influencer merchant reject offer
 const influencerMerchantDeclinePrice = async (req,res)  => {
     try {
         const {email} = req.user
@@ -369,7 +374,7 @@ const influencerMerchantDeclinePrice = async (req,res)  => {
         if (!req.user.userType === "EX90IF" || !req.user.userType === "EX10AF") return res.json({code:401,message:"Only the influencer or merchant can make this action"})
         const getChat = await Negotiation.findById(id).lean()
         if (!getChat) return res.json({code:404,message:"Chat not found !, it has probably been declined and deleted by either merchant or influencer"})
-        //find the merchant that matches thee chat section
+        //find the merchant that matches the chat section
         let matchProfile = await Profiles.find({email:getChat.merchantEmail}).lean()
         if (!matchProfile) return res.json({code:404,message:"not found"})
         matchProfile.pendingCampaigns = matchProfile.pendingCampaigns - 1
@@ -378,7 +383,7 @@ const influencerMerchantDeclinePrice = async (req,res)  => {
         //find the influencer
         let matchInfluencer = await Influencers.find({email:getChat.influencerEmail}).lean()
         if (!matchInfluencer) return res.json({code:404,message:"Not found !"})
-        matchInfluencer.pendingJobs = matchInfluencer.pendingJobs - 1
+            matchInfluencer.pendingJobs = matchInfluencer.pendingJobs - 1
         await matchInfluencer.markModified("pendingJobs")
         await matchInfluencer.save()
         //send mail on conditionals of the userType : influencer or merchant
