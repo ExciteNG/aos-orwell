@@ -1,6 +1,6 @@
 const emailHost = require('./email_host');
 const socialMediaLinks = require('../emails/social_links');
-const influencerMailNotification = (firstName,fullname,id) => {
+const influencerMailNotification = (firstName,fullname) => {
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
     
@@ -61,8 +61,8 @@ const influencerMailNotification = (firstName,fullname,id) => {
             }
     
             /*
-                END OF IMPORTANT
-                */
+                    END OF IMPORTANT
+                    */
             s {
                 text-decoration: line-through;
             }
@@ -742,28 +742,28 @@ const influencerMailNotification = (firstName,fullname,id) => {
             }
         </style>
         <!--[if (mso 16)]>
-                    <style type="text/css">
-                    a {text-decoration: none;}
-                    </style>
-                    <![endif]-->
+                        <style type="text/css">
+                        a {text-decoration: none;}
+                        </style>
+                        <![endif]-->
         <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
         <!--[if gte mso 9]>
-                <xml>
-                    <o:OfficeDocumentSettings>
-                    <o:AllowPNG></o:AllowPNG>
-                    <o:PixelsPerInch>96</o:PixelsPerInch>
-                    </o:OfficeDocumentSettings>
-                </xml>
-                <![endif]-->
+                    <xml>
+                        <o:OfficeDocumentSettings>
+                        <o:AllowPNG></o:AllowPNG>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                        </o:OfficeDocumentSettings>
+                    </xml>
+                    <![endif]-->
     </head>
     
     <body>
         <div class="es-wrapper-color">
             <!--[if gte mso 9]>
-                <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-                    <v:fill type="tile" color="#e8e8e4"></v:fill>
-                </v:background>
-            <![endif]-->
+                    <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+                        <v:fill type="tile" color="#e8e8e4"></v:fill>
+                    </v:background>
+                <![endif]-->
             <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                     <tr>
@@ -817,8 +817,8 @@ const influencerMailNotification = (firstName,fullname,id) => {
                                                                                         <td class="esd-block-text" bgcolor="#ffffff" align="center">
                                                                                             <h3 style="color: #6fd20d; font-weight: 400; line-height: 200%;">&nbsp;EXCITE&nbsp;INFLUENCER&nbsp;MARKETING&nbsp;ENGAGEMENT&nbsp;<br>NOTIFICATION</h3>
                                                                                             <p style="color: #6fd20d; line-height: 200%;"><br></p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear ${firstName},<br>&nbsp; You are receiving this email because a merchant with the name ${fullname} has requested for your services as an influencer marketer to promote his/her products.</p>
-                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Please login to your dashboard via the link below to learn more about the deal below.<br>&nbsp; <a href= ${emailHost()}/influencer-marketing/influencer-dashboard/${id} target="_blank" style="font-size:large; text-decoration:upper;">GO TO DASHBOARD</a><br><br></p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Dear ${firstName},<br><br>&nbsp; You are receiving this email because a merchant with the name ${fullname} has requested for your services as an influencer marketer to promote his/her products.<br><br></p>
+                                                                                            <p style="text-align: left; color: #000000; font-size: medium; line-height: 200%;">Please login to your dashboard via the link below to learn more about the deal.<br><br>&nbsp; <a href="${emailHost()}/influencer-marketing/influencer-dashboard" target="_blank" style="font-size:large; text-decoration:upper;">GO TO DASHBOARD</a><br><br></p>
                                                                                             <p style="text-align:left; color:black; font-size:medium;">Best Regards,<br>The excite team</p>
                                                                                         </td>
                                                                                     </tr>
@@ -875,8 +875,7 @@ const influencerMailNotification = (firstName,fullname,id) => {
                                                             <table width="100%" cellspacing="0" cellpadding="0">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td class="esd-container-frame" width="540" valign="top" align="center">
-                                                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                                        <td class="esd-container-frame" width="540" valign="top" align="center"> ${socialMediaLinks()} <table width="100%" cellspacing="0" cellpadding="0">
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
@@ -887,7 +886,7 @@ const influencerMailNotification = (firstName,fullname,id) => {
                                                                                         <td class="esd-block-text es-p15t es-p5b" bgcolor="#6fd20d" align="center">
                                                                                             <p style="color: #ffffff;">© Excite Inc.</p>
                                                                                             <p style="color: #ffffff;">3,&nbsp; Dapo Bode Street Yaba Phase 2 Lagos, Nigeria</p>
-                                                                                            <p style="color: #ffffff;">Company Number: 0701234522</p>
+                                                                                            <p style="color: #ffffff;">Company Number: 09138650923</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -895,9 +894,7 @@ const influencerMailNotification = (firstName,fullname,id) => {
                                                                                             <p style="color: #ffffff;"><a href="https://www.exciteenterprise.com/privacy" target="_blank" style="color: #ffffff; text-decoration: underline;">excite privacy policy</a></p>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr>
-                                                                                    ${socialMediaLinks()}
-                                                                                    </tr>
+                                                                                    <tr></tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#6fd20d" align="center">
                                                                                             <p style="font-size: 12px; line-height: 150%; color: #ffffff;">You are receiving this email because a merchant requested for your services as an influencer on the excite enterprise platform</p>
@@ -955,7 +952,7 @@ const influencerMailNotification = (firstName,fullname,id) => {
         </div>
     </body>
     
-    </html>`.replace('<p style="color: #ffffff;">Company Number: 0701234522</p>','');
+    </html>`
 
 }
 

@@ -126,8 +126,8 @@ const influencerNegotiation = async (req,res) => {
         //       from: 'enquiry@exciteafrica.com',
         //       to: getInfluencer.email,
         //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-        //       html: influencerNotification(firstName,profile.fullName,id),
-        //       text: influencerNotification(firstName,profile.fullName,id),
+        //       html: influencerNotification(firstName,profile.fullName),
+        //       text: influencerNotification(firstName,profile.fullName),
         //       replyTo: 'enquiry@exciteafrica.com',
         //       onError: (e) => console.log(e),
         //       onSuccess: (i) => {
@@ -354,7 +354,7 @@ const influencerAcceptsPrice = async (req,res) => {
             console.log(docs)
         }
     })
-    
+
     //send mail to the influencer and merchant
 
     return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
