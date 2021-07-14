@@ -10,7 +10,6 @@ const merchantAgreePrice = require('../emails/merchant_agreement');
 const Profiles = require('../models/Profiles');
 const agreePrice = require('../models/agreeprice');
 const Negotiation = require('../models/infMerchantNegotiate');
-
 // todo access control vulnerabilities
 //restricting users where possible
 
@@ -286,7 +285,7 @@ const merchantNegotiateOffer = async (req,res) => {
         //first conditional: send the message to the  right influencer
         if (req.user.userType === "EX10AF"){
         let merchantNegotiationEmail = await Negotiation.findById(id).lean()
-        if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found !,it has probably been declined and deleted by either merchant or influencer"})
+        if (!merchantNegotiationEmail) return res.json({code:404,message:"Not found !, it has probably been declined and deleted by either merchant or influencer"})
         let newMerchantMessages = merchantNegotiationEmail.merchantMessages
         await Negotiation.findOneAndUpdate({_id:id},{newMerchantMessages:newMerchantMessages.push(req.body.merchantMessages)},
         {new:true,runValidators:true},(err,docs)=>{
@@ -356,6 +355,27 @@ const influencerAcceptsPrice = async (req,res) => {
     })
 
     //send mail to the influencer and merchant
+    //influencer's agreement mail
+     nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: findInfluencer.email,
+              subject: 'INFLUENCER MARKETING AGREEMENT',
+              html: influencerAgreePrice(findInfluencer.fullName.split(' ')[0],findMerchant.fullName),
+              text: influencerAgreePrice(findInfluencer.fullName.split(' ')[0],findMerchant.fullName),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+          // merchant's agreement email
+
 
     return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
    } catch (err) {

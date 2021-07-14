@@ -11,7 +11,8 @@ const merchantInfluencerSchema = mongoose.Schema({
             },
             message: mail => `${mail.value} is not a valid email address !`
         },
-        required: [true, 'Please enter your email address']
+        required: [true, 'Please enter your email address'],
+        lowercase:true
     },
     userType: {
         type: String,
@@ -33,8 +34,8 @@ const merchantInfluencerSchema = mongoose.Schema({
         type: String
     },
     contactPreference: {
-        type: Array,
-        default: []
+        type: String,
+        default: ""
     },
     modeOfContact: {
         type: Array,
