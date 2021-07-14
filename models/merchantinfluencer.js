@@ -79,8 +79,7 @@ const merchantInfluencerSchema = mongoose.Schema({
     },
     unitPost: {
         type: Number,
-        default: 1,
-        required: true
+        default: 1
     },
     durationOfPromotion: {
         type: String,
@@ -88,8 +87,7 @@ const merchantInfluencerSchema = mongoose.Schema({
     },
     unitMonth: {
         type: Number,
-        default: 1,
-        required: true
+        default: 1
     },
     crossPlatformPromotion: {
         type: String
@@ -103,8 +101,8 @@ const merchantInfluencerSchema = mongoose.Schema({
         default: []
     },
     coverage: {
-        type: Array,
-        default: []
+        type:String,
+        default:""
     },
     pricing: {
         type: Array,

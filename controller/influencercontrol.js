@@ -375,8 +375,25 @@ const influencerAcceptsPrice = async (req,res) => {
               secure:false,
           })
           // merchant's agreement email
-
-
+          nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: findInfluencer.email,
+              subject: 'INFLUENCER MARKETING AGREEMENT',
+              html: merchantAgreePrice(findInfluencer.fullName.split(' ')[0],findMerchant.fullName),
+              text: merchantAgreePrice(findMerchant.fullName.split(' ')[0],findInfluencer.fullName),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+          
     return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
    } catch (err) {
         console.error(err)
