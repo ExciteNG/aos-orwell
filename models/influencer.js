@@ -69,8 +69,8 @@ const influencerSChema = mongoose.Schema({
         default:[]
     },
     marketingSpecialty:{
-        type:Array,
-        default:[]
+        type:String,
+        default:""
     },
     negotiable:{
         type:String,

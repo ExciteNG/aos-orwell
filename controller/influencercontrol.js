@@ -15,11 +15,16 @@ const Negotiation = require('../models/infMerchantNegotiate');
 
 
 const getPricingRange = (Reach,posts,months) => {
-    return [2.2*Reach*posts*months, 4.2*Reach*posts*months]
+    let lowPricing = 2.2*Reach*posts*months
+    let highPricing = 4.2*Reach*posts*months
+    return {low:lowPricing.toFixed(2), high:highPricing.toFixed(2)}
 }
 
 const unitPricingRange = (Reach) => {
-    return [2.2*Reach,4.2*Reach] 
+    let lowUnitPricing = 2.2*Reach
+    let highUnitPricing = 4.2*Reach
+
+    return {low:lowUnitPricing,high:highUnitPricing}
 }
 
 const merchantPickInfluencer = async (req,res) => {
@@ -393,7 +398,7 @@ const influencerAcceptsPrice = async (req,res) => {
               },
               secure:false,
           })
-          
+
     return res.json({code:200,message:"message sent successfully, check your mail for the next steps"})
    } catch (err) {
         console.error(err)
