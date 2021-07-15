@@ -57,6 +57,14 @@ const influencerSChema = mongoose.Schema({
         type:Number,
         required:true
     },
+    AccountNo:{
+        type:String,
+        default:""
+    },
+    Bank:{
+        type:String,
+        default:""
+    },
     // telephone:{
     //     type:String
     // },

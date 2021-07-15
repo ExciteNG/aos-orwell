@@ -411,7 +411,7 @@ const signUpRefCode = async (req, res, next) => {
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "Account exist", doc });
+      res.json({ code: 401, msg: "this Account already exists", doc });
       next(err);
     } else {
       //continue
