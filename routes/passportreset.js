@@ -72,7 +72,7 @@ router.post('/reset/:token/:email', function(req, res) {
             }
 
             const exist = await User.findOne({email:req.params.email});
-            if(exist) return res.json({ code: 401, error: "Account Exist" });
+            if(exist) return res.json({ code: 401, error: "this Account already exists" });
                 // continue
                 const newUsers = {
                   email: req.params.email,

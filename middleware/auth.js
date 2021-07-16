@@ -51,7 +51,7 @@ const signUp = async (req, res, next) => {
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "Account exist", doc });
+      res.json({ code: 401, msg: "this Account already exists", doc });
       next(err);
     } else {
       const user = {
