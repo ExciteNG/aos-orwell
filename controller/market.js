@@ -71,6 +71,19 @@ const getOfferById = async (req, res) => {
 
 };
 
+
+// Merchant delete product
+
+const delMyProduct = async (req,res)=>{
+  const id=req.params.id;
+  try {
+    const doc = await Products.findByIdAndDelete(id);
+   return res.json({code:200,doc})
+  } catch (error) {
+    return res.status(500)
+  }
+}
+
 const addElectronics = async (req, res) => {
   const {
     title,
@@ -860,5 +873,6 @@ module.exports = {
   getLandinpPage,
   addServices,
   addProperty,
-  addKids
+  addKids,
+  delMyProduct
 };
