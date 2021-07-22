@@ -96,9 +96,9 @@ const influencerNegotiation = async (req,res) => {
         //filter only the approved influencers
         // const approvedInfluencers = Influencer.find({regStatus:"accepted"})
         let profile = await Profiles.findOne({email:email})
-        if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
+        if (!profile) return res.json({code:404,message:"No merchant with that email address was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
-        if (!getInfluencer) return res.json({code:404,message:"this influencer was not found !"})
+        if (!getInfluencer) return res.json({code:404,message:"this influencer cannot be found !"})
         //increase the merchant campaign
        let pendingIncrement = profile.pendingCampaigns + 1
     //    profile.pendingCampaigns =await profile.pendingCampaigns + 1
