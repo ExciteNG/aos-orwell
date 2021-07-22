@@ -54,7 +54,8 @@ const merchantPickInfluencer = async (req,res) => {
             deliveryType,
             coverage,
             pricing,
-            unitPricing
+            unitPricing,
+            offerPrice
         } = req.body
         req.body.email = email
         req.body.userType = userType
@@ -122,6 +123,9 @@ const influencerNegotiation = async (req,res) => {
         // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
         // await getInfluencer.markModified("pendingJobs")
         let firstName = getInfluencer.fullName.split(' ')[0]
+        let offerPrice = req.body.offerPrice
+        let durationOfPromotion = req.body.durationOfPromotion
+        let reach = req.body.reach
         // nodeoutlook.sendEmail({
         //     auth: {
         //       user: process.env.EXCITE_ENQUIRY_USER,
@@ -130,8 +134,8 @@ const influencerNegotiation = async (req,res) => {
         //       from: 'enquiry@exciteafrica.com',
         //       to: getInfluencer.email,
         //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-        //       html: influencerNotification(firstName,profile.fullName),
-        //       text: influencerNotification(firstName,profile.fullName),
+        //       html: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
+        //       text: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
         //       replyTo: 'enquiry@exciteafrica.com',
         //       onError: (e) => console.log(e),
         //       onSuccess: (i) => {

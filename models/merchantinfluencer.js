@@ -16,7 +16,7 @@ const merchantInfluencerSchema = mongoose.Schema({
     },
     userType: {
         type: String,
-        default: "EX90IF"
+        default: "EX10AF"
     },
     productName: {
         type: String,
@@ -112,9 +112,9 @@ const merchantInfluencerSchema = mongoose.Schema({
         type: Array,
         default: [0, 0]
     },
-    bargain: {
-        type: Array,
-        default: []
+    offerPrice: {
+        type: String,
+        default: ""
     },
     assignedInfluencer: [{
         type: mongoose.Schema.Types.ObjectId,
