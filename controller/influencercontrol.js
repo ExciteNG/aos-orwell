@@ -77,7 +77,7 @@ const merchantPickInfluencer = async (req,res) => {
         const matchedInfluencers = await Influencer.find({$or:[{marketingSpecialty:productServiceCategory},
             {influencerLevel:influencerLevel}]}) 
         //find an influencer based on these parameters
-        if (matchedInfluencers.length === 0) return res.json({code:200,data:"no matches for your budget",
+        if (matchedInfluencers.length === 0) return res.json({code:404,data:"no matches for your budget",
         prices:[pricing,unitPricing]})
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
@@ -280,7 +280,6 @@ const influencerNegotiatePrice = async (req,res) => {
         }
         
     } catch (err) {
-
         console.error(err)
         return res.json({code:500,message:err.message})
     }
