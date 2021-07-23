@@ -54,7 +54,8 @@ const merchantPickInfluencer = async (req,res) => {
             deliveryType,
             coverage,
             pricing,
-            unitPricing
+            unitPricing,
+            offerPrice
         } = req.body
         req.body.email = email
         req.body.userType = userType
@@ -96,9 +97,9 @@ const influencerNegotiation = async (req,res) => {
         //filter only the approved influencers
         // const approvedInfluencers = Influencer.find({regStatus:"accepted"})
         let profile = await Profiles.findOne({email:email})
-        if (!profile) return res.json({code:404,message:"No user profile with that email was found"})
+        if (!profile) return res.json({code:404,message:"No merchant with that email address was found"})
         const getInfluencer =  await Influencer.findById(id).lean()
-        if (!getInfluencer) return res.json({code:404,message:"this influencer was not found !"})
+        if (!getInfluencer) return res.json({code:404,message:"this influencer cannot be found !"})
         //increase the merchant campaign
        let pendingIncrement = profile.pendingCampaigns + 1
     //    profile.pendingCampaigns =await profile.pendingCampaigns + 1
@@ -122,6 +123,9 @@ const influencerNegotiation = async (req,res) => {
         // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
         // await getInfluencer.markModified("pendingJobs")
         let firstName = getInfluencer.fullName.split(' ')[0]
+        let offerPrice = req.body.offerPrice
+        let durationOfPromotion = req.body.durationOfPromotion
+        let reach = req.body.reach
         // nodeoutlook.sendEmail({
         //     auth: {
         //       user: process.env.EXCITE_ENQUIRY_USER,
@@ -130,8 +134,8 @@ const influencerNegotiation = async (req,res) => {
         //       from: 'enquiry@exciteafrica.com',
         //       to: getInfluencer.email,
         //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-        //       html: influencerNotification(firstName,profile.fullName),
-        //       text: influencerNotification(firstName,profile.fullName),
+        //       html: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
+        //       text: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
         //       replyTo: 'enquiry@exciteafrica.com',
         //       onError: (e) => console.log(e),
         //       onSuccess: (i) => {

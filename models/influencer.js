@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
-
 const mongoose = require('./init');
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const influencerSChema = mongoose.Schema({
+const influencerSchema = mongoose.Schema({
     fullName:{
         type:String,
         required:[true,'please enter your full name !']
@@ -114,4 +113,4 @@ const influencerSChema = mongoose.Schema({
 },
 {timestamps:true})
 
-module.exports = mongoose.model('influencer',influencerSChema)
+module.exports = mongoose.model('influencer',influencerSchema)
