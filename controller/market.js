@@ -73,7 +73,6 @@ const getOfferById = async (req, res) => {
 
 
 // Merchant delete product
-
 const delMyProduct = async (req,res)=>{
   const id=req.params.id;
   try {
@@ -81,6 +80,18 @@ const delMyProduct = async (req,res)=>{
    return res.json({code:200,doc})
   } catch (error) {
     return res.status(500)
+  }
+}
+
+// Merchant update product
+const updateMyProduct = async (req,res)=>{
+  const id =  req.params.id;
+  const body = req.body;
+  try {
+    const updateDocs = await Products.findOneAndUpdate({_id:id},{...body});
+    res.json({code:200,message:"Update was successful"})
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -874,5 +885,6 @@ module.exports = {
   addServices,
   addProperty,
   addKids,
-  delMyProduct
+  delMyProduct,
+  updateMyProduct
 };
