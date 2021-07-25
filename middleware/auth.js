@@ -7,6 +7,7 @@ const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profile = require("../models/Profiles");
 const Affiliates = require("../models/Affiliates"); 
+const Agents = require('../models/Agents');
 const Partners = require("../models/Partners");
 const Influencers = require("../models/influencer");
 const randomstring = require("randomstring");
@@ -326,7 +327,7 @@ const signUpAffiliates = async (req, res, next) => {
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
-          res.json({ code: 401, mesage: "Failed create account" });
+          res.json({ code: 401, mesage: "Failed to create account" });
           return;
         }
       });
@@ -397,6 +398,137 @@ const signUpAffiliates = async (req, res, next) => {
   });
 };
 
+//sign up agents
+const signUpAgents = async (req,res) => {
+
+  const {
+    email,
+    password,
+    phone,
+    fullname,
+    lga,
+    state,
+    cell,
+    idType,
+    idImg,
+    passportImg,
+    address,
+    broughtBy
+  } = req.body;
+  if (!email || !password) {
+    return res.json({ status: 400, code: "No email or password provided" });
+  }
+  if (password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
+  }
+
+  const validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email);
+  if (!validEmail) {
+    res.json({ message: "invalid email", code: 400 });
+  }
+
+  await User.findOne({ email: req.body.email }, (err, doc) => {
+    if (err) {
+      res.json({ code: 401, msg: "Error ocured" });
+    }
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "Account exist", doc });
+      next(err);
+    } else {
+      //continue
+      const generateRefNo = randomstring.generate({
+        length: 12,
+        charset: "alphanumeric",
+        readable: true,
+     });
+      //  let clientRefNo= `HR-CL-${generateRefNo}`,
+
+      const user = {
+        email: email,
+        name: fullname,
+        userType: "EX20AG",
+        emailVerified: false,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 401, mesage: "Failed to create account" });
+          return;
+        }
+      });
+
+      const profileInstance = new Agents(userInstance);
+      profileInstance.fullname = fullname;
+      profileInstance.phone = phone;
+      profileInstance.broughtBy=broughtBy;
+      profileInstance.cellInfo = {
+        cell: cell,
+        cellGroup: "",
+        isCellHead: false,
+        isClusterHead: false,
+        cluster: "",
+      };
+      profileInstance.identification = {
+        idType: idType,
+        id: idImg,
+        passport: passportImg,
+        signature: "",
+      };
+      profileInstance.location = { address: address, state: state, lga: lga };
+
+      profileInstance.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 401, mesage: "Failed to create profile" });
+          return;
+        }
+      });
+      // req.user = userInstance;
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "ACKNOWLEDGEMENT EMAIL",
+        html: affiliateAcknowledge(),
+        text: affiliateAcknowledge(),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.log(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+      //send a general welcome mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${fullname.split(' ')[0]}`,
+        html: welcomeEmail(fullname.split(' ')[0]),
+        text: welcomeEmail(fullname.split(' ')[0]),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+      
+     return res.json({ code: 201, mesage: "Account created" });
+      // next();
+    }
+  });
+
+}
+
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
@@ -408,7 +540,7 @@ const signUpRefCode = async (req, res, next) => {
       error: "password must be at least eight characters long",
     });
   }
-  User.findOne({ email: req.body.email }, async (err, doc) => {
+ await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "this Account already exists", doc });
@@ -448,6 +580,121 @@ const signUpRefCode = async (req, res, next) => {
       });
       // TODO restructure
       const refBy = await Affiliates.findOne({
+        affiliateCode: req.body.refCode,
+      });
+      console.log(refBy, "here", req.body.refCode);
+
+      if (!refBy) return res.json({ code: 201, mesage: "Account created" });
+      if (refBy) {
+        refBy.merchants.push(profileId);
+        refBy.markModified("merchants");
+        await refBy.save();
+        //send verification mail
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: "Verify Your Account",
+          html: verifyEmail(user.username, user.email, user.verifyToken),
+          text: verifyEmail(user.username, user.email, user.verifyToken),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
+          html: welcomeEmail(user.fullname.split(' ')[0]),
+          text: welcomeEmail(user.fullname.split(' ')[0]),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+        
+        // nodeoutlook.sendEmail({
+        //   auth: {
+        //     user: process.env.EXCITE_ENQUIRY_USER,
+        //     pass: process.env.EXCITE_ENQUIRY_PASS,
+        //   },
+        //   from: "enquiry@exciteafrica.com",
+        //   to: user.email,
+        //   subject: "ACKNOWLEDGEMENT EMAIL",
+        //   html: affiliateAcknowledge(),
+        //   text: affiliateAcknowledge(),
+        //   replyTo: "enquiry@exciteafrica.com",
+        //   onError: (e) => console.log(e),
+        //   onSuccess: (i) => console.log(i),
+        //   secure: false,
+        // });
+        return res.json({ code: 201, mesage: "Account created successfully !, please check your email address to confirm your account" });
+      }
+    }
+  });
+};
+
+// sign up user via refcode of the sales agents
+
+const signUpAgentRefCode = async (req, res, next) => {
+  if (!req.body.email || !req.body.password) {
+    res.json({code:400,message:"No email or password provided."});
+  }
+  if (req.body.password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
+  }
+ await User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "this Account already exists", doc });
+      next(err);
+    } else {
+      //continue
+      const user = {
+        email: req.body.email.toLowerCase(),
+        userType: "EX10AF",
+        emailVerified: false,
+        fullname: req.body.fullname,
+        username: req.body.username,
+        name: req.body.fullname,
+        verifyToken:generateRefNo
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          res.json({ code: 400, mesage: "Failed create account" });
+
+          return;
+        }
+      });
+      const profileInstance = new Profile({ ...userInstance, ...user });
+      const profileId = profileInstance._id;
+      let profiler = profileInstance;
+      profiler.referral.isReffered = true;
+      profiler.referral.refCode = req.body.refCode;
+      profiler.refBy = req.body.refCode;
+      profileInstance.save((err, doc) => {
+        if (err) {
+          // next(err);
+          res.json({ code: 400, mesage: "Failed to create profile" });
+          return;
+        }
+      });
+      // TODO restructure
+      const refBy = await Agents.findOne({
         affiliateCode: req.body.refCode,
       });
       console.log(refBy, "here", req.body.refCode);
@@ -751,6 +998,31 @@ const signJWTForAffiliates = (req, res) => {
   }
 };
 
+// Agent login
+const signJWTforAgents = async (req,res) => {
+  try{
+  if (req.user.userType !== "EX30AF")
+      return res.status(400).json({ msg: "invalid login" });
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    // console.log(token);
+    return res.json({ token });
+  } catch (err) {
+    return res.json({ code: 400, message: err.mesage });
+  }
+
+}
 // Partners Login
 const signJWTForPartners = (req, res) => {
   try {
@@ -937,6 +1209,8 @@ module.exports = {
   initialize: passport.initialize(),
   signUp,
   signUpAffiliates,
+  signUpAgents,
+  signUpAgentRefCode,
   signUpInfluencers,
   signUpPartner,
   signUpRefCode,
@@ -950,5 +1224,6 @@ module.exports = {
   signJWTForPartners,
   signJWTForSpringBoard,
   signJWTForExcite,
+  signJWTforAgents,
   passwordReset,
 };

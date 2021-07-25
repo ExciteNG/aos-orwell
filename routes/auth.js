@@ -5,11 +5,14 @@ const express = require('express');
 const {
   signUp,
   signUpAffiliates,
+  signUpAgents,
+  signUpAgentRefCode,
   signUpInfluencers,
   signUpPartner,
   setUpSpringBoard,
   signIn,
   requireJWT,
+  signJWTforAgents,
   signJWTForUser,
   signJWTForAffiliates,
   signJWTForInfluencers,
@@ -29,6 +32,12 @@ router.post('/auth/sign-up', signUp)
 
 //sign up influencers
 router.post('/auth/influencer-marketer/sign-up', signUpInfluencers)
+
+//sign up agents
+router.post('/auth/agent/sign-up',signUpAgents)
+
+//sign up agents referrals 
+router.post('/auth/agents/sign-up/ref-system/',signUpAgentRefCode)
 
 
 // Sign up affiliates
@@ -62,13 +71,16 @@ router.post('/auth', signIn, signJWTForUser)
 router.post('/auth/login/affiliates', signIn, signJWTForAffiliates)
 // Sign in partners
 router.post('/auth/login/partners', signIn, signJWTForPartners)
-// Sign in springboard
+// Sign in springboard  
 router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 //sign in admin
 router.post('/auth/login/admin', signIn, signJWTForExcite)
 
 //sign in influencer
 router.post('/auth/login/influencer', signIn, signJWTForInfluencers)
+
+//sign in agents 
+router.post('/auth/login/agent',signIn,signJWTforAgents)
 
 
 
