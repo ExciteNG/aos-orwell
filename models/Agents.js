@@ -23,29 +23,18 @@ const agentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  identification: {
+  id: {
     type: Object,
     default: { id: "", passport: "", idType: "", signature: "" },
   },
-  phone: {
+  mobile: {
     type: String,
     default: "",
   },
 
-  fullname: {
+  fullName: {
     type: String,
     default: "",
-  },
-  location: Object,
-  default: {
-    address: "",
-    lga: "",
-    state: "",
-    town: "",
-  },
-  regStatus: {
-    type: Object,
-    default: { isApproved: false, dateApproved: "", dateRegistered: "" },
   },
   agentCode: {
     type: String,
@@ -54,20 +43,6 @@ const agentSchema = new mongoose.Schema({
   agentCount: {
     type: Number,
     default: 0,
-  },
-  broughtBy: {
-    type: String,
-    default: "",
-  },
-  cellInfo: {
-    type: Object,
-    default: {
-      cell: "",
-      cellGroup: "",
-      isCellHead: false,
-      isClusterHead: false,
-      cluster: "",
-    },
   },
   accountDetails: {
     type: Object,
@@ -93,7 +68,19 @@ const agentSchema = new mongoose.Schema({
       },
     ],
   },
-  cycle: {
+  nok: {
+    type: String,
+    default: "",
+  },
+  nokAddress: {
+    type: String,
+    default: "",
+  },
+  nokPhone: {
+    type: String,
+    default: "",
+  },
+  nokRelationship: {
     type: String,
     default: "",
   },

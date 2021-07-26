@@ -404,16 +404,14 @@ const signUpAgents = async (req,res) => {
   const {
     email,
     password,
-    phone,
-    fullname,
-    lga,
-    state,
-    cell,
-    idType,
-    idImg,
-    passportImg,
+    mobile,
+    fullName,
+    id,
     address,
-    broughtBy
+    nok,
+    nokAddress,
+    nokPhone,
+    nokRelationship
   } = req.body;
   if (!email || !password) {
     return res.json({ status: 400, code: "No email or password provided" });
@@ -440,16 +438,11 @@ const signUpAgents = async (req,res) => {
       next(err);
     } else {
       //continue
-      const generateRefNo = randomstring.generate({
-        length: 12,
-        charset: "alphanumeric",
-        readable: true,
-     });
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
 
       const user = {
         email: email,
-        name: fullname,
+        name: fullName,
         userType: "EX20AG",
         emailVerified: false,
       };
@@ -463,24 +456,14 @@ const signUpAgents = async (req,res) => {
       });
 
       const profileInstance = new Agents(userInstance);
-      profileInstance.fullname = fullname;
-      profileInstance.phone = phone;
-      profileInstance.broughtBy=broughtBy;
-      profileInstance.cellInfo = {
-        cell: cell,
-        cellGroup: "",
-        isCellHead: false,
-        isClusterHead: false,
-        cluster: "",
-      };
-      profileInstance.identification = {
-        idType: idType,
-        id: idImg,
-        passport: passportImg,
-        signature: "",
-      };
-      profileInstance.location = { address: address, state: state, lga: lga };
-
+      profileInstance.fullnNme = fullName;
+      profileInstance.mobile = mobile;
+      profileInstance.id = id;
+      profileInstance.address=address
+      profileInstance.nok=nok
+      profileInstance.nokAddress=nokAddress
+      profileInstance.nokPhone=nokPhone
+      profileInstance.nokRelationship=nokRelationship
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -513,9 +496,9 @@ const signUpAgents = async (req,res) => {
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
-        subject: `Welcome to  Excite ${fullname.split(' ')[0]}`,
-        html: welcomeEmail(fullname.split(' ')[0]),
-        text: welcomeEmail(fullname.split(' ')[0]),
+        subject: `Welcome to  Excite ${fullName.split(' ')[0]}`,
+        html: welcomeEmail(fullName.split(' ')[0]),
+        text: welcomeEmail(fullName.split(' ')[0]),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
@@ -1001,7 +984,7 @@ const signJWTForAffiliates = (req, res) => {
 // Agent login
 const signJWTforAgents = async (req,res) => {
   try{
-  if (req.user.userType !== "EX30AF")
+  if (req.user.userType !== "EX20AG")
       return res.status(400).json({ msg: "invalid login" });
     const user = req.user;
     const token = JWT.sign(
