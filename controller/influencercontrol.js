@@ -14,15 +14,15 @@ const Negotiation = require('../models/infMerchantNegotiate');
 //restricting users where possible
 
 
-const getPricingRange = (Reach,posts,months) => {
-    let lowPricing = 2.2*Reach*posts*months
-    let highPricing = 4.2*Reach*posts*months
+const getPricingRange = (Reach,posts,months,out) => {
+    let lowPricing = 2.2*Reach*posts*months*out
+    let highPricing = 4.2*Reach*posts*months*out
     return {low:lowPricing.toFixed(2), high:highPricing.toFixed(2)}
 }
 
-const unitPricingRange = (Reach) => {
-    let lowUnitPricing = 2.2*Reach
-    let highUnitPricing = 4.2*Reach
+const unitPricingRange = (Reach,out) => {
+    let lowUnitPricing = 2.2*Reach*out
+    let highUnitPricing = 4.2*Reach*out
 
     return {low:lowUnitPricing,high:highUnitPricing}
 }
@@ -46,6 +46,8 @@ const merchantPickInfluencer = async (req,res) => {
             productServiceCategory,
             contentCreator,
             noOfPosts,
+            timeUnit,
+            output,
             unitPost,
             durationOfPromotion,
             unitMonth,
@@ -65,8 +67,12 @@ const merchantPickInfluencer = async (req,res) => {
         //get the influencer level (could be one of micro,mini,max)
         // const getInfluencerLevel = influencerLevel.replaceAll(" ","").split("")[0].toLowerCase()
         // console.log(getInfluencerLevel)
-        pricing = getPricingRange(reach,noOfPosts,durationOfPromotion)
-        unitPricing = unitPricingRange(reach)
+        if (timeUnit === "day") output = 30
+        if (timeUnit === "week") output = 4
+        if (timeUnit === "month") output = 1
+        if (timeUnit === "year") output = 1 / 12
+        pricing = getPricingRange(reach,noOfPosts,durationOfPromotion,output)
+        unitPricing = unitPricingRange(reach,output)
         // let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing,unitPricing})
         // newMerchantInfluencer.markModified("pricing")
         // newMerchantInfluencer.markModified("unitPricing")
@@ -274,6 +280,10 @@ const influencerNegotiatePrice = async (req,res) => {
         req.body.merchantEmail = getMerchant.email
         req.body.merchantFullName = req.body.fullName
         req.body.influencerFullName = negotiateInfluencer.fullName
+        //find the product of the merchant and influencer negotiation model
+        let getProduct = await influencerMerchantModel.findOne({email:getMerchant.email,
+            influencerName:negotiateInfluencer.fullName}).lean()
+        req.body.product = getProduct.productName
         //check if this particular people has conversed before
         let checkPreviousConversation = await Negotiation.findOne({influencerEmail:email,
             merchantEmail:getMerchant.email}).lean()
@@ -285,6 +295,9 @@ const influencerNegotiatePrice = async (req,res) => {
 
         return res.json({code:201,data:negotiation})
         }else{
+            await Negotiation.findOneAndUpdate({influencerEmail:email,
+                merchantEmail:getMerchant.email},{product:getProduct.productName},
+                {new:true,runValidators:true})
             return res.json({code:200,data:checkPreviousConversation})
         }
         

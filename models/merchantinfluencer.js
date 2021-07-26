@@ -80,6 +80,10 @@ const merchantInfluencerSchema = mongoose.Schema({
     timeUnit:{
         type:String
     },
+    output:{
+        type:Number,
+        default:1
+    },
     unitPost: {
         type: Number,
         default: 1
