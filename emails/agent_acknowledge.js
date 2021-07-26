@@ -950,3 +950,5 @@ const agentAcknowledge = () => {
     
     </html>`
 }
+
+module.exports = agentAcknowledge
