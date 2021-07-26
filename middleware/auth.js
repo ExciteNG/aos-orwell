@@ -16,6 +16,7 @@ const { use } = require("passport");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
+const agentAcknowledge = require('../emails/agent_acknowledge');
 const influencerAcknowledge = require("../emails/influencer_acknowledge");
 const welcomeEmail = require('../emails/new_welcome_templates');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -481,8 +482,8 @@ const signUpAgents = async (req,res) => {
         from: "enquiry@exciteafrica.com",
         to: user.email,
         subject: "ACKNOWLEDGEMENT EMAIL",
-        html: affiliateAcknowledge(),
-        text: affiliateAcknowledge(),
+        html: agentAcknowledge(),
+        text: agentAcknowledge(),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.log(e),
         onSuccess: (i) => console.log(i),
