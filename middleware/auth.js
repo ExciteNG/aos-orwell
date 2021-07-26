@@ -457,7 +457,7 @@ const signUpAgents = async (req,res) => {
       });
 
       const profileInstance = new Agents(userInstance);
-      profileInstance.fullnNme = fullName;
+      profileInstance.fullName = fullName;
       profileInstance.mobile = mobile;
       profileInstance.id = id;
       profileInstance.address=address
