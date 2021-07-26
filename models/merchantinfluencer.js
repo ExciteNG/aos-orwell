@@ -77,6 +77,9 @@ const merchantInfluencerSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    timeUnit:{
+        type:String
+    },
     unitPost: {
         type: Number,
         default: 1
@@ -115,6 +118,9 @@ const merchantInfluencerSchema = mongoose.Schema({
     offerPrice: {
         type: String,
         default: ""
+    },
+    influencerName:{
+        type:String,
     },
     assignedInfluencer: [{
         type: mongoose.Schema.Types.ObjectId,

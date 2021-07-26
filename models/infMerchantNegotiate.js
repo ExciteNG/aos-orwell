@@ -53,6 +53,10 @@ const NegotiateSchema = mongoose.Schema({
         type:Number,
         default:0
     },
+    product:{
+        type:String,
+        required:true
+    },
     negotiationStatus:{
         type:String,
         default:"pending"

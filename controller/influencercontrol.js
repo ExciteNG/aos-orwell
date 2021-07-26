@@ -55,7 +55,8 @@ const merchantPickInfluencer = async (req,res) => {
             coverage,
             pricing,
             unitPricing,
-            offerPrice
+            offerPrice,
+            influencerName
         } = req.body
         req.body.email = email
         req.body.userType = userType
@@ -66,12 +67,12 @@ const merchantPickInfluencer = async (req,res) => {
         // console.log(getInfluencerLevel)
         pricing = getPricingRange(reach,noOfPosts,durationOfPromotion)
         unitPricing = unitPricingRange(reach)
-        let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing,unitPricing})
-        newMerchantInfluencer.markModified("pricing")
-        newMerchantInfluencer.markModified("unitPricing")
+        // let newMerchantInfluencer = new influencerMerchantModel({...req.body,pricing,unitPricing})
+        // newMerchantInfluencer.markModified("pricing")
+        // newMerchantInfluencer.markModified("unitPricing")
         // influencerMerchantModel.markModified("pricing")
         // influencerMerchantModel.markModified("unitPricing")
-        await newMerchantInfluencer.save()
+        // await newMerchantInfluencer.save()
         //filter only the approved influencers
     //    const approvedInfs = Influencer.find({regStatus:"accepted"})
     // todo sort the selected influencers based on their followers
@@ -128,6 +129,11 @@ const influencerNegotiation = async (req,res) => {
         let offerPrice = req.body.offerPrice
         let durationOfPromotion = req.body.durationOfPromotion
         let reach = req.body.reach
+        getInfluencer.fullName = req.body.influencerName
+        let newMerchantInfluencer = new influencerMerchantModel(req.body)
+        newMerchantInfluencer.markModified("pricing")
+        newMerchantInfluencer.markModified("unitPricing")
+        await newMerchantInfluencer.save()
         // nodeoutlook.sendEmail({
         //     auth: {
         //       user: process.env.EXCITE_ENQUIRY_USER,
@@ -149,6 +155,7 @@ const influencerNegotiation = async (req,res) => {
         //   await getInfluencer.save((err,docs)=>{
         //       console.log(err)
         //   })
+        
         return res.json({code:200,data:{...getInfluencer,...profile[fullName]},message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
         })
     } catch (err) {
