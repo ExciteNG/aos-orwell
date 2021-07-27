@@ -1,8 +1,22 @@
 const router = require('express').Router();
-const {merchantPickInfluencer,getInfluencerDashboard,influencerNegotiation
-    ,merchantDashboard,merchantPaymentPrice,influencerNegotiatePrice,
-    merchantNegotiateOffer,getAllChats,influencerMerchantDeclinePrice,
-    influencerAcceptsPrice,singleChat, merchantDeclinePendings} = require('../controller/influencercontrol')
+const {merchantPickInfluencer,
+    getInfluencerDashboard,
+    influencerNegotiation,
+    merchantDashboard,
+    merchantPaymentPrice,
+    influencerNegotiatePrice,
+    merchantNegotiateOffer,
+    getAllChats,
+    influencerMerchantDeclinePrice,
+    influencerAcceptsPrice,
+    singleChat,
+    merchantDeclinePendings,
+    getMerchantPendings,
+    getMerchantAccepted,
+    getMerchantCompleted,
+    getInfluencerPendings,
+    getInfluencerAccepted,
+    getInfluencerCompleted} = require('../controller/influencercontrol')
 
 const {requireJWT} = require('./../middleware/auth')
 //merchant form for influencer
@@ -38,5 +52,18 @@ router.delete('/merchant/influencer-decline/:id',requireJWT,influencerMerchantDe
 //influencer accept offer
 router.put("/influencer-accept/:id",requireJWT,influencerAcceptsPrice)
 
+//get merchant pendings
+router.get('/merchant-pendings', requireJWT, getMerchantPendings)
+//get merchant ongoing
+router.get('/merchant-ongoing', requireJWT, getMerchantAccepted)
+//get merchant complete
+router.get('/merchant-complete', requireJWT, getMerchantCompleted)
+
+// get influencer pendings
+router.get('/influencer-pendings', requireJWT, getInfluencerPendings)
+// get influencer ongoing
+router.get('/influencer-ongoing', requireJWT, getInfluencerAccepted)
+// get influencer complete
+router.get('/influencer-complete', requireJWT, getInfluencerCompleted)
 
 module.exports = router
