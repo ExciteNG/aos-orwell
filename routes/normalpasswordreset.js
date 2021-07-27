@@ -21,21 +21,21 @@ router.post('/forgot-password', async function (req,res,next) {
           });
         },
         async function(token, done) {
-         await User.findOne({ email: req.body.email }, function(err, user) {
+         await User.findOne({ email: req.body.email }, function(err, userReset) {
             
-            if (!user) {
+            if (!userReset) {
              return   res.json({code:500,message:"No account with that email address!"});
               // return res.redirect('/password-forgot/forgot-password');
             }
-            user.resetPasswordToken = token,
-            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-            user.save(function(err) {
+            userReset.resetPasswordToken = token,
+            userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+            userReset.save(function(err) {
               if (err) console.error(err)
               // done(err, token, user);
             });
           });
         },
-        function(token, user, done) {
+        function(token, userReset, done) {
           // console.log(user)
           nodeoutlook.sendEmail({
             auth: {
@@ -43,10 +43,10 @@ router.post('/forgot-password', async function (req,res,next) {
               pass: process.env.EXCITE_ENQUIRY_PASS,
             },
               from: 'enquiry@exciteafrica.com',
-              to: user.email,
+              to: userReset.email,
               subject: 'Excite Account Password Reset',
-              html: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
-              text: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
+              html: normalResetPassTemplates(userReset.name.split(' ')[0],userReset.email,token),
+              text: normalResetPassTemplates(userReset.name.split(' ')[0],userReset.email,token),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => {
