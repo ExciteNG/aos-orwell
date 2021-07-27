@@ -31,7 +31,7 @@ router.put('/influencer-negotiation/:id',requireJWT,influencerNegotiation)
 router.get('/merchant/dashboard',requireJWT,merchantDashboard)
 
 // get a list of merchant pending jobs
-router.get('/merchant/pending-jobs',requireJWT, merchantDeclinePendings)
+router.get('/merchant/pending-jobs', requireJWT, merchantDeclinePendings)
 
 //merchant agree price
 router.post('/merchant-agree-price',requireJWT,merchantPaymentPrice)
@@ -41,13 +41,14 @@ router.post('/influencer/start-negotiation/:id',requireJWT,influencerNegotiatePr
 // merchant/influencer send message
 router.put('/influencer-marketing/negotiation/:id',requireJWT,merchantNegotiateOffer)
 //router.post('/send-message/:id',bargainSendInfluencer)
+
 //get specific chats
 router.get('/negotiation-chat/:id',requireJWT,singleChat)
 //get total  chats by each 
-router.get('/my-chats',requireJWT,getAllChats)
+router.get('/my-chats', requireJWT, getAllChats)
 
 //influencer decline offer
-router.delete('/merchant/influencer-decline/:id',requireJWT,influencerMerchantDeclinePrice)
+router.delete('/merchant/influencer-decline/:id', requireJWT, influencerMerchantDeclinePrice)
 
 //influencer accept offer
 router.put("/influencer-accept/:id",requireJWT,influencerAcceptsPrice)
