@@ -376,13 +376,12 @@ const influencerAcceptsPrice = async (req,res) => {
     await findInfluencer.markModified("exciteClients")
     await findInfluencer.save()
     await Negotiation.findOneAndUpdate({_id:id},{status:"Accepted"},{
-        new:true,runValidators:true, function (err,docs) {
+        new:true,runValidators:true}, function (err,docs) {
             if (err){
                 console.error(err)
             }
             console.log(docs)
-        }
-    })
+        })
 
     //send mail to the influencer and merchant
     //influencer's agreement mail
@@ -503,6 +502,81 @@ const singleChat = async (req,res) => {
     }
 }
 
+const getMerchantPendings = async (req,res) => {
+    try{
+    const {email} = req.user
+    if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allMerchantPending = await Negotiation.find({merchantEmail:email,negotiationStatus:"pending"}).lean()
+    return res.json({code:200,data:allMerchantPending})
+    } catch (err){
+    console.error(err)
+    return res.json({code:500,message:err.message})
+    }
+}
+
+const getMerchantAccepted = async (req,res) => {
+    try {
+    const {email} = req.user
+    if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allMerchantAccepted = await Negotiation.find({merchantEmail:email,negotiationStatus:"Accepted"}).lean()
+    return res.json({code:200,data:allMerchantAccepted})
+    } catch (err){
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+const getMerchantCompleted = async (req,res) => {
+    try {
+    const {email} = req.user
+    if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allMerchantComplete = await Negotiation.find({merchantEmail:email,negotiationStatus:"completed"}).lean()
+    return res.json({code:200,message:allMerchantComplete})
+    } catch(err){
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+
+}
+
+const getInfluencerPendings = async (req,res) => {
+    try{
+    const {email} = req.user
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allInfluencerPending = await Negotiation.find({influencerEmail:email,negotiationStatus:"pending"}).lean()
+    return res.json({code:200,data:allInfluencerPending})
+    } catch(err){
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+}
+
+const getInfluencerAccepted = async (req,res) => {
+    try {
+    const {email} = req.user
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allInfluencerAccepted = await Negotiation.find({influencerEmail:email,negotiationStatus:"Accepted"}).lean()
+    return res.json({code:200,data:allInfluencerAccepted})
+    } catch(err){
+        console.error(err)
+        return res.json({code:200,message:err.message})
+    }
+    
+}
+
+const getInfluencerCompleted = async (req,res) => {
+    try {
+    const {email} = req.user
+    if (req.user.userType !== "EX90IF") return res.json({code:401,message:"You are not allowed to view this resource"})
+    let allInfluencerComplete = await Negotiation.find({influencerEmail:email,negotiationStatus:"completed"}).lean()
+    return res.json({code:200,data:allInfluencerComplete})
+    } catch (err){
+        console.error(err)
+        return res.json({code:500,message:err.message})
+    }
+
+}
+
 // get the overall design pattern to track the accepted seection to the payments section to the reports section to the payment tracking session 
 // GET weekly reports
 // PAYMENT POPUP VIEW 
@@ -519,5 +593,11 @@ module.exports = {
     influencerMerchantDeclinePrice,
     getAllChats,
     singleChat,
-    merchantDeclinePendings
+    merchantDeclinePendings,
+    getMerchantPendings,
+    getMerchantCompleted,
+    getMerchantAccepted,
+    getInfluencerPendings,
+    getInfluencerAccepted,
+    getInfluencerCompleted
 }
