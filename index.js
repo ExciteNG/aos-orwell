@@ -105,6 +105,7 @@ else {
   //       payment.negotiationStatus = "completed"
   //       let influencer = await Influencers.findOne({fullName:payment.influencerName})
   //       let profile = await Profiles.findOne({email:payment.email})
+  //       profile.completedCampaigns = profile.completedCampaigns + 1
   //       //send mails to the the respective influencers and merchants
   //       //merchant first
   //          nodeoutlook.sendEmail({

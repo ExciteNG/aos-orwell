@@ -24,7 +24,7 @@ const unitPricingRange = (Reach,out) => {
     let lowUnitPricing = 2.2*Reach*out
     let highUnitPricing = 4.2*Reach*out
 
-    return {low:lowUnitPricing,high:highUnitPricing}
+    return {low:lowUnitPricing.toFixed(2),high:highUnitPricing.toFixed(2)}
 }
 
 const merchantPickInfluencer = async (req,res) => {
