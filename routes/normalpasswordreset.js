@@ -20,7 +20,7 @@ router.post('/forgot-password', async function (req,res,next) {
             done(err, token);
           });
         },
-        function(token, done) {
+        async function(token, done) {
          await User.findOne({ email: req.body.email }, function(err, user) {
             
             if (!user) {
@@ -73,7 +73,7 @@ router.post('/forgot-password', async function (req,res,next) {
 router.post('/reset/:token/:email', async function(req, res) {
   console.log(req.params.token)
     async.waterfall([
-      function(done) {
+     async function(done) {
         await User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
           console.error(err)
           if (!user) {
