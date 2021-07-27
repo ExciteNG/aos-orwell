@@ -12,6 +12,7 @@ const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
 router.post('/forgot-password', async function (req,res,next) {
+  const {email,userType} = req.user
   console.log(req.body.email)
     async.waterfall([
         function(done) {
@@ -55,7 +56,7 @@ router.post('/forgot-password', async function (req,res,next) {
               },
               secure:false,
           })
-          return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:user.userType});
+          return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
           done('done')
         }
       ], function(err) {
