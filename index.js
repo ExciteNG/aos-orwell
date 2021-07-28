@@ -173,6 +173,7 @@ else {
     app.use('/excite/partners', require('./routes/excite/partners'));
     app.use('/excite/banners', require('./routes/excite/banners'));
     app.use('/excite/influencers',require('./routes/excite/influencers'));
+    app.use('/excite/agent',require('./routes/excite/agents'));
     app.use('/partners',require('./routes/partners/partners'));
     app.use('/password-forgot',require('./routes/passportreset'));
     app.use('/reset-password',require('./routes/normalpasswordreset'));
@@ -186,6 +187,7 @@ else {
     app.use('/post-transaction',require('./routes/transactions/posttransaction'));
     app.use('/paystack',require('./helper/payments/generate'));
     app.use('/influencer-marketing',require('./routes/influenceroutes'))
+    app.use('/sales-agent',require('./routes/agents'))
 
     app.use([
       require("./routes/angolia"),

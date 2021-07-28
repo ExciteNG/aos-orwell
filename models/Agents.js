@@ -27,6 +27,10 @@ const agentSchema = new mongoose.Schema({
     type: Object,
     default: { id: "", passport: "", idType: "", signature: "" },
   },
+  passport: {
+    type: Object,
+    default: {  },
+  },
   mobile: {
     type: String,
     default: "",
@@ -37,6 +41,10 @@ const agentSchema = new mongoose.Schema({
     default: "",
   },
   agentCode: {
+    type: String,
+    default: "",
+  },
+  address: {
     type: String,
     default: "",
   },
@@ -57,16 +65,7 @@ const agentSchema = new mongoose.Schema({
   },
   earnings: {
     type: Array,
-    default: [
-      {
-        amount: 0,
-        email: "",
-        package: "",
-        cycle: "",
-        commission: 0,
-        merchant: "",
-      },
-    ],
+    default: [],
   },
   nok: {
     type: String,
@@ -83,6 +82,10 @@ const agentSchema = new mongoose.Schema({
   nokRelationship: {
     type: String,
     default: "",
+  },
+  approve:{
+    type:Boolean,
+    default:false
   },
   merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Profile" }],
 });
