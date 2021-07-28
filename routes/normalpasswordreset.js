@@ -11,7 +11,7 @@ const normalResetPassTemplates = require('../emails/original_password_reset');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
-router.post('/forgot-password', function (req,res,next) {
+router.post('/forgot-password', async function (req,res,next) {
   console.log(req.body.email)
     async.waterfall([
         function(done) {
@@ -20,21 +20,22 @@ router.post('/forgot-password', function (req,res,next) {
             done(err, token);
           });
         },
-        function(token, done) {
-          User.findOne({ email: req.body.email }, function(err, user) {
+        async function(token, done) {
+         await User.findOne({ email: req.body.email }, function(err, userReset) {
             
-            if (!user) {
+            if (!userReset) {
              return   res.json({code:500,message:"No account with that email address!"});
               // return res.redirect('/password-forgot/forgot-password');
             }
-            user.resetPasswordToken = token,
-            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-            user.save(function(err) {
-              done(err, token, user);
+            userReset.resetPasswordToken = token,
+            userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+            userReset.save(function(err) {
+              if (err) console.error(err)
+              // done(err, token, user);
             });
           });
         },
-        function(token, user, done) {
+        function(token, userReset, done) {
           // console.log(user)
           nodeoutlook.sendEmail({
             auth: {
@@ -42,10 +43,10 @@ router.post('/forgot-password', function (req,res,next) {
               pass: process.env.EXCITE_ENQUIRY_PASS,
             },
               from: 'enquiry@exciteafrica.com',
-              to: user.email,
+              to: userReset.email,
               subject: 'Excite Account Password Reset',
-              html: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
-              text: normalResetPassTemplates(user.name.split(' ')[0],user.email,token),
+              html: normalResetPassTemplates(userReset.name.split(' ')[0],userReset.email,token),
+              text: normalResetPassTemplates(userReset.name.split(' ')[0],userReset.email,token),
               replyTo: 'enquiry@exciteafrica.com',
               onError: (e) => console.log(e),
               onSuccess: (i) => {
@@ -54,7 +55,7 @@ router.post('/forgot-password', function (req,res,next) {
               },
               secure:false,
           })
-          return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:user.userType});
+          return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
           done('done')
         }
       ], function(err) {
@@ -70,11 +71,11 @@ router.post('/forgot-password', function (req,res,next) {
 
 
 //verify the password reset
-router.post('/reset/:token/:email', function(req, res) {
+router.post('/reset/:token/:email', async function(req, res) {
   console.log(req.params.token)
     async.waterfall([
-      function(done) {
-        User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+     async function(done) {
+        await User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, async function(err, user) {
           console.error(err)
           if (!user) {
            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
@@ -87,6 +88,8 @@ router.post('/reset/:token/:email', function(req, res) {
               //save new password
               user.resetPasswordToken = undefined;
               user.resetPasswordExpires = undefined;
+              await user.markModified("resetPasswordToken")
+              await user.markModified("resetPasswordExpires")
             // setpassword
             user.setPassword(req.body.password, function(){
                             user.save(function(err){

@@ -36,6 +36,7 @@ else {
     const Influencers = require('./models/influencer');
     const Profiles = require("./models/Profiles");
     const Payments = require('./models/agreeprice');
+    const Negotiation = require('./models/infMerchantNegotiate');
     const merchantContractExpired = require('./emails/merchant_contract_expired');
     const influencerContractExpired = require('./emails/influencer_contract_expired');
     const bodyParser=require('body-parser');
@@ -105,6 +106,14 @@ else {
   //       payment.negotiationStatus = "completed"
   //       let influencer = await Influencers.findOne({fullName:payment.influencerName})
   //       let profile = await Profiles.findOne({email:payment.email})
+  //       profile.completedCampaigns = profile.completedCampaigns + 1
+  //       await Negotiation.findOneAndUpdate({merchantEmail:profile.email,influencerEmail:influencer.email},{status:"Completed"},{
+  //         new:true,runValidators:true}, function (err,docs) {
+  //        if (err){
+  //             console.error(err)
+  //         }
+  //         console.log(docs)
+  //     })
   //       //send mails to the the respective influencers and merchants
   //       //merchant first
   //          nodeoutlook.sendEmail({
