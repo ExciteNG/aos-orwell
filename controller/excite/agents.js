@@ -9,9 +9,10 @@ const generateRefNo = Randomstring.generate({
 
 const getAllAgents = async (req, res) => {
   try {
-    const allAgents = await Agents.find().populate('merchants')
+    const allAgents = await Agents.find().populate(['merchants','earnings','payouts'])
     res.json({ code: 200, agents: allAgents });
   } catch (e) {
+    console.log(e)
     res.status(400).json({
       error: e,
       message: "Oops! Something went wrong!",
