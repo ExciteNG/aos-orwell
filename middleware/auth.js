@@ -651,7 +651,6 @@ const signUpAgentRefCode = async (req, res, next) => {
         userType: "EX10AF",
         emailVerified: false,
         fullname: req.body.fullname,
-        username: req.body.username,
         name: req.body.fullname,
         verifyToken:generateRefNo
       };
@@ -679,9 +678,9 @@ const signUpAgentRefCode = async (req, res, next) => {
       });
       // TODO restructure
       const refBy = await Agents.findOne({
-        affiliateCode: req.body.refCode,
+        agentCode: req.body.refCode,
       });
-      console.log(refBy, "here", req.body.refCode);
+      // console.log(refBy, "here", req.body.refCode);
 
       if (!refBy) return res.json({ code: 201, mesage: "Account created" });
       if (refBy) {
@@ -906,7 +905,7 @@ const setUpAdmin = async (req, res, next) => {
   // console.log(req.body)
   User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
-      console.log(doc);
+      // console.log(doc);
       return res.json({ code: 401, msg: "Account exist" });
     } else {
       //continue

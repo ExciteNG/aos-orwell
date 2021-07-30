@@ -51,6 +51,12 @@ router.post('/auth/affiliate/sign-up/ref-system/', signUpRefCode)
 //verify sign up affiliates via token
 // router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
 
+// 
+// Sign up agents (referrals)
+router.post('/auth/agents/sign-up/ref-system/', signUpAgentRefCode)
+//verify sign up affiliates via token
+// router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
+
 
 
 // Sign up partner

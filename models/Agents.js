@@ -2,7 +2,9 @@
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
+const Payout = require('./Payouts');
+const Payment = require('./Payments');
+const Profile = require('./Profiles');
 
 const agentSchema = new mongoose.Schema({
   email: {
@@ -27,6 +29,10 @@ const agentSchema = new mongoose.Schema({
     type: Object,
     default: { id: "", passport: "", idType: "", signature: "" },
   },
+  passport: {
+    type: Object,
+    default: {  },
+  },
   mobile: {
     type: String,
     default: "",
@@ -37,6 +43,10 @@ const agentSchema = new mongoose.Schema({
     default: "",
   },
   agentCode: {
+    type: String,
+    default: "",
+  },
+  address: {
     type: String,
     default: "",
   },
@@ -55,19 +65,6 @@ const agentSchema = new mongoose.Schema({
       paymentMode: "",
     },
   },
-  earnings: {
-    type: Array,
-    default: [
-      {
-        amount: 0,
-        email: "",
-        package: "",
-        cycle: "",
-        commission: 0,
-        merchant: "",
-      },
-    ],
-  },
   nok: {
     type: String,
     default: "",
@@ -84,10 +81,13 @@ const agentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Profile" }],
+  approve:{
+    type:Boolean,
+    default:false
+  },
+  merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: Profile }],
+  earnings: [{ type: mongoose.Schema.Types.ObjectId, ref: Payment }],
+  payouts:[{ type: mongoose.Schema.Types.ObjectId, ref: Payout }]
 });
 
-const Agent = (module.exports = mongoose.model(
-  "Agent",
-  agentSchema
-));
+module.exports = mongoose.model("Agent",agentSchema);
