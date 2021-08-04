@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
-const Profile = require("../models/Profiles");
+const Profiles = require("../models/Profiles");
 const Affiliates = require("../models/Affiliates"); 
 const Agents = require('../models/Agents');
 const Partners = require("../models/Partners");
@@ -28,6 +28,7 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 const Cookies = require("cookies");
+// const Profiles = require("../models/Profiles");
 
 const generateRefNo = randomstring.generate({
   length: 12,
@@ -59,7 +60,6 @@ const signUp = async (req, res, next) => {
       const user = {
         email: req.body.email,
         fullname: req.body.fullname,
-        username: req.body.username,
         name: req.body.fullname,
         userType: "EX10AF",
         emailVerified: false,
@@ -74,7 +74,7 @@ const signUp = async (req, res, next) => {
         }
       });
       //
-      const profileInstance = new Profile(userInstance);
+      const profileInstance = new Profiles(userInstance);
       profileInstance.fullname = req.body.fullname;
       profileInstance.save((err, doc) => {
         if (err) {
@@ -549,7 +549,7 @@ const signUpRefCode = async (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile({ ...userInstance, ...user });
+      const profileInstance = new Profiles({ ...userInstance, ...user });
       const profileId = profileInstance._id;
       let profiler = profileInstance;
       profiler.referral.isReffered = true;
@@ -663,7 +663,7 @@ const signUpAgentRefCode = async (req, res, next) => {
           return;
         }
       });
-      const profileInstance = new Profile({ ...userInstance, ...user });
+      const profileInstance = new Profiles({ ...userInstance, ...user });
       const profileId = profileInstance._id;
       let profiler = profileInstance;
       profiler.referral.isReffered = true;
@@ -930,10 +930,6 @@ const setUpAdmin = async (req, res, next) => {
 /*                  SIGN JWTS                        */
 // Merchants Login
 const signJWTForUser = (req, res) => {
-  // console.log('signing jwt', req.user)
-  // check login route authorization
-  // if (req.user.userType !== "EX10AF")
-  //   return res.status(400).json({ msg: "invalid login" });
   try {
     const user = req.user;
     const token = JWT.sign(
@@ -949,6 +945,28 @@ const signJWTForUser = (req, res) => {
       }
     );
     return res.json({ token });
+  } catch (err) {
+    return res.json({ code: 400, message: err.message });
+  }
+};
+// Merchants Login Via Mobile Phone
+const signJWTForUserOnMobile =async (req, res) => {
+  try {
+    const user = req.user;
+    const token = JWT.sign(
+      {
+        email: user.email,
+        userType: user.userType,
+      },
+      jwtSecret,
+      {
+        algorithm: jwtAlgorithm,
+        expiresIn: jwtExpiresIn,
+        subject: user._id.toString(),
+      }
+    );
+    const profile = await Profiles.findOne({email:user.email}).populate(['product'])
+    return res.json({ token, profile:profile });
   } catch (err) {
     return res.json({ code: 400, message: err.message });
   }
@@ -1202,6 +1220,7 @@ module.exports = {
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
+  signJWTForUserOnMobile,
   signJWTForAffiliates,
   signJWTForInfluencers,
   signJWTForPartners,

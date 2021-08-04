@@ -21,7 +21,8 @@ const {
   signUpRefCode,
   setUpAdmin,
   passwordReset,
-  signJWTForExcite
+  signJWTForExcite,
+  signJWTForUserOnMobile
 } = require('../middleware/auth')
 
 const router = express.Router()
@@ -73,6 +74,7 @@ router.post('/reset-password',passwordReset)
 
 // Sign in client
 router.post('/auth', signIn, signJWTForUser)
+router.post('/auth/mobile', signIn, signJWTForUserOnMobile)
 // Sign in affiliates
 router.post('/auth/login/affiliates', signIn, signJWTForAffiliates)
 // Sign in partners
