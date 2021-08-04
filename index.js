@@ -70,6 +70,8 @@ else {
 
 
     // Middleware
+    // disable x-powered-by header
+    app.disable('x-powered-by');
     app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());

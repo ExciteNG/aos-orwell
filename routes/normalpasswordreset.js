@@ -4,10 +4,9 @@ const router = require('express').Router();
 const async = require('async');
 const crypto = require('crypto');
 const User = require('../models/User');
-const Profile = require('../models/Profiles')
+const Profile = require('../models/Profiles');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const normalResetPassTemplates = require('../emails/original_password_reset');
-//const resetPasswordConfirmation = require('../emails/password_reset_confirm');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
@@ -24,10 +23,10 @@ router.post('/forgot-password', async function (req,res,next) {
          await User.findOne({ email: req.body.email }, function(err, userReset) {
             
             if (!userReset) {
-             return   res.json({code:500,message:"No account with that email address!"});
+             return res.json({code:500,message:"No account with that email address!"});
               // return res.redirect('/password-forgot/forgot-password');
             }
-            userReset.resetPasswordToken = token,
+            userReset.resetPasswordToken = token;
             userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
             userReset.save(function(err) {
               if (err) console.error(err)
