@@ -6,6 +6,8 @@ const controller = require('./../../controller/excite/agents')
 
 router.get('/get-all',requireJWT,controller.getAllAgents);
 router.put('/update/:id',requireJWT,controller.updateAgent,controller.getAllAgents);
+router.put('/sector/assign/:id',requireJWT,controller.updateAgentSector,controller.getAllAgents);
+// router.put('/update/:id',requireJWT,controller.updateAgent,controller.getAllAgents);
 
 
 

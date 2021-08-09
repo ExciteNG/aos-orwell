@@ -28,7 +28,7 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 // const emailTemplate = require('./template');
 passport.use(User.createStrategy());
 const Cookies = require("cookies");
-// const Profiles = require("../models/Profiles");
+
 
 const generateRefNo = randomstring.generate({
   length: 12,
@@ -1001,6 +1001,9 @@ const signJWTForAffiliates = (req, res) => {
 
 // Agent login
 const signJWTforAgents = async (req,res) => {
+  // console.log(req.body)
+  const {location} =req.body;
+  console.log(location)
   try{
   if (req.user.userType !== "EX20AG")
       return res.status(400).json({ msg: "invalid login" });
@@ -1018,6 +1021,12 @@ const signJWTforAgents = async (req,res) => {
       }
     );
     // console.log(token);
+    const agentProfile= await Agents.findOne({email:req.body.email});
+    if(agentProfile){
+      agentProfile.logins = {lat:req.body.lat,long:req.body.long,time:Date.now(),address:location}
+      agentProfile.markModified('logins');
+      await agentProfile.save();
+    }
     return res.json({ token });
   } catch (err) {
     return res.json({ code: 400, message: err.mesage });
