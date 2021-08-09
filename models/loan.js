@@ -167,6 +167,6 @@ const loanSchema = mongoose.Schema({
     type: String,
     default: "",
   },
-});
+},{timestamps:true});
 
 module.exports = mongoose.model("loan", loanSchema);

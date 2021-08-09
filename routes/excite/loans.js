@@ -12,7 +12,6 @@ router.get('/all-loans', (req,res)=>{
     } catch (err) {
         return res.json({code:500,message:err.message})
     }
-    
 
 })
 

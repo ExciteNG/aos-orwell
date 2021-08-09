@@ -57,6 +57,6 @@ const Deals = new mongoose.Schema({
     required:[true,'Please enter your email address'],
     unique:true
 }
-});
+},{timestamps:true});
 
 module.exports = mongoose.model("Deal", Deals);
