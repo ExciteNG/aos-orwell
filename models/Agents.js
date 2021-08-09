@@ -2,9 +2,9 @@
 const mongoose = require("./init");
 const passportLocalMongoose = require("passport-local-mongoose");
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const Payout = require('./Payouts');
-const Payment = require('./Payments');
-const Profile = require('./Profiles');
+const Payout = require("./Payouts");
+const Payment = require("./Payments");
+const Profile = require("./Profiles");
 
 const agentSchema = new mongoose.Schema({
   email: {
@@ -31,7 +31,7 @@ const agentSchema = new mongoose.Schema({
   },
   passport: {
     type: Object,
-    default: {  },
+    default: {},
   },
   mobile: {
     type: String,
@@ -81,13 +81,21 @@ const agentSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  approve:{
-    type:Boolean,
-    default:false
+  approve: {
+    type: Boolean,
+    default: false,
+  },
+  sector: {
+    type: Number,
+    default: 0,
+  },
+  logins: {
+    type: Object,
+    default: { lat: "", long: "", address: "" ,time:0}
   },
   merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: Profile }],
   earnings: [{ type: mongoose.Schema.Types.ObjectId, ref: Payment }],
-  payouts:[{ type: mongoose.Schema.Types.ObjectId, ref: Payout }]
+  payouts: [{ type: mongoose.Schema.Types.ObjectId, ref: Payout }],
 });
 
-module.exports = mongoose.model("Agent",agentSchema);
+module.exports = mongoose.model("Agent", agentSchema);

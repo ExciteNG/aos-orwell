@@ -43,7 +43,27 @@ const updateAgent = async (req, res, next) => {
   }
 };
 
+const updateAgentSector = async (req, res, next) => {
+  const { userType } = req.user;
+  const { sector } = req.body;
+  try {
+    const profile = await Agents.findOne({ _id: req.params.id });
+
+    if (sector) {
+      profile.sector = sector;
+      profile.markModified('sector')
+      await profile.save();
+    }
+    next();
+  } catch (error) {
+    res.status(500);
+  }
+};
+
+
+
 module.exports = {
   getAllAgents,
   updateAgent,
+  updateAgentSector
 };

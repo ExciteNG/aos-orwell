@@ -5,7 +5,7 @@ const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 // var multerS3 = require("multer-s3-v3");
 const { v4: uuidv4 } = require("uuid");
-
+const {imageUpload} = require('./../controller/uploads/mobile')
 const router = express.Router();
 
 const s3 = new AWS.S3({
@@ -170,5 +170,12 @@ router.post('/upload/loan-applications/doc',upload, async (req,res)=>{
    res.status(200).json({code:201,data});
  });
 })
+
+
+// Upload product images from mobile phone
+
+router.post('/upload-v2/mobile',upload,imageUpload, async (req,res)=>{
+  return res.json({msg:req.images})
+ })
 
 module.exports = router;
