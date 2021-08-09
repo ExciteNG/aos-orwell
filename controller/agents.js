@@ -1,5 +1,8 @@
 const Agents = require('../models/Agents');
+const AgentFeedback  = require("../models/AgentsFeedback")
 
+
+// 
 const agentsProfile = async (req,res) => {
     const {email} = req.user;
     try {
@@ -71,9 +74,25 @@ const updateBio = async (req,res)=>{
         }
 }
 
+const agentFeedBackSubmit =async (req,res)=>{
+    const {email} = req.user;
+    const {reporter, location} = req.body;
+    try {
+        const newFeedback = new AgentFeedback({...req.body});
+        newFeedback.location = location;
+        await newFeedback.save();
+        res.json({code:201,msg:"Report submitted"})
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+    }
+  
+}
+
 module.exports={
     agentsProfile,
     uploadToProfile,
     updateBankProfile,
-    updateBio
+    updateBio,
+    agentFeedBackSubmit
 } 
