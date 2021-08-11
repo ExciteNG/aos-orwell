@@ -19,6 +19,7 @@ const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
 const agentAcknowledge = require('../emails/agent_acknowledge');
 const influencerAcknowledge = require("../emails/influencer_acknowledge");
 const welcomeEmail = require('../emails/new_welcome_templates');
+const welcomeSalesMail = require('../emails/agent_welcome');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -498,8 +499,8 @@ const signUpAgents = async (req,res) => {
         from: "enquiry@exciteafrica.com",
         to: user.email,
         subject: `Welcome to  Excite ${fullName.split(' ')[0]}`,
-        html: welcomeEmail(fullName.split(' ')[0]),
-        text: welcomeEmail(fullName.split(' ')[0]),
+        html: welcomeSalesMail(fullName.split(' ')[0]),
+        text: welcomeSalesMail(fullName.split(' ')[0]),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
@@ -598,8 +599,8 @@ const signUpRefCode = async (req, res, next) => {
           from: "enquiry@exciteafrica.com",
           to: user.email,
           subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
-          html: welcomeEmail(user.fullname.split(' ')[0]),
-          text: welcomeEmail(user.fullname.split(' ')[0]),
+          html: welcomeMail(user.fullname.split(' ')[0]),
+          text: welcomeMail(user.fullname.split(' ')[0]),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
