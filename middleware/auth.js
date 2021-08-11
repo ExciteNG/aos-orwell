@@ -437,7 +437,6 @@ const signUpAgents = async (req,res) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "Account exist", doc });
-      next(err);
     } else {
       //continue
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
