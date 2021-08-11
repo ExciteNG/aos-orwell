@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 function emailHost(){
-    if (process.env.NODE_ENV==='development'){
-        return 'http://localhost:3000'
-    }
-    return 'https://exciteenterprise.com'
+
+    return process.env.NODE_ENV === 'development' ? 'http://localhost:7000' : 'https://exciteenterprise.com';
+    
 }
 
-module.exports = emailHost;
+module.exports = emailHost; 
