@@ -175,7 +175,7 @@ router.post('/upload/loan-applications/doc',upload, async (req,res)=>{
 // Upload product images from mobile phone
 
 router.post('/upload-v2/mobile',upload,imageUpload, async (req,res)=>{
-  return res.json({msg:req.images})
+  return res.json({code:201,image:req.images})
  })
 
 module.exports = router;
