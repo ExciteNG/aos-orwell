@@ -41,7 +41,7 @@ const s3 = new AWS.S3({
       next()
     
     });
-    console.log(req.file)
+    // console.log(req.file)
     // next()
   }
 

@@ -306,7 +306,7 @@ const addFashion = async (req, res) => {
 
 
   // 
-  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storeName)
+  if (!storeInfo.storeName || !storeInfo.storeAddress || !storeInfo.storePhone)
     return res.json({ code: 404, message: "Please update store info" });
   const priority = profile.subscriptionLevel;
   const item = {
