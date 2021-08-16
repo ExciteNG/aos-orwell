@@ -90,8 +90,8 @@ const agentSchema = new mongoose.Schema({
     default: 0,
   },
   logins: {
-    type: Object,
-    default: { lat: "", long: "", address: "" ,time:0}
+    type: Array,
+    default: []
   },
   merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: Profile }],
   earnings: [{ type: mongoose.Schema.Types.ObjectId, ref: Payment }],

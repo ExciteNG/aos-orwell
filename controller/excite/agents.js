@@ -1,4 +1,5 @@
 const Agents = require("../../models/Agents");
+const Feedbacks = require("../../models/AgentsFeedback")
 const Randomstring = require("randomstring");
 
 const generateRefNo = Randomstring.generate({
@@ -9,8 +10,12 @@ const generateRefNo = Randomstring.generate({
 
 const getAllAgents = async (req, res) => {
   try {
-    const allAgents = await Agents.find().populate(['merchants','earnings','payouts'])
-    res.json({ code: 200, agents: allAgents });
+    const allAgents = await Agents.find().populate(['merchants','earnings','payouts']);
+    const allFeedbacks = await Feedbacks.find().populate(['reporter']).sort({
+      date: -1,
+      _id:-1
+    });
+    res.json({ code: 200, agents: allAgents, feedbacks:allFeedbacks });
   } catch (e) {
     console.log(e)
     res.status(400).json({

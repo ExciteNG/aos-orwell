@@ -34,13 +34,14 @@ const s3 = new AWS.S3({
     };
     s3.upload(params, (error, data) => {
       if (error) {
-        res.status(500).send(error);
+        console.log(error)
+       return res.status(500).send(error);
       }
       req.images = data;
       next()
     
     });
-    console.log(req.file)
+    // console.log(req.file)
     // next()
   }
 

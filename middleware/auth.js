@@ -1023,7 +1023,7 @@ const signJWTforAgents = async (req,res) => {
     // console.log(token);
     const agentProfile= await Agents.findOne({email:req.body.email});
     if(agentProfile){
-      agentProfile.logins = {lat:req.body.lat,long:req.body.long,time:Date.now(),address:location}
+      agentProfile.logins = [...agentProfile.logins,{lat:req.body.lat,long:req.body.long,time:Date.now(),address:location}]
       agentProfile.markModified('logins');
       await agentProfile.save();
     }
