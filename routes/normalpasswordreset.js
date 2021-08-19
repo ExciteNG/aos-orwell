@@ -33,9 +33,6 @@ router.post('/forgot-password', async function (req,res,next) {
               // done(err, token, user);
             });
           });
-        },
-        function(token, userReset, done) {
-          // console.log(user)
           nodeoutlook.sendEmail({
             auth: {
               user: process.env.EXCITE_ENQUIRY_USER,
@@ -55,8 +52,8 @@ router.post('/forgot-password', async function (req,res,next) {
               secure:false,
           })
           return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
-          done('done')
-        }
+          
+        },
       ], function(err) {
         console.log(err)
         if (err) {
