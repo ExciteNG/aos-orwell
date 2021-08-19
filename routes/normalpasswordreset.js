@@ -20,8 +20,7 @@ router.post('/forgot-password', async function (req,res,next) {
           });
         },
         async function(token, done) {
-         await User.findOne({ email: req.body.email }, function(err, userReset) {
-            
+         let userReset = await User.findOne({ email: req.body.email })
             if (!userReset) {
              return res.json({code:500,message:"No account with that email address!"});
               // return res.redirect('/password-forgot/forgot-password');
@@ -32,7 +31,7 @@ router.post('/forgot-password', async function (req,res,next) {
               if (err) console.error(err)
               // done(err, token, user);
             });
-          });
+          
           nodeoutlook.sendEmail({
             auth: {
               user: process.env.EXCITE_ENQUIRY_USER,
