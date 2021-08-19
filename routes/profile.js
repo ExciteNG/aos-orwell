@@ -167,11 +167,15 @@ router.put("/app/profile/get/profile/approved", async (req, res) => {
 // Merchants Profile by email
 router.get('/app/profile/get/profile/email',requireJWT, async (req,res)=>{
     const {profile} = req.body;
-    console.log('passed')
-    const {email,userType} = req.user
-    const doc = await Profiles.findOne({email:email}).populate(['product'])
+    // console.log('passed')
+    const {email,userType} = req.user;
+    try {
+      const doc = await Profiles.findOne({email:email}).populate(['product'])
     return res.json(doc)
-
+    } catch (error) {
+      console.log(error)
+      return res.status(500)
+    }
     })
 // Merchants name by email
 router.get('/app/profile/get/profile/email/name',requireJWT, async (req,res)=>{
