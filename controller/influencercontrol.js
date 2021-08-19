@@ -437,7 +437,7 @@ const influencerMerchantDeclinePrice = async (req,res)  => {
         const {email} = req.user
         const id = req.params.id
         //get a specific chat
-        if (!req.user.userType === "EX90IF" || !req.user.userType === "EX10AF") return res.json({code:401,message:"Only the influencer or merchant can make this action"})
+        if (req.user.userType !== "EX90IF" || req.user.userType !== "EX10AF") return res.json({code:401,message:"Only the influencer or merchant can make this action"})
         const getChat = await Negotiation.findById(id).lean()
         if (!getChat) return res.json({code:404,message:"Chat not found !, it has probably been declined and deleted by either merchant or influencer"})
         //find the merchant that matches the chat section

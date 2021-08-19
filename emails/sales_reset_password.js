@@ -1,4 +1,4 @@
-const salesHost = require('./sales_host');
+const sailsHost = require('./sales_host');
 const socialMediaLinks = require('./social_links');
 // let x = salesHost()
 
