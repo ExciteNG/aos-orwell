@@ -215,7 +215,7 @@ else {
       require('./routes/confirmation'),
       require('./routes/social'),
       require('./helper/migrations/migrate'),
-      require('./routes/')
+      require('./routes/salespasswordreset')
     ])
 
     // Error handling
