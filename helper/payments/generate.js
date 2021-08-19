@@ -17,7 +17,7 @@ router.get("/generate-payment", requireJWT, (req, res) => {
     const details = plans[req.query.item];
     if (!details) return res.status(404).json({ msg: "not found" });
     details.email = email;
-    console.log(details);
+    // console.log(details);
 
     const token = jwt.sign(details, process.env.PAY_TOKEN_SECRET, {
       expiresIn: 10000,
