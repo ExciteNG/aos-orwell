@@ -1,6 +1,6 @@
 const salesHost = require('./sales_host');
 const socialMediaLinks = require('./social_links');
-let x = salesHost()
+// let x = salesHost()
 
 function salesResetPassword(name,email,tokenString){
 
@@ -827,11 +827,11 @@ function salesResetPassword(name,email,tokenString){
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td class="esd-block-button es-m-txt-c" bgcolor="#ffffff" align="center"><br><br><br><span class="es-button-border" style="border-radius: 8px; background: #6fd20d; border-color: #50b948;"><a href="${sailsHost()}/reset/?email=${email}&token=${tokenString}" class="es-button" target="_blank" style="color: #000000; border-radius: 8px; font-weight: bold; font-size: 18px; font-family: arial, &quot;helvetica neue&quot;, helvetica, sans-serif; border-left-width: 20px; border-right-width: 20px; background: #6fd20d; border-color: #6fd20d;">Reset Password</a></span></td>
+                                                                                        <td class="esd-block-button es-m-txt-c" bgcolor="#ffffff" align="center"><br><br><br><span class="es-button-border" style="border-radius: 8px; background: #6fd20d; border-color: #50b948;"><a href="${salesHost()}/reset/?email=${email}&token=${tokenString}" class="es-button" target="_blank" style="color: #000000; border-radius: 8px; font-weight: bold; font-size: 18px; font-family: arial, &quot;helvetica neue&quot;, helvetica, sans-serif; border-left-width: 20px; border-right-width: 20px; background: #6fd20d; border-color: #6fd20d;">Reset Password</a></span></td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td class="esd-block-text" bgcolor="#ffffff" align="left">
-                                                                                            <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work, Copy and paste the link below to your browser.</p><br><a href="${sailsHost()}/reset/?email=${email}&token=${tokenString}" style="font-size:medium;" target="_blank">${sailsHost()}/reset/?email=${email}&token=${tokenString}</a><br><br>Please kindly ignore if you did not request for this action<br><br>
+                                                                                            <p style="color: #000000; line-height: 200%; font-size:medium;">If that doesn't work, Copy and paste the link below to your browser.</p><br><a href="${salesHost()}/reset/?email=${email}&token=${tokenString}" style="font-size:medium;" target="_blank">${salesHost()}/reset/?email=${email}&token=${tokenString}</a><br><br>Please kindly ignore if you did not request for this action<br><br>
                                                                                             <p style="color: #000000; line-height: 100%; font-size:medium;">If you have any questions, just reply to this email, we are always happy to help out.<br><br><br><br></p>
                                                                                             <p style="color: #000000; line-height: 100%; font-size:medium;">Cheers,<br>The Excite Team<br><br></p>
                                                                                         </td>
