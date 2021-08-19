@@ -10,7 +10,9 @@ const salesResetPassword = require('../emails/sales_reset_password');
 
 router.post('/accounts', async function (req,res) {
     console.log(req.body.email)
-    req.query.q = 'forgot-password'
+    let q = 'forgot-password'
+    req.query.q = q
+    // const {q:"forgot-password"} = req.query
       async.waterfall([
           function(done) {
             crypto.randomBytes(20, function(err, buf) {
@@ -28,7 +30,7 @@ router.post('/accounts', async function (req,res) {
               userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
               userReset.save(function(err) {
                 if (err) console.error(err)
-                // done(err, token, user);
+                done(err, token, user);
               });
             });
           },
@@ -52,8 +54,9 @@ router.post('/accounts', async function (req,res) {
                 },
                 secure:false,
             })
-            return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
             done('done')
+            return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
+      
           }
         ], function(err) {
           console.log(err)
@@ -72,11 +75,10 @@ router.post('/accounts', async function (req,res) {
 
 router.post('/reset', async function(req, res) {
     // console.log(req.params.token)
-    req.query.token = token
-    req.query.email = email
+    const {email,token} = req.query
       async.waterfall([
        async function(done) {
-          await User.findOne({ resetPasswordToken: req.query.token, email:req.query.email, resetPasswordExpires: { $gt: Date.now() } }, async function(err, user) {
+          await User.findOne({ resetPasswordToken: token, email:email, resetPasswordExpires: { $gt: Date.now() } }, async function(err, user) {
             console.error(err)
             if (!user) {
              return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
@@ -120,9 +122,10 @@ router.post('/reset', async function(req, res) {
               secure:false,
              
           });
+          done("done");
           return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
   
-          done("done");
+          
           // process.exit(1)
         }
       ], /***  function(err) {

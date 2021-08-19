@@ -30,6 +30,7 @@ router.post('/forgot-password', async function (req,res,next) {
             userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
             userReset.save(function(err) {
               if (err) console.error(err)
+              done(err, token, user);
               // done(err, token, user);
             });
           });
