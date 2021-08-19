@@ -199,7 +199,7 @@ else {
     app.use('/paystack',require('./helper/payments/generate'));
     app.use('/influencer-marketing',require('./routes/influenceroutes'))
     app.use('/sales-agent',require('./routes/agents'))
-
+  app.use('/sales-auth',require('./routes/salespasswordreset'))
     app.use([
       require("./routes/angolia"),
       require("./routes/auth"),
@@ -215,7 +215,6 @@ else {
       require('./routes/confirmation'),
       require('./routes/social'),
       require('./helper/migrations/migrate'),
-      require('./routes/salespasswordreset')
     ])
 
     // Error handling
