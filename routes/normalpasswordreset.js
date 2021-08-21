@@ -89,9 +89,9 @@ router.post('/reset/:token/:email', async function(req, res) {
                             user.save(function(err){
                                 done(err,user)
                               //  return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
-                            });
+                            });  
                         });
-            
+                        done(err,user)
       },
       function(user, done) {
         // console.log(user)
@@ -113,9 +113,8 @@ router.post('/reset/:token/:email', async function(req, res) {
             secure:false,
            
         });
-        return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
-
         done("done");
+        return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
         // process.exit(1)
       }
     ], /***  function(err) {
