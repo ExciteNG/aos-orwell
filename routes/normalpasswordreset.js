@@ -87,7 +87,7 @@ router.post('/reset/:token/:email', async function(req, res) {
             // setpassword
            await user.setPassword(req.body.password, function(){
                             user.save(function(err){
-                                done(err,user)
+                              if (err) console.error(err)
                               //  return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
                             });  
                         });
