@@ -997,7 +997,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
         });
         refBy.merchants.push(profileId);
         refBy.markModified("merchants");
-        await refBy.save();
+        refBy.save();
       //send mail
       nodeoutlook.sendEmail({
         auth: {
