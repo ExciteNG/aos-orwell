@@ -931,6 +931,9 @@ const setUpAdmin = async (req, res, next) => {
 
 // Merchants via referral code on mobile
 const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
+
+
+  //create the store info object
   const storeObject = {
     storeName: req.body.storeName,
     storeAddress: req.body.storeAddress,
@@ -938,6 +941,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
     storeLga: req.body.storeLga,
     storeState: req.body.storeState,
   }
+  
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
@@ -979,23 +983,22 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       // profileInstance.referral.refCode = req.body.refCode;
       // profileInstance.refBy = req.body.refCode;
       profileInstance.storeInfo = storeObject
-     await profileInstance.save((err, doc) => {
-        if (err) {
-          // next(err);
-          res.json({ code: 401, mesage: "Failed to create profile" });
-          return;
-        }
-      });
-      // req.user = userInstance;
-      // next();
-      //check for the availability of the affiliate code
-      const refBy = await Agents.findOne({
+       //check for the availability of the affiliate code
+       const refBy = await Agents.findOne({
         agentCode: req.body.refCode,
       });
-      // console.log(refBy, "here", req.body.refCode);
-
-      if (!refBy) return res.json({ code: 201, mesage: "Account created" });
-      if (refBy) {
+      if (!refBy) return res.json({ code: 201, mesage: "Invalid referral code, make sure you enter the correct code in the right format !" });
+      else if (refBy) {
+          profileInstance.referral.isReffered = true;
+          profileInstance.referral.refCode = req.body.refCode;
+          profileInstance.refBy = req.body.refCode;
+        await profileInstance.save((err, doc) => {
+          if (err) {
+            // next(err);
+            res.json({ code: 401, mesage: "Failed to create profile" });
+            return;
+          }
+        });
         refBy.merchants.push(profileId);
         refBy.markModified("merchants");
         await refBy.save();
@@ -1033,6 +1036,11 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       });
     return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
     }
+      // req.user = userInstance;
+      // next();
+      // console.log(refBy, "here", req.body.refCode);
+      // if (!refBy) return res.json({ code: 201, mesage: "Account created" });
+      
   }
   });
 };
