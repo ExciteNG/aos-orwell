@@ -952,7 +952,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
     });
   }
   // console.log(req.body);
-  await User.findOne({ email: req.body.email }, (err, doc) => {
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "this Account already exists", doc });
@@ -997,7 +997,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
         });
         refBy.merchants.push(profileId);
         refBy.markModified("merchants");
-        refBy.save();
+       await refBy.save();
       //send mail
       nodeoutlook.sendEmail({
         auth: {
