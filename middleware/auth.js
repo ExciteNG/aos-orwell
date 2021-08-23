@@ -988,7 +988,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
           profileInstance.referral.isReffered = true;
           profileInstance.referral.refCode = req.body.refCode;
           profileInstance.refBy = req.body.refCode;
-        await profileInstance.save((err, doc) => {
+        profileInstance.save((err, doc) => {
           if (err) {
             // next(err);
             res.json({ code: 401, message: "Failed to create profile" });
