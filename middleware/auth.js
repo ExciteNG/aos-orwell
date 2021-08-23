@@ -941,7 +941,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
     storeLga: req.body.storeLga,
     storeState: req.body.storeState,
   }
-  
+
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
@@ -969,7 +969,6 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
-          // next(error);
           res.json({ code: 401, mesage: "Failed to create account" });
           return;
         }
@@ -979,9 +978,6 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       let profileId = profileInstance._id;
       profileInstance.fullname = req.body.fullname;
       profileInstance.refBy = req.body.refCode;
-      // profileInstance.referral.isReffered = true;
-      // profileInstance.referral.refCode = req.body.refCode;
-      // profileInstance.refBy = req.body.refCode;
       profileInstance.storeInfo = storeObject
        //check for the availability of the affiliate code
        const refBy = await Agents.findOne({
@@ -995,7 +991,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
         await profileInstance.save((err, doc) => {
           if (err) {
             // next(err);
-            res.json({ code: 401, mesage: "Failed to create profile" });
+            res.json({ code: 401, message: "Failed to create profile" });
             return;
           }
         });
@@ -1036,10 +1032,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       });
     return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
     }
-      // req.user = userInstance;
-      // next();
       // console.log(refBy, "here", req.body.refCode);
-      // if (!refBy) return res.json({ code: 201, mesage: "Account created" });
       
   }
   });

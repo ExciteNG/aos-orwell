@@ -4,7 +4,7 @@ const User = require('../models/User');
 const {requireJWT} = require('../middleware/auth')
 
 router.post('/update', requireJWT, async (req,res) => {
-    const {email,userType} = req.user
+    const {email} = req.user
     try {
         const userId = await  User.findOne({email:email}).lean()
         if (!userId){
