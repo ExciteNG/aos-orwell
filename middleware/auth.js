@@ -980,7 +980,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       profileInstance.refBy = req.body.refCode;
       profileInstance.storeInfo = storeObject
        //check for the availability of the affiliate code
-       const refBy = await Agents.findOne({
+       const refBy = Agents.findOne({
         agentCode: req.body.refCode,
       });
       if (!refBy) return res.json({ code: 201, mesage: "Invalid referral code, make sure you enter the correct code in the right format !" });
