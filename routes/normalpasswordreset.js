@@ -10,7 +10,7 @@ const normalResetPassTemplates = require('../emails/original_password_reset');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
-router.post('/forgot-password', async function (req,res,next) {
+router.post('/forgot-password', async function (req,res) {
   console.log(req.body.email)
     async.waterfall([
         function(done) {
@@ -88,33 +88,33 @@ router.post('/reset/:token/:email', async function(req, res) {
            await user.setPassword(req.body.password, function(){
                             user.save(function(err){
                               if (err) console.error(err)
+                              done(err,user)
                               //  return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
                             });  
                         });
-                        done(err,user)
+                    nodeoutlook.sendEmail({
+                      auth: {
+                        user: process.env.EXCITE_ENQUIRY_USER,
+                        pass: process.env.EXCITE_ENQUIRY_PASS,
+                      },
+                        from: 'enquiry@exciteafrica.com',
+                        to: user.email,
+                        subject: 'Your password has been changed',
+                        html: passwordResetConfirmation(user.email),
+                        text: passwordResetConfirmation(user.email),
+                        replyTo: 'enquiry@exciteafrica.com',
+                        onError: (e) => console.log(e),
+                        onSuccess: (i) => {
+                          console.log(i)
+                        },
+                        secure:false,
+                        
+                    });
+                    return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
       },
       function(user, done) {
-        // console.log(user)
-        nodeoutlook.sendEmail({
-          auth: {
-            user: process.env.EXCITE_ENQUIRY_USER,
-            pass: process.env.EXCITE_ENQUIRY_PASS,
-          },
-            from: 'enquiry@exciteafrica.com',
-            to: user.email,
-            subject: 'Your password has been changed',
-            html: passwordResetConfirmation(user.email),
-            text: passwordResetConfirmation(user.email),
-            replyTo: 'enquiry@exciteafrica.com',
-            onError: (e) => console.log(e),
-            onSuccess: (i) => {
-              console.log(i)
-            },
-            secure:false,
-           
-        });
+        console.log(user)
         done("done");
-        return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
         // process.exit(1)
       }
     ], /***  function(err) {
