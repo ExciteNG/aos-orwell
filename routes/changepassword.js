@@ -27,4 +27,3 @@ router.post('/update', requireJWT, async (req,res) => {
 })
 
 module.exports = router;
-

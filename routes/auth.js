@@ -7,6 +7,7 @@ const {
   signUpAffiliates,
   signUpAgents,
   signUpAgentRefCode,
+  signUpMobileMerchantViaSalesCode,
   signUpInfluencers,
   signUpPartner,
   setUpSpringBoard,
@@ -59,6 +60,8 @@ router.post('/auth/agents/sign-up/ref-system/', signUpAgentRefCode)
 // router.post('/auth/affiliate/sign-up/ref-system/:token', verifyAffiliateToken)
 
 
+//sign up merchant on mobile app via sales ref code
+router.post('/auth/mobile/merchant-ref-agent', signUpMobileMerchantViaSalesCode)
 
 // Sign up partner
 router.post('/auth/partner/sign-up', signUpPartner)
