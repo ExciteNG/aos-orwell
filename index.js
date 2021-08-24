@@ -63,7 +63,10 @@ else {
         if (whitelist.indexOf(origin) !== -1) {
           callback(null, true)
         } else {
-          callback(new Error({code:401,message:'Not allowed by CORS'}))
+          //TO UNCOMMENT
+          // callback(new Error({code:401,message:'Not allowed by CORS'})) 
+          callback(null, true)
+
         }
       }
     }
