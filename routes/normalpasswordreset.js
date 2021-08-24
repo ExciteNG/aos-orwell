@@ -10,7 +10,7 @@ const normalResetPassTemplates = require('../emails/original_password_reset');
 const passwordResetConfirmation = require('../emails/password_reset_confirm');
 
 
-router.post('/forgot-password', async function (req,res,next) {
+router.post('/forgot-password', async function (req,res) {
   console.log(req.body.email)
     async.waterfall([
         function(done) {
@@ -20,8 +20,7 @@ router.post('/forgot-password', async function (req,res,next) {
           });
         },
         async function(token, done) {
-         await User.findOne({ email: req.body.email }, function(err, userReset) {
-            
+         let userReset = await User.findOne({ email: req.body.email })
             if (!userReset) {
              return res.json({code:500,message:"No account with that email address!"});
               // return res.redirect('/password-forgot/forgot-password');
@@ -30,13 +29,9 @@ router.post('/forgot-password', async function (req,res,next) {
             userReset.resetPasswordExpires = Date.now() + 3600000; // 1 hour
             userReset.save(function(err) {
               if (err) console.error(err)
-              done(err, token, userReset);
               // done(err, token, user);
             });
-          });
-        },
-        function(token, userReset, done) {
-          // console.log(user)
+          
           nodeoutlook.sendEmail({
             auth: {
               user: process.env.EXCITE_ENQUIRY_USER,
@@ -56,8 +51,8 @@ router.post('/forgot-password', async function (req,res,next) {
               secure:false,
           })
           return res.json({code:200,message: 'Recieved, please check your email for more instructions on how to reset your password',userType:userReset.userType});
-          done('done')
-        }
+          
+        },
       ], function(err) {
         console.log(err)
         if (err) {
@@ -75,8 +70,7 @@ router.post('/reset/:token/:email', async function(req, res) {
   console.log(req.params.token)
     async.waterfall([
      async function(done) {
-        await User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } }, async function(err, user) {
-          console.error(err)
+        const user = await User.findOne({ resetPasswordToken: req.params.token, email:req.params.email, resetPasswordExpires: { $gt: Date.now() } })
           if (!user) {
            return res.json({status:400,message:'Password reset token is invalid or has expired,please reset your password again'});
             
@@ -88,39 +82,38 @@ router.post('/reset/:token/:email', async function(req, res) {
               //save new password
               user.resetPasswordToken = undefined;
               user.resetPasswordExpires = undefined;
-              await user.markModified("resetPasswordToken")
-              await user.markModified("resetPasswordExpires")
+              user.markModified("resetPasswordToken")
+              user.markModified("resetPasswordExpires")
             // setpassword
-            user.setPassword(req.body.password, function(){
+           await user.setPassword(req.body.password, function(){
                             user.save(function(err){
-                                done(err,user)
+                              if (err) console.error(err)
+                              done(err,user)
                               //  return res.json({code:200,message: 'Password reset was successful',userType:user.userType});
-                            });
+                            });  
                         });
-            });
+                    nodeoutlook.sendEmail({
+                      auth: {
+                        user: process.env.EXCITE_ENQUIRY_USER,
+                        pass: process.env.EXCITE_ENQUIRY_PASS,
+                      },
+                        from: 'enquiry@exciteafrica.com',
+                        to: user.email,
+                        subject: 'Your password has been changed',
+                        html: passwordResetConfirmation(user.email),
+                        text: passwordResetConfirmation(user.email),
+                        replyTo: 'enquiry@exciteafrica.com',
+                        onError: (e) => console.log(e),
+                        onSuccess: (i) => {
+                          console.log(i)
+                        },
+                        secure:false,
+                        
+                    });
+                    return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
       },
       function(user, done) {
-        // console.log(user)
-        nodeoutlook.sendEmail({
-          auth: {
-            user: process.env.EXCITE_ENQUIRY_USER,
-            pass: process.env.EXCITE_ENQUIRY_PASS,
-          },
-            from: 'enquiry@exciteafrica.com',
-            to: user.email,
-            subject: 'Your password has been changed',
-            html: passwordResetConfirmation(user.email),
-            text: passwordResetConfirmation(user.email),
-            replyTo: 'enquiry@exciteafrica.com',
-            onError: (e) => console.log(e),
-            onSuccess: (i) => {
-              console.log(i)
-            },
-            secure:false,
-           
-        });
-        return res.json({code:200,message: 'Password reset was successful You can now click on the excite icon to log in to your account with your new password',userType:user.userType});
-
+        console.log(user)
         done("done");
         // process.exit(1)
       }

@@ -40,6 +40,7 @@ const generateRefNo = randomstring.generate({
 
 /*                  SIGNUPs                         */
 
+
 // Merchants
 const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
@@ -927,6 +928,116 @@ const setUpAdmin = async (req, res, next) => {
   });
 };
 
+
+// Merchants via referral code on mobile
+const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
+
+
+  //create the store info object
+  const storeObject = {
+    storeName: req.body.storeName,
+    storeAddress: req.body.storeAddress,
+    storePhone: req.body.storePhone,
+    storeLga: req.body.storeLga,
+    storeState: req.body.storeState,
+  }
+
+  if (!req.body.email || !req.body.password) {
+    return res.send({ code: 400, error: "No username or password provided." });
+  }
+  if (req.body.password.length < 8) {
+    return res.send({
+      code: 400,
+      error: "password must be at least eight characters long",
+    });
+  }
+  // console.log(req.body);
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      // console.log(doc);
+      res.json({ code: 401, msg: "this Account already exists", doc });
+      next(err);
+    } else {
+      const user = {
+        email: req.body.email,
+        fullname: req.body.fullname,
+        name: req.body.fullname,
+        userType: "EX10AF",
+        emailVerified: false,
+        verifyToken: generateRefNo,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          res.json({ code: 401, mesage: "Failed to create account" });
+          return;
+        }
+      });
+      //
+      const profileInstance = new Profiles(userInstance);
+      let profileId = profileInstance._id;
+      profileInstance.fullname = req.body.fullname;
+      profileInstance.refBy = req.body.refCode;
+      profileInstance.storeInfo = storeObject
+       //check for the availability of the affiliate code
+       const refBy = Agents.findOne({
+        agentCode: req.body.refCode,
+      });
+      if (!refBy) return res.json({ code: 201, mesage: "Invalid referral code, make sure you enter the correct code in the right format !" });
+      else if (refBy) {
+          profileInstance.referral.isReffered = true;
+          profileInstance.referral.refCode = req.body.refCode;
+          profileInstance.refBy = req.body.refCode;
+        profileInstance.save((err, doc) => {
+          if (err) {
+            // next(err);
+            res.json({ code: 401, message: "Failed to create profile" });
+            return;
+          }
+        });
+        refBy.merchants.push(profileId);
+        refBy.markModified("merchants");
+       await refBy.save();
+      //send mail
+      nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: "Verify Your Account",
+        html: verifyEmail(user.username, user.email, user.verifyToken),
+        text: verifyEmail(user.username, user.email, user.verifyToken),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+       //send welcome email 
+       nodeoutlook.sendEmail({
+        auth: {
+          user: process.env.EXCITE_ENQUIRY_USER,
+          pass: process.env.EXCITE_ENQUIRY_PASS,
+        },
+        from: "enquiry@exciteafrica.com",
+        to: user.email,
+        subject: `Welcome to  Excite ${user.username}`,
+        html: welcomeEmail(user.username),
+        text: welcomeEmail(user.username),
+        replyTo: "enquiry@exciteafrica.com",
+        onError: (e) => console.error(e),
+        onSuccess: (i) => console.log(i),
+        secure: false,
+      });
+    return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
+    }
+      // console.log(refBy, "here", req.body.refCode);
+      
+  }
+  });
+};
+
 /*                  SIGN JWTS                        */
 // Merchants Login
 const signJWTForUser = (req, res) => {
@@ -1221,6 +1332,7 @@ module.exports = {
   signUpAffiliates,
   signUpAgents,
   signUpAgentRefCode,
+  signUpMobileMerchantViaSalesCode,
   signUpInfluencers,
   signUpPartner,
   signUpRefCode,
