@@ -6,8 +6,8 @@ const JWT = require("jsonwebtoken");
 const PassportJWT = require("passport-jwt");
 const User = require("../models/User");
 const Profiles = require("../models/Profiles");
-const Affiliates = require("../models/Affiliates"); 
-const Agents = require('../models/Agents');
+const Affiliates = require("../models/Affiliates");
+const Agents = require("../models/Agents");
 const Partners = require("../models/Partners");
 const Influencers = require("../models/influencer");
 const randomstring = require("randomstring");
@@ -16,10 +16,10 @@ const { use } = require("passport");
 const verifyEmail = require("../emails/verify_template");
 const partnersAcknowledgeMail = require("../emails/partner_acknow");
 const affiliateAcknowledge = require("../emails/affiliate_acknowledge");
-const agentAcknowledge = require('../emails/agent_acknowledge');
+const agentAcknowledge = require("../emails/agent_acknowledge");
 const influencerAcknowledge = require("../emails/influencer_acknowledge");
-const welcomeEmail = require('../emails/new_welcome_templates');
-const welcomeSalesMail = require('../emails/agent_welcome');
+const welcomeEmail = require("../emails/new_welcome_templates");
+const welcomeSalesMail = require("../emails/agent_welcome");
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const jwtSecret = process.env.JWT_SECRET;
 // const jwtAlgorithm = process.env.JWT_ALGORITHM
@@ -30,16 +30,13 @@ const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 passport.use(User.createStrategy());
 const Cookies = require("cookies");
 
-
 const generateRefNo = randomstring.generate({
   length: 12,
   charset: "alphanumeric",
   readable: true,
 });
 
-
 /*                  SIGNUPs                         */
-
 
 // Merchants
 const signUp = async (req, res, next) => {
@@ -103,8 +100,8 @@ const signUp = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-       //send welcome email 
-       nodeoutlook.sendEmail({
+      //send welcome email
+      nodeoutlook.sendEmail({
         auth: {
           user: process.env.EXCITE_ENQUIRY_USER,
           pass: process.env.EXCITE_ENQUIRY_PASS,
@@ -119,13 +116,17 @@ const signUp = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-    
-     return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
+
+      return res.json({
+        code: 201,
+        mesage:
+          "Account created Please check your email to verify your account",
+      });
     }
   });
 };
 
-// todo add welcome mails 
+// todo add welcome mails
 
 // Partners
 const signUpPartner = (req, res, next) => {
@@ -246,24 +247,28 @@ const signUpPartner = (req, res, next) => {
         });
 
         // send a general welcome mail
-          //send welcome email 
-       nodeoutlook.sendEmail({
-        auth: {
-          user: process.env.EXCITE_ENQUIRY_USER,
-          pass: process.env.EXCITE_ENQUIRY_PASS,
-        },
-        from: "enquiry@exciteafrica.com",
-        to: user.email,
-        subject: `Welcome to  Excite ${fullname}`,
-        html: welcomeEmail(fullname),
-        text: welcomeEmail(fullname),
-        replyTo: "enquiry@exciteafrica.com",
-        onError: (e) => console.error(e),
-        onSuccess: (i) => console.log(i),
-        secure: false,
-      });
-        
-        res.json({ code: 201, mesage: "Your Account has been successfully created, please check your email for the next steps" });
+        //send welcome email
+        nodeoutlook.sendEmail({
+          auth: {
+            user: process.env.EXCITE_ENQUIRY_USER,
+            pass: process.env.EXCITE_ENQUIRY_PASS,
+          },
+          from: "enquiry@exciteafrica.com",
+          to: user.email,
+          subject: `Welcome to  Excite ${fullname}`,
+          html: welcomeEmail(fullname),
+          text: welcomeEmail(fullname),
+          replyTo: "enquiry@exciteafrica.com",
+          onError: (e) => console.error(e),
+          onSuccess: (i) => console.log(i),
+          secure: false,
+        });
+
+        res.json({
+          code: 201,
+          mesage:
+            "Your Account has been successfully created, please check your email for the next steps",
+        });
       });
       // req.user = userInstance;
       // res.json({ code: 201, mesage: "Account created" });
@@ -286,7 +291,7 @@ const signUpAffiliates = async (req, res, next) => {
     idImg,
     passportImg,
     address,
-    broughtBy
+    broughtBy,
   } = req.body;
   if (!email || !password) {
     return res.json({ status: 400, code: "No email or password provided" });
@@ -317,7 +322,7 @@ const signUpAffiliates = async (req, res, next) => {
         length: 12,
         charset: "alphanumeric",
         readable: true,
-     });
+      });
       //  let clientRefNo= `HR-CL-${generateRefNo}`,
 
       const user = {
@@ -338,7 +343,7 @@ const signUpAffiliates = async (req, res, next) => {
       const profileInstance = new Affiliates(userInstance);
       profileInstance.fullname = fullname;
       profileInstance.phone = phone;
-      profileInstance.broughtBy=broughtBy;
+      profileInstance.broughtBy = broughtBy;
       profileInstance.cellInfo = {
         cell: cell,
         cellGroup: "",
@@ -386,24 +391,23 @@ const signUpAffiliates = async (req, res, next) => {
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
-        subject: `Welcome to  Excite ${fullname.split(' ')[0]}`,
-        html: welcomeEmail(fullname.split(' ')[0]),
-        text: welcomeEmail(fullname.split(' ')[0]),
+        subject: `Welcome to  Excite ${fullname.split(" ")[0]}`,
+        html: welcomeEmail(fullname.split(" ")[0]),
+        text: welcomeEmail(fullname.split(" ")[0]),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-      
-     return res.json({ code: 201, mesage: "Account created" });
+
+      return res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
 };
 
 //sign up agents
-const signUpAgents = async (req,res) => {
-
+const signUpAgents = async (req, res) => {
   const {
     email,
     password,
@@ -414,7 +418,7 @@ const signUpAgents = async (req,res) => {
     nok,
     nokAddress,
     nokPhone,
-    nokRelationship
+    nokRelationship,
   } = req.body;
   if (!email || !password) {
     return res.json({ status: 400, code: "No email or password provided" });
@@ -461,11 +465,11 @@ const signUpAgents = async (req,res) => {
       profileInstance.fullName = fullName;
       profileInstance.mobile = mobile;
       profileInstance.id = id;
-      profileInstance.address=address
-      profileInstance.nok=nok
-      profileInstance.nokAddress=nokAddress
-      profileInstance.nokPhone=nokPhone
-      profileInstance.nokRelationship=nokRelationship
+      profileInstance.address = address;
+      profileInstance.nok = nok;
+      profileInstance.nokAddress = nokAddress;
+      profileInstance.nokPhone = nokPhone;
+      profileInstance.nokRelationship = nokRelationship;
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
@@ -498,26 +502,25 @@ const signUpAgents = async (req,res) => {
         },
         from: "enquiry@exciteafrica.com",
         to: user.email,
-        subject: `Welcome to  Excite ${fullName.split(' ')[0]}`,
-        html: welcomeSalesMail(fullName.split(' ')[0]),
-        text: welcomeSalesMail(fullName.split(' ')[0]),
+        subject: `Welcome to  Excite ${fullName.split(" ")[0]}`,
+        html: welcomeSalesMail(fullName.split(" ")[0]),
+        text: welcomeSalesMail(fullName.split(" ")[0]),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-      
-     return res.json({ code: 201, mesage: "Account created" });
+
+      return res.json({ code: 201, mesage: "Account created" });
       // next();
     }
   });
-
-}
+};
 
 // Signup User Via Refcode
 const signUpRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.json({code:400,message:"No email or password provided."});
+    res.json({ code: 400, message: "No email or password provided." });
   }
   if (req.body.password.length < 8) {
     return res.send({
@@ -525,7 +528,7 @@ const signUpRefCode = async (req, res, next) => {
       error: "password must be at least eight characters long",
     });
   }
- await User.findOne({ email: req.body.email }, async (err, doc) => {
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "this Account already exists", doc });
@@ -539,7 +542,7 @@ const signUpRefCode = async (req, res, next) => {
         fullname: req.body.fullname,
         username: req.body.username,
         name: req.body.fullname,
-        verifyToken:generateRefNo
+        verifyToken: generateRefNo,
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -598,15 +601,15 @@ const signUpRefCode = async (req, res, next) => {
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
-          subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
-          html: welcomeMail(user.fullname.split(' ')[0]),
-          text: welcomeMail(user.fullname.split(' ')[0]),
+          subject: `Welcome to  Excite ${user.fullname.split(" ")[0]}`,
+          html: welcomeMail(user.fullname.split(" ")[0]),
+          text: welcomeMail(user.fullname.split(" ")[0]),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });
-        
+
         // nodeoutlook.sendEmail({
         //   auth: {
         //     user: process.env.EXCITE_ENQUIRY_USER,
@@ -622,7 +625,11 @@ const signUpRefCode = async (req, res, next) => {
         //   onSuccess: (i) => console.log(i),
         //   secure: false,
         // });
-        return res.json({ code: 201, mesage: "Account created successfully !, please check your email address to confirm your account" });
+        return res.json({
+          code: 201,
+          mesage:
+            "Account created successfully !, please check your email address to confirm your account",
+        });
       }
     }
   });
@@ -632,7 +639,7 @@ const signUpRefCode = async (req, res, next) => {
 
 const signUpAgentRefCode = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
-    res.json({code:400,message:"No email or password provided."});
+    res.json({ code: 400, message: "No email or password provided." });
   }
   if (req.body.password.length < 8) {
     return res.send({
@@ -640,7 +647,7 @@ const signUpAgentRefCode = async (req, res, next) => {
       error: "password must be at least eight characters long",
     });
   }
- await User.findOne({ email: req.body.email }, async (err, doc) => {
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
       res.json({ code: 401, msg: "this Account already exists", doc });
@@ -653,7 +660,7 @@ const signUpAgentRefCode = async (req, res, next) => {
         emailVerified: false,
         fullname: req.body.fullname,
         name: req.body.fullname,
-        verifyToken:generateRefNo
+        verifyToken: generateRefNo,
       };
       const userInstance = new User(user);
       User.register(userInstance, req.body.password, (error, user) => {
@@ -712,15 +719,15 @@ const signUpAgentRefCode = async (req, res, next) => {
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
-          subject: `Welcome to  Excite ${user.fullname.split(' ')[0]}`,
-          html: welcomeEmail(user.fullname.split(' ')[0]),
-          text: welcomeEmail(user.fullname.split(' ')[0]),
+          subject: `Welcome to  Excite ${user.fullname.split(" ")[0]}`,
+          html: welcomeEmail(user.fullname.split(" ")[0]),
+          text: welcomeEmail(user.fullname.split(" ")[0]),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
           secure: false,
         });
-        
+
         // nodeoutlook.sendEmail({
         //   auth: {
         //     user: process.env.EXCITE_ENQUIRY_USER,
@@ -736,7 +743,11 @@ const signUpAgentRefCode = async (req, res, next) => {
         //   onSuccess: (i) => console.log(i),
         //   secure: false,
         // });
-        return res.json({ code: 201, mesage: "Account created successfully !, please check your email address to confirm your account" });
+        return res.json({
+          code: 201,
+          mesage:
+            "Account created successfully !, please check your email address to confirm your account",
+        });
       }
     }
   });
@@ -881,9 +892,9 @@ const signUpInfluencers = async (req, res, next) => {
           },
           from: "enquiry@exciteafrica.com",
           to: user.email,
-          subject: `Welcome to  Excite ${user.name.split(' ')[0]}`,
-          html: welcomeEmail(user.name.split(' ')[0]),
-          text: welcomeEmail(user.name.split(' ')[0]),
+          subject: `Welcome to  Excite ${user.name.split(" ")[0]}`,
+          html: welcomeEmail(user.name.split(" ")[0]),
+          text: welcomeEmail(user.name.split(" ")[0]),
           replyTo: "enquiry@exciteafrica.com",
           onError: (e) => console.error(e),
           onSuccess: (i) => console.log(i),
@@ -928,11 +939,8 @@ const setUpAdmin = async (req, res, next) => {
   });
 };
 
-
 // Merchants via referral code on mobile
 const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
-
-
   //create the store info object
   const storeObject = {
     storeName: req.body.storeName,
@@ -940,7 +948,7 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
     storePhone: req.body.storePhone,
     storeLga: req.body.storeLga,
     storeState: req.body.storeState,
-  }
+  };
 
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
@@ -951,12 +959,26 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       error: "password must be at least eight characters long",
     });
   }
+  //check for the availability of the affiliate code
+  let agentRef = null;
+  if (req.body.refCode) {
+    const refBy = await Agents.findOne({
+      agentCode: req.body.refCode,
+    });
+    if (!refBy)
+      return res.json({
+        code: 405,
+        mesage:
+          "Invalid referral code, make sure you enter the correct code in the right format !",
+      });
+    agentRef = refBy;
+    //
+  }
   // console.log(req.body);
   await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "this Account already exists", doc });
-      next(err);
+     return res.json({ code: 401, msg: "this Account already exists"});
     } else {
       const user = {
         email: req.body.email,
@@ -978,26 +1000,20 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
       let profileId = profileInstance._id;
       profileInstance.fullname = req.body.fullname;
       profileInstance.refBy = req.body.refCode;
-      profileInstance.storeInfo = storeObject
-       //check for the availability of the affiliate code
-       const refBy = Agents.findOne({
-        agentCode: req.body.refCode,
-      });
-      if (!refBy) return res.json({ code: 201, mesage: "Invalid referral code, make sure you enter the correct code in the right format !" });
-      else if (refBy) {
-          profileInstance.referral.isReffered = true;
-          profileInstance.referral.refCode = req.body.refCode;
-          profileInstance.refBy = req.body.refCode;
-        profileInstance.save((err, doc) => {
-          if (err) {
-            // next(err);
-            res.json({ code: 401, message: "Failed to create profile" });
-            return;
-          }
-        });
-        refBy.merchants.push(profileId);
-        refBy.markModified("merchants");
-       await refBy.save();
+      profileInstance.storeInfo = storeObject;
+      console.log(req.body);
+     
+    //  
+    if(agentRef){
+      agentRef.merchants.push(profileId);
+      agentRef.markModified("merchants");
+      await agentRef.save();
+      profileInstance.referral.isReffered = true;
+      profileInstance.referral.refCode = req.body.refCode;
+      profileInstance.refBy = req.body.refCode;
+    }
+    await profileInstance.save();
+  
       //send mail
       nodeoutlook.sendEmail({
         auth: {
@@ -1014,8 +1030,8 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-       //send welcome email 
-       nodeoutlook.sendEmail({
+      //send welcome email
+      nodeoutlook.sendEmail({
         auth: {
           user: process.env.EXCITE_ENQUIRY_USER,
           pass: process.env.EXCITE_ENQUIRY_PASS,
@@ -1030,11 +1046,14 @@ const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
         onSuccess: (i) => console.log(i),
         secure: false,
       });
-    return res.json({ code: 201, mesage: "Account created Please check your email to verify your account" });
-    }
+      return res.json({
+        code: 201,
+        mesage:
+          "Account created Please check your email to verify your account",
+      });
+
       // console.log(refBy, "here", req.body.refCode);
-      
-  }
+    }
   });
 };
 
@@ -1061,7 +1080,7 @@ const signJWTForUser = (req, res) => {
   }
 };
 // Merchants Login Via Mobile Phone
-const signJWTForUserOnMobile =async (req, res) => {
+const signJWTForUserOnMobile = async (req, res) => {
   try {
     const user = req.user;
     const token = JWT.sign(
@@ -1076,8 +1095,10 @@ const signJWTForUserOnMobile =async (req, res) => {
         subject: user._id.toString(),
       }
     );
-    const profile = await Profiles.findOne({email:user.email}).populate(['product'])
-    return res.json({ token, profile:profile });
+    const profile = await Profiles.findOne({ email: user.email }).populate([
+      "product",
+    ]);
+    return res.json({ token, profile: profile });
   } catch (err) {
     return res.json({ code: 400, message: err.message });
   }
@@ -1111,12 +1132,12 @@ const signJWTForAffiliates = (req, res) => {
 };
 
 // Agent login
-const signJWTforAgents = async (req,res) => {
+const signJWTforAgents = async (req, res) => {
   // console.log(req.body)
-  const {location} =req.body;
-  console.log(location)
-  try{
-  if (req.user.userType !== "EX20AG")
+  const { location } = req.body;
+  console.log(location);
+  try {
+    if (req.user.userType !== "EX20AG")
       return res.status(400).json({ msg: "invalid login" });
     const user = req.user;
     const token = JWT.sign(
@@ -1132,18 +1153,25 @@ const signJWTforAgents = async (req,res) => {
       }
     );
     // console.log(token);
-    const agentProfile= await Agents.findOne({email:req.body.email});
-    if(agentProfile){
-      agentProfile.logins = [...agentProfile.logins,{lat:req.body.lat,long:req.body.long,time:Date.now(),address:location}]
-      agentProfile.markModified('logins');
+    const agentProfile = await Agents.findOne({ email: req.body.email });
+    if (agentProfile) {
+      agentProfile.logins = [
+        ...agentProfile.logins,
+        {
+          lat: req.body.lat,
+          long: req.body.long,
+          time: Date.now(),
+          address: location,
+        },
+      ];
+      agentProfile.markModified("logins");
       await agentProfile.save();
     }
     return res.json({ token });
   } catch (err) {
     return res.json({ code: 400, message: err.mesage });
   }
-
-}
+};
 // Partners Login
 const signJWTForPartners = (req, res) => {
   try {
