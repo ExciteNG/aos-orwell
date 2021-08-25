@@ -5,6 +5,7 @@ const {requireJWT} = require('../middleware/auth');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const Users = require('../models/User');
 const verifyEmail = require("../emails/verify_template");
+const crypto = require('crypto');
 
 router.post('/verify-account', async (req,res) => {
     //filter users who haven't their emails
