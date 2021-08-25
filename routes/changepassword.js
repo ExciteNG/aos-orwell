@@ -13,12 +13,12 @@ router.post('/update', requireJWT, async (req,res) => {
         await userId.changePassword(req.body.oldpassword, req.body.newpassword, function(err) {
             if (err){
                 if(err.name === 'IncorrectPasswordError'){
-                    return res.json({ success: false, message: 'Incorrect password' }); // Return error
+                    return res.json({ code: 401, message: 'Incorrect password' }); // Return error
                }else {
-                  return  res.json({ success: false, message: 'Something went wrong! Please try again later.' });
+                  return  res.json({ code: 404, message: 'Something went wrong! Please try again later.' });
                }
             }else {
-                return res.json({success:true,message:"Password changed successfully"})
+                return res.json({code:200,message:"Password changed successfully"})
             }
         })  
     } catch (err) {

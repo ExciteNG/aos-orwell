@@ -5,12 +5,17 @@ const {requireJWT} = require('../middleware/auth');
 var nodeoutlook = require('nodejs-nodemailer-outlook');
 const Users = require('../models/User');
 const verifyEmail = require("../emails/verify_template");
+const crypto = require('crypto');
 
 router.post('/verify-account', async (req,res) => {
     //filter users who haven't their emails
     try {
         const {email} = req.user;
+        // generate a verify token
+        let genToken = crypto.randomBytes(10);
+        let genTokenString = genToken.toString('hex');
         const User = await Users.findOne({email:email}).lean()
+        User.verifyToken = genTokenString
         if (!User) return res.json({code:400,message:"an error occurred !, try again"})
     
         //send mail
