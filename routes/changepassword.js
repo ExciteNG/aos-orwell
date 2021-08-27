@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 const router = require('express').Router();
 const User = require('../models/User');
-const {requireJWT} = require('../middleware/auth')
+const {requireJWT} = require('../middleware/auth');
 
 router.post('/update', requireJWT, async (req,res) => {
     const {email} = req.user
