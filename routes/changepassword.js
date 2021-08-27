@@ -5,12 +5,14 @@ const {requireJWT} = require('../middleware/auth');
 
 router.post('/update', requireJWT, async (req,res) => {
     const {email} = req.user
+    // console.log(email)
     try {
-        const userId = await  User.findOne({email:email}).lean()
+        const userId = await  User.findOne({email:email})
+        // console.log(userId)
         if (!userId){
             return res.json({code:400,message:"Error processing your request, please try again"})
         }
-        await userId.changePassword(req.body.oldpassword, req.body.newpassword, function(err) {
+        await userId.changePassword(req.body.oldPassword, req.body.newPassword, function(err) {
             if (err){
                 if(err.name === 'IncorrectPasswordError'){
                     return res.json({ code: 401, message: 'Incorrect password' }); // Return error
@@ -22,7 +24,7 @@ router.post('/update', requireJWT, async (req,res) => {
             }
         })  
     } catch (err) {
-        return res.json({code:500,message:err.message})
+        return res.status(500).json({code:500,message:err.message})
     }
 })
 
