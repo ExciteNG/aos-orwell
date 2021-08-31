@@ -93,6 +93,14 @@ const agentSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
+  isLead:{
+    type:Boolean,
+    default:false,
+  },
+  supervisedBy:{
+    type:String,
+    default:""
+  },
   merchants: [{ type: mongoose.Schema.Types.ObjectId, ref: Profile }],
   earnings: [{ type: mongoose.Schema.Types.ObjectId, ref: Payment }],
   payouts: [{ type: mongoose.Schema.Types.ObjectId, ref: Payout }],

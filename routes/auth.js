@@ -23,7 +23,9 @@ const {
   setUpAdmin,
   passwordReset,
   signJWTForExcite,
-  signJWTForUserOnMobile
+  signJWTForUserOnMobile,
+  setUpExtSalesAdmin,
+  signJWTForExciteExtSalesAdmin
 } = require('../middleware/auth')
 
 const router = express.Router()
@@ -71,6 +73,10 @@ router.post('/auth/springboard/set-up', setUpSpringBoard)
 
 // Setup admin
 router.post('/auth/management/set-up', setUpAdmin)
+// Setup Ext sales admin
+router.post('/auth/ext-sales/set-up', setUpExtSalesAdmin)
+
+
 router.post('/reset-password',passwordReset)
 
 
@@ -86,6 +92,8 @@ router.post('/auth/login/partners', signIn, signJWTForPartners)
 router.post('/auth/login/springboard', signIn, signJWTForSpringBoard)
 //sign in admin
 router.post('/auth/login/admin', signIn, signJWTForExcite)
+//sign in ext sales admin
+router.post('/auth/login/ext-sales/admin', signIn, signJWTForExciteExtSalesAdmin)
 
 //sign in influencer
 router.post('/auth/login/influencer', signIn, signJWTForInfluencers)

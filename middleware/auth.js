@@ -938,6 +938,36 @@ const setUpAdmin = async (req, res, next) => {
     }
   });
 };
+const setUpExtSalesAdmin = async (req, res, next) => {
+  if (req.body.token !== process.env.EXCITE_SALES_ADMIN_TOKEN)
+    return res.json({ code: 400, msg: "Invalid Token" });
+  if (!req.body.email || !req.body.password) {
+    return res.send({ code: 400, error: "No email or password provided." });
+  }
+  // console.log(req.body)
+  User.findOne({ email: req.body.email }, async (err, doc) => {
+    if (doc) {
+      // console.log(doc);
+      return res.json({ code: 401, msg: "Account exist" });
+    } else {
+      //continue
+      const user = {
+        email: req.body.email,
+        name: "Excite Africa",
+        userType: "EX-DSA-EXT-ADMIN",
+        emailVerified: true,
+      };
+      const userInstance = new User(user);
+      User.register(userInstance, req.body.password, (error, user) => {
+        if (error) {
+          // next(error);
+          return res.json({ code: 400, mesage: "Failed create account" });
+        }
+      });
+      return res.json({ code: 201, mesage: "Account Set Successfully." });
+    }
+  });
+};
 
 // Merchants via referral code on mobile
 const signUpMobileMerchantViaSalesCode = async (req, res, next) => {
@@ -1282,6 +1312,28 @@ const signJWTForExcite = (req, res) => {
   // console.log(token);
   res.json({ token });
 };
+// Excite Ext Sales Agent Admin Login
+const signJWTForExciteExtSalesAdmin = (req, res) => {
+  // console.log('signing jwt', req.user)
+  // check login route authorization
+  if (req.user.userType !== "EX-DSA-EXT-ADMIN")
+    return res.status(400).json({ msg: "invalid login" });
+  const user = req.user;
+  const token = JWT.sign(
+    {
+      email: user.email,
+      userType: user.userType,
+    },
+    jwtSecret,
+    {
+      algorithm: jwtAlgorithm,
+      expiresIn: jwtExpiresIn,
+      subject: user._id.toString(),
+    }
+  );
+  // console.log(token);
+  res.json({ token });
+};
 
 //influencer dashbaord authorization
 const authInfluencerMarketer = (req, res) => {
@@ -1366,6 +1418,7 @@ module.exports = {
   signUpRefCode,
   setUpSpringBoard,
   setUpAdmin,
+  setUpExtSalesAdmin,
   signIn: passport.authenticate("local", { session: false }),
   requireJWT: passport.authenticate("jwt", { session: false }),
   signJWTForUser,
@@ -1375,6 +1428,7 @@ module.exports = {
   signJWTForPartners,
   signJWTForSpringBoard,
   signJWTForExcite,
+  signJWTForExciteExtSalesAdmin,
   signJWTforAgents,
   passwordReset,
 };
