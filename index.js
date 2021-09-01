@@ -78,7 +78,7 @@ else {
     app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());
-    app.use(helmet.frameguard({action:"sameorigin"}));
+    app.use(helmet.frameguard({ action: 'SAMEORIGIN' }));
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());

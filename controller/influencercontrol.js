@@ -574,7 +574,6 @@ const getInfluencerCompleted = async (req,res) => {
         console.error(err)
         return res.json({code:500,message:err.message})
     }
-
 }
 
 // get the overall design pattern to track the accepted seection to the payments section to the reports section to the payment tracking session 
