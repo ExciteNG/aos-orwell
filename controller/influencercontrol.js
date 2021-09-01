@@ -58,10 +58,8 @@ const merchantPickInfluencer = async (req,res) => {
             pricing,
             unitPricing,
             offerPrice,
-            influencerName
+            // influencerName
         } = req.body
-        req.body.email = email
-        req.body.userType = userType
         //verify that the user is a merchant
         if (userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //get the influencer level (could be one of micro,mini,max)
@@ -100,7 +98,7 @@ const merchantPickInfluencer = async (req,res) => {
 
 const influencerNegotiation = async (req,res) => {
     try {
-        const {email} = req.user
+        const {email,userType} = req.user
         const id = req.params.id
         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
         //filter only the approved influencers
@@ -135,8 +133,7 @@ const influencerNegotiation = async (req,res) => {
         let offerPrice = req.body.offerPrice
         let durationOfPromotion = req.body.durationOfPromotion
         let reach = req.body.reach
-        // getInfluencer.fullName = req.body.influencerName
-        let newMerchantInfluencer = new influencerMerchantModel({...req.body,email:email})
+        let newMerchantInfluencer = new influencerMerchantModel({...req.body,email:email,userType:userType})
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
         await newMerchantInfluencer.save()

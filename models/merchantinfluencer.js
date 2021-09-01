@@ -123,9 +123,6 @@ const merchantInfluencerSchema = mongoose.Schema({
         type: String,
         default: ""
     },
-    influencerName:{
-        type:String,
-    },
     assignedInfluencer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "influencer"
