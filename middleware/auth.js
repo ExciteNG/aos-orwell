@@ -77,9 +77,11 @@ const signUp = async (req, res, next) => {
       profileInstance.fullname = req.body.fullname;
       profileInstance.save((err, doc) => {
         if (err) {
+          console.log(doc)
           // next(err);
           return res.json({ code: 401, message: "Failed to create profile" });
-          return;
+          console.error(err)
+          
         }
       });
       // req.user = userInstance;
