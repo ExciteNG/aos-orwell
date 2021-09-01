@@ -135,8 +135,8 @@ const influencerNegotiation = async (req,res) => {
         let offerPrice = req.body.offerPrice
         let durationOfPromotion = req.body.durationOfPromotion
         let reach = req.body.reach
-        getInfluencer.fullName = req.body.influencerName
-        let newMerchantInfluencer = new influencerMerchantModel(req.body)
+        // getInfluencer.fullName = req.body.influencerName
+        let newMerchantInfluencer = new influencerMerchantModel({...req.body,email:email})
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
         await newMerchantInfluencer.save()
@@ -162,7 +162,7 @@ const influencerNegotiation = async (req,res) => {
         //       console.log(err)
         //   })
         
-        return res.json({code:200,data:{...getInfluencer,...profile[fullName]},message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
+        return res.json({code:200,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
         })
     } catch (err) {
         console.error(err)
