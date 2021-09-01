@@ -53,7 +53,7 @@ const signUp = async (req, res, next) => {
   await User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "this Account already exists", doc });
+      return res.json({ code: 401, msg: "this Account already exists", doc });
       next(err);
     } else {
       const user = {
@@ -68,7 +68,7 @@ const signUp = async (req, res, next) => {
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
-          res.json({ code: 401, mesage: "Failed to create account" });
+          return res.json({ code: 401, message: "Failed to create account" });
           return;
         }
       });
@@ -78,7 +78,7 @@ const signUp = async (req, res, next) => {
       profileInstance.save((err, doc) => {
         if (err) {
           // next(err);
-          res.json({ code: 401, mesage: "Failed to create profile" });
+          return res.json({ code: 401, message: "Failed to create profile" });
           return;
         }
       });
