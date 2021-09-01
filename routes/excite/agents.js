@@ -9,7 +9,9 @@ router.put('/update/:id',requireJWT,controller.updateAgent,controller.getAllAgen
 router.put('/sector/assign/:id',requireJWT,controller.updateAgentSector,controller.getAllAgents);
 // router.put('/update/:id',requireJWT,controller.updateAgent,controller.getAllAgents);
 
-
+// For External Agents
+router.get('/get-all/ext04',requireJWT,controller.getAllExtAgents);
+router.put('/update/ext/:id',requireJWT,controller.updateExtAgent,controller.getAllExtAgents);
 
 
 module.exports = router;

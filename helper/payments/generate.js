@@ -107,10 +107,10 @@ router.post("/confirm/subscription", verify, async (req, res) => {
 
     // check if is referred by an agent
     const splitCode = isRef.split("-");
-    if (splitCode[0] == "SG" && splitCode.length === 2) {
+    if (splitCode[0] == "SG" && splitCode.length > 1) {
       // merchant is ref by a sales agent
       const agentProfile = await Agents.findOne({ agentCode: isRef }).populate("earnings");
-      console.log(agentProfile.earnings)
+      // console.log(agentProfile.earnings)
       const prevEarns = agentProfile.earnings.filter(
         (item) => `${item.email}` === `${email}`
       );
