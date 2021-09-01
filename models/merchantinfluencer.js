@@ -126,9 +126,9 @@ const merchantInfluencerSchema = mongoose.Schema({
     influencerName:{
         type:String,
     },
-    assignedInfluencer: [{
+    assignedInfluencer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "influencer"
-    }]
+    }
 }, { timestamps: true })
 module.exports = mongoose.model('merchantInfluencer', merchantInfluencerSchema)

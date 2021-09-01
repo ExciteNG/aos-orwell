@@ -202,7 +202,7 @@ else {
     app.use('/paystack',require('./helper/payments/generate'));
     app.use('/influencer-marketing',require('./routes/influenceroutes'))
     app.use('/sales-agent',require('./routes/agents'))
-  app.use('/sales-auth',require('./routes/salespasswordreset'))
+    app.use('/sales-auth',require('./routes/salespasswordreset'))
     app.use([
       require("./routes/angolia"),
       require("./routes/auth"),
