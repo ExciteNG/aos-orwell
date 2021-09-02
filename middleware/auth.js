@@ -50,11 +50,11 @@ const signUp = async (req, res, next) => {
     });
   }
   // console.log(req.body);
-  await User.findOne({ email: req.body.email }, (err, doc) => {
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
       return res.json({ code: 401, msg: "this Account already exists", doc });
-      next(err);
+      // next(err);
     } else {
       const user = {
         email: req.body.email,
@@ -69,20 +69,20 @@ const signUp = async (req, res, next) => {
         if (error) {
           // next(error);
           return res.json({ code: 401, message: "Failed to create account" });
-          return;
         }
       });
       //
       const profileInstance = new Profiles(userInstance);
       profileInstance.fullname = req.body.fullname;
-      profileInstance.save((err) => {
-        if (err) {
-          console.log(doc)
-          // next(err);
-          return res.json({ code: 401, message: "Failed to create profile" });
+      await profileInstance.save()
+        // (err) => {
+      //   if (err) {
+      //     console.error(err)
+      //     // next(err);
+      //     return res.json({ code: 401, message: "Failed to create profile" });
           
-        }
-      });
+      //   }
+      // });
       // req.user = userInstance;
       // next();
       //send mail
