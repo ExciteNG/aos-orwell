@@ -58,8 +58,8 @@ const signUp = async (req, res, next) => {
     } else {
       const user = {
         email: req.body.email,
+        username: req.body.username,
         fullname: req.body.fullname,
-        name: req.body.fullname,
         userType: "EX10AF",
         emailVerified: false,
         verifyToken: generateRefNo,
@@ -94,8 +94,8 @@ const signUp = async (req, res, next) => {
         from: "enquiry@exciteafrica.com",
         to: user.email,
         subject: "Verify Your Account",
-        html: verifyEmail(user.username, user.email, user.verifyToken),
-        text: verifyEmail(user.username, user.email, user.verifyToken),
+        html: verifyEmail(user.name, user.email, user.verifyToken),
+        text: verifyEmail(user.name, user.email, user.verifyToken),
         replyTo: "enquiry@exciteafrica.com",
         onError: (e) => console.error(e),
         onSuccess: (i) => console.log(i),
