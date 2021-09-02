@@ -10,7 +10,7 @@ const {merchantPickInfluencer,
     influencerMerchantDeclinePrice,
     influencerAcceptsPrice,
     singleChat,
-    merchantDeclinePendings,
+   // merchantDeclinePendings,
     getMerchantPendings,
     getMerchantAccepted,
     getMerchantCompleted,
@@ -31,7 +31,7 @@ router.put('/influencer-negotiation/:id',requireJWT,influencerNegotiation)
 router.get('/merchant/dashboard',requireJWT,merchantDashboard)
 
 // get a list of merchant pending jobs
-router.get('/merchant/pending-jobs', requireJWT, merchantDeclinePendings)
+// router.get('/merchant/pending-jobs', requireJWT, merchantDeclinePendings)
 
 //merchant agree price
 router.post('/merchant-agree-price',requireJWT,merchantPaymentPrice)
