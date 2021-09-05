@@ -78,7 +78,7 @@ else {
     app.use(cors({ credentials: true },corsOptions));
     //middleware against standard http header attacks
     app.use(helmet());
-    app.use(helmet.frameguard({action:"sameorigin"}));
+    app.use(helmet.frameguard({ action: 'SAMEORIGIN' }));
     app.use(express.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
@@ -202,7 +202,7 @@ else {
     app.use('/paystack',require('./helper/payments/generate'));
     app.use('/influencer-marketing',require('./routes/influenceroutes'))
     app.use('/sales-agent',require('./routes/agents'))
-  app.use('/sales-auth',require('./routes/salespasswordreset'))
+    app.use('/sales-auth',require('./routes/salespasswordreset'))
     app.use([
       require("./routes/angolia"),
       require("./routes/auth"),
