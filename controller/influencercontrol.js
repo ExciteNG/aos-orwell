@@ -88,7 +88,7 @@ const merchantPickInfluencer = async (req,res) => {
         prices:[pricing,unitPricing]})
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
-           console.error(err)
+           console.error(err) 
         return res.json({code:500,message:err.message})
     }
 } 
@@ -131,7 +131,7 @@ const influencerNegotiation = async (req,res) => {
         // await getInfluencer.markModified("pendingJobs")
         // create a new negotiation document
         let negotiation = {
-            
+
         influencerEmail:getInfluencer.email,
         influencerFullName:getInfluencer.fullName,
         merchantEmail:email,
