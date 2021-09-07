@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // my affiliate profile
-router.get("/app/profile/get-my-profile", requireJWT, async (req, res) => {
+router.get("/", requireJWT, async (req, res) => {
   res.send('ok')
 });
 

@@ -1,15 +1,13 @@
 {
   "name": "hr-paragon",
   "version": "1.0.0",
-  "description": "Application for employee management",
+  "description": "Application for precise tracker",
   "engines": {
     "node": "14.16.1"
   },
   "main": "app.js",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.4.5",
-    "algoliasearch": "^4.10.3",
     "async": "^3.2.0",
     "authy": "^1.4.0",
     "aws-sdk": "^2.960.0",
@@ -46,7 +44,6 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.4.0",
     "randomstring": "^1.1.5",
-    "twilio": "^3.66.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
