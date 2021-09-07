@@ -607,7 +607,7 @@ const addKids = async (req, res) => {
     subCategory,
     condition,
     storeInfo,
-    category: "kids",
+    category: "Kids",
     email: email,
     priority,
     gender,
