@@ -50,16 +50,16 @@ const signUp = async (req, res, next) => {
     });
   }
   // console.log(req.body);
-  await User.findOne({ email: req.body.email }, (err, doc) => {
+  await User.findOne({ email: req.body.email }, async (err, doc) => {
     if (doc) {
       // console.log(doc);
-      res.json({ code: 401, msg: "this Account already exists", doc });
-      next(err);
+      return res.json({ code: 401, msg: "this Account already exists", doc });
+      // next(err);
     } else {
       const user = {
         email: req.body.email,
+        username: req.body.username,
         fullname: req.body.fullname,
-        name: req.body.fullname,
         userType: "EX10AF",
         emailVerified: false,
         verifyToken: generateRefNo,
@@ -68,20 +68,21 @@ const signUp = async (req, res, next) => {
       User.register(userInstance, req.body.password, (error, user) => {
         if (error) {
           // next(error);
-          res.json({ code: 401, mesage: "Failed to create account" });
-          return;
+          return res.json({ code: 401, message: "Failed to create account" });
         }
       });
       //
       const profileInstance = new Profiles(userInstance);
       profileInstance.fullname = req.body.fullname;
-      profileInstance.save((err, doc) => {
-        if (err) {
-          // next(err);
-          res.json({ code: 401, mesage: "Failed to create profile" });
-          return;
-        }
-      });
+      await profileInstance.save()
+        // (err) => {
+      //   if (err) {
+      //     console.error(err)
+      //     // next(err);
+      //     return res.json({ code: 401, message: "Failed to create profile" });
+          
+      //   }
+      // });
       // req.user = userInstance;
       // next();
       //send mail

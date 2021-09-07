@@ -137,7 +137,7 @@ const profileSchema = new mongoose.Schema({
   cycle: {
     type: String,
     default: "",
-  },
+  } ,
   refBy: { type: String, default: "" },
   netBalance: { type: Number, default: 0 },
   incomeTotal: { type: Number, default: 0 },

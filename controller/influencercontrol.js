@@ -88,7 +88,7 @@ const merchantPickInfluencer = async (req,res) => {
         prices:[pricing,unitPricing]})
         return res.json({code:200,data:matchedInfluencers,prices:[pricing,unitPricing]})
     } catch (err) {
-           console.error(err)
+           console.error(err) 
         return res.json({code:500,message:err.message})
     }
 } 
@@ -129,6 +129,27 @@ const influencerNegotiation = async (req,res) => {
             })
         // getInfluencer.pendingJobs = await getInfluencer.pendingJobs + 1
         // await getInfluencer.markModified("pendingJobs")
+        // create a new negotiation document
+        let negotiation = {
+
+        influencerEmail:getInfluencer.email,
+        influencerFullName:getInfluencer.fullName,
+        merchantEmail:email,
+        merchantFullName:profile.fullname,
+        merchantMessages:[],
+        influencerMessages:[],
+        startDateStr:"",
+        startDate:0,
+        endDate:0,
+        product:req.body.productName,
+        offerPrice:req.body.offerPrice,
+        negotiationStatus:"pending"
+
+        }
+
+        let newNegotiationDocument = new Negotiation(negotiation)
+        await newNegotiationDocument.save()
+
         let firstName = getInfluencer.fullName.split(' ')[0]
         let offerPrice = req.body.offerPrice
         let durationOfPromotion = req.body.durationOfPromotion
@@ -137,27 +158,27 @@ const influencerNegotiation = async (req,res) => {
         newMerchantInfluencer.markModified("pricing")
         newMerchantInfluencer.markModified("unitPricing")
         await newMerchantInfluencer.save()
-        // nodeoutlook.sendEmail({
-        //     auth: {
-        //       user: process.env.EXCITE_ENQUIRY_USER,
-        //       pass: process.env.EXCITE_ENQUIRY_PASS,
-        //     },
-        //       from: 'enquiry@exciteafrica.com',
-        //       to: getInfluencer.email,
-        //       subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
-        //       html: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
-        //       text: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
-        //       replyTo: 'enquiry@exciteafrica.com',
-        //       onError: (e) => console.log(e),
-        //       onSuccess: (i) => {
-        //       // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
-        //       console.log(i)
-        //       },
-        //       secure:false,
-        //   })
-        //   await getInfluencer.save((err,docs)=>{
-        //       console.log(err)
-        //   })
+        nodeoutlook.sendEmail({
+            auth: {
+              user: process.env.EXCITE_ENQUIRY_USER,
+              pass: process.env.EXCITE_ENQUIRY_PASS,
+            },
+              from: 'enquiry@exciteafrica.com',
+              to: getInfluencer.email,
+              subject: 'EXCITE INFLUENCER MARKETING ENGAGEMENT NOTIFICATION',
+              html: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
+              text: influencerNotification(firstName,profile.fullName,offerPrice,durationOfPromotion,reach),
+              replyTo: 'enquiry@exciteafrica.com',
+              onError: (e) => console.log(e),
+              onSuccess: (i) => {
+              // return res.json({code:200,message: 'Reset mail has been sent',userType:user.userType});
+              console.log(i)
+              },
+              secure:false,
+          })
+          await getInfluencer.save((err,docs)=>{
+              console.log(err)
+          })
         
         return res.json({code:200,message:"an email has been sent to the influencer you just selected,expect to hear from him/her soon !",
         })
@@ -200,17 +221,17 @@ const merchantDashboard = async (req,res) => {
 }
 
 //allow merchant to cancel out a pending response
-const merchantDeclinePendings = async (req,res)=> {
-    const {email} = req.user
-    try {
-        if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
-        const getNegotiateMerchant = await Negotiation.find({merchantEmail:email})
-        return res.json({code:200,data:getNegotiateMerchant})
-    } catch (err) {
-        console.error(err)
-        return res.json({code:500,message:err.message})
-    }
-}
+// const merchantDeclinePendings = async (req,res)=> {
+//     const {email} = req.user
+//     try {
+//         if (req.user.userType !== "EX10AF") return res.json({code:401,message:"You must be a merchant to access this resource"})
+//         const getNegotiateMerchant = await Negotiation.find({merchantEmail:email})
+//         return res.json({code:200,data:getNegotiateMerchant})
+//     } catch (err) {
+//         console.error(err)
+//         return res.json({code:500,message:err.message})
+//     }
+// }
 
 // influencer accept offer /agree route
 const merchantPaymentPrice = async (req,res) => {
@@ -589,7 +610,7 @@ module.exports = {
     influencerMerchantDeclinePrice,
     getAllChats,
     singleChat,
-    merchantDeclinePendings,
+   // merchantDeclinePendings,
     getMerchantPendings,
     getMerchantCompleted,
     getMerchantAccepted,

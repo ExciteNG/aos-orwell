@@ -5,7 +5,8 @@ const passportLocalMongoose = require('passport-local-mongoose')
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const userSchema = new mongoose.Schema({
- name:{type:String, default:""},
+ fullname:{type:String, default:""},
+ username:{type:String, default:""},
   email: { type: String,
    unique:true },
   userType:{
