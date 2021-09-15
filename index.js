@@ -31,7 +31,7 @@ else {
     dotenv.config()
     const morgan = require('morgan');
     const cronJob = require('node-cron');
-    const Profiles = require("./models/Profiles");
+    const Company = require("./models/Company");
  
     const bodyParser=require('body-parser');
     const cookieParser = require('cookie-parser');
@@ -87,7 +87,7 @@ else {
     //create the cron job helper function
 
   const checkSub = async () => {
-      let profiles = await Profiles.find();
+      let profiles = await Company.find();
       profiles.forEach((profile) => {
         if (Date.now() > profile.subscriptionEnd){
           profile.subscriptionLevel= 0

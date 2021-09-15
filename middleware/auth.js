@@ -4,8 +4,11 @@ const passport = require("passport");
 // const crypto = require("crypto");
 const JWT = require("jsonwebtoken");
 // const PassportJWT = require("passport-jwt");
+
+// MODELS
 const User = require("../models/User");
-const Profiles = require("../models/Profiles");
+const Company = require("../models/Company");
+
 const randomstring = require("randomstring");
 // const { use } = require("passport");
 
@@ -27,49 +30,45 @@ const generateRefNo = randomstring.generate({
 
 /*                  SIGNUPs                         */
 
-// Merchants
+// Company
 const signUp = async (req, res, next) => {
   if (!req.body.email || !req.body.password) {
     return res.send({ code: 400, error: "No username or password provided." });
   }
-  // console.log(req.body);
-  await User.findOne({ email: req.body.email }, async (err, doc) => {
-    if (doc) {
-      // console.log(doc);
-      return res.json({ code: 401, msg: "this Account already exists", doc });
-      // next(err);
-    } else {
-      const user = {
-        email: req.body.email,
-        username: req.body.username,
-        fullname: req.body.fullname,
-        userType: "EX10AF",
-        emailVerified: false,
-        verifyToken: generateRefNo,
-      };
-      const userInstance = new User(user);
-      User.register(userInstance, req.body.password, (error, user) => {
-        if (error) {
-          // next(error);
-          return res.json({ code: 401, message: "Failed to create account" });
-        }
-      });
-      //
-      const profileInstance = new Profiles(userInstance);
-      profileInstance.fullname = req.body.fullname;
-      await profileInstance.save()
-      return res.json({
-        code: 201,
-        mesage:
-          "Account created Please check your email to verify your account",
-      });
-    }
-  });
+  try {
+    const isExist = await User.findOne({ email: req.body.email.toLowerCase() });
+  if (isExist)
+    return res.json({ code: 401, msg: "this Account already exists" });
+    const user = {
+      ...req.body,
+      email: req.body.email.toLowerCase(),
+      accountType: "PT02",
+      emailVerified: false,
+      verifyToken: generateRefNo,
+    };
+    const userInstance = new User(user);
+    User.register(userInstance, req.body.password, async (error, user) => {
+      if (error) {
+        return res.status(400).json({ code: 401, message: "Failed to create account" });
+      }
+       // if  no error 
+     const profileInstance = new Company({...req.body, accountType:"PT02"});
+     if(!profileInstance) return res.status(400).json({msg:"Bad Request"})
+
+     const company = await profileInstance.save();
+
+     if(!company) return res.status(400).json({msg:"Bad Request"})
+     //TODO SEND WELCOME EMAIL
+      
+     return res.status(200).json({msg:"Account created"})
+    });
+  } catch (error) {
+    return res.status(500)
+  }
 };
 
-
 /*                  SIGN JWTS                        */
-// Merchants Login
+// Company Login
 const signJWTForUser = (req, res) => {
   try {
     const user = req.user;
@@ -90,7 +89,6 @@ const signJWTForUser = (req, res) => {
     return res.json({ code: 400, message: err.message });
   }
 };
-
 
 module.exports = {
   initialize: passport.initialize(),

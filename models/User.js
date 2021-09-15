@@ -1,41 +1,38 @@
 /* eslint-disable prettier/prettier */
-const mongoose = require('./init')
-const passportLocalMongoose = require('passport-local-mongoose')
+const mongoose = require("./init");
+const passportLocalMongoose = require("passport-local-mongoose");
 //email regex validation
 let emailRegexVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const userSchema = new mongoose.Schema({
- fullname:{type:String, default:""},
- username:{type:String, default:""},
-  email: { type: String,
-   unique:true },
-  userType:{
-    type:String,
-    required:true
+  email: { type: String, unique: true },
+  accountType: {
+    type: String,
+    required: true,
   },
-  emailVerified:{
-    type:Boolean,
-    default:false
+  isVerified: {
+    type: Boolean,
+    default: false,
   },
-  verifyToken:{
-    type:String,
-    default:""
+  verifyToken: {
+    type: String,
+    default: "",
   },
-  authToken:{
-    type:String,
-    default:""
+  authToken: {
+    type: String,
+    default: "",
   },
   resetPasswordToken: String,
-  resetPasswordExpires:{
-    type:Number,
-     default:Date.now()
-}
-})
+  resetPasswordExpires: {
+    type: Number,
+    default: Date.now(),
+  },
+});
 
 userSchema.plugin(passportLocalMongoose, {
-  usernameField: 'email',
+  usernameField: "email",
   usernameLowerCase: true,
-  session: false
-})
+  session: false,
+});
 
-const User = (module.exports = mongoose.model('User', userSchema))
+const User = (module.exports = mongoose.model("User", userSchema));

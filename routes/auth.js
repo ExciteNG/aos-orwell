@@ -12,12 +12,12 @@ const {
 const router = express.Router()
 
 // Sign up merchants
-router.post('/auth/sign-up', signUp)
+router.post('/create-account', signUp)
 // router.post('/auth/sign-up', signUp, signJWTForUser)
 
 
 // Sign in client
-router.post('/create-account', signIn, signJWTForUser)
+router.post('/login-account', signIn, signJWTForUser)
 
 
 
