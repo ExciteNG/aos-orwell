@@ -1,13 +1,18 @@
+const { response } = require("express");
 const Survey = require("./../../models/Survey");
 
 const addNewSurvey = async (req, res) => {
   try {
     const survey = new Survey({ ...req.body });
     survey.Date = Date.now();
-
-    await survey.save();
+    const doc = await survey.save();
+    if (doc) {
+      return res.json({code:201,doc});
+    }
+    return res.status(400);
   } catch (err) {
-    return res.json({ code: 400, message: err.message });
+      console.log(err)
+    return res.status(500).json({ code: 400, message: err.message });
   }
 };
 

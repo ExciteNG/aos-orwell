@@ -17,7 +17,7 @@ const SurveySchema = new mongoose.Schema({
   },
   PRS: {
     type: String,
-    required: true,
+    default: "",
   },
   SRR: {
     type: Array,
@@ -29,7 +29,7 @@ const SurveySchema = new mongoose.Schema({
   },
   Suggestion: {
     type: String,
-    default: 0,
+    default: "",
   },
   Responses: {
     type: Array,
