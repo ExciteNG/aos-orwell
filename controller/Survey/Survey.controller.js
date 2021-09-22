@@ -7,7 +7,7 @@ const addNewSurvey = async (req, res) => {
     survey.Date = Date.now();
     const doc = await survey.save();
     if (doc) {
-      return res.json({code:201,doc});
+      return res.status(201).json({code:201,doc});
     }
     return res.status(400);
   } catch (err) {
