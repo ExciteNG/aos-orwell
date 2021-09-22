@@ -7,7 +7,7 @@ const JWT = require("jsonwebtoken");
 
 // MODELS
 const User = require("../models/User");
-const Company = require("../models/Company");
+
 
 const randomstring = require("randomstring");
 // const { use } = require("passport");
@@ -51,13 +51,6 @@ const signUp = async (req, res, next) => {
       if (error) {
         return res.status(400).json({ code: 401, message: "Failed to create account" });
       }
-       // if  no error 
-     const profileInstance = new Company({...req.body, accountType:"PT02"});
-     if(!profileInstance) return res.status(400).json({msg:"Bad Request"})
-
-     const company = await profileInstance.save();
-
-     if(!company) return res.status(400).json({msg:"Bad Request"})
      //TODO SEND WELCOME EMAIL
       
      return res.status(200).json({msg:"Account created"})
